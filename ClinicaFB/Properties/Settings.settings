@@ -1,0 +1,54 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ClinicaFB.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Usuario_ID" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Empresa_ID" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Usuario" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Servidor" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UsuarioBD" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PassWord" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Puerto" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="BaseDeDatos" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CarpetaDatos" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SucursalId" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="CorreoServidor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mx46.hostgator.mx</Value>
+    </Setting>
+    <Setting Name="CorreoCuenta" Type="System.String" Scope="User">
+      <Value Profile="(Default)">envios@axess.com.mx</Value>
+    </Setting>
+    <Setting Name="CorreoUsuario" Type="System.String" Scope="User">
+      <Value Profile="(Default)">envios@axess.com.mx</Value>
+    </Setting>
+    <Setting Name="CorreoPassWord" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ab369741</Value>
+    </Setting>
+    <Setting Name="CorreoSSL" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CorreoMensaje" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Envío automático de facturas, favor de no responder a esta cuenta</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

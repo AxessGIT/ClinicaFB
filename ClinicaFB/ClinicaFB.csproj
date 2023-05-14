@@ -1,0 +1,1072 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props" Condition="Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{836828B4-0765-4335-8A42-F042F947414D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ClinicaFB</RootNamespace>
+    <AssemblyName>ClinicaFB</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Clinicadb.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.2.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="CFDiLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CFDiLib\CFDiLib\bin\Debug\CFDiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.123\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="FirebirdSql.Data.FirebirdClient, Version=9.1.1.0, Culture=neutral, PublicKeyToken=3750abcc3150b00c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FirebirdSql.Data.FirebirdClient.9.1.1\lib\net48\FirebirdSql.Data.FirebirdClient.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.4.0.0\lib\net48\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.30.1\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.30.1\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.30.1\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.30.1\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.160.1000.6\lib\net462\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.4.0.0\lib\net48\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZKWeb.Fork.QRCoder.1.3.0\lib\net461\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Chart.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Chart.Base.21.2.4\lib\net46\Syncfusion.Chart.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Chart.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Chart.Windows.21.2.4\lib\net46\Syncfusion.Chart.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.21.2.4\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Core.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Data.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.DataSource.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.DocIO.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.DocIO.WinForms.21.2.4\lib\net46\Syncfusion.DocIO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Edit.Windows, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grid.Base.21.2.4\lib\net46\Syncfusion.Grid.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grid.Grouping.Windows.21.2.4\lib\net46\Syncfusion.Grid.Grouping.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grid.Windows.21.2.4\lib\net46\Syncfusion.Grid.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.GridCommon.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Gridconverter.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.GridExport.WinForms.21.2.4\lib\net46\Syncfusion.Gridconverter.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.GridHelperClasses.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.GridHelperClasses.Windows.21.2.4\lib\net46\Syncfusion.GridHelperClasses.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Grouping.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grouping.Base.21.2.4\lib\net46\Syncfusion.Grouping.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.21.2.4\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Linq.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Linq.Base.21.2.4\lib\net46\Syncfusion.Linq.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.OfficeChart.Base.21.2.4\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.WinForms.21.2.4\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.PivotAnalysis.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.PivotAnalysis.Base.21.2.4\lib\net46\Syncfusion.PivotAnalysis.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.PivotAnalysis.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.PivotTable.WinForms.21.2.4\lib\net46\Syncfusion.PivotAnalysis.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfDataGrid.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfInput.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.SfListView.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Shared.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.Base.21.2.4\lib\net46\Syncfusion.Shared.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.Windows.21.2.4\lib\net46\Syncfusion.Shared.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SpellChecker.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SpellChecker.Base.21.2.4\lib\net46\Syncfusion.SpellChecker.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Tools.Base.21.2.4\lib\net46\Syncfusion.Tools.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Tools.Windows.21.2.4\lib\net46\Syncfusion.Tools.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.XlsIO.WinForms.21.2.4\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.30.1\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encoding.CodePages, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.7.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.7.0.2\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Twilio, Version=6.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.6.6.0\lib\net451\Twilio.dll</HintPath>
+    </Reference>
+    <Reference Include="ZKWeb.System.Drawing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZKWeb.System.Drawing.4.0.1\lib\net45\ZKWeb.System.Drawing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Agenda\AsignaRecurso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\AsignaRecurso.Designer.cs">
+      <DependentUpon>AsignaRecurso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\CancelacionMotivos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\CancelacionMotivos.Designer.cs">
+      <DependentUpon>CancelacionMotivos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\CeldaDatos.cs" />
+    <Compile Include="Agenda\CeldaLayout.cs" />
+    <Compile Include="Agenda\CeldasBloquear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\CeldasBloquear.Designer.cs">
+      <DependentUpon>CeldasBloquear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\CitaAC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\CitaAC.Designer.cs">
+      <DependentUpon>CitaAC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\CitaFecha.cs" />
+    <Compile Include="Agenda\CitasCanceladasImprimir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\CitasCanceladasImprimir.Designer.cs">
+      <DependentUpon>CitasCanceladasImprimir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\CitasImprimir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\CitasImprimir.Designer.cs">
+      <DependentUpon>CitasImprimir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\CitasListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\CitasListado.Designer.cs">
+      <DependentUpon>CitasListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\DatosReporte.cs" />
+    <Compile Include="Agenda\ExternalData.cs" />
+    <Compile Include="Agenda\FechasBloquear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\FechasBloquear.Designer.cs">
+      <DependentUpon>FechasBloquear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\FechasDesbloquear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\FechasDesbloquear.Designer.cs">
+      <DependentUpon>FechasDesbloquear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\Helper.cs" />
+    <Compile Include="Agenda\InfoColumna.cs" />
+    <Compile Include="Agenda\InfoHorario.cs" />
+    <Compile Include="Agenda\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\MenuCita.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\MenuCita.Designer.cs">
+      <DependentUpon>MenuCita.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\MyGridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Agenda\Recurso.cs" />
+    <Compile Include="Configuracion\Facturacion\ClaveSATBuscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\ClaveSATBuscar.Designer.cs">
+      <DependentUpon>ClaveSATBuscar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\ClavesSATActualiza.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\ClavesSATActualiza.Designer.cs">
+      <DependentUpon>ClavesSATActualiza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\ColoresConfigurar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\ColoresConfigurar.Designer.cs">
+      <DependentUpon>ColoresConfigurar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\ColorPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\ColorPicker.Designer.cs">
+      <DependentUpon>ColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Conexion\ConexionDatos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Conexion\ConexionDatos.Designer.cs">
+      <DependentUpon>ConexionDatos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\ConfiguracionMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\ConfiguracionMenu.Designer.cs">
+      <DependentUpon>ConfiguracionMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\CuartosAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\CuartosAltasCambios.Designer.cs">
+      <DependentUpon>CuartosAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\CuartosListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\CuartosListado.Designer.cs">
+      <DependentUpon>CuartosListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\DescripcionesAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\DescripcionesAltasCambios.Designer.cs">
+      <DependentUpon>DescripcionesAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\DescripcionesListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\DescripcionesListado.Designer.cs">
+      <DependentUpon>DescripcionesListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\DoctoresAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\DoctoresAltasCambios.Designer.cs">
+      <DependentUpon>DoctoresAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\DoctoresListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\DoctoresListado.Designer.cs">
+      <DependentUpon>DoctoresListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Empresas\EmpresaAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Empresas\EmpresaAltasCambios.Designer.cs">
+      <DependentUpon>EmpresaAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Empresas\EmpresasListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Empresas\EmpresasListado.Designer.cs">
+      <DependentUpon>EmpresasListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\EquiposAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\EquiposAltasCambios.Designer.cs">
+      <DependentUpon>EquiposAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\EquiposListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\EquiposListado.Designer.cs">
+      <DependentUpon>EquiposListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\EmisoresAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\EmisoresAltasCambios.Designer.cs">
+      <DependentUpon>EmisoresAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\EmisoresListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\EmisoresListado.Designer.cs">
+      <DependentUpon>EmisoresListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\SeriesConceptosAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\SeriesConceptosAltasCambios.Designer.cs">
+      <DependentUpon>SeriesConceptosAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\ProcedimientosAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\ProcedimientosAltasCambios.Designer.cs">
+      <DependentUpon>ProcedimientosAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\ProcedimientosListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\ProcedimientosListado.Designer.cs">
+      <DependentUpon>ProcedimientosListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\EmpresaDatos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\EmpresaDatos.Designer.cs">
+      <DependentUpon>EmpresaDatos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\DiaImprimir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agenda\DiaImprimir.Designer.cs">
+      <DependentUpon>DiaImprimir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\PuntoDeVenta\ImpuestoAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\PuntoDeVenta\ImpuestoAltasCambios.Designer.cs">
+      <DependentUpon>ImpuestoAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\PuntoDeVenta\ImpuestosListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\PuntoDeVenta\ImpuestosListado.Designer.cs">
+      <DependentUpon>ImpuestosListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Recetas\TextosRapidosConfigurar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Recetas\TextosRapidosConfigurar.Designer.cs">
+      <DependentUpon>TextosRapidosConfigurar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\SeriesDocsAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Facturacion\SeriesDocsAltasCambios.Designer.cs">
+      <DependentUpon>SeriesDocsAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\SucursalesAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\SucursalesAltasCambios.Designer.cs">
+      <DependentUpon>SucursalesAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\SucursalesListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\SucursalesListado.Designer.cs">
+      <DependentUpon>SucursalesListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Usuarios\UsuariosAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Usuarios\UsuariosAltasCambios.Designer.cs">
+      <DependentUpon>UsuariosAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Usuarios\UsuariosListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Usuarios\UsuariosListado.Designer.cs">
+      <DependentUpon>UsuariosListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\ExpedientesMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\ExpedientesMenu.Designer.cs">
+      <DependentUpon>ExpedientesMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\ImagenAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\ImagenAltasCambios.Designer.cs">
+      <DependentUpon>ImagenAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\NotaEditar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\NotaEditar.Designer.cs">
+      <DependentUpon>NotaEditar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\PacienteBuscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\PacienteBuscar.Designer.cs">
+      <DependentUpon>PacienteBuscar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\PacienteDatosAgenda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\PacienteDatosAgenda.Designer.cs">
+      <DependentUpon>PacienteDatosAgenda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\PacientesAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\PacientesAltasCambios.Designer.cs">
+      <DependentUpon>PacientesAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\PacientesListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\PacientesListado.Designer.cs">
+      <DependentUpon>PacientesListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\TabletListadoPacientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\TabletListadoPacientes.Designer.cs">
+      <DependentUpon>TabletListadoPacientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expedientes\TabletPacienteVer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\TabletPacienteVer.Designer.cs">
+      <DependentUpon>TabletPacienteVer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Conversion.cs" />
+    <Compile Include="Ingresos\CFDisLIstado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\CFDisLIstado.Designer.cs">
+      <DependentUpon>CFDisLIstado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresos\ConceptoModificar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\ConceptoModificar.Designer.cs">
+      <DependentUpon>ConceptoModificar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresos\IngresosListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\IngresosListado.Designer.cs">
+      <DependentUpon>IngresosListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresos\RazonesSocialesListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\RazonesSocialesListado.Designer.cs">
+      <DependentUpon>RazonesSocialesListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresos\RazSocAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\RazSocAltasCambios.Designer.cs">
+      <DependentUpon>RazSocAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ChecaDatos.cs" />
+    <Compile Include="Helpers\DataGridHelper.cs" />
+    <Compile Include="Helpers\DatosConexion.cs" />
+    <Compile Include="Helpers\DatosConexionServidor.cs" />
+    <Compile Include="Helpers\General.cs" />
+    <Compile Include="Helpers\ManejaCFDIs.cs" />
+    <Compile Include="Helpers\Queries.cs" />
+    <Compile Include="Helpers\SincronizaAgendaWEB.cs" />
+    <Compile Include="Ingresos\ingCaptura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\ingCaptura.Designer.cs">
+      <DependentUpon>ingCaptura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresos\IngMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\IngMenu.Designer.cs">
+      <DependentUpon>IngMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuPrincipal.Designer.cs">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloConfiguracion\DatosEmpresa.cs" />
+    <Compile Include="ModeloConfiguracion\Usuario.cs" />
+    <Compile Include="ModeloWEB\CitaWEB.cs" />
+    <Compile Include="ModeloWEB\DoctorWEB.cs" />
+    <Compile Include="Modelo\ActDatos.cs" />
+    <Compile Include="Modelo\Articulo.cs" />
+    <Compile Include="Modelo\CFDIDetalle.cs" />
+    <Compile Include="Modelo\Cita.cs" />
+    <Compile Include="Modelo\CitaProins.cs" />
+    <Compile Include="Modelo\ClaveSAT.cs" />
+    <Compile Include="Modelo\ColRecurso.cs" />
+    <Compile Include="Modelo\CorreoInfo.cs" />
+    <Compile Include="Modelo\Cuarto.cs" />
+    <Compile Include="Modelo\DatoFiscal.cs" />
+    <Compile Include="Modelo\DatosExpediente.cs" />
+    <Compile Include="Modelo\DescripcionCat.cs" />
+    <Compile Include="Modelo\Doctor.cs" />
+    <Compile Include="ModeloConfiguracion\Empresa.cs" />
+    <Compile Include="Modelo\Documento.cs" />
+    <Compile Include="Modelo\DocumentoDetalle.cs" />
+    <Compile Include="Modelo\Emisor.cs" />
+    <Compile Include="Modelo\Equipo.cs" />
+    <Compile Include="Modelo\CFDI.cs" />
+    <Compile Include="Modelo\Impuesto.cs" />
+    <Compile Include="Modelo\Ingreso.cs" />
+    <Compile Include="Modelo\IngresoDetalle.cs" />
+    <Compile Include="Modelo\Nota.cs" />
+    <Compile Include="Modelo\Paciente.cs" />
+    <Compile Include="Inicio.cs" />
+    <Compile Include="Modelo\PacienteNotas.cs" />
+    <Compile Include="Modelo\PacientesImagenes.cs" />
+    <Compile Include="Modelo\Parametro.cs" />
+    <Compile Include="Modelo\Procedimiento.cs" />
+    <Compile Include="Modelo\RazonSocial.cs" />
+    <Compile Include="Modelo\Receta.cs" />
+    <Compile Include="Modelo\RecetaMedipiel.cs" />
+    <Compile Include="Modelo\SerieConcepto.cs" />
+    <Compile Include="Modelo\SerieDoc.cs" />
+    <Compile Include="Modelo\Sucursal.cs" />
+    <Compile Include="Modelo\TextoRapido.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuntoDeVenta\ArticuloAltaCambio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PuntoDeVenta\ArticuloAltaCambio.Designer.cs">
+      <DependentUpon>ArticuloAltaCambio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PuntoDeVenta\ArticulosBuscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PuntoDeVenta\ArticulosBuscar.Designer.cs">
+      <DependentUpon>ArticulosBuscar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PuntoDeVenta\ArticulosListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PuntoDeVenta\ArticulosListado.Designer.cs">
+      <DependentUpon>ArticulosListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PuntoDeVenta\PdV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PuntoDeVenta\PdV.Designer.cs">
+      <DependentUpon>PdV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PuntoDeVenta\pdvMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PuntoDeVenta\pdvMenu.Designer.cs">
+      <DependentUpon>pdvMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recetas\RecetaElaboracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recetas\RecetaElaboracion.Designer.cs">
+      <DependentUpon>RecetaElaboracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\PreVerReporte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reportes\PreVerReporte.Designer.cs">
+      <DependentUpon>PreVerReporte.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Agenda\AsignaRecurso.resx">
+      <DependentUpon>AsignaRecurso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\CancelacionMotivos.resx">
+      <DependentUpon>CancelacionMotivos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\CeldasBloquear.resx">
+      <DependentUpon>CeldasBloquear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\CitaAC.resx">
+      <DependentUpon>CitaAC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\CitasCanceladasImprimir.resx">
+      <DependentUpon>CitasCanceladasImprimir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\CitasImprimir.resx">
+      <DependentUpon>CitasImprimir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\CitasListado.resx">
+      <DependentUpon>CitasListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\FechasBloquear.resx">
+      <DependentUpon>FechasBloquear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\FechasDesbloquear.resx">
+      <DependentUpon>FechasDesbloquear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\MenuCita.resx">
+      <DependentUpon>MenuCita.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Facturacion\ClaveSATBuscar.resx">
+      <DependentUpon>ClaveSATBuscar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Facturacion\ClavesSATActualiza.resx">
+      <DependentUpon>ClavesSATActualiza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\ColoresConfigurar.resx">
+      <DependentUpon>ColoresConfigurar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\ColorPicker.resx">
+      <DependentUpon>ColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Conexion\ConexionDatos.resx">
+      <DependentUpon>ConexionDatos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\ConfiguracionMenu.resx">
+      <DependentUpon>ConfiguracionMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\CuartosAltasCambios.resx">
+      <DependentUpon>CuartosAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\CuartosListado.resx">
+      <DependentUpon>CuartosListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\DescripcionesAltasCambios.resx">
+      <DependentUpon>DescripcionesAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\DescripcionesListado.resx">
+      <DependentUpon>DescripcionesListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\DoctoresAltasCambios.resx">
+      <DependentUpon>DoctoresAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\DoctoresListado.resx">
+      <DependentUpon>DoctoresListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Empresas\EmpresaAltasCambios.resx">
+      <DependentUpon>EmpresaAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Empresas\EmpresasListado.resx">
+      <DependentUpon>EmpresasListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\EquiposAltasCambios.resx">
+      <DependentUpon>EquiposAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\EquiposListado.resx">
+      <DependentUpon>EquiposListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Facturacion\EmisoresAltasCambios.resx">
+      <DependentUpon>EmisoresAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Facturacion\EmisoresListado.resx">
+      <DependentUpon>EmisoresListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Facturacion\SeriesConceptosAltasCambios.resx">
+      <DependentUpon>SeriesConceptosAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\ProcedimientosAltasCambios.resx">
+      <DependentUpon>ProcedimientosAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\ProcedimientosListado.resx">
+      <DependentUpon>ProcedimientosListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\EmpresaDatos.resx">
+      <DependentUpon>EmpresaDatos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agenda\DiaImprimir.resx">
+      <DependentUpon>DiaImprimir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\PuntoDeVenta\ImpuestoAltasCambios.resx">
+      <DependentUpon>ImpuestoAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\PuntoDeVenta\ImpuestosListado.resx">
+      <DependentUpon>ImpuestosListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Recetas\TextosRapidosConfigurar.resx">
+      <DependentUpon>TextosRapidosConfigurar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Facturacion\SeriesDocsAltasCambios.resx">
+      <DependentUpon>SeriesDocsAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\SucursalesAltasCambios.resx">
+      <DependentUpon>SucursalesAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\SucursalesListado.resx">
+      <DependentUpon>SucursalesListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Usuarios\UsuariosAltasCambios.resx">
+      <DependentUpon>UsuariosAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Usuarios\UsuariosListado.resx">
+      <DependentUpon>UsuariosListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\ExpedientesMenu.resx">
+      <DependentUpon>ExpedientesMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\ImagenAltasCambios.resx">
+      <DependentUpon>ImagenAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\NotaEditar.resx">
+      <DependentUpon>NotaEditar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\PacienteBuscar.resx">
+      <DependentUpon>PacienteBuscar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\PacienteDatosAgenda.resx">
+      <DependentUpon>PacienteDatosAgenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\PacientesAltasCambios.resx">
+      <DependentUpon>PacientesAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\PacientesListado.resx">
+      <DependentUpon>PacientesListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\TabletListadoPacientes.resx">
+      <DependentUpon>TabletListadoPacientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\TabletPacienteVer.resx">
+      <DependentUpon>TabletPacienteVer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\CFDisLIstado.resx">
+      <DependentUpon>CFDisLIstado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\ConceptoModificar.resx">
+      <DependentUpon>ConceptoModificar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\IngresosListado.resx">
+      <DependentUpon>IngresosListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\RazonesSocialesListado.resx">
+      <DependentUpon>RazonesSocialesListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\RazSocAltasCambios.resx">
+      <DependentUpon>RazSocAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\ingCaptura.resx">
+      <DependentUpon>ingCaptura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\IngMenu.resx">
+      <DependentUpon>IngMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuPrincipal.resx">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="PuntoDeVenta\ArticuloAltaCambio.resx">
+      <DependentUpon>ArticuloAltaCambio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PuntoDeVenta\ArticulosBuscar.resx">
+      <DependentUpon>ArticulosBuscar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PuntoDeVenta\ArticulosListado.resx">
+      <DependentUpon>ArticulosListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PuntoDeVenta\PdV.resx">
+      <DependentUpon>PdV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PuntoDeVenta\pdvMenu.resx">
+      <DependentUpon>pdvMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recetas\RecetaElaboracion.resx">
+      <DependentUpon>RecetaElaboracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Expedientes\Expediente.rdlc" />
+    <EmbeddedResource Include="Reportes\Ingresos\Factura.rdlc" />
+    <EmbeddedResource Include="Reportes\Ingresos\Ticket.rdlc" />
+    <EmbeddedResource Include="Reportes\PreVerReporte.resx">
+      <DependentUpon>PreVerReporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\PuntoDeVenta\Impuestos.rdlc" />
+    <None Include="imagenes\Cuartos.ai" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.CFDI.datasource" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.CFDIDetalle.datasource" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.DatosExpediente.datasource" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.Impuesto.datasource" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.Ingreso.datasource" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.IngresoDetalle.datasource" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.Nota.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Clinicadb.ico" />
+    <Content Include="imagenes\Aceptar32.png" />
+    <Content Include="imagenes\Agenda.ico" />
+    <Content Include="imagenes\Agenda32.png" />
+    <Content Include="imagenes\Agregar20.png" />
+    <Content Include="imagenes\Asistio20.png" />
+    <Content Include="imagenes\Bloquear20.png" />
+    <Content Include="imagenes\bloqueo.ico" />
+    <Content Include="imagenes\bloqueo16.png" />
+    <Content Include="imagenes\bloqueo20.png" />
+    <Content Include="imagenes\bloqueo32.png" />
+    <Content Include="imagenes\Borrar24.png" />
+    <Content Include="imagenes\Borrar32.png" />
+    <Content Include="imagenes\Buscar20.png" />
+    <Content Include="imagenes\Calendario.ico" />
+    <Content Include="imagenes\Cancel24.png" />
+    <Content Include="imagenes\cancelar16.png" />
+    <Content Include="imagenes\Cancelar20.png" />
+    <Content Include="imagenes\cancelar20a.png" />
+    <Content Include="imagenes\cancelar24.png" />
+    <Content Include="imagenes\cancelar32.png" />
+    <Content Include="imagenes\Celda.ico" />
+    <Content Include="imagenes\Celdas32.png" />
+    <Content Include="imagenes\Clinica.ico" />
+    <Content Include="imagenes\Clinica20.png" />
+    <Content Include="imagenes\Clinica20a.png" />
+    <Content Include="imagenes\clinica20b.png" />
+    <Content Include="imagenes\clinica20c.png" />
+    <Content Include="imagenes\clinica24.png" />
+    <Content Include="imagenes\Clinicadb.ico" />
+    <Content Include="imagenes\Colores.ico" />
+    <None Include="imagenes\colores20.png" />
+    <Content Include="imagenes\Colores32-2.png" />
+    <Content Include="imagenes\Colores32.png" />
+    <Content Include="imagenes\Configurar.ico" />
+    <Content Include="imagenes\Configurar32.png" />
+    <Content Include="imagenes\Copiar20.png" />
+    <Content Include="imagenes\correo20.png" />
+    <Content Include="imagenes\correo32.png" />
+    <Content Include="imagenes\Cuartos.ico" />
+    <Content Include="imagenes\Cuartos32.png" />
+    <Content Include="imagenes\Cuartos32a.png" />
+    <Content Include="imagenes\Delete32.png" />
+    <Content Include="imagenes\Depurar.ico" />
+    <Content Include="imagenes\Depurar20.png" />
+    <Content Include="imagenes\Depurar24.png" />
+    <Content Include="imagenes\Depurar32.png" />
+    <Content Include="imagenes\Doctores.ico" />
+    <Content Include="imagenes\Doctores32.png" />
+    <Content Include="imagenes\Edit24.png" />
+    <Content Include="imagenes\Editar20.png" />
+    <Content Include="imagenes\Editar32.png" />
+    <Content Include="imagenes\ejemplologo.png" />
+    <Content Include="imagenes\Equipos.ico" />
+    <Content Include="imagenes\Equipos32.png" />
+    <Content Include="imagenes\Guardar16.png" />
+    <Content Include="imagenes\guardar24.png" />
+    <Content Include="imagenes\Guardar32.png" />
+    <Content Include="imagenes\Imprimir.ico" />
+    <Content Include="imagenes\Imprimir20.png" />
+    <Content Include="imagenes\ImprimirDia.ico" />
+    <Content Include="imagenes\Imprimirdia20.png" />
+    <Content Include="imagenes\Instrucciones32.png" />
+    <None Include="imagenes\letra20.png" />
+    <Content Include="imagenes\login.ico" />
+    <Content Include="imagenes\mail.ico" />
+    <Content Include="imagenes\medipiel.png" />
+    <Content Include="imagenes\MOver20.png" />
+    <Content Include="imagenes\Nuevo24.png" />
+    <Content Include="imagenes\Nuevo32.png" />
+    <Content Include="imagenes\ok20.png" />
+    <Content Include="imagenes\Ok24.png" />
+    <Content Include="imagenes\Paciente.ico" />
+    <Content Include="imagenes\Pacientes32.png" />
+    <None Include="imagenes\paletacolor20.png" />
+    <Content Include="imagenes\Procedimientos32.png" />
+    <Content Include="imagenes\Salir20.png" />
+    <Content Include="imagenes\Salir24.png" />
+    <Content Include="imagenes\salir32.png" />
+    <Content Include="imagenes\Setup.ico" />
+    <Content Include="imagenes\Setup20.png" />
+    <Content Include="imagenes\Update20.png" />
+    <Content Include="imagenes\Update24.png" />
+    <Content Include="imagenes\Update32.png" />
+    <Content Include="imagenes\ver16.png" />
+    <Content Include="imagenes\ver20.png" />
+    <Content Include="imagenes\ver24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props'))" />
+  </Target>
+</Project>
