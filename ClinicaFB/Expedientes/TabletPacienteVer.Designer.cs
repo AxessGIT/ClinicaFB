@@ -32,9 +32,10 @@
             Syncfusion.WinForms.DataGrid.GridDateTimeColumn gridDateTimeColumn1 = new Syncfusion.WinForms.DataGrid.GridDateTimeColumn();
             Syncfusion.WinForms.DataGrid.GridTextColumn gridTextColumn1 = new Syncfusion.WinForms.DataGrid.GridTextColumn();
             this.lblNombrePaciente = new System.Windows.Forms.Label();
-            this.cmdSalir = new System.Windows.Forms.Button();
             this.tabPaciente = new System.Windows.Forms.TabControl();
             this.pagGenerales = new System.Windows.Forms.TabPage();
+            this.cmdVideo = new System.Windows.Forms.Button();
+            this.picFoto = new System.Windows.Forms.PictureBox();
             this.grdNotas = new Syncfusion.WinForms.DataGrid.SfDataGrid();
             this.txtMaquillaje = new System.Windows.Forms.TextBox();
             this.txtMedico = new System.Windows.Forms.TextBox();
@@ -135,12 +136,11 @@
             this.txtActPrefijo = new System.Windows.Forms.TextBox();
             this.pagReceta = new System.Windows.Forms.TabPage();
             this.cmdTraerUltimaReceta = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.cmdImprimirReceta = new System.Windows.Forms.Button();
             this.txtEtiquetas = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.chkImprimirEdad = new System.Windows.Forms.CheckBox();
             this.chkImprimirDireccion = new System.Windows.Forms.CheckBox();
-            this.cmdGurdarReceta = new System.Windows.Forms.Button();
             this.cmdBoton7 = new System.Windows.Forms.Button();
             this.cmdBoton6 = new System.Windows.Forms.Button();
             this.cmdBoton5 = new System.Windows.Forms.Button();
@@ -151,45 +151,60 @@
             this.txtTexto = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cboTextosRapidos = new Syncfusion.WinForms.ListView.SfComboBox();
+            this.cmdGurdarReceta = new System.Windows.Forms.Button();
             this.pagRecetasPacientes = new System.Windows.Forms.TabPage();
             this.cmdQuitarFiltroRecetas = new System.Windows.Forms.Button();
             this.txtBuscarRecetas = new System.Windows.Forms.TextBox();
-            this.cmdFiltrarRecetas = new System.Windows.Forms.Button();
-            this.cmdBorrarRecetaGuardada = new System.Windows.Forms.Button();
-            this.cmdPasarAReceta = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.txtEtiquetasGuardadas = new System.Windows.Forms.TextBox();
             this.txtRecetaGuardada = new System.Windows.Forms.TextBox();
             this.grdRecetas = new System.Windows.Forms.DataGridView();
-            this.pagRecetasMedipiel = new System.Windows.Forms.TabPage();
-            this.cmdQuitarFiltro = new System.Windows.Forms.Button();
-            this.txtBuscarRecetasMedipiel = new System.Windows.Forms.TextBox();
-            this.cmdBuscarRecetaMedipiel = new System.Windows.Forms.Button();
-            this.cmdPasarRecetaMedipiel = new System.Windows.Forms.Button();
-            this.txtCompletoMedipiel = new System.Windows.Forms.TextBox();
-            this.txtRecetaMedipiel = new System.Windows.Forms.TextBox();
-            this.grdRecetasMedipiel = new System.Windows.Forms.DataGridView();
+            this.cmdFiltrarRecetas = new System.Windows.Forms.Button();
+            this.cmdBorrarRecetaGuardada = new System.Windows.Forms.Button();
+            this.cmdPasarAReceta = new System.Windows.Forms.Button();
             this.pagRecetasUsuario = new System.Windows.Forms.TabPage();
+            this.cmdBorrarRecetaDoctor = new System.Windows.Forms.Button();
             this.cmdQuitarFiltroRecetasDoctor = new System.Windows.Forms.Button();
             this.txtBuscarRecetasDoctor = new System.Windows.Forms.TextBox();
-            this.cmdFiltrarRecetasDoctor = new System.Windows.Forms.Button();
-            this.cmdPasarARecetaDoctor = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.txtEtiquetasGuardadasDoctor = new System.Windows.Forms.TextBox();
             this.txtRecetaGuardadaDoctor = new System.Windows.Forms.TextBox();
             this.grdRecetasDoctor = new System.Windows.Forms.DataGridView();
+            this.cmdFiltrarRecetasDoctor = new System.Windows.Forms.Button();
+            this.cmdPasarARecetaDoctor = new System.Windows.Forms.Button();
+            this.pagRecetasMedipiel = new System.Windows.Forms.TabPage();
+            this.cmdQuitarFiltro = new System.Windows.Forms.Button();
+            this.txtBuscarRecetasMedipiel = new System.Windows.Forms.TextBox();
+            this.txtCompletoMedipiel = new System.Windows.Forms.TextBox();
+            this.txtRecetaMedipiel = new System.Windows.Forms.TextBox();
+            this.grdRecetasMedipiel = new System.Windows.Forms.DataGridView();
+            this.cmdBuscarRecetaMedipiel = new System.Windows.Forms.Button();
+            this.cmdPasarRecetaMedipiel = new System.Windows.Forms.Button();
+            this.pagImagenes = new System.Windows.Forms.TabPage();
+            this.cmdImagenModificar = new System.Windows.Forms.Button();
+            this.cmdImagenAgregar = new System.Windows.Forms.Button();
+            this.cmdImagenBorrar = new System.Windows.Forms.Button();
+            this.grdImagenes = new System.Windows.Forms.DataGridView();
+            this.colImagen = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDiagnostico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalabrasClave = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmdSalir = new System.Windows.Forms.Button();
             this.tabPaciente.SuspendLayout();
             this.pagGenerales.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdNotas)).BeginInit();
             this.pagDatosACT.SuspendLayout();
             this.pagReceta.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboTextosRapidos)).BeginInit();
             this.pagRecetasPacientes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRecetas)).BeginInit();
-            this.pagRecetasMedipiel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdRecetasMedipiel)).BeginInit();
             this.pagRecetasUsuario.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRecetasDoctor)).BeginInit();
+            this.pagRecetasMedipiel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdRecetasMedipiel)).BeginInit();
+            this.pagImagenes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdImagenes)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNombrePaciente
@@ -202,16 +217,6 @@
             this.lblNombrePaciente.TabIndex = 38;
             this.lblNombrePaciente.Text = "Nombre";
             // 
-            // cmdSalir
-            // 
-            this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
-            this.cmdSalir.Location = new System.Drawing.Point(1152, 12);
-            this.cmdSalir.Name = "cmdSalir";
-            this.cmdSalir.Size = new System.Drawing.Size(75, 46);
-            this.cmdSalir.TabIndex = 68;
-            this.cmdSalir.UseVisualStyleBackColor = true;
-            this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
-            // 
             // tabPaciente
             // 
             this.tabPaciente.Controls.Add(this.pagGenerales);
@@ -220,14 +225,17 @@
             this.tabPaciente.Controls.Add(this.pagRecetasPacientes);
             this.tabPaciente.Controls.Add(this.pagRecetasUsuario);
             this.tabPaciente.Controls.Add(this.pagRecetasMedipiel);
+            this.tabPaciente.Controls.Add(this.pagImagenes);
             this.tabPaciente.Location = new System.Drawing.Point(4, 64);
             this.tabPaciente.Name = "tabPaciente";
             this.tabPaciente.SelectedIndex = 0;
-            this.tabPaciente.Size = new System.Drawing.Size(1223, 626);
+            this.tabPaciente.Size = new System.Drawing.Size(1223, 605);
             this.tabPaciente.TabIndex = 69;
             // 
             // pagGenerales
             // 
+            this.pagGenerales.Controls.Add(this.cmdVideo);
+            this.pagGenerales.Controls.Add(this.picFoto);
             this.pagGenerales.Controls.Add(this.grdNotas);
             this.pagGenerales.Controls.Add(this.txtMaquillaje);
             this.pagGenerales.Controls.Add(this.txtMedico);
@@ -260,10 +268,32 @@
             this.pagGenerales.Location = new System.Drawing.Point(4, 29);
             this.pagGenerales.Name = "pagGenerales";
             this.pagGenerales.Padding = new System.Windows.Forms.Padding(3);
-            this.pagGenerales.Size = new System.Drawing.Size(1215, 593);
+            this.pagGenerales.Size = new System.Drawing.Size(1215, 572);
             this.pagGenerales.TabIndex = 0;
             this.pagGenerales.Text = "Generales";
             this.pagGenerales.UseVisualStyleBackColor = true;
+            // 
+            // cmdVideo
+            // 
+            this.cmdVideo.Image = ((System.Drawing.Image)(resources.GetObject("cmdVideo.Image")));
+            this.cmdVideo.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.cmdVideo.Location = new System.Drawing.Point(1009, 178);
+            this.cmdVideo.Name = "cmdVideo";
+            this.cmdVideo.Size = new System.Drawing.Size(200, 31);
+            this.cmdVideo.TabIndex = 98;
+            this.cmdVideo.Text = "&Tomar foto al px.";
+            this.cmdVideo.UseVisualStyleBackColor = true;
+            this.cmdVideo.Click += new System.EventHandler(this.cmdVideo_Click);
+            // 
+            // picFoto
+            // 
+            this.picFoto.Location = new System.Drawing.Point(1009, 6);
+            this.picFoto.Name = "picFoto";
+            this.picFoto.Size = new System.Drawing.Size(200, 166);
+            this.picFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picFoto.TabIndex = 97;
+            this.picFoto.TabStop = false;
+            this.picFoto.Click += new System.EventHandler(this.picFoto_Click);
             // 
             // grdNotas
             // 
@@ -306,7 +336,7 @@
             // 
             // txtMaquillaje
             // 
-            this.txtMaquillaje.Location = new System.Drawing.Point(512, 121);
+            this.txtMaquillaje.Location = new System.Drawing.Point(490, 114);
             this.txtMaquillaje.Name = "txtMaquillaje";
             this.txtMaquillaje.ReadOnly = true;
             this.txtMaquillaje.Size = new System.Drawing.Size(233, 26);
@@ -314,7 +344,7 @@
             // 
             // txtMedico
             // 
-            this.txtMedico.Location = new System.Drawing.Point(172, 121);
+            this.txtMedico.Location = new System.Drawing.Point(150, 114);
             this.txtMedico.Name = "txtMedico";
             this.txtMedico.ReadOnly = true;
             this.txtMedico.Size = new System.Drawing.Size(217, 26);
@@ -322,7 +352,7 @@
             // 
             // txtExposicionSolar
             // 
-            this.txtExposicionSolar.Location = new System.Drawing.Point(846, 88);
+            this.txtExposicionSolar.Location = new System.Drawing.Point(824, 81);
             this.txtExposicionSolar.Name = "txtExposicionSolar";
             this.txtExposicionSolar.ReadOnly = true;
             this.txtExposicionSolar.Size = new System.Drawing.Size(179, 26);
@@ -330,7 +360,7 @@
             // 
             // txtColorDePiel
             // 
-            this.txtColorDePiel.Location = new System.Drawing.Point(512, 88);
+            this.txtColorDePiel.Location = new System.Drawing.Point(490, 81);
             this.txtColorDePiel.Name = "txtColorDePiel";
             this.txtColorDePiel.ReadOnly = true;
             this.txtColorDePiel.Size = new System.Drawing.Size(233, 26);
@@ -338,7 +368,7 @@
             // 
             // txtDiagnostico
             // 
-            this.txtDiagnostico.Location = new System.Drawing.Point(172, 88);
+            this.txtDiagnostico.Location = new System.Drawing.Point(150, 81);
             this.txtDiagnostico.Name = "txtDiagnostico";
             this.txtDiagnostico.ReadOnly = true;
             this.txtDiagnostico.Size = new System.Drawing.Size(217, 26);
@@ -347,7 +377,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(73, 91);
+            this.label26.Location = new System.Drawing.Point(51, 84);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(93, 20);
             this.label26.TabIndex = 80;
@@ -356,7 +386,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(428, 124);
+            this.label25.Location = new System.Drawing.Point(406, 117);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(79, 20);
             this.label25.TabIndex = 84;
@@ -364,7 +394,7 @@
             // 
             // txtAntecedentes
             // 
-            this.txtAntecedentes.Location = new System.Drawing.Point(606, 153);
+            this.txtAntecedentes.Location = new System.Drawing.Point(584, 146);
             this.txtAntecedentes.Name = "txtAntecedentes";
             this.txtAntecedentes.ReadOnly = true;
             this.txtAntecedentes.Size = new System.Drawing.Size(419, 26);
@@ -373,7 +403,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(491, 156);
+            this.label24.Location = new System.Drawing.Point(469, 149);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(109, 20);
             this.label24.TabIndex = 89;
@@ -381,7 +411,7 @@
             // 
             // txtAlergias
             // 
-            this.txtAlergias.Location = new System.Drawing.Point(172, 185);
+            this.txtAlergias.Location = new System.Drawing.Point(150, 178);
             this.txtAlergias.Name = "txtAlergias";
             this.txtAlergias.ReadOnly = true;
             this.txtAlergias.Size = new System.Drawing.Size(450, 26);
@@ -390,7 +420,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(107, 188);
+            this.label23.Location = new System.Drawing.Point(85, 181);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(66, 20);
             this.label23.TabIndex = 87;
@@ -398,7 +428,7 @@
             // 
             // txtMedicamentos
             // 
-            this.txtMedicamentos.Location = new System.Drawing.Point(172, 153);
+            this.txtMedicamentos.Location = new System.Drawing.Point(150, 146);
             this.txtMedicamentos.Name = "txtMedicamentos";
             this.txtMedicamentos.ReadOnly = true;
             this.txtMedicamentos.Size = new System.Drawing.Size(309, 26);
@@ -407,7 +437,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(71, 156);
+            this.label22.Location = new System.Drawing.Point(49, 149);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(113, 20);
             this.label22.TabIndex = 85;
@@ -416,7 +446,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(106, 124);
+            this.label21.Location = new System.Drawing.Point(84, 117);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(60, 20);
             this.label21.TabIndex = 83;
@@ -425,7 +455,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(755, 91);
+            this.label20.Location = new System.Drawing.Point(733, 84);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(81, 20);
             this.label20.TabIndex = 82;
@@ -434,7 +464,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(411, 91);
+            this.label19.Location = new System.Drawing.Point(389, 84);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(96, 20);
             this.label19.TabIndex = 81;
@@ -442,7 +472,7 @@
             // 
             // txtOrigen
             // 
-            this.txtOrigen.Location = new System.Drawing.Point(512, 55);
+            this.txtOrigen.Location = new System.Drawing.Point(490, 48);
             this.txtOrigen.Name = "txtOrigen";
             this.txtOrigen.ReadOnly = true;
             this.txtOrigen.Size = new System.Drawing.Size(233, 26);
@@ -451,7 +481,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(451, 58);
+            this.label2.Location = new System.Drawing.Point(429, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 20);
             this.label2.TabIndex = 78;
@@ -459,7 +489,7 @@
             // 
             // txtReferidoPor
             // 
-            this.txtReferidoPor.Location = new System.Drawing.Point(172, 55);
+            this.txtReferidoPor.Location = new System.Drawing.Point(150, 48);
             this.txtReferidoPor.Name = "txtReferidoPor";
             this.txtReferidoPor.ReadOnly = true;
             this.txtReferidoPor.Size = new System.Drawing.Size(217, 26);
@@ -468,7 +498,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(69, 58);
+            this.label3.Location = new System.Drawing.Point(47, 51);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 20);
             this.label3.TabIndex = 76;
@@ -476,7 +506,7 @@
             // 
             // txtOcupacion
             // 
-            this.txtOcupacion.Location = new System.Drawing.Point(846, 22);
+            this.txtOcupacion.Location = new System.Drawing.Point(824, 15);
             this.txtOcupacion.Name = "txtOcupacion";
             this.txtOcupacion.ReadOnly = true;
             this.txtOcupacion.Size = new System.Drawing.Size(152, 26);
@@ -485,7 +515,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(751, 25);
+            this.label1.Location = new System.Drawing.Point(729, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 20);
             this.label1.TabIndex = 74;
@@ -493,7 +523,7 @@
             // 
             // txtEstadoCivil
             // 
-            this.txtEstadoCivil.Location = new System.Drawing.Point(593, 22);
+            this.txtEstadoCivil.Location = new System.Drawing.Point(571, 15);
             this.txtEstadoCivil.Name = "txtEstadoCivil";
             this.txtEstadoCivil.ReadOnly = true;
             this.txtEstadoCivil.Size = new System.Drawing.Size(152, 26);
@@ -502,7 +532,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(491, 25);
+            this.label9.Location = new System.Drawing.Point(469, 18);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(88, 20);
             this.label9.TabIndex = 70;
@@ -511,7 +541,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(319, 25);
+            this.label27.Location = new System.Drawing.Point(297, 18);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(47, 20);
             this.label27.TabIndex = 71;
@@ -520,7 +550,7 @@
             // txtEdad
             // 
             this.txtEdad.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEdad.Location = new System.Drawing.Point(376, 24);
+            this.txtEdad.Location = new System.Drawing.Point(354, 17);
             this.txtEdad.Name = "txtEdad";
             this.txtEdad.ReadOnly = true;
             this.txtEdad.Size = new System.Drawing.Size(105, 23);
@@ -529,7 +559,7 @@
             // dtpFechaNacimiento
             // 
             this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaNacimiento.Location = new System.Drawing.Point(172, 22);
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(150, 15);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(133, 26);
             this.dtpFechaNacimiento.TabIndex = 69;
@@ -537,7 +567,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(31, 25);
+            this.label6.Location = new System.Drawing.Point(9, 18);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(135, 20);
             this.label6.TabIndex = 68;
@@ -616,7 +646,7 @@
             this.pagDatosACT.Location = new System.Drawing.Point(4, 29);
             this.pagDatosACT.Name = "pagDatosACT";
             this.pagDatosACT.Padding = new System.Windows.Forms.Padding(3);
-            this.pagDatosACT.Size = new System.Drawing.Size(1215, 593);
+            this.pagDatosACT.Size = new System.Drawing.Size(1215, 572);
             this.pagDatosACT.TabIndex = 1;
             this.pagDatosACT.Text = "Datos ACT!";
             this.pagDatosACT.UseVisualStyleBackColor = true;
@@ -1203,12 +1233,11 @@
             // pagReceta
             // 
             this.pagReceta.Controls.Add(this.cmdTraerUltimaReceta);
-            this.pagReceta.Controls.Add(this.button2);
+            this.pagReceta.Controls.Add(this.cmdImprimirReceta);
             this.pagReceta.Controls.Add(this.txtEtiquetas);
             this.pagReceta.Controls.Add(this.label5);
             this.pagReceta.Controls.Add(this.chkImprimirEdad);
             this.pagReceta.Controls.Add(this.chkImprimirDireccion);
-            this.pagReceta.Controls.Add(this.cmdGurdarReceta);
             this.pagReceta.Controls.Add(this.cmdBoton7);
             this.pagReceta.Controls.Add(this.cmdBoton6);
             this.pagReceta.Controls.Add(this.cmdBoton5);
@@ -1219,10 +1248,11 @@
             this.pagReceta.Controls.Add(this.txtTexto);
             this.pagReceta.Controls.Add(this.label4);
             this.pagReceta.Controls.Add(this.cboTextosRapidos);
+            this.pagReceta.Controls.Add(this.cmdGurdarReceta);
             this.pagReceta.Location = new System.Drawing.Point(4, 29);
             this.pagReceta.Name = "pagReceta";
             this.pagReceta.Padding = new System.Windows.Forms.Padding(3);
-            this.pagReceta.Size = new System.Drawing.Size(1215, 593);
+            this.pagReceta.Size = new System.Drawing.Size(1215, 572);
             this.pagReceta.TabIndex = 2;
             this.pagReceta.Text = "Rx";
             this.pagReceta.UseVisualStyleBackColor = true;
@@ -1242,17 +1272,18 @@
             this.cmdTraerUltimaReceta.UseVisualStyleBackColor = true;
             this.cmdTraerUltimaReceta.Click += new System.EventHandler(this.cmdTraerUltimaReceta_Click);
             // 
-            // button2
+            // cmdImprimirReceta
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.Location = new System.Drawing.Point(720, 455);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(161, 42);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "&Imprimir receta";
-            this.button2.UseVisualStyleBackColor = true;
+            this.cmdImprimirReceta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdImprimirReceta.Image = ((System.Drawing.Image)(resources.GetObject("cmdImprimirReceta.Image")));
+            this.cmdImprimirReceta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdImprimirReceta.Location = new System.Drawing.Point(720, 455);
+            this.cmdImprimirReceta.Name = "cmdImprimirReceta";
+            this.cmdImprimirReceta.Size = new System.Drawing.Size(161, 42);
+            this.cmdImprimirReceta.TabIndex = 25;
+            this.cmdImprimirReceta.Text = "&Imprimir receta";
+            this.cmdImprimirReceta.UseVisualStyleBackColor = true;
+            this.cmdImprimirReceta.Click += new System.EventHandler(this.cmdImprimirReceta_Click);
             // 
             // txtEtiquetas
             // 
@@ -1290,19 +1321,6 @@
             this.chkImprimirDireccion.TabIndex = 21;
             this.chkImprimirDireccion.Text = "&Imprimir dirección del paciente";
             this.chkImprimirDireccion.UseVisualStyleBackColor = true;
-            // 
-            // cmdGurdarReceta
-            // 
-            this.cmdGurdarReceta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdGurdarReceta.Image = ((System.Drawing.Image)(resources.GetObject("cmdGurdarReceta.Image")));
-            this.cmdGurdarReceta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdGurdarReceta.Location = new System.Drawing.Point(887, 455);
-            this.cmdGurdarReceta.Name = "cmdGurdarReceta";
-            this.cmdGurdarReceta.Size = new System.Drawing.Size(161, 42);
-            this.cmdGurdarReceta.TabIndex = 19;
-            this.cmdGurdarReceta.Text = "&Guardar receta";
-            this.cmdGurdarReceta.UseVisualStyleBackColor = true;
-            this.cmdGurdarReceta.Click += new System.EventHandler(this.cmdGurdarReceta_Click);
             // 
             // cmdBoton7
             // 
@@ -1407,25 +1425,39 @@
             this.cboTextosRapidos.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboTextosRapidos.Style.TokenStyle.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboTextosRapidos.TabIndex = 1;
+            this.cboTextosRapidos.TabStop = false;
             this.cboTextosRapidos.SelectedIndexChanged += new System.EventHandler(this.cboTextosRapidos_SelectedIndexChanged);
+            // 
+            // cmdGurdarReceta
+            // 
+            this.cmdGurdarReceta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdGurdarReceta.Image = ((System.Drawing.Image)(resources.GetObject("cmdGurdarReceta.Image")));
+            this.cmdGurdarReceta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdGurdarReceta.Location = new System.Drawing.Point(887, 455);
+            this.cmdGurdarReceta.Name = "cmdGurdarReceta";
+            this.cmdGurdarReceta.Size = new System.Drawing.Size(161, 42);
+            this.cmdGurdarReceta.TabIndex = 19;
+            this.cmdGurdarReceta.Text = "&Guardar receta";
+            this.cmdGurdarReceta.UseVisualStyleBackColor = true;
+            this.cmdGurdarReceta.Click += new System.EventHandler(this.cmdGurdarReceta_Click);
             // 
             // pagRecetasPacientes
             // 
             this.pagRecetasPacientes.Controls.Add(this.cmdQuitarFiltroRecetas);
             this.pagRecetasPacientes.Controls.Add(this.txtBuscarRecetas);
-            this.pagRecetasPacientes.Controls.Add(this.cmdFiltrarRecetas);
-            this.pagRecetasPacientes.Controls.Add(this.cmdBorrarRecetaGuardada);
-            this.pagRecetasPacientes.Controls.Add(this.cmdPasarAReceta);
             this.pagRecetasPacientes.Controls.Add(this.label7);
             this.pagRecetasPacientes.Controls.Add(this.txtEtiquetasGuardadas);
             this.pagRecetasPacientes.Controls.Add(this.txtRecetaGuardada);
             this.pagRecetasPacientes.Controls.Add(this.grdRecetas);
+            this.pagRecetasPacientes.Controls.Add(this.cmdFiltrarRecetas);
+            this.pagRecetasPacientes.Controls.Add(this.cmdBorrarRecetaGuardada);
+            this.pagRecetasPacientes.Controls.Add(this.cmdPasarAReceta);
             this.pagRecetasPacientes.Location = new System.Drawing.Point(4, 29);
             this.pagRecetasPacientes.Name = "pagRecetasPacientes";
             this.pagRecetasPacientes.Padding = new System.Windows.Forms.Padding(3);
-            this.pagRecetasPacientes.Size = new System.Drawing.Size(1215, 593);
+            this.pagRecetasPacientes.Size = new System.Drawing.Size(1215, 572);
             this.pagRecetasPacientes.TabIndex = 3;
-            this.pagRecetasPacientes.Text = "Rx\'s pacientes";
+            this.pagRecetasPacientes.Text = "Rx\'s  Px";
             this.pagRecetasPacientes.UseVisualStyleBackColor = true;
             this.pagRecetasPacientes.Enter += new System.EventHandler(this.pagRecetasPaciente_Enter);
             // 
@@ -1447,44 +1479,6 @@
             this.txtBuscarRecetas.Name = "txtBuscarRecetas";
             this.txtBuscarRecetas.Size = new System.Drawing.Size(391, 26);
             this.txtBuscarRecetas.TabIndex = 0;
-            // 
-            // cmdFiltrarRecetas
-            // 
-            this.cmdFiltrarRecetas.Image = ((System.Drawing.Image)(resources.GetObject("cmdFiltrarRecetas.Image")));
-            this.cmdFiltrarRecetas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdFiltrarRecetas.Location = new System.Drawing.Point(566, 16);
-            this.cmdFiltrarRecetas.Name = "cmdFiltrarRecetas";
-            this.cmdFiltrarRecetas.Size = new System.Drawing.Size(141, 42);
-            this.cmdFiltrarRecetas.TabIndex = 1;
-            this.cmdFiltrarRecetas.Text = "&Filtrar";
-            this.cmdFiltrarRecetas.UseVisualStyleBackColor = true;
-            this.cmdFiltrarRecetas.Click += new System.EventHandler(this.cmdFiltrarRecetas_Click);
-            // 
-            // cmdBorrarRecetaGuardada
-            // 
-            this.cmdBorrarRecetaGuardada.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdBorrarRecetaGuardada.Image = ((System.Drawing.Image)(resources.GetObject("cmdBorrarRecetaGuardada.Image")));
-            this.cmdBorrarRecetaGuardada.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdBorrarRecetaGuardada.Location = new System.Drawing.Point(1021, 16);
-            this.cmdBorrarRecetaGuardada.Name = "cmdBorrarRecetaGuardada";
-            this.cmdBorrarRecetaGuardada.Size = new System.Drawing.Size(161, 42);
-            this.cmdBorrarRecetaGuardada.TabIndex = 4;
-            this.cmdBorrarRecetaGuardada.Text = "&Borrar receta";
-            this.cmdBorrarRecetaGuardada.UseVisualStyleBackColor = true;
-            this.cmdBorrarRecetaGuardada.Click += new System.EventHandler(this.cmdBorrarRecetaGuardada_Click);
-            // 
-            // cmdPasarAReceta
-            // 
-            this.cmdPasarAReceta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdPasarAReceta.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasarAReceta.Image")));
-            this.cmdPasarAReceta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdPasarAReceta.Location = new System.Drawing.Point(854, 16);
-            this.cmdPasarAReceta.Name = "cmdPasarAReceta";
-            this.cmdPasarAReceta.Size = new System.Drawing.Size(161, 42);
-            this.cmdPasarAReceta.TabIndex = 3;
-            this.cmdPasarAReceta.Text = "&Pasar a receta";
-            this.cmdPasarAReceta.UseVisualStyleBackColor = true;
-            this.cmdPasarAReceta.Click += new System.EventHandler(this.cmdPasarAReceta_Click);
             // 
             // label7
             // 
@@ -1527,117 +1521,75 @@
             this.grdRecetas.TabIndex = 5;
             this.grdRecetas.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdRecetas_RowEnter);
             // 
-            // pagRecetasMedipiel
+            // cmdFiltrarRecetas
             // 
-            this.pagRecetasMedipiel.Controls.Add(this.cmdQuitarFiltro);
-            this.pagRecetasMedipiel.Controls.Add(this.txtBuscarRecetasMedipiel);
-            this.pagRecetasMedipiel.Controls.Add(this.cmdBuscarRecetaMedipiel);
-            this.pagRecetasMedipiel.Controls.Add(this.cmdPasarRecetaMedipiel);
-            this.pagRecetasMedipiel.Controls.Add(this.txtCompletoMedipiel);
-            this.pagRecetasMedipiel.Controls.Add(this.txtRecetaMedipiel);
-            this.pagRecetasMedipiel.Controls.Add(this.grdRecetasMedipiel);
-            this.pagRecetasMedipiel.Location = new System.Drawing.Point(4, 29);
-            this.pagRecetasMedipiel.Name = "pagRecetasMedipiel";
-            this.pagRecetasMedipiel.Padding = new System.Windows.Forms.Padding(3);
-            this.pagRecetasMedipiel.Size = new System.Drawing.Size(1215, 593);
-            this.pagRecetasMedipiel.TabIndex = 4;
-            this.pagRecetasMedipiel.Text = "Rx\'s Medipiel";
-            this.pagRecetasMedipiel.UseVisualStyleBackColor = true;
-            this.pagRecetasMedipiel.Click += new System.EventHandler(this.pagRecetasMedipiel_Click);
-            this.pagRecetasMedipiel.Enter += new System.EventHandler(this.pagRecetasMedipiel_Enter);
+            this.cmdFiltrarRecetas.Image = ((System.Drawing.Image)(resources.GetObject("cmdFiltrarRecetas.Image")));
+            this.cmdFiltrarRecetas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdFiltrarRecetas.Location = new System.Drawing.Point(566, 16);
+            this.cmdFiltrarRecetas.Name = "cmdFiltrarRecetas";
+            this.cmdFiltrarRecetas.Size = new System.Drawing.Size(141, 42);
+            this.cmdFiltrarRecetas.TabIndex = 1;
+            this.cmdFiltrarRecetas.Text = "&Filtrar";
+            this.cmdFiltrarRecetas.UseVisualStyleBackColor = true;
+            this.cmdFiltrarRecetas.Click += new System.EventHandler(this.cmdFiltrarRecetas_Click);
             // 
-            // cmdQuitarFiltro
+            // cmdBorrarRecetaGuardada
             // 
-            this.cmdQuitarFiltro.Image = ((System.Drawing.Image)(resources.GetObject("cmdQuitarFiltro.Image")));
-            this.cmdQuitarFiltro.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdQuitarFiltro.Location = new System.Drawing.Point(862, 16);
-            this.cmdQuitarFiltro.Name = "cmdQuitarFiltro";
-            this.cmdQuitarFiltro.Size = new System.Drawing.Size(141, 42);
-            this.cmdQuitarFiltro.TabIndex = 6;
-            this.cmdQuitarFiltro.Text = "&Quitar filtro";
-            this.cmdQuitarFiltro.UseVisualStyleBackColor = true;
-            this.cmdQuitarFiltro.Click += new System.EventHandler(this.cmdQuitarFiltro_Click);
+            this.cmdBorrarRecetaGuardada.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdBorrarRecetaGuardada.Image = ((System.Drawing.Image)(resources.GetObject("cmdBorrarRecetaGuardada.Image")));
+            this.cmdBorrarRecetaGuardada.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdBorrarRecetaGuardada.Location = new System.Drawing.Point(1021, 16);
+            this.cmdBorrarRecetaGuardada.Name = "cmdBorrarRecetaGuardada";
+            this.cmdBorrarRecetaGuardada.Size = new System.Drawing.Size(161, 42);
+            this.cmdBorrarRecetaGuardada.TabIndex = 4;
+            this.cmdBorrarRecetaGuardada.Text = "&Borrar receta";
+            this.cmdBorrarRecetaGuardada.UseVisualStyleBackColor = true;
+            this.cmdBorrarRecetaGuardada.Click += new System.EventHandler(this.cmdBorrarRecetaGuardada_Click);
             // 
-            // txtBuscarRecetasMedipiel
+            // cmdPasarAReceta
             // 
-            this.txtBuscarRecetasMedipiel.Location = new System.Drawing.Point(318, 23);
-            this.txtBuscarRecetasMedipiel.Name = "txtBuscarRecetasMedipiel";
-            this.txtBuscarRecetasMedipiel.Size = new System.Drawing.Size(391, 26);
-            this.txtBuscarRecetasMedipiel.TabIndex = 0;
-            // 
-            // cmdBuscarRecetaMedipiel
-            // 
-            this.cmdBuscarRecetaMedipiel.Image = ((System.Drawing.Image)(resources.GetObject("cmdBuscarRecetaMedipiel.Image")));
-            this.cmdBuscarRecetaMedipiel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdBuscarRecetaMedipiel.Location = new System.Drawing.Point(715, 16);
-            this.cmdBuscarRecetaMedipiel.Name = "cmdBuscarRecetaMedipiel";
-            this.cmdBuscarRecetaMedipiel.Size = new System.Drawing.Size(141, 42);
-            this.cmdBuscarRecetaMedipiel.TabIndex = 1;
-            this.cmdBuscarRecetaMedipiel.Text = "&Filtrar";
-            this.cmdBuscarRecetaMedipiel.UseVisualStyleBackColor = true;
-            this.cmdBuscarRecetaMedipiel.Click += new System.EventHandler(this.cmdBuscarRecetaMedipiel_Click);
-            // 
-            // cmdPasarRecetaMedipiel
-            // 
-            this.cmdPasarRecetaMedipiel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdPasarRecetaMedipiel.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasarRecetaMedipiel.Image")));
-            this.cmdPasarRecetaMedipiel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdPasarRecetaMedipiel.Location = new System.Drawing.Point(1009, 16);
-            this.cmdPasarRecetaMedipiel.Name = "cmdPasarRecetaMedipiel";
-            this.cmdPasarRecetaMedipiel.Size = new System.Drawing.Size(141, 42);
-            this.cmdPasarRecetaMedipiel.TabIndex = 2;
-            this.cmdPasarRecetaMedipiel.Text = "&Pasar a receta";
-            this.cmdPasarRecetaMedipiel.UseVisualStyleBackColor = true;
-            this.cmdPasarRecetaMedipiel.Click += new System.EventHandler(this.cmdPasarRecetaMedipiel_Click);
-            // 
-            // txtCompletoMedipiel
-            // 
-            this.txtCompletoMedipiel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCompletoMedipiel.Location = new System.Drawing.Point(302, 214);
-            this.txtCompletoMedipiel.Multiline = true;
-            this.txtCompletoMedipiel.Name = "txtCompletoMedipiel";
-            this.txtCompletoMedipiel.ReadOnly = true;
-            this.txtCompletoMedipiel.Size = new System.Drawing.Size(889, 352);
-            this.txtCompletoMedipiel.TabIndex = 5;
-            // 
-            // txtRecetaMedipiel
-            // 
-            this.txtRecetaMedipiel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRecetaMedipiel.Location = new System.Drawing.Point(302, 71);
-            this.txtRecetaMedipiel.Multiline = true;
-            this.txtRecetaMedipiel.Name = "txtRecetaMedipiel";
-            this.txtRecetaMedipiel.ReadOnly = true;
-            this.txtRecetaMedipiel.Size = new System.Drawing.Size(889, 122);
-            this.txtRecetaMedipiel.TabIndex = 4;
-            // 
-            // grdRecetasMedipiel
-            // 
-            this.grdRecetasMedipiel.AllowUserToAddRows = false;
-            this.grdRecetasMedipiel.AllowUserToDeleteRows = false;
-            this.grdRecetasMedipiel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdRecetasMedipiel.Location = new System.Drawing.Point(8, 52);
-            this.grdRecetasMedipiel.Name = "grdRecetasMedipiel";
-            this.grdRecetasMedipiel.ReadOnly = true;
-            this.grdRecetasMedipiel.Size = new System.Drawing.Size(288, 514);
-            this.grdRecetasMedipiel.TabIndex = 3;
-            this.grdRecetasMedipiel.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdRecetasMedipiel_RowEnter);
+            this.cmdPasarAReceta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdPasarAReceta.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasarAReceta.Image")));
+            this.cmdPasarAReceta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdPasarAReceta.Location = new System.Drawing.Point(854, 16);
+            this.cmdPasarAReceta.Name = "cmdPasarAReceta";
+            this.cmdPasarAReceta.Size = new System.Drawing.Size(161, 42);
+            this.cmdPasarAReceta.TabIndex = 3;
+            this.cmdPasarAReceta.Text = "&Pasar a receta";
+            this.cmdPasarAReceta.UseVisualStyleBackColor = true;
+            this.cmdPasarAReceta.Click += new System.EventHandler(this.cmdPasarAReceta_Click);
             // 
             // pagRecetasUsuario
             // 
+            this.pagRecetasUsuario.Controls.Add(this.cmdBorrarRecetaDoctor);
             this.pagRecetasUsuario.Controls.Add(this.cmdQuitarFiltroRecetasDoctor);
             this.pagRecetasUsuario.Controls.Add(this.txtBuscarRecetasDoctor);
-            this.pagRecetasUsuario.Controls.Add(this.cmdFiltrarRecetasDoctor);
-            this.pagRecetasUsuario.Controls.Add(this.cmdPasarARecetaDoctor);
             this.pagRecetasUsuario.Controls.Add(this.label8);
             this.pagRecetasUsuario.Controls.Add(this.txtEtiquetasGuardadasDoctor);
             this.pagRecetasUsuario.Controls.Add(this.txtRecetaGuardadaDoctor);
             this.pagRecetasUsuario.Controls.Add(this.grdRecetasDoctor);
+            this.pagRecetasUsuario.Controls.Add(this.cmdFiltrarRecetasDoctor);
+            this.pagRecetasUsuario.Controls.Add(this.cmdPasarARecetaDoctor);
             this.pagRecetasUsuario.Location = new System.Drawing.Point(4, 29);
             this.pagRecetasUsuario.Name = "pagRecetasUsuario";
-            this.pagRecetasUsuario.Size = new System.Drawing.Size(1215, 593);
+            this.pagRecetasUsuario.Size = new System.Drawing.Size(1215, 572);
             this.pagRecetasUsuario.TabIndex = 5;
             this.pagRecetasUsuario.Text = "Rx\'s Doctor";
             this.pagRecetasUsuario.UseVisualStyleBackColor = true;
+            this.pagRecetasUsuario.Enter += new System.EventHandler(this.pagRecetasUsuario_Enter);
+            // 
+            // cmdBorrarRecetaDoctor
+            // 
+            this.cmdBorrarRecetaDoctor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdBorrarRecetaDoctor.Image = ((System.Drawing.Image)(resources.GetObject("cmdBorrarRecetaDoctor.Image")));
+            this.cmdBorrarRecetaDoctor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdBorrarRecetaDoctor.Location = new System.Drawing.Point(1028, 26);
+            this.cmdBorrarRecetaDoctor.Name = "cmdBorrarRecetaDoctor";
+            this.cmdBorrarRecetaDoctor.Size = new System.Drawing.Size(161, 42);
+            this.cmdBorrarRecetaDoctor.TabIndex = 30;
+            this.cmdBorrarRecetaDoctor.Text = "&Borrar receta";
+            this.cmdBorrarRecetaDoctor.UseVisualStyleBackColor = true;
+            this.cmdBorrarRecetaDoctor.Click += new System.EventHandler(this.cmdBorrarRecetaDoctor_Click);
             // 
             // cmdQuitarFiltroRecetasDoctor
             // 
@@ -1649,6 +1601,7 @@
             this.cmdQuitarFiltroRecetasDoctor.TabIndex = 24;
             this.cmdQuitarFiltroRecetasDoctor.Text = "&Quitar filtro";
             this.cmdQuitarFiltroRecetasDoctor.UseVisualStyleBackColor = true;
+            this.cmdQuitarFiltroRecetasDoctor.Click += new System.EventHandler(this.cmdQuitarFiltroRecetasDoctor_Click);
             // 
             // txtBuscarRecetasDoctor
             // 
@@ -1656,29 +1609,6 @@
             this.txtBuscarRecetasDoctor.Name = "txtBuscarRecetasDoctor";
             this.txtBuscarRecetasDoctor.Size = new System.Drawing.Size(391, 26);
             this.txtBuscarRecetasDoctor.TabIndex = 22;
-            // 
-            // cmdFiltrarRecetasDoctor
-            // 
-            this.cmdFiltrarRecetasDoctor.Image = ((System.Drawing.Image)(resources.GetObject("cmdFiltrarRecetasDoctor.Image")));
-            this.cmdFiltrarRecetasDoctor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdFiltrarRecetasDoctor.Location = new System.Drawing.Point(573, 26);
-            this.cmdFiltrarRecetasDoctor.Name = "cmdFiltrarRecetasDoctor";
-            this.cmdFiltrarRecetasDoctor.Size = new System.Drawing.Size(141, 42);
-            this.cmdFiltrarRecetasDoctor.TabIndex = 23;
-            this.cmdFiltrarRecetasDoctor.Text = "&Filtrar";
-            this.cmdFiltrarRecetasDoctor.UseVisualStyleBackColor = true;
-            // 
-            // cmdPasarARecetaDoctor
-            // 
-            this.cmdPasarARecetaDoctor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdPasarARecetaDoctor.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasarARecetaDoctor.Image")));
-            this.cmdPasarARecetaDoctor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdPasarARecetaDoctor.Location = new System.Drawing.Point(861, 26);
-            this.cmdPasarARecetaDoctor.Name = "cmdPasarARecetaDoctor";
-            this.cmdPasarARecetaDoctor.Size = new System.Drawing.Size(161, 42);
-            this.cmdPasarARecetaDoctor.TabIndex = 25;
-            this.cmdPasarARecetaDoctor.Text = "&Pasar a receta";
-            this.cmdPasarARecetaDoctor.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
@@ -1719,6 +1649,235 @@
             this.grdRecetasDoctor.ReadOnly = true;
             this.grdRecetasDoctor.Size = new System.Drawing.Size(273, 425);
             this.grdRecetasDoctor.TabIndex = 26;
+            this.grdRecetasDoctor.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdRecetasDoctor_RowEnter);
+            // 
+            // cmdFiltrarRecetasDoctor
+            // 
+            this.cmdFiltrarRecetasDoctor.Image = ((System.Drawing.Image)(resources.GetObject("cmdFiltrarRecetasDoctor.Image")));
+            this.cmdFiltrarRecetasDoctor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdFiltrarRecetasDoctor.Location = new System.Drawing.Point(573, 26);
+            this.cmdFiltrarRecetasDoctor.Name = "cmdFiltrarRecetasDoctor";
+            this.cmdFiltrarRecetasDoctor.Size = new System.Drawing.Size(141, 42);
+            this.cmdFiltrarRecetasDoctor.TabIndex = 23;
+            this.cmdFiltrarRecetasDoctor.Text = "&Filtrar";
+            this.cmdFiltrarRecetasDoctor.UseVisualStyleBackColor = true;
+            this.cmdFiltrarRecetasDoctor.Click += new System.EventHandler(this.cmdFiltrarRecetasDoctor_Click);
+            // 
+            // cmdPasarARecetaDoctor
+            // 
+            this.cmdPasarARecetaDoctor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdPasarARecetaDoctor.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasarARecetaDoctor.Image")));
+            this.cmdPasarARecetaDoctor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdPasarARecetaDoctor.Location = new System.Drawing.Point(861, 26);
+            this.cmdPasarARecetaDoctor.Name = "cmdPasarARecetaDoctor";
+            this.cmdPasarARecetaDoctor.Size = new System.Drawing.Size(161, 42);
+            this.cmdPasarARecetaDoctor.TabIndex = 25;
+            this.cmdPasarARecetaDoctor.Text = "&Pasar a receta";
+            this.cmdPasarARecetaDoctor.UseVisualStyleBackColor = true;
+            this.cmdPasarARecetaDoctor.Click += new System.EventHandler(this.cmdPasarARecetaDoctor_Click);
+            // 
+            // pagRecetasMedipiel
+            // 
+            this.pagRecetasMedipiel.Controls.Add(this.cmdQuitarFiltro);
+            this.pagRecetasMedipiel.Controls.Add(this.txtBuscarRecetasMedipiel);
+            this.pagRecetasMedipiel.Controls.Add(this.txtCompletoMedipiel);
+            this.pagRecetasMedipiel.Controls.Add(this.txtRecetaMedipiel);
+            this.pagRecetasMedipiel.Controls.Add(this.grdRecetasMedipiel);
+            this.pagRecetasMedipiel.Controls.Add(this.cmdBuscarRecetaMedipiel);
+            this.pagRecetasMedipiel.Controls.Add(this.cmdPasarRecetaMedipiel);
+            this.pagRecetasMedipiel.Location = new System.Drawing.Point(4, 29);
+            this.pagRecetasMedipiel.Name = "pagRecetasMedipiel";
+            this.pagRecetasMedipiel.Padding = new System.Windows.Forms.Padding(3);
+            this.pagRecetasMedipiel.Size = new System.Drawing.Size(1215, 572);
+            this.pagRecetasMedipiel.TabIndex = 4;
+            this.pagRecetasMedipiel.Text = "Rx\'s Medipiel";
+            this.pagRecetasMedipiel.UseVisualStyleBackColor = true;
+            this.pagRecetasMedipiel.Click += new System.EventHandler(this.pagRecetasMedipiel_Click);
+            this.pagRecetasMedipiel.Enter += new System.EventHandler(this.pagRecetasMedipiel_Enter);
+            // 
+            // cmdQuitarFiltro
+            // 
+            this.cmdQuitarFiltro.Image = ((System.Drawing.Image)(resources.GetObject("cmdQuitarFiltro.Image")));
+            this.cmdQuitarFiltro.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdQuitarFiltro.Location = new System.Drawing.Point(862, 16);
+            this.cmdQuitarFiltro.Name = "cmdQuitarFiltro";
+            this.cmdQuitarFiltro.Size = new System.Drawing.Size(141, 42);
+            this.cmdQuitarFiltro.TabIndex = 6;
+            this.cmdQuitarFiltro.Text = "&Quitar filtro";
+            this.cmdQuitarFiltro.UseVisualStyleBackColor = true;
+            this.cmdQuitarFiltro.Click += new System.EventHandler(this.cmdQuitarFiltro_Click);
+            // 
+            // txtBuscarRecetasMedipiel
+            // 
+            this.txtBuscarRecetasMedipiel.Location = new System.Drawing.Point(318, 23);
+            this.txtBuscarRecetasMedipiel.Name = "txtBuscarRecetasMedipiel";
+            this.txtBuscarRecetasMedipiel.Size = new System.Drawing.Size(391, 26);
+            this.txtBuscarRecetasMedipiel.TabIndex = 0;
+            // 
+            // txtCompletoMedipiel
+            // 
+            this.txtCompletoMedipiel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCompletoMedipiel.Location = new System.Drawing.Point(302, 214);
+            this.txtCompletoMedipiel.Multiline = true;
+            this.txtCompletoMedipiel.Name = "txtCompletoMedipiel";
+            this.txtCompletoMedipiel.ReadOnly = true;
+            this.txtCompletoMedipiel.Size = new System.Drawing.Size(889, 352);
+            this.txtCompletoMedipiel.TabIndex = 5;
+            // 
+            // txtRecetaMedipiel
+            // 
+            this.txtRecetaMedipiel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRecetaMedipiel.Location = new System.Drawing.Point(302, 71);
+            this.txtRecetaMedipiel.Multiline = true;
+            this.txtRecetaMedipiel.Name = "txtRecetaMedipiel";
+            this.txtRecetaMedipiel.ReadOnly = true;
+            this.txtRecetaMedipiel.Size = new System.Drawing.Size(889, 122);
+            this.txtRecetaMedipiel.TabIndex = 4;
+            // 
+            // grdRecetasMedipiel
+            // 
+            this.grdRecetasMedipiel.AllowUserToAddRows = false;
+            this.grdRecetasMedipiel.AllowUserToDeleteRows = false;
+            this.grdRecetasMedipiel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdRecetasMedipiel.Location = new System.Drawing.Point(8, 52);
+            this.grdRecetasMedipiel.Name = "grdRecetasMedipiel";
+            this.grdRecetasMedipiel.ReadOnly = true;
+            this.grdRecetasMedipiel.Size = new System.Drawing.Size(288, 514);
+            this.grdRecetasMedipiel.TabIndex = 3;
+            this.grdRecetasMedipiel.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdRecetasMedipiel_RowEnter);
+            // 
+            // cmdBuscarRecetaMedipiel
+            // 
+            this.cmdBuscarRecetaMedipiel.Image = ((System.Drawing.Image)(resources.GetObject("cmdBuscarRecetaMedipiel.Image")));
+            this.cmdBuscarRecetaMedipiel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdBuscarRecetaMedipiel.Location = new System.Drawing.Point(715, 16);
+            this.cmdBuscarRecetaMedipiel.Name = "cmdBuscarRecetaMedipiel";
+            this.cmdBuscarRecetaMedipiel.Size = new System.Drawing.Size(141, 42);
+            this.cmdBuscarRecetaMedipiel.TabIndex = 1;
+            this.cmdBuscarRecetaMedipiel.Text = "&Filtrar";
+            this.cmdBuscarRecetaMedipiel.UseVisualStyleBackColor = true;
+            this.cmdBuscarRecetaMedipiel.Click += new System.EventHandler(this.cmdBuscarRecetaMedipiel_Click);
+            // 
+            // cmdPasarRecetaMedipiel
+            // 
+            this.cmdPasarRecetaMedipiel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdPasarRecetaMedipiel.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasarRecetaMedipiel.Image")));
+            this.cmdPasarRecetaMedipiel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdPasarRecetaMedipiel.Location = new System.Drawing.Point(1009, 16);
+            this.cmdPasarRecetaMedipiel.Name = "cmdPasarRecetaMedipiel";
+            this.cmdPasarRecetaMedipiel.Size = new System.Drawing.Size(141, 42);
+            this.cmdPasarRecetaMedipiel.TabIndex = 2;
+            this.cmdPasarRecetaMedipiel.Text = "&Pasar a receta";
+            this.cmdPasarRecetaMedipiel.UseVisualStyleBackColor = true;
+            this.cmdPasarRecetaMedipiel.Click += new System.EventHandler(this.cmdPasarRecetaMedipiel_Click);
+            // 
+            // pagImagenes
+            // 
+            this.pagImagenes.Controls.Add(this.cmdImagenModificar);
+            this.pagImagenes.Controls.Add(this.cmdImagenAgregar);
+            this.pagImagenes.Controls.Add(this.cmdImagenBorrar);
+            this.pagImagenes.Controls.Add(this.grdImagenes);
+            this.pagImagenes.Location = new System.Drawing.Point(4, 29);
+            this.pagImagenes.Name = "pagImagenes";
+            this.pagImagenes.Padding = new System.Windows.Forms.Padding(3);
+            this.pagImagenes.Size = new System.Drawing.Size(1215, 572);
+            this.pagImagenes.TabIndex = 6;
+            this.pagImagenes.Text = "Imágenes";
+            this.pagImagenes.UseVisualStyleBackColor = true;
+            this.pagImagenes.Enter += new System.EventHandler(this.pagImagenes_Enter);
+            // 
+            // cmdImagenModificar
+            // 
+            this.cmdImagenModificar.Image = ((System.Drawing.Image)(resources.GetObject("cmdImagenModificar.Image")));
+            this.cmdImagenModificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdImagenModificar.Location = new System.Drawing.Point(961, 56);
+            this.cmdImagenModificar.Name = "cmdImagenModificar";
+            this.cmdImagenModificar.Size = new System.Drawing.Size(121, 35);
+            this.cmdImagenModificar.TabIndex = 37;
+            this.cmdImagenModificar.Text = "&Ver";
+            this.cmdImagenModificar.UseVisualStyleBackColor = true;
+            this.cmdImagenModificar.Click += new System.EventHandler(this.cmdImagenModificar_Click);
+            // 
+            // cmdImagenAgregar
+            // 
+            this.cmdImagenAgregar.Image = ((System.Drawing.Image)(resources.GetObject("cmdImagenAgregar.Image")));
+            this.cmdImagenAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdImagenAgregar.Location = new System.Drawing.Point(961, 15);
+            this.cmdImagenAgregar.Name = "cmdImagenAgregar";
+            this.cmdImagenAgregar.Size = new System.Drawing.Size(121, 35);
+            this.cmdImagenAgregar.TabIndex = 36;
+            this.cmdImagenAgregar.Text = "&Agregar";
+            this.cmdImagenAgregar.UseVisualStyleBackColor = true;
+            this.cmdImagenAgregar.Click += new System.EventHandler(this.cmdImagenAgregar_Click);
+            // 
+            // cmdImagenBorrar
+            // 
+            this.cmdImagenBorrar.Image = global::ClinicaFB.Properties.Resources.Borrar24;
+            this.cmdImagenBorrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdImagenBorrar.Location = new System.Drawing.Point(961, 97);
+            this.cmdImagenBorrar.Name = "cmdImagenBorrar";
+            this.cmdImagenBorrar.Size = new System.Drawing.Size(121, 35);
+            this.cmdImagenBorrar.TabIndex = 35;
+            this.cmdImagenBorrar.Text = "&Borrar";
+            this.cmdImagenBorrar.UseVisualStyleBackColor = true;
+            this.cmdImagenBorrar.Click += new System.EventHandler(this.cmdImagenBorrar_Click);
+            // 
+            // grdImagenes
+            // 
+            this.grdImagenes.AllowUserToAddRows = false;
+            this.grdImagenes.AllowUserToDeleteRows = false;
+            this.grdImagenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdImagenes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colImagen,
+            this.colFecha,
+            this.colDiagnostico,
+            this.colPalabrasClave});
+            this.grdImagenes.Location = new System.Drawing.Point(8, 15);
+            this.grdImagenes.Name = "grdImagenes";
+            this.grdImagenes.ReadOnly = true;
+            this.grdImagenes.RowTemplate.Height = 50;
+            this.grdImagenes.Size = new System.Drawing.Size(947, 439);
+            this.grdImagenes.TabIndex = 34;
+            // 
+            // colImagen
+            // 
+            this.colImagen.DataPropertyName = "Imagen";
+            this.colImagen.HeaderText = "Imagen";
+            this.colImagen.Name = "colImagen";
+            this.colImagen.ReadOnly = true;
+            // 
+            // colFecha
+            // 
+            this.colFecha.DataPropertyName = "Fecha";
+            this.colFecha.HeaderText = "Fecha";
+            this.colFecha.Name = "colFecha";
+            this.colFecha.ReadOnly = true;
+            // 
+            // colDiagnostico
+            // 
+            this.colDiagnostico.DataPropertyName = "Diagnostico";
+            this.colDiagnostico.HeaderText = "Diagnóstico";
+            this.colDiagnostico.Name = "colDiagnostico";
+            this.colDiagnostico.ReadOnly = true;
+            this.colDiagnostico.Width = 300;
+            // 
+            // colPalabrasClave
+            // 
+            this.colPalabrasClave.DataPropertyName = "PalabrasClave";
+            this.colPalabrasClave.HeaderText = "Palabras clave";
+            this.colPalabrasClave.Name = "colPalabrasClave";
+            this.colPalabrasClave.ReadOnly = true;
+            this.colPalabrasClave.Width = 400;
+            // 
+            // cmdSalir
+            // 
+            this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
+            this.cmdSalir.Location = new System.Drawing.Point(1152, 12);
+            this.cmdSalir.Name = "cmdSalir";
+            this.cmdSalir.Size = new System.Drawing.Size(75, 46);
+            this.cmdSalir.TabIndex = 68;
+            this.cmdSalir.UseVisualStyleBackColor = true;
+            this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
             // TabletPacienteVer
             // 
@@ -1738,6 +1897,7 @@
             this.tabPaciente.ResumeLayout(false);
             this.pagGenerales.ResumeLayout(false);
             this.pagGenerales.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFoto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdNotas)).EndInit();
             this.pagDatosACT.ResumeLayout(false);
             this.pagDatosACT.PerformLayout();
@@ -1747,12 +1907,14 @@
             this.pagRecetasPacientes.ResumeLayout(false);
             this.pagRecetasPacientes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRecetas)).EndInit();
-            this.pagRecetasMedipiel.ResumeLayout(false);
-            this.pagRecetasMedipiel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdRecetasMedipiel)).EndInit();
             this.pagRecetasUsuario.ResumeLayout(false);
             this.pagRecetasUsuario.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRecetasDoctor)).EndInit();
+            this.pagRecetasMedipiel.ResumeLayout(false);
+            this.pagRecetasMedipiel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdRecetasMedipiel)).EndInit();
+            this.pagImagenes.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdImagenes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1876,7 +2038,7 @@
         private System.Windows.Forms.CheckBox chkImprimirEdad;
         private System.Windows.Forms.CheckBox chkImprimirDireccion;
         private System.Windows.Forms.Button cmdGurdarReceta;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button cmdImprimirReceta;
         private System.Windows.Forms.Button cmdTraerUltimaReceta;
         private System.Windows.Forms.TextBox txtTexto;
         private System.Windows.Forms.TabPage pagRecetasPacientes;
@@ -1906,5 +2068,17 @@
         private System.Windows.Forms.TextBox txtEtiquetasGuardadasDoctor;
         private System.Windows.Forms.TextBox txtRecetaGuardadaDoctor;
         private System.Windows.Forms.DataGridView grdRecetasDoctor;
+        private System.Windows.Forms.PictureBox picFoto;
+        private System.Windows.Forms.TabPage pagImagenes;
+        private System.Windows.Forms.Button cmdImagenModificar;
+        private System.Windows.Forms.Button cmdImagenAgregar;
+        private System.Windows.Forms.Button cmdImagenBorrar;
+        private System.Windows.Forms.DataGridView grdImagenes;
+        private System.Windows.Forms.DataGridViewImageColumn colImagen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDiagnostico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalabrasClave;
+        private System.Windows.Forms.Button cmdVideo;
+        private System.Windows.Forms.Button cmdBorrarRecetaDoctor;
     }
 }

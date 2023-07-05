@@ -21,6 +21,8 @@ using Microsoft.Reporting.WinForms;
 using ClinicaFB.ModeloConfiguracion;
 using Syncfusion.Windows.Forms.Grid;
 using System.IO;
+using AForge.Video.DirectShow;
+using AForge.Video;
 
 namespace ClinicaFB.Expedientes
 {
@@ -29,9 +31,24 @@ namespace ClinicaFB.Expedientes
         public int PacienteID = 0;
         private bool _esAlta = false;
         private Paciente _paciente = null;
+        private FilterInfoCollection _dispositivosVideo;
+
         ObservableCollection<Nota> notas = new ObservableCollection<Nota>();
         BindingList<Receta> _listRecetas = new BindingList<Receta>();
         BindingList<PacientesImagenes> _PacienteImagenes = new BindingList<PacientesImagenes>();
+        private VideoCaptureDevice _camara;
+
+
+        private void CerrarCamara()
+        {
+            if (_camara != null && _camara.IsRunning)
+            {
+                _camara.SignalToStop();
+                //_camara.Stop();
+                _camara = null;
+            }
+        }
+
 
         public PacientesAltasCambios(bool esAlta, int pacienteId)
         {
@@ -42,6 +59,7 @@ namespace ClinicaFB.Expedientes
 
         private void PacientesAltasCambios_Load(object sender, EventArgs e)
         {
+
             SetCombos();
 
             if (_esAlta)
@@ -165,8 +183,38 @@ namespace ClinicaFB.Expedientes
             cboOrigen.Text = _paciente.Origen;
 
 
+            MuestraFoto();
+
 
         }
+
+        private void MuestraFoto()
+        {
+            string carpeta = General.CarpetaImagenesEmpresa() + "\\" + General.CarpetaImagenesPaciente(PacienteID) + "\\";
+            string archivo = carpeta + "Foto.png";
+
+
+
+
+            if (File.Exists(archivo))
+            {
+
+
+                using (var fs = new FileStream(archivo, FileMode.Open, FileAccess.Read))
+                {
+                    Image tmpImage = Image.FromStream(fs);
+                    picFoto.Image = new Bitmap(tmpImage);
+                    tmpImage.Dispose();
+                }
+
+
+                //Image img = Image.FromStream(new MemoryStream(File.ReadAllBytes(archivo)));
+                //picFoto.Image = img;
+            }
+
+
+        }
+
 
 
         private void ControlesAPropiedades()
@@ -416,11 +464,6 @@ namespace ClinicaFB.Expedientes
             grdNotas.TableControl.Invalidate();
 
         }
-
-        private void PacientesAltasCambios_FormClosing(object sender, FormClosingEventArgs e)
-        {
-                
-        }
         private bool GuardaDatos()
         {                
 
@@ -448,6 +491,13 @@ namespace ClinicaFB.Expedientes
                 }
 
             }
+            if (picFoto.Image != null )
+            {
+                string carpeta = General.CarpetaImagenesEmpresa() + "\\" + General.CarpetaImagenesPaciente(PacienteID)+"\\";
+                string archivo = carpeta + "Foto.png";
+                picFoto.Image.Save(archivo);
+            }
+
             return true;
 
         }
@@ -771,14 +821,9 @@ namespace ClinicaFB.Expedientes
 
         private void cmdImprimirExpedienteRDLC_Click(object sender, EventArgs e)
         {
+
             GuardaDatos();
-            string carpetaReportes = "";
-            using (FbConnection db = General.GetConexionConfig())
-            {
-                string sql = Queries.EmpresaSelect();
-                Empresa emp = db.Query<Empresa>(sql, new { Empresa_Id = Properties.Settings.Default.Empresa_ID }).FirstOrDefault();
-                carpetaReportes = emp.CarpetaReportes;
-            }
+            string carpetaReportes = General.GetCarpetaReportes();
 
             List<DatosExpediente> datosExpediente = new List<DatosExpediente>();
 
@@ -860,7 +905,7 @@ namespace ClinicaFB.Expedientes
             grdImagenes.ReadOnly = true;
             grdImagenes.AllowUserToResizeColumns = false;
             grdImagenes.AllowUserToResizeRows = false;
-
+            colImagen.ImageLayout = DataGridViewImageCellLayout.Stretch;
             //grdImagenes.ColumnCount = 4;
 
             //grdImagenes.RowHeadersVisible = true;
@@ -923,6 +968,41 @@ namespace ClinicaFB.Expedientes
 
         private void pagImagenes_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void cmdImagenBorrar_Click(object sender, EventArgs e)
+        {
+            if (grdImagenes.CurrentRow == null)
+            {
+                MessageBox.Show("Indique la imagen a borrar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            if (MessageBox.Show("¿Desea borrar la imagen?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.PacienteImagenDelete();
+                int id = _PacienteImagenes[grdImagenes.CurrentRow.Index].PacImId;
+                db.Execute(sql, new { PacImId = id });
+            }
+            RefrescaImagenes();
+        }
+
+        private void PacientesAltasCambios_FormClosing(object sender, FormClosingEventArgs e)
+        {
+         
+        }
+
+
+        private void cmdCapturar_Click(object sender, EventArgs e)
+        {
+
+            PacienteFotoTomar pacienteFotoTomar = new PacienteFotoTomar(PacienteID);
+            pacienteFotoTomar.ShowDialog();
+            MuestraFoto();
 
         }
     }

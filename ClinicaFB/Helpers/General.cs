@@ -19,11 +19,144 @@ using Syncfusion.WinForms.ListView;
 using System.Globalization;
 using ClinicaFB.Configuracion.Facturacion;
 using Microsoft.ReportingServices.Interfaces;
+using AForge.Video.DirectShow;
 
 namespace ClinicaFB.Helpers
 {
     public class General
     {
+
+        public static Doctor GetDoctorXUsuario(int usuarioId)
+        {
+            Doctor doc = new Doctor();
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.DoctorSelectXUsuario();
+                doc = db.Query<Doctor>(sql, new {UsuarioId = usuarioId }).FirstOrDefault();
+
+            }
+            return doc;
+
+        }
+
+        public static string GetCarpetaReportes()
+        {
+            string carpetaReportes = "";
+            using (FbConnection db = General.GetConexionConfig())
+            {
+                string sql = Queries.EmpresaSelect();
+                Empresa emp = db.Query<Empresa>(sql, new { Empresa_Id = Properties.Settings.Default.Empresa_ID }).FirstOrDefault();
+                carpetaReportes = emp.CarpetaReportes;
+            }
+
+
+            return carpetaReportes;
+
+        }
+
+        public  static string PacienteDireccion(int pacienteId)
+        {
+            string dir = "";
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.PacienteReporteExpedienteSelect();
+                DatosExpediente datosExpediente= db.Query<DatosExpediente>(sql, new {PacienteId = pacienteId}).FirstOrDefault();
+                if (datosExpediente != null)
+                {
+                    dir = datosExpediente.Direccion == null ? "" : datosExpediente.Direccion.Trim();
+                    dir += datosExpediente.Colonia == null ? "" : $" {datosExpediente.Colonia.Trim()}";
+                    dir += datosExpediente.Ciudad == null ? "" : $" {datosExpediente.Ciudad.Trim()}";
+                    dir += datosExpediente.Estado == null ? "" : $" {datosExpediente.Estado.Trim()}";
+                    dir += datosExpediente.CP== null ? "" : $" C.P. {datosExpediente.CP.Trim()}";
+                }
+            }
+            return dir;
+        }
+        public static void BotonBuscarClaveSAT(string tipo, ref TextBox txtClave, ref TextBox txtDescripcion )
+        {
+            ClaveSATBuscar claveSATBuscar = new ClaveSATBuscar(tipo);
+            claveSATBuscar.ShowDialog();
+
+            if (!string.IsNullOrEmpty(claveSATBuscar.Clave))
+            {
+                txtClave.Text = claveSATBuscar.Clave;
+                ClaveSATValidar(tipo, ref txtClave,ref txtDescripcion);
+
+            }
+
+        }
+        public static void ClaveSATValidar(string tipo, ref TextBox txtClave, ref TextBox txtDescripcion)
+        {
+
+            if (string.IsNullOrEmpty(txtClave.Text))
+            {
+                return;
+            }
+            string des = General.GetDescripcionClaveSAT(tipo, txtClave.Text.Trim());
+
+            if (string.IsNullOrEmpty(des))
+            {
+                MessageBox.Show("No existe esa clave", "Confirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtClave.Text = "";
+                txtDescripcion.Text = "";
+
+            }
+            else
+            {
+                txtDescripcion.Text = des;
+            }
+
+
+        }
+
+        public static  void CargaDispositivosVideo(ref ComboBox combo, ref FilterInfoCollection dispositivosVideo)
+        {
+            combo.Items.Clear();
+            dispositivosVideo = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+            foreach (FilterInfo disp in dispositivosVideo)
+            {
+                combo.Items.Add(disp.Name);
+
+            }
+
+            if (combo.Items.Count > 0)
+            {
+                combo.SelectedIndex = 0;
+            }
+        }
+
+
+
+        public static string CarpetaImagenesPaciente(int pacienteId)
+        {
+            
+            string carpeta = "";
+
+            carpeta = $@"pac{pacienteId.ToString("000000000000000")}\";
+            CarpetaImagenes(CarpetaImagenesEmpresa(), carpeta);
+            return carpeta;
+        }
+
+
+        public static string CarpetaImagenesEmpresa()
+        {
+            string carpeta = "";
+            using (FbConnection db = General.GetConexionConfig())
+            {
+                int empresaId = (int)ClinicaFB.Properties.Settings.Default.Empresa_ID;
+                string sql = Queries.EmpresaSelect();
+                Empresa emp = db.Query<Empresa>(sql, new { Empresa_Id = empresaId }).FirstOrDefault();
+                carpeta = emp.CarpetaImagenes;
+
+
+            }
+
+            return carpeta;
+
+        }
 
         public static CorreoInfo DatosCorreo()
         {
@@ -495,7 +628,36 @@ namespace ClinicaFB.Helpers
             return horarios;
         }
 
+        public static int GetDescripcionId(string tipo, string des, bool agregar=false)
+        {
+            int id = 0;
 
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.DescripcionSelectxDescripcion();
+                DescripcionCat cat = db.Query<DescripcionCat>(sql, new {Tipo=tipo, Descripcion=des  }).FirstOrDefault();
+                if (cat == null)
+                {
+                    if (agregar)
+                    {
+                        cat = new DescripcionCat();
+                        cat.Tipo = tipo;
+                        cat.Descripcion = des;
+                        sql = Queries.DescripcionInsert();
+
+                        id = db.ExecuteScalar<int>(sql,cat);
+
+                    }
+                }
+                else 
+                { 
+                    id = (int)cat.Descripcion_Id;
+                }
+
+            }
+            return id;
+
+        }
 
         public static string GetDescripcion(string tipo, int descripcionId)
         {

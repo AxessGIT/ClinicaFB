@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CFDisLIstado));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,10 +45,10 @@
             this.colRazonSocial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colImporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCancelado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cmdCerrar = new System.Windows.Forms.Button();
-            this.cmdArchivos = new System.Windows.Forms.Button();
-            this.cmdCancelar = new System.Windows.Forms.Button();
             this.cmdVer = new System.Windows.Forms.Button();
+            this.cmdCancelar = new System.Windows.Forms.Button();
+            this.cmdArchivos = new System.Windows.Forms.Button();
+            this.cmdCerrar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdCfdis)).BeginInit();
             this.SuspendLayout();
             // 
@@ -181,44 +182,53 @@
             this.colCancelado.Name = "colCancelado";
             this.colCancelado.ReadOnly = true;
             // 
-            // cmdCerrar
+            // cmdVer
             // 
-            this.cmdCerrar.Location = new System.Drawing.Point(1019, 164);
-            this.cmdCerrar.Name = "cmdCerrar";
-            this.cmdCerrar.Size = new System.Drawing.Size(103, 29);
-            this.cmdCerrar.TabIndex = 8;
-            this.cmdCerrar.Text = "C&errar";
-            this.cmdCerrar.UseVisualStyleBackColor = true;
-            this.cmdCerrar.Click += new System.EventHandler(this.cmdCerrar_Click);
-            // 
-            // cmdArchivos
-            // 
-            this.cmdArchivos.Location = new System.Drawing.Point(1019, 59);
-            this.cmdArchivos.Name = "cmdArchivos";
-            this.cmdArchivos.Size = new System.Drawing.Size(103, 29);
-            this.cmdArchivos.TabIndex = 9;
-            this.cmdArchivos.Text = "&Archivos";
-            this.cmdArchivos.UseVisualStyleBackColor = true;
-            this.cmdArchivos.Click += new System.EventHandler(this.cmdArchivos_Click);
+            this.cmdVer.Image = ((System.Drawing.Image)(resources.GetObject("cmdVer.Image")));
+            this.cmdVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdVer.Location = new System.Drawing.Point(1019, 108);
+            this.cmdVer.Name = "cmdVer";
+            this.cmdVer.Size = new System.Drawing.Size(111, 43);
+            this.cmdVer.TabIndex = 11;
+            this.cmdVer.Text = "&Ver";
+            this.cmdVer.UseVisualStyleBackColor = true;
+            this.cmdVer.Click += new System.EventHandler(this.cmdVer_Click);
             // 
             // cmdCancelar
             // 
-            this.cmdCancelar.Location = new System.Drawing.Point(1019, 129);
+            this.cmdCancelar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCancelar.Image")));
+            this.cmdCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdCancelar.Location = new System.Drawing.Point(1019, 157);
             this.cmdCancelar.Name = "cmdCancelar";
-            this.cmdCancelar.Size = new System.Drawing.Size(103, 29);
+            this.cmdCancelar.Size = new System.Drawing.Size(111, 43);
             this.cmdCancelar.TabIndex = 10;
             this.cmdCancelar.Text = "&Cancelar";
             this.cmdCancelar.UseVisualStyleBackColor = true;
             this.cmdCancelar.Click += new System.EventHandler(this.cmdCancelar_Click);
             // 
-            // cmdVer
+            // cmdArchivos
             // 
-            this.cmdVer.Location = new System.Drawing.Point(1019, 94);
-            this.cmdVer.Name = "cmdVer";
-            this.cmdVer.Size = new System.Drawing.Size(103, 29);
-            this.cmdVer.TabIndex = 11;
-            this.cmdVer.Text = "&Ver";
-            this.cmdVer.UseVisualStyleBackColor = true;
+            this.cmdArchivos.Image = ((System.Drawing.Image)(resources.GetObject("cmdArchivos.Image")));
+            this.cmdArchivos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdArchivos.Location = new System.Drawing.Point(1019, 59);
+            this.cmdArchivos.Name = "cmdArchivos";
+            this.cmdArchivos.Size = new System.Drawing.Size(111, 43);
+            this.cmdArchivos.TabIndex = 9;
+            this.cmdArchivos.Text = "&Archivos";
+            this.cmdArchivos.UseVisualStyleBackColor = true;
+            this.cmdArchivos.Click += new System.EventHandler(this.cmdArchivos_Click);
+            // 
+            // cmdCerrar
+            // 
+            this.cmdCerrar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCerrar.Image")));
+            this.cmdCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdCerrar.Location = new System.Drawing.Point(1019, 206);
+            this.cmdCerrar.Name = "cmdCerrar";
+            this.cmdCerrar.Size = new System.Drawing.Size(111, 43);
+            this.cmdCerrar.TabIndex = 8;
+            this.cmdCerrar.Text = "C&errar";
+            this.cmdCerrar.UseVisualStyleBackColor = true;
+            this.cmdCerrar.Click += new System.EventHandler(this.cmdCerrar_Click);
             // 
             // CFDisLIstado
             // 
@@ -238,6 +248,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "CFDisLIstado";

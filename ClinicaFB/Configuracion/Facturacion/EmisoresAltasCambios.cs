@@ -21,6 +21,7 @@ namespace ClinicaFB.Configuracion.Facturacion
     {
         private bool _esAlta;
         private int _emisorId;
+        private bool _emisorDefault = false;
         private BindingList<SerieDoc> _series = new BindingList<SerieDoc>();
         private BindingList<SerieConcepto> _seriesConceptos = new BindingList<SerieConcepto>();
 
@@ -77,6 +78,8 @@ namespace ClinicaFB.Configuracion.Facturacion
                     txtPassWord.Text=emi.PassWord;
 
                     txtCveRef.Text = emi.CveRef;
+                    _emisorDefault = emi.Defa;
+                    chkPDV.Checked = emi.PDV;
                     txtCveRef_Validated(new {}, new EventArgs());
                 }
             }
@@ -105,6 +108,7 @@ namespace ClinicaFB.Configuracion.Facturacion
             emi.Certificado = txtCertificado.Text;
             emi.LlavePrivada = txtLlavePrivada.Text;
             emi.PassWord = txtPassWord.Text;
+            emi.PDV=chkPDV.Checked;
 
             string sql = "";
 
@@ -116,6 +120,7 @@ namespace ClinicaFB.Configuracion.Facturacion
             }
             else
             {
+                emi.Defa = _emisorDefault;
                 sql = Queries.EmisorUpdate();
             }
 
@@ -404,9 +409,14 @@ namespace ClinicaFB.Configuracion.Facturacion
                 int serieId = _series[grdSeries.CurrentRow.Index].SerieDocId;
                 db.Execute(sql, new { SerieDocId = serieId });
 
+                sql = Queries.SerieConceptosDelete();
+                db.Execute(sql, new {SerieId=serieId}); 
+
             }
             CargaSeries();
             SetGridSeries();
+            _seriesConceptos = new BindingList<SerieConcepto>();
+            SetGridConceptos();
 
 
         }

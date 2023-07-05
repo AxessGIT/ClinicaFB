@@ -60,6 +60,12 @@
             this.cmdBorrarConcepto = new System.Windows.Forms.Button();
             this.cmdAgregarConcepto = new System.Windows.Forms.Button();
             this.grdConceptos = new System.Windows.Forms.DataGridView();
+            this.colClave = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPorceRetIVA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRetISR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAgregarNombre = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.label13 = new System.Windows.Forms.Label();
             this.cmdSerieEliminar = new System.Windows.Forms.Button();
             this.cmdSerieModificar = new System.Windows.Forms.Button();
@@ -82,12 +88,7 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cmdSalir = new System.Windows.Forms.Button();
             this.cmdGuardar = new System.Windows.Forms.Button();
-            this.colClave = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPorceRetIVA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRetISR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAgregarNombre = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.chkPDV = new System.Windows.Forms.CheckBox();
             this.tabEmisores.SuspendLayout();
             this.pagGenerales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboPaises)).BeginInit();
@@ -112,6 +113,7 @@
             // 
             // pagGenerales
             // 
+            this.pagGenerales.Controls.Add(this.chkPDV);
             this.pagGenerales.Controls.Add(this.txtRegimenFiscal);
             this.pagGenerales.Controls.Add(this.cmdCveRefBuscar);
             this.pagGenerales.Controls.Add(this.txtCveRef);
@@ -146,14 +148,14 @@
             this.txtRegimenFiscal.Name = "txtRegimenFiscal";
             this.txtRegimenFiscal.ReadOnly = true;
             this.txtRegimenFiscal.Size = new System.Drawing.Size(288, 23);
-            this.txtRegimenFiscal.TabIndex = 61;
+            this.txtRegimenFiscal.TabIndex = 19;
             // 
             // cmdCveRefBuscar
             // 
             this.cmdCveRefBuscar.Location = new System.Drawing.Point(244, 284);
             this.cmdCveRefBuscar.Name = "cmdCveRefBuscar";
             this.cmdCveRefBuscar.Size = new System.Drawing.Size(31, 23);
-            this.cmdCveRefBuscar.TabIndex = 57;
+            this.cmdCveRefBuscar.TabIndex = 18;
             this.cmdCveRefBuscar.Text = "...";
             this.cmdCveRefBuscar.UseVisualStyleBackColor = true;
             this.cmdCveRefBuscar.Click += new System.EventHandler(this.cmdCveRefBuscar_Click);
@@ -163,7 +165,7 @@
             this.txtCveRef.Location = new System.Drawing.Point(129, 284);
             this.txtCveRef.Name = "txtCveRef";
             this.txtCveRef.Size = new System.Drawing.Size(109, 23);
-            this.txtCveRef.TabIndex = 48;
+            this.txtCveRef.TabIndex = 17;
             this.txtCveRef.Validated += new System.EventHandler(this.txtCveRef_Validated);
             // 
             // cboPaises
@@ -176,7 +178,8 @@
             this.cboPaises.Size = new System.Drawing.Size(234, 28);
             this.cboPaises.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboPaises.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cboPaises.TabIndex = 44;
+            this.cboPaises.TabIndex = 13;
+            this.cboPaises.TabStop = false;
             // 
             // cboEstados
             // 
@@ -188,7 +191,8 @@
             this.cboEstados.Size = new System.Drawing.Size(234, 28);
             this.cboEstados.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboEstados.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cboEstados.TabIndex = 42;
+            this.cboEstados.TabIndex = 11;
+            this.cboEstados.TabStop = false;
             // 
             // cboCiudades
             // 
@@ -200,7 +204,8 @@
             this.cboCiudades.Size = new System.Drawing.Size(234, 28);
             this.cboCiudades.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboCiudades.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cboCiudades.TabIndex = 40;
+            this.cboCiudades.TabIndex = 9;
+            this.cboCiudades.TabStop = false;
             // 
             // label12
             // 
@@ -208,7 +213,7 @@
             this.label12.Location = new System.Drawing.Point(29, 287);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(90, 16);
-            this.label12.TabIndex = 47;
+            this.label12.TabIndex = 16;
             this.label12.Text = "Régimen fiscal";
             // 
             // txtCP
@@ -216,7 +221,7 @@
             this.txtCP.Location = new System.Drawing.Point(129, 255);
             this.txtCP.Name = "txtCP";
             this.txtCP.Size = new System.Drawing.Size(82, 23);
-            this.txtCP.TabIndex = 46;
+            this.txtCP.TabIndex = 15;
             // 
             // label11
             // 
@@ -224,7 +229,7 @@
             this.label11.Location = new System.Drawing.Point(89, 258);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(30, 16);
-            this.label11.TabIndex = 45;
+            this.label11.TabIndex = 14;
             this.label11.Text = "C.P.";
             // 
             // label8
@@ -233,7 +238,7 @@
             this.label8.Location = new System.Drawing.Point(89, 227);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(30, 16);
-            this.label8.TabIndex = 43;
+            this.label8.TabIndex = 12;
             this.label8.Text = "País";
             // 
             // label7
@@ -242,7 +247,7 @@
             this.label7.Location = new System.Drawing.Point(74, 193);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 16);
-            this.label7.TabIndex = 41;
+            this.label7.TabIndex = 10;
             this.label7.Text = "Estado";
             // 
             // txtColonia
@@ -250,28 +255,28 @@
             this.txtColonia.Location = new System.Drawing.Point(129, 124);
             this.txtColonia.Name = "txtColonia";
             this.txtColonia.Size = new System.Drawing.Size(440, 23);
-            this.txtColonia.TabIndex = 38;
+            this.txtColonia.TabIndex = 7;
             // 
             // txtDireccion
             // 
             this.txtDireccion.Location = new System.Drawing.Point(129, 95);
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(440, 23);
-            this.txtDireccion.TabIndex = 36;
+            this.txtDireccion.TabIndex = 5;
             // 
             // txtNombre
             // 
             this.txtNombre.Location = new System.Drawing.Point(129, 66);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(440, 23);
-            this.txtNombre.TabIndex = 34;
+            this.txtNombre.TabIndex = 3;
             // 
             // txtRFC
             // 
             this.txtRFC.Location = new System.Drawing.Point(129, 37);
             this.txtRFC.Name = "txtRFC";
             this.txtRFC.Size = new System.Drawing.Size(150, 23);
-            this.txtRFC.TabIndex = 32;
+            this.txtRFC.TabIndex = 1;
             // 
             // label5
             // 
@@ -279,7 +284,7 @@
             this.label5.Location = new System.Drawing.Point(73, 159);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(46, 16);
-            this.label5.TabIndex = 39;
+            this.label5.TabIndex = 8;
             this.label5.Text = "Ciudad";
             // 
             // label4
@@ -288,7 +293,7 @@
             this.label4.Location = new System.Drawing.Point(70, 127);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(49, 16);
-            this.label4.TabIndex = 37;
+            this.label4.TabIndex = 6;
             this.label4.Text = "Colonia";
             // 
             // label3
@@ -297,7 +302,7 @@
             this.label3.Location = new System.Drawing.Point(60, 98);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 16);
-            this.label3.TabIndex = 35;
+            this.label3.TabIndex = 4;
             this.label3.Text = "Dirección";
             // 
             // label2
@@ -306,7 +311,7 @@
             this.label2.Location = new System.Drawing.Point(67, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 16);
-            this.label2.TabIndex = 33;
+            this.label2.TabIndex = 2;
             this.label2.Text = "Nombre";
             // 
             // label1
@@ -315,7 +320,7 @@
             this.label1.Location = new System.Drawing.Point(89, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(30, 16);
-            this.label1.TabIndex = 31;
+            this.label1.TabIndex = 0;
             this.label1.Text = "RFC";
             // 
             // pagSeries
@@ -387,6 +392,58 @@
             this.grdConceptos.Name = "grdConceptos";
             this.grdConceptos.Size = new System.Drawing.Size(646, 218);
             this.grdConceptos.TabIndex = 18;
+            // 
+            // colClave
+            // 
+            this.colClave.DataPropertyName = "Clave";
+            this.colClave.HeaderText = "Clave";
+            this.colClave.Name = "colClave";
+            this.colClave.ReadOnly = true;
+            this.colClave.Width = 80;
+            // 
+            // colDescripcion
+            // 
+            this.colDescripcion.DataPropertyName = "Descripcion";
+            this.colDescripcion.HeaderText = "Descripción";
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.ReadOnly = true;
+            // 
+            // colPrecio
+            // 
+            this.colPrecio.DataPropertyName = "Precio";
+            dataGridViewCellStyle1.Format = "c2";
+            dataGridViewCellStyle1.NullValue = null;
+            this.colPrecio.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colPrecio.HeaderText = "Precio";
+            this.colPrecio.Name = "colPrecio";
+            this.colPrecio.ReadOnly = true;
+            this.colPrecio.Width = 80;
+            // 
+            // colPorceRetIVA
+            // 
+            this.colPorceRetIVA.DataPropertyName = "PorceRetIVA";
+            dataGridViewCellStyle2.Format = "#0.##%";
+            dataGridViewCellStyle2.NullValue = null;
+            this.colPorceRetIVA.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colPorceRetIVA.HeaderText = "% Ret. IVA";
+            this.colPorceRetIVA.Name = "colPorceRetIVA";
+            // 
+            // colRetISR
+            // 
+            this.colRetISR.DataPropertyName = "PorceRetISR";
+            dataGridViewCellStyle3.Format = "#0.##%";
+            dataGridViewCellStyle3.NullValue = null;
+            this.colRetISR.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colRetISR.HeaderText = "% Ret. ISR";
+            this.colRetISR.Name = "colRetISR";
+            // 
+            // colAgregarNombre
+            // 
+            this.colAgregarNombre.DataPropertyName = "AgregaPaciente";
+            this.colAgregarNombre.HeaderText = "Agregar nombre Px.";
+            this.colAgregarNombre.Name = "colAgregarNombre";
+            this.colAgregarNombre.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colAgregarNombre.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // label13
             // 
@@ -606,57 +663,15 @@
             this.cmdGuardar.UseVisualStyleBackColor = true;
             this.cmdGuardar.Click += new System.EventHandler(this.cmdGuardar_Click);
             // 
-            // colClave
+            // chkPDV
             // 
-            this.colClave.DataPropertyName = "Clave";
-            this.colClave.HeaderText = "Clave";
-            this.colClave.Name = "colClave";
-            this.colClave.ReadOnly = true;
-            this.colClave.Width = 80;
-            // 
-            // colDescripcion
-            // 
-            this.colDescripcion.DataPropertyName = "Descripcion";
-            this.colDescripcion.HeaderText = "Descripción";
-            this.colDescripcion.Name = "colDescripcion";
-            this.colDescripcion.ReadOnly = true;
-            // 
-            // colPrecio
-            // 
-            this.colPrecio.DataPropertyName = "Precio";
-            dataGridViewCellStyle1.Format = "c2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.colPrecio.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colPrecio.HeaderText = "Precio";
-            this.colPrecio.Name = "colPrecio";
-            this.colPrecio.ReadOnly = true;
-            this.colPrecio.Width = 80;
-            // 
-            // colPorceRetIVA
-            // 
-            this.colPorceRetIVA.DataPropertyName = "PorceRetIVA";
-            dataGridViewCellStyle2.Format = "#0.##%";
-            dataGridViewCellStyle2.NullValue = null;
-            this.colPorceRetIVA.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colPorceRetIVA.HeaderText = "% Ret. IVA";
-            this.colPorceRetIVA.Name = "colPorceRetIVA";
-            // 
-            // colRetISR
-            // 
-            this.colRetISR.DataPropertyName = "PorceRetISR";
-            dataGridViewCellStyle3.Format = "#0.##%";
-            dataGridViewCellStyle3.NullValue = null;
-            this.colRetISR.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colRetISR.HeaderText = "% Ret. ISR";
-            this.colRetISR.Name = "colRetISR";
-            // 
-            // colAgregarNombre
-            // 
-            this.colAgregarNombre.DataPropertyName = "AgregaPaciente";
-            this.colAgregarNombre.HeaderText = "Agregar nombre Px.";
-            this.colAgregarNombre.Name = "colAgregarNombre";
-            this.colAgregarNombre.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colAgregarNombre.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.chkPDV.AutoSize = true;
+            this.chkPDV.Location = new System.Drawing.Point(129, 313);
+            this.chkPDV.Name = "chkPDV";
+            this.chkPDV.Size = new System.Drawing.Size(99, 20);
+            this.chkPDV.TabIndex = 20;
+            this.chkPDV.Text = "Emite ventas";
+            this.chkPDV.UseVisualStyleBackColor = true;
             // 
             // EmisoresAltasCambios
             // 
@@ -749,5 +764,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPorceRetIVA;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRetISR;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colAgregarNombre;
+        private System.Windows.Forms.CheckBox chkPDV;
     }
 }

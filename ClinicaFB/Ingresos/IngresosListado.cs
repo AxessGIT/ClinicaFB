@@ -17,10 +17,12 @@ namespace ClinicaFB.Ingresos
     public partial class IngresosListado : Form
     {
         private BindingList<Ingreso> _ingresos = new BindingList<Ingreso>();
+        private string _tipo;
 
-        public IngresosListado()
+        public IngresosListado(string tipo)
         {
             InitializeComponent();
+            _tipo = tipo;
         }
 
         private void IngresosListado_Load(object sender, EventArgs e)
@@ -39,7 +41,7 @@ namespace ClinicaFB.Ingresos
                 DateTime fechaIni = dtpFechaInicial.Value;
                 DateTime fechaFin = dtpFechaFinal.Value;
 
-                var res = db.Query<Ingreso>(sql, new {SucursalId = Properties.Settings.Default.SucursalId, FechaInicial= fechaIni, FechaFinal= fechaFin }).ToList();
+                var res = db.Query<Ingreso>(sql, new {SucursalId = Properties.Settings.Default.SucursalId, Tipo = _tipo, FechaInicial= fechaIni, FechaFinal= fechaFin }).ToList();
 
                 _ingresos = new BindingList<Ingreso>(res);
             }
@@ -82,11 +84,11 @@ namespace ClinicaFB.Ingresos
             grdIngresos.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             grdIngresos.Columns[3].HeaderText = "Paciente";
-            grdIngresos.Columns[3].DataPropertyName = "PacienteNombre";
+            grdIngresos.Columns[3].DataPropertyName = "NomPac";
             grdIngresos.Columns[3].Width = 200;
 
             grdIngresos.Columns[4].HeaderText = "Razon Social";
-            grdIngresos.Columns[4].DataPropertyName = "RazonSoc";
+            grdIngresos.Columns[4].DataPropertyName = "NomRazon";
             grdIngresos.Columns[4].Width = 200;
 
 
@@ -118,6 +120,72 @@ namespace ClinicaFB.Ingresos
         private void cmdSalir_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private bool HayIngresoSeleccionado()
+        {
+            if (grdIngresos.CurrentRow==null)
+            {
+                MessageBox.Show("Seleccione el ingreso", "Verifique",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                return false;
+            }
+            return true;
+        }
+
+        private void cmdVer_Click(object sender, EventArgs e)
+        {
+            if (HayIngresoSeleccionado()==false)
+            {
+                return;
+            }
+            int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
+            IngresoVer ingresoVer = new IngresoVer(ingresoId);
+            ingresoVer.ShowDialog();
+
+        }
+
+        private void cmdTicket_Click(object sender, EventArgs e)
+        {
+            if (HayIngresoSeleccionado()==false)
+            {
+                return;
+            }
+
+            int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
+            Ingreso ing = new Ingreso();
+            BindingList<IngresoDetalle> conceptos = new BindingList<IngresoDetalle>();
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.IngresoSelect();
+                ing = db.Query<Ingreso>(sql, new {IngresoId = ingresoId}).FirstOrDefault();
+
+                if (ing == null)
+                {
+                    return;
+                }
+
+                sql = Queries.IngresoDetallesSelect();
+                var res = db.Query<IngresoDetalle>(sql, new {IngresoId = ingresoId}).ToList();
+
+                conceptos = new BindingList<IngresoDetalle>(res);
+
+
+            }
+            ManejaCFDIs.ImprimeTicket(ing, conceptos);
+
+        }
+
+        private void cmdFacturar_Click(object sender, EventArgs e)
+        {
+            if (HayIngresoSeleccionado() == false)
+            {
+                return;
+            }
+
+            int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
+            ManejaCFDIs.IngresoFacturar(ingresoId);
+
         }
     }
 }

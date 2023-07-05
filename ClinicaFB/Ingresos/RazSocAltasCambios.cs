@@ -87,7 +87,10 @@ namespace ClinicaFB.Facturacion
 
         private bool ValidaDatos()
         {
-            if (string.IsNullOrEmpty(txtRFC.Text))
+
+            string rfc = txtRFC.Text.Trim();
+
+            if (string.IsNullOrEmpty(rfc))
             {
                 MessageBox.Show("Indique el RFC","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 txtRFC.Focus();
@@ -108,11 +111,27 @@ namespace ClinicaFB.Facturacion
                 return false;
             }
 
+
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.RazonSocialSelectXRFC();
+                RazonSocial rz = db.Query<RazonSocial>(sql, new {RFC = rfc}).FirstOrDefault();
+
+                if (rz != null)
+                {
+                    MessageBox.Show("Ese RFC ya está registrado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+            }
+
             return true;
         }
 
         private void cmdGuardar_Click(object sender, EventArgs e)
         {
+
+
             RazonSocial razSoc = new RazonSocial();
             razSoc.RazonSocialId = _razonId;
             razSoc.RFC = txtRFC.Text;

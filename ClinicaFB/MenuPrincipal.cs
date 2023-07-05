@@ -156,10 +156,6 @@ namespace ClinicaFB
             conexionDatos.ShowDialog();
 
         }
-
-
-
-
         private void cmdConfigurar_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("Usuario no autorizado");
@@ -221,9 +217,6 @@ namespace ClinicaFB
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

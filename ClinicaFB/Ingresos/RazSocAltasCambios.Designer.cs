@@ -79,6 +79,7 @@
             // 
             // txtRFC
             // 
+            this.txtRFC.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtRFC.Location = new System.Drawing.Point(146, 12);
             this.txtRFC.Name = "txtRFC";
             this.txtRFC.Size = new System.Drawing.Size(180, 23);
@@ -86,6 +87,7 @@
             // 
             // txtRazonSocial
             // 
+            this.txtRazonSocial.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtRazonSocial.Location = new System.Drawing.Point(146, 42);
             this.txtRazonSocial.Name = "txtRazonSocial";
             this.txtRazonSocial.Size = new System.Drawing.Size(672, 23);
@@ -102,6 +104,7 @@
             // 
             // txtDireccion
             // 
+            this.txtDireccion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtDireccion.Location = new System.Drawing.Point(146, 72);
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(672, 23);
@@ -127,6 +130,7 @@
             this.cboPaises.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboPaises.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboPaises.TabIndex = 13;
+            this.cboPaises.TabStop = false;
             // 
             // cboEstados
             // 
@@ -139,6 +143,7 @@
             this.cboEstados.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboEstados.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboEstados.TabIndex = 11;
+            this.cboEstados.TabStop = false;
             // 
             // cboCiudades
             // 
@@ -151,6 +156,7 @@
             this.cboCiudades.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboCiudades.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboCiudades.TabIndex = 9;
+            this.cboCiudades.TabStop = false;
             // 
             // label17
             // 
@@ -215,6 +221,7 @@
             // 
             // txtCveRef
             // 
+            this.txtCveRef.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCveRef.Location = new System.Drawing.Point(146, 232);
             this.txtCveRef.Name = "txtCveRef";
             this.txtCveRef.Size = new System.Drawing.Size(109, 23);

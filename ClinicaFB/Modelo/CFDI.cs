@@ -56,5 +56,17 @@ namespace ClinicaFB.Modelo
         public string CertificadoSAT { get; set; }
         public int IngresoId { get; set; }
 
+        public string NomPac { 
+            get { 
+                if(string.IsNullOrEmpty(PacienteNombre)) { return "PUBLICO EN GENERAL"; } else { return PacienteNombre;}
+            } }
+
+        public string NomRec
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ReceptorNombre)) { return "PUBLICO EN GENERAL"; } else { return ReceptorNombre; }
+            }
+        }
     }
 }

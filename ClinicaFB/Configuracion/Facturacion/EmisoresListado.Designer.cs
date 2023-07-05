@@ -42,6 +42,7 @@
             this.colRFC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDefault = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colPDV = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdEmisores)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,7 +52,7 @@
             this.grdEmisores.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -61,7 +62,8 @@
             this.grdEmisores.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colRFC,
             this.colNombre,
-            this.colDefault});
+            this.colDefault,
+            this.colPDV});
             this.grdEmisores.Location = new System.Drawing.Point(14, 15);
             this.grdEmisores.Margin = new System.Windows.Forms.Padding(4);
             this.grdEmisores.Name = "grdEmisores";
@@ -150,7 +152,7 @@
             this.colNombre.HeaderText = "Nombre";
             this.colNombre.Name = "colNombre";
             this.colNombre.ReadOnly = true;
-            this.colNombre.Width = 400;
+            this.colNombre.Width = 300;
             // 
             // colDefault
             // 
@@ -159,10 +161,16 @@
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle4.NullValue = false;
             this.colDefault.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colDefault.HeaderText = "Emisor predeterminado";
+            this.colDefault.HeaderText = "Emisor principal";
             this.colDefault.Name = "colDefault";
             this.colDefault.ReadOnly = true;
-            this.colDefault.Width = 150;
+            // 
+            // colPDV
+            // 
+            this.colPDV.DataPropertyName = "PDV";
+            this.colPDV.HeaderText = "¿Emite ventas?";
+            this.colPDV.Name = "colPDV";
+            this.colPDV.ReadOnly = true;
             // 
             // EmisoresListado
             // 
@@ -201,5 +209,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colRFC;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colDefault;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colPDV;
     }
 }

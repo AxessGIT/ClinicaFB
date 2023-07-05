@@ -97,12 +97,12 @@ namespace ClinicaFB.Ingresos
             grdCfdis.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             grdCfdis.Columns[4].HeaderText = "Paciente";
-            grdCfdis.Columns[4].DataPropertyName = "PacienteNombre";
+            grdCfdis.Columns[4].DataPropertyName = "NomPac";
             grdCfdis.Columns[4].Width = 200;
             //grdCfdis.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             grdCfdis.Columns[5].HeaderText = "Razon Social";
-            grdCfdis.Columns[5].DataPropertyName = "ReceptorNombre";
+            grdCfdis.Columns[5].DataPropertyName = "NomRec";
             grdCfdis.Columns[5].Width = 200;
             //grdCfdis.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
@@ -177,11 +177,26 @@ namespace ClinicaFB.Ingresos
             SetGrid();
         }
 
-        private void cmdArchivos_Click(object sender, EventArgs e)
+
+
+        private bool CfdiSeleccionado()
         {
+            bool sel = true;
             if (grdCfdis.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione la factura","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Seleccione la factura", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                sel=false;
+            }
+
+
+            return sel;
+        }
+
+        private void cmdArchivos_Click(object sender, EventArgs e)
+        {
+
+            if (CfdiSeleccionado() == false)
+            {
                 return;
             }
 
@@ -228,9 +243,9 @@ namespace ClinicaFB.Ingresos
 
         private void cmdCancelar_Click(object sender, EventArgs e)
         {
-            if (grdCfdis.CurrentRow == null)
+
+            if (CfdiSeleccionado() == false)
             {
-                MessageBox.Show("Seleccione la factura para cancelar", "Confirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -303,9 +318,24 @@ namespace ClinicaFB.Ingresos
                 string sql = Queries.CfdiCancela();
                 db.Execute(sql, new { Id = cfdId, Acuse=res });
             }
+            MessageBox.Show("Factura cancelada","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
             CargaFacturas();
+            SetGrid();
 
 
+
+        }
+
+        private void cmdVer_Click(object sender, EventArgs e)
+        {
+            if (CfdiSeleccionado() == false)
+            {
+                return;
+            }
+
+            int id = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
+            CfdiVisor cfdiVisor = new CfdiVisor(id);
+            cfdiVisor.ShowDialog();
 
         }
     }

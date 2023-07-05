@@ -1,4 +1,6 @@
-﻿using ClinicaFB.Helpers;
+﻿using AForge.Video;
+using AForge.Video.DirectShow;
+using ClinicaFB.Helpers;
 using ClinicaFB.Modelo;
 using ClinicaFB.ModeloConfiguracion;
 using Dapper;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.DrawingCore.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,6 +27,9 @@ namespace ClinicaFB.Expedientes
         private int _pacienteImagenId;
         private string _carpetaImagenes;
         private string _imagenOrigen;
+        public bool _reproduciendoVideo { get; set; }
+        private FilterInfoCollection _dispositivosVideo;
+        private VideoCaptureDevice _camara;
 
         public ImagenAltasCambios(int pacienteImagenId, int pacienteId, bool esAlta)
         {
@@ -41,12 +47,18 @@ namespace ClinicaFB.Expedientes
                 return;
             }
 
-            picImagen.Image = Bitmap.FromFile(opfSeleccionaImagen.FileName);
+            picVideo.Image = Bitmap.FromFile(opfSeleccionaImagen.FileName);
             _imagenOrigen = opfSeleccionaImagen.FileName;
         }
 
+
+
         private void ImagenAltasCambios_Load(object sender, EventArgs e)
         {
+
+            General.CargaDispositivosVideo(ref cboDispositivos, ref _dispositivosVideo);
+            General.ConfiguraCombo(ref cboDiagnosticos, "DIA");
+
             if (_esAlta)
             {
                 Text = "Agregar imagen";
@@ -54,6 +66,7 @@ namespace ClinicaFB.Expedientes
             }
             else
             {
+
 
                 using (FbConnection db = General.GetDB())
                 {
@@ -65,7 +78,10 @@ namespace ClinicaFB.Expedientes
                         return;
                     }
 
-                    picImagen.Image = Bitmap.FromFile(pacim.RutaImagen);
+                    cmdVideo.Enabled = false;
+                    //cmdGuardar.Enabled = false;
+
+                    picVideo.Image = Bitmap.FromFile(pacim.RutaImagen);
                     txtFecha.Value = pacim.Fecha;
                     cboDiagnosticos.SelectedValue = pacim.DiagnosticoId;
                     txtPalabrasClave.Text = pacim.PalabrasClave;
@@ -74,28 +90,27 @@ namespace ClinicaFB.Expedientes
                 }
                 cmdCargar.Visible = false;
                 txtFecha.Enabled = false;
-                Text = "Modificar imagen";
+                Text = "Modificar atributos de imagen";
             }
-            General.ConfiguraCombo(ref cboDiagnosticos, "DIA");
 
-            using (FbConnection db = General.GetConexionConfig())
-            {
-                int empresaId = (int) ClinicaFB.Properties.Settings.Default.Empresa_ID;
-                string sql = Queries.EmpresaSelect();
-                Empresa emp = db.Query<Empresa>(sql, new { Empresa_Id = empresaId }).FirstOrDefault();
-                _carpetaImagenes = emp.CarpetaImagenes;
+            _carpetaImagenes = General.CarpetaImagenesEmpresa();
 
-
-            }
 
         }
 
         private void cmdGuardar_Click(object sender, EventArgs e)
         {
-            if (picImagen.Image == null)
+            if (picVideo.Image == null)
             {
                 MessageBox.Show("Indique la imagen","Aviso",MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
+            }
+
+            if (string.IsNullOrEmpty(cboDiagnosticos.Text))
+            {
+                MessageBox.Show("Indique le diagnóstico", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+
             }
 
 
@@ -103,6 +118,7 @@ namespace ClinicaFB.Expedientes
             
 
             PacientesImagenes pacim = new PacientesImagenes();
+            pacim.PacImId = _pacienteImagenId;
             pacim.PacienteId = _pacienteId;
             pacim.DiagnosticoId = (int)General.DevuelveValorCombo(cboDiagnosticos, "DIA");
             pacim.Fecha = txtFecha.Value;
@@ -117,10 +133,10 @@ namespace ClinicaFB.Expedientes
            
             if (_esAlta)
             {
-                FileInfo infoOrigen = new FileInfo(_imagenOrigen);
-                string ext = infoOrigen.Extension;
+                //FileInfo infoOrigen = new FileInfo(_imagenOrigen);
 
-                carpeta = $@"pac{_pacienteId.ToString("000000000000000")}\{anio}\{mes}\{dia}\";
+                string ext = "png";
+                carpeta =  General.CarpetaImagenesPaciente(_pacienteId) + $@"\{anio}\{mes}\{dia}\";
 
                 if (General.CarpetaImagenes(_carpetaImagenes, carpeta) == false)
                 {
@@ -130,7 +146,9 @@ namespace ClinicaFB.Expedientes
 
                 nuevoArchivo = _carpetaImagenes + @"\" + carpeta + Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ext;
 
-                File.Copy(_imagenOrigen, nuevoArchivo);
+                //picImagen.Image.Save(nuevoArchivo, ImageFormat.Png);
+                picVideo.Image.Save(nuevoArchivo, System.Drawing.Imaging.ImageFormat.Png);
+                //File.Copy(_imagenOrigen, nuevoArchivo);
 
             }
 
@@ -162,5 +180,58 @@ namespace ClinicaFB.Expedientes
         {
             Close();
         }
+
+
+
+        private void cmdVideo_Click(object sender, EventArgs e)
+        {
+
+            if (_reproduciendoVideo == true)
+            {
+                cmdVideo.Text = "Iniciar vídeo";
+                CerrarCamara();
+                _reproduciendoVideo = false;
+
+            }
+
+            else
+            {
+                if (_dispositivosVideo.Count == 0)
+                {
+                    MessageBox.Show("No hay ningún dispositivo de vídeo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                _reproduciendoVideo = true;
+                cmdVideo.Text = "Capturar imagen";
+                string nombredisp = _dispositivosVideo[cboDispositivos.SelectedIndex].MonikerString;
+                _camara = new VideoCaptureDevice(nombredisp);
+                _camara.NewFrame += new NewFrameEventHandler(Capturando);
+                _camara.Start();
+
+            }
+        }
+
+        private void CerrarCamara()
+        {
+            if (_camara!=null && _camara.IsRunning)
+            {
+                _camara.SignalToStop();
+                //_camara.Stop();
+                _camara = null;
+            }
+        }
+
+        private void Capturando(object sender, NewFrameEventArgs eventArgs)
+        {
+            Bitmap imagen= (Bitmap)eventArgs.Frame.Clone();
+            picVideo.Image=imagen;
+
+        }
+
+        private void ImagenAltasCambios_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CerrarCamara();
+        }
+
     }
 }

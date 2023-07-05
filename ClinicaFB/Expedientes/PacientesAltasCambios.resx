@@ -118,6 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cmdCapturar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EQAACxEBf2RfkQAAAYNJREFUSEvtlMsuBEEUhmvBmpW3EJelywoLl9hZW2GNSURCIiRYuDwEHsEzCIkl
+        cXsA3sCO/6uu0+mpnr6Mtpw/+TKnu2r+U33q5Lie/kvLYidiRXStJcGfF/1TogPxLE4jngRrtTQuWuJb
+        /IRfEt2KRzEkYvGONfZkvwzwGhNemH+KQ8Eip7ONq6JfFIk19th+40jgOSrcrjgWw8I2EGeF0ZzYChD3
+        iTKdCLx9HQ3KA9naTot3cScuAsRvYkoUyTzTgFPbBdoXYP4l5v1TuxYEa5P+Ka9cgliUhZOb+aBYDwzw
+        QqLbXkWnclUmoM6UAmH+Ia4CxJbkXswkYZsqE2yLsyR0GwJj07VYS0J3Ltgbq6sElKUoAZdOZ8WqTNCp
+        RBjfCO6mcYm4OFqRbkEYcmowc0bLi/jTJSP6nFbMziYT5qxN+Ke8aiVA9DmtSCmo96V4EJy8yBylvjYq
+        ykQJZsVmgJrXHhVMPQYTAyo7sJpgw25EeDH19oWNiqbsidS8pxI59wsnWnldokuaJgAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
   <data name="cmdBorrar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -159,7 +172,7 @@
   <metadata name="colDiagnostico.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="colComentario.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="colPalabrasClave.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="cmdImprimirExpedienteRDLC.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

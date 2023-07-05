@@ -22,6 +22,7 @@ namespace ClinicaFB.Modelo
         public string LlavePrivada { get; set; }
         public string PassWord { get; set; }
         public bool Defa { get; set; }
+        public bool PDV { get; set; }
 
     }
 }

@@ -6,30 +6,216 @@ using FirebirdSql.Data.FirebirdClient;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Reporting.WinForms;
 using Microsoft.ReportingServices.Interfaces;
+using Org.BouncyCastle.Tls;
 using QRCoder;
+using Syncfusion.Pdf;
+using Syncfusion.PdfViewer;
+using Syncfusion.Windows.Forms.PdfViewer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.DrawingCore;
 using System.IO;
 using System.Linq;
+
+//using System.Net;
+//using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MimeKit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Net.Mail;
 
 namespace ClinicaFB.Helpers
 {
     public static class ManejaCFDIs
     {
 
-        public static void MandaArchivos(string archivolXML, string archivoPDF, List<string> destinatarios)
+        public static async void MandaCorreo(string correos,string archivoXML = "", string archivoPDF = "")
+        {
+            await Task.Run(()=> EnviaArchivos(correos, archivoXML,archivoPDF));
+        
+        }
+
+        public static void EnviaArchivos(string correos, string archivoXML = "", string archivoPDF = "")
         {
 
 
+            string[] dirs = correos.Split(',');
+            MimeMessage mensaje = new MimeMessage();
+            foreach (string dir in dirs)
+            {
+                mensaje.To.Add(MailboxAddress.Parse(dir));
+            }
+
+            //mensaje.From.Add(new MailboxAddress("Facturación Medipiel", "novedades@sifiscalapp.com"));
+            mensaje.From.Add(new MailboxAddress("Facturación Medipiel", "facturacion@medipielapp.com"));
+            mensaje.Subject = "Envío de comprobante medipiel";
+
+            /*mensaje.Body = new TextPart("plain")
+            {
+               Text= "Favor de no responder a esta dirección. Envío automático. Saludos"
+
+            };
+
+            if (string.IsNullOrEmpty(archivoXML) == false)
+            {
+                mensaje.Attachments. .Add(new Attachment( archivoXML));
+            }
+
+            if (string.IsNullOrEmpty(archivoPDF) == false)
+            {
+                mensaje.Attachments.Add(new Attachment(archivoPDF));
+            }*/
+
+
+            var builder = new BodyBuilder();
+            builder.HtmlBody = "Favor de no responder a esta dirección. Envío automático. Saludos";
+
+
+            if (string.IsNullOrEmpty(archivoXML) == false)
+            {
+                builder.Attachments.Add(archivoXML);
+            }
+
+            if (string.IsNullOrEmpty(archivoPDF) == false)
+            {
+                builder.Attachments.Add(archivoPDF);
+            }
+
+
+            mensaje.Body= builder.ToMessageBody();
+
+            MailKit.Net.Smtp.SmtpClient server = new MailKit.Net.Smtp.SmtpClient();
+
+            //server.Connect("smtpout.secureserver.net", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            server.Connect("mx46.hostgator.mx", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            //server.Authenticate("novedades@sifiscalapp.com", "Ab369741@");
+            server.Authenticate("facturacion@medipielapp.com", "Ab369741@");
+            string res =server.Send(mensaje);
+            server.Disconnect(true);
+
+            //MessageBox.Show(res);
+
+
+
         }
-        public static void IngresoFacturar(int ingresoId)
+
+
+
+        public static async void ImprimeTicket
+            (Ingreso ing, BindingList<IngresoDetalle> conceptos,
+            bool imprimir = false, string impresora="",bool mandarCorreo=false, string correos="")
+        {
+
+            string datosSucursal = "";
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.SucursalSelect();
+                Sucursal suc = db.Query<Sucursal>(sql, new { SucursalId = ing.SucursalId }).FirstOrDefault();
+
+                if (suc != null)
+                {
+                    datosSucursal = suc.DatosAdicionales;
+                }
+            }
+
+            List<Ingreso> datosTicket = new List<Ingreso> { ing };
+
+
+            List<ReportDataSource> reportDataSources = new List<ReportDataSource>();
+
+            reportDataSources.Add(
+                new ReportDataSource { Name = "dsIngreso", Value = datosTicket }
+            );
+
+            reportDataSources.Add(
+                new ReportDataSource { Name = "dsDetalle", Value = conceptos }
+            );
+
+            ReportViewer rptTicket = new ReportViewer();
+
+            rptTicket.ProcessingMode = ProcessingMode.Local;
+            rptTicket.LocalReport.ReportPath = @"C:\Users\Felipe  Juan\source\repos\ClinicaFB\ClinicaFB\Reportes\Ingresos\Ticket.rdlc";
+            rptTicket.LocalReport.DataSources.Clear();
+
+
+            foreach (var dato in reportDataSources)
+            {
+                rptTicket.LocalReport.DataSources.Add(dato);
+            }
+
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string filenameExtension;
+
+            string archivoPDF = GetTempPDF();
+
+
+            ReportParameter datos = new ReportParameter("DatosSucursal", datosSucursal);
+
+
+
+
+            ReportParameter[] parametros =
+            {
+                datos
+            };
+
+            rptTicket.LocalReport.EnableExternalImages = true;
+
+            rptTicket.LocalReport.SetParameters(parametros);
+
+
+
+
+            var deviceInfo = @"<DeviceInfo>
+            <EmbedFonts>None</EmbedFonts>
+            </DeviceInfo>";
+
+            byte[] bytes = rptTicket.LocalReport.Render(
+                 "PDF", deviceInfo, out mimeType, out encoding, out filenameExtension,
+                 out streamids, out warnings);
+
+            using (FileStream fs = new FileStream(archivoPDF, FileMode.Create))
+            {
+                fs.Write(bytes, 0, bytes.Length);
+            }
+
+            if (imprimir)
+            {
+                ImprimeArchivo(archivoPDF, impresora);
+            }
+
+            if (mandarCorreo)
+            {
+                await Task.Run(()=>MandaCorreo(correos:correos, archivoPDF:archivoPDF));
+            }
+            
+
+
+        }
+
+        private static string GetTempPDF()
+        {
+            string carpetaTemporal = System.IO.Path.GetTempPath();
+            string archivoPDF = System.IO.Path.GetRandomFileName();
+            archivoPDF = System.IO.Path.GetFileNameWithoutExtension(archivoPDF);
+            archivoPDF = carpetaTemporal + archivoPDF + ".pdf";
+            return archivoPDF;
+
+        }
+
+
+        public static async void IngresoFacturar(int ingresoId,bool imprimir= false, string impresora="",bool mandarCorreos=false,string direcciones="")
         {
             Ingreso ing = new Ingreso();
 
@@ -65,7 +251,8 @@ namespace ClinicaFB.Helpers
                 if (concepto.EmisorId != emisorId || concepto.Serie != serie)
                 {
 
-                    GeneraFactura(ing, conceptos);
+                    await Task.Run(() => GeneraFactura(ing, conceptos, imprimir, impresora, mandarCorreos, direcciones));
+                    //GeneraFactura(ing, conceptos);
                     emisorId = concepto.EmisorId;
                     serie = concepto.Serie;
                     conceptos = new List<IngresoDetalle>();
@@ -74,19 +261,22 @@ namespace ClinicaFB.Helpers
 
             }
 
-            GeneraFactura(ing, conceptos);
+           await Task.Run(()=>GeneraFactura(ing, conceptos,imprimir,impresora,mandarCorreos,direcciones));
 
 
 
         }
 
-        private static void GeneraFactura(Ingreso ing, List<IngresoDetalle> conceptos)
+        private static void  GeneraFactura(Ingreso ing,
+            List<IngresoDetalle> conceptos,bool imprimir=false, string impresora="",
+            bool mandarCorreos = false, string direcciones = "")
         {
 
             int emisorId = conceptos[0].EmisorId;
             string serie = conceptos[0].Serie;
             int folioFac = 0;
             string tipoDoc = "FAC";
+            bool publico = ing.RazonSocialId == 0;
 
             RazonSocial razonSocial = new RazonSocial();
             Emisor emi = new Emisor();
@@ -107,7 +297,11 @@ namespace ClinicaFB.Helpers
 
                 sql = Queries.RazonSocialSelect();
 
-                razonSocial = db.Query<RazonSocial>(sql, new { RazonSocialId = ing.RazonSocialId }).FirstOrDefault();
+                if (publico == false)
+                {
+                    razonSocial = db.Query<RazonSocial>(sql, new { RazonSocialId = ing.RazonSocialId }).FirstOrDefault();
+                }
+
 
                 sql = Queries.EmisorSelect();
 
@@ -136,6 +330,8 @@ namespace ClinicaFB.Helpers
 
             CFDI cfdi = new CFDI();
 
+
+
             cfdi.IngresoId = ing.IngresoId;
             cfdi.EmisorId = emisorId;
             cfdi.EmisorRFC = emi.RFC;
@@ -145,16 +341,44 @@ namespace ClinicaFB.Helpers
             cfdi.Folio = folioFac;
             cfdi.Fecha = ing.Fecha;
             cfdi.PacienteId= ing.PacienteId;
-            cfdi.RazonSocialId= ing.RazonSocialId;
+
+            /*cfdi.RazonSocialId= ing.RazonSocialId;
             cfdi.ReceptorRFC = razonSocial.RFC;
             cfdi.ReceptorNombre = razonSocial.RazonSoc;
             cfdi.ReceptorRegimenFiscal = razonSocial.CveREF;
-            cfdi.TipoComprobante = "I";
-            cfdi.FormaPago = razonSocial.CveFOP;
-            cfdi.Moneda = "MXN";
             cfdi.MetodoPago = razonSocial.CveMEP;
+            cfdi.UsoCFdi = razonSocial.CveUSO;*/
+
+
+            if (publico)
+            {
+                cfdi.RazonSocialId = 0;
+                cfdi.ReceptorRFC = "XAXX010101000";
+                cfdi.ReceptorNombre = "PUBLICO EN GENERAL";
+                cfdi.ReceptorRegimenFiscal = "616";
+                cfdi.FormaPago = ing.CveFOP;
+                cfdi.MetodoPago = ing.CveMEP;
+                cfdi.UsoCFdi = "S01";
+            }
+            else
+            {
+                cfdi.RazonSocialId = ing.RazonSocialId;
+                cfdi.ReceptorRFC = razonSocial.RFC;
+                cfdi.ReceptorNombre = razonSocial.RazonSoc;
+                cfdi.ReceptorRegimenFiscal = razonSocial.CveREF;
+                cfdi.FormaPago = ing.CveFOP;
+                cfdi.MetodoPago = ing.CveMEP;
+                cfdi.UsoCFdi = ing.CveUSO;
+
+            }
+
+
+
+
+
+            cfdi.TipoComprobante = "I";
+            cfdi.Moneda = "MXN";
             cfdi.LugarExpedicion = emi.CP;
-            cfdi.UsoCFdi = razonSocial.CveUSO;
             cfdi.SubTotal = subTotal;
             cfdi.Descuento = descuento;
             cfdi.RetISR = retISR;
@@ -179,11 +403,11 @@ namespace ClinicaFB.Helpers
             comprobante.LlavePrivada   = emi.LlavePrivada;
             comprobante.PassWord = emi.PassWord;
 
-            comprobante.ComprobanteReceptor.RFC = razonSocial.RFC;
-            comprobante.ComprobanteReceptor.Nombre = razonSocial.RazonSoc;
-            comprobante.ComprobanteReceptor.DomicilioFiscalReceptor = razonSocial.CP;
-            comprobante.ComprobanteReceptor.RegimenFiscalReceptor = razonSocial.CveREF;
-            comprobante.ComprobanteReceptor.UsoCFDI = razonSocial.CveUSO;
+            comprobante.ComprobanteReceptor.RFC = cfdi.ReceptorRFC;
+            comprobante.ComprobanteReceptor.Nombre = cfdi.ReceptorNombre;
+            comprobante.ComprobanteReceptor.DomicilioFiscalReceptor = publico?cfdi.LugarExpedicion:razonSocial.CP;
+            comprobante.ComprobanteReceptor.RegimenFiscalReceptor = cfdi.ReceptorRegimenFiscal;
+            comprobante.ComprobanteReceptor.UsoCFDI = cfdi.UsoCFdi;
 
             foreach (var concepto in conceptos)
             {
@@ -300,7 +524,17 @@ namespace ClinicaFB.Helpers
                 }
             }
 
-            GeneraPDFFactura(cfdi, cfdiDetalle,xml);
+            string archivoPDF=  GeneraPDFFactura(cfdi, cfdiDetalle,xml);
+
+            if (imprimir)
+            {
+                ImprimeArchivo(archivoPDF, impresora);
+            }
+            
+            if (mandarCorreos)
+            {
+                MandaCorreo(direcciones, comprobante.archivoXMLTimbrado, archivoPDF);
+            }
 
 
         }
@@ -326,7 +560,8 @@ namespace ClinicaFB.Helpers
         }
 
 
-        public static void GeneraPDFFactura(CFDI cfdi, List<CFDIDetalle> conceptos, string xml = "")
+        public static string GeneraPDFFactura(CFDI cfdi, List<CFDIDetalle> conceptos,string xml = "")
+
         {
             int emisorId = cfdi.EmisorId;
             string serie = cfdi.Serie;
@@ -344,13 +579,13 @@ namespace ClinicaFB.Helpers
                 emi = db.Query<Emisor>(sql, new {EmisorId =emisorId}).FirstOrDefault();
 
                 if (emi == null)
-                    return;
+                    return "";
 
                 sql = Queries.IngresoSelect();
                 Ingreso ing = db.Query<Ingreso>(sql, new {IngresoId =cfdi.IngresoId }).FirstOrDefault();
 
                 if (ing == null)
-                    return;
+                    return "";
 
                 sql = Queries.SucursalSelect();
                 Sucursal suc = db.Query<Sucursal>(sql, new {SucursalId=ing.SucursalId}).FirstOrDefault();
@@ -429,7 +664,7 @@ namespace ClinicaFB.Helpers
 
 
             ReportParameter folioCompleto = new ReportParameter("FolioCompleto", $"{serie.Trim()} {folio.ToString()}");
-           ReportParameter lugarFecha = new ReportParameter("LugarFecha", $"CP {emi.CP.Trim()}   {cfdi.Fecha.ToShortDateString()}");
+            ReportParameter lugarFecha = new ReportParameter("LugarFecha", $"CP {emi.CP.Trim()}   {cfdi.Fecha.ToShortDateString()}");
             ReportParameter letras = new ReportParameter("Letras", let);
 
             ReportParameter cadenaOriginal = new ReportParameter("CadenaOriginal", cadenaSAT);
@@ -471,8 +706,13 @@ namespace ClinicaFB.Helpers
 
             string archivoPDF = General.CarpetaCfdi(cfdi.EmisorRFC, cfdi.Fecha) + General.NombreArchivoPDF("FAC",cfdi.Serie,cfdi.Folio);
 
-           byte[] bytes = rptFactura.LocalReport.Render(
-                "PDF", null, out mimeType, out encoding, out filenameExtension,
+
+            var deviceInfo = @"<DeviceInfo>
+            <EmbedFonts>None</EmbedFonts>
+            </DeviceInfo>";
+
+            byte[] bytes = rptFactura.LocalReport.Render(
+                "PDF", deviceInfo, out mimeType, out encoding, out filenameExtension,
                 out streamids, out warnings);
 
            using (FileStream fs = new FileStream(archivoPDF, FileMode.Create))
@@ -484,8 +724,36 @@ namespace ClinicaFB.Helpers
                 File.Delete(archCBB);
 
 
+            return archivoPDF;
 
 
+
+        }
+
+        private static void  ImprimeArchivo(string archivo, string impresora)
+        {
+            PdfDocumentView doc = new PdfDocumentView();
+            doc.Load(archivo);
+            
+            PrinterSettings ps = new PrinterSettings();
+            ps.PrinterName = impresora;
+            
+
+            PrintDialog dialog = new PrintDialog();
+
+            dialog.PrinterSettings = ps;
+
+            dialog.AllowPrintToFile = true;
+
+            dialog.AllowSomePages = true;
+            dialog.AllowCurrentPage = true;
+            dialog.Document = doc.PrintDocument;
+
+
+            //Print the PDF document
+            dialog.Document.Print();
+            //Dispose the viewer
+            doc.Dispose();
 
         }
     }

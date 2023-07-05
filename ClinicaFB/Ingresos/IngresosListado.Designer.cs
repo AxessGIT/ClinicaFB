@@ -30,18 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IngresosListado));
             this.grdIngresos = new System.Windows.Forms.DataGridView();
-            this.cmdBuscar = new System.Windows.Forms.Button();
             this.dtpFechaFinal = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaInicial = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cmdVer = new System.Windows.Forms.Button();
             this.cmdFacturar = new System.Windows.Forms.Button();
             this.cmdTicket = new System.Windows.Forms.Button();
-            this.cmdImprimir = new System.Windows.Forms.Button();
             this.cmdExportar = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
             this.cmdCancelar = new System.Windows.Forms.Button();
+            this.cmdVer = new System.Windows.Forms.Button();
+            this.cmdBuscar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdIngresos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,16 +54,6 @@
             this.grdIngresos.ReadOnly = true;
             this.grdIngresos.Size = new System.Drawing.Size(833, 423);
             this.grdIngresos.TabIndex = 13;
-            // 
-            // cmdBuscar
-            // 
-            this.cmdBuscar.Location = new System.Drawing.Point(206, 31);
-            this.cmdBuscar.Name = "cmdBuscar";
-            this.cmdBuscar.Size = new System.Drawing.Size(70, 29);
-            this.cmdBuscar.TabIndex = 12;
-            this.cmdBuscar.Text = "&Buscar";
-            this.cmdBuscar.UseVisualStyleBackColor = true;
-            this.cmdBuscar.Click += new System.EventHandler(this.cmdBuscar_Click);
             // 
             // dtpFechaFinal
             // 
@@ -100,79 +89,100 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Fecha inicial";
             // 
-            // cmdVer
-            // 
-            this.cmdVer.Location = new System.Drawing.Point(850, 83);
-            this.cmdVer.Name = "cmdVer";
-            this.cmdVer.Size = new System.Drawing.Size(94, 29);
-            this.cmdVer.TabIndex = 14;
-            this.cmdVer.Text = "&Ver";
-            this.cmdVer.UseVisualStyleBackColor = true;
-            // 
             // cmdFacturar
             // 
-            this.cmdFacturar.Location = new System.Drawing.Point(850, 151);
+            this.cmdFacturar.Image = ((System.Drawing.Image)(resources.GetObject("cmdFacturar.Image")));
+            this.cmdFacturar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdFacturar.Location = new System.Drawing.Point(850, 175);
             this.cmdFacturar.Name = "cmdFacturar";
-            this.cmdFacturar.Size = new System.Drawing.Size(94, 29);
+            this.cmdFacturar.Size = new System.Drawing.Size(96, 40);
             this.cmdFacturar.TabIndex = 15;
             this.cmdFacturar.Text = "&Facturar";
+            this.cmdFacturar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdFacturar.UseVisualStyleBackColor = true;
+            this.cmdFacturar.Click += new System.EventHandler(this.cmdFacturar_Click);
             // 
             // cmdTicket
             // 
-            this.cmdTicket.Location = new System.Drawing.Point(850, 117);
+            this.cmdTicket.Image = ((System.Drawing.Image)(resources.GetObject("cmdTicket.Image")));
+            this.cmdTicket.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdTicket.Location = new System.Drawing.Point(850, 129);
             this.cmdTicket.Name = "cmdTicket";
-            this.cmdTicket.Size = new System.Drawing.Size(94, 29);
+            this.cmdTicket.Size = new System.Drawing.Size(96, 40);
             this.cmdTicket.TabIndex = 16;
             this.cmdTicket.Text = "&Ticket";
+            this.cmdTicket.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdTicket.UseVisualStyleBackColor = true;
-            // 
-            // cmdImprimir
-            // 
-            this.cmdImprimir.Location = new System.Drawing.Point(850, 185);
-            this.cmdImprimir.Name = "cmdImprimir";
-            this.cmdImprimir.Size = new System.Drawing.Size(94, 29);
-            this.cmdImprimir.TabIndex = 18;
-            this.cmdImprimir.Text = "&Imprimir";
-            this.cmdImprimir.UseVisualStyleBackColor = true;
+            this.cmdTicket.Click += new System.EventHandler(this.cmdTicket_Click);
             // 
             // cmdExportar
             // 
-            this.cmdExportar.Location = new System.Drawing.Point(850, 219);
+            this.cmdExportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdExportar.Location = new System.Drawing.Point(850, 267);
             this.cmdExportar.Name = "cmdExportar";
-            this.cmdExportar.Size = new System.Drawing.Size(94, 29);
+            this.cmdExportar.Size = new System.Drawing.Size(96, 40);
             this.cmdExportar.TabIndex = 19;
             this.cmdExportar.Text = "&Exportar";
+            this.cmdExportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdExportar.UseVisualStyleBackColor = true;
             // 
             // cmdSalir
             // 
-            this.cmdSalir.Location = new System.Drawing.Point(850, 289);
+            this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdSalir.Location = new System.Drawing.Point(850, 313);
             this.cmdSalir.Name = "cmdSalir";
-            this.cmdSalir.Size = new System.Drawing.Size(94, 29);
+            this.cmdSalir.Size = new System.Drawing.Size(96, 40);
             this.cmdSalir.TabIndex = 20;
             this.cmdSalir.Text = "&Salir";
+            this.cmdSalir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
             // cmdCancelar
             // 
-            this.cmdCancelar.Location = new System.Drawing.Point(850, 254);
+            this.cmdCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdCancelar.Location = new System.Drawing.Point(850, 221);
             this.cmdCancelar.Name = "cmdCancelar";
-            this.cmdCancelar.Size = new System.Drawing.Size(94, 29);
+            this.cmdCancelar.Size = new System.Drawing.Size(96, 40);
             this.cmdCancelar.TabIndex = 21;
             this.cmdCancelar.Text = "&Cancelar";
+            this.cmdCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdCancelar.UseVisualStyleBackColor = true;
+            // 
+            // cmdVer
+            // 
+            this.cmdVer.Image = ((System.Drawing.Image)(resources.GetObject("cmdVer.Image")));
+            this.cmdVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdVer.Location = new System.Drawing.Point(850, 83);
+            this.cmdVer.Name = "cmdVer";
+            this.cmdVer.Size = new System.Drawing.Size(96, 40);
+            this.cmdVer.TabIndex = 14;
+            this.cmdVer.Text = "&Ver";
+            this.cmdVer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cmdVer.UseVisualStyleBackColor = true;
+            this.cmdVer.Click += new System.EventHandler(this.cmdVer_Click);
+            // 
+            // cmdBuscar
+            // 
+            this.cmdBuscar.Image = ((System.Drawing.Image)(resources.GetObject("cmdBuscar.Image")));
+            this.cmdBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdBuscar.Location = new System.Drawing.Point(206, 22);
+            this.cmdBuscar.Name = "cmdBuscar";
+            this.cmdBuscar.Size = new System.Drawing.Size(73, 29);
+            this.cmdBuscar.TabIndex = 12;
+            this.cmdBuscar.Text = "&Buscar";
+            this.cmdBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cmdBuscar.UseVisualStyleBackColor = true;
+            this.cmdBuscar.Click += new System.EventHandler(this.cmdBuscar_Click);
             // 
             // IngresosListado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(956, 521);
+            this.ClientSize = new System.Drawing.Size(958, 521);
             this.Controls.Add(this.cmdCancelar);
             this.Controls.Add(this.cmdSalir);
             this.Controls.Add(this.cmdExportar);
-            this.Controls.Add(this.cmdImprimir);
             this.Controls.Add(this.cmdTicket);
             this.Controls.Add(this.cmdFacturar);
             this.Controls.Add(this.cmdVer);
@@ -207,7 +217,6 @@
         private System.Windows.Forms.Button cmdVer;
         private System.Windows.Forms.Button cmdFacturar;
         private System.Windows.Forms.Button cmdTicket;
-        private System.Windows.Forms.Button cmdImprimir;
         private System.Windows.Forms.Button cmdExportar;
         private System.Windows.Forms.Button cmdSalir;
         private System.Windows.Forms.Button cmdCancelar;

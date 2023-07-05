@@ -324,7 +324,7 @@ namespace ClinicaFB.Agenda
                 return;
             }
 
-            ingCaptura ingCaptura = new ingCaptura(Convert.ToInt32(cita.Paciente_Id));
+            ingCaptura ingCaptura = new ingCaptura("CLI", Convert.ToInt32(cita.Paciente_Id));
             ingCaptura.Show();
 
         }

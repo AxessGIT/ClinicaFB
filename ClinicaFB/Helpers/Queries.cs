@@ -14,6 +14,110 @@ namespace ClinicaFB.Helpers
 {
     public static class Queries
     {
+        #region FormasPago
+        public static string FormasPagoSelect()
+        {
+            string sql = "";
+            sql = "Select FormaPagoId,Nombre,Clave,CVEFOP From FormasPago Order By Clave";
+            return sql;
+        }
+
+        public static string FormaPagoUltimaClave()
+        {
+            string sql = "Select max(Clave) as Ultima From FormasPago";
+            return sql;
+
+        }
+
+        public static string FormaPagoExisteClave()
+        {
+            string sql = "Select Nombre,Clave,CVEFOP From FormasPago Where Clave=@Clave";
+            return sql;
+
+        }
+
+
+
+        public static string FormaPagoSelect()
+        {
+            string sql = "";
+            sql = "Select Nombre,Clave,CVEFOP From FormasPago Where FormaPagoId = @FormaPagoId";
+            return sql;
+        }
+
+        public static string FormaPagoInsert()
+        {
+            string sql = "";
+            sql = "Insert Into FormasPago (Nombre,Clave,CVEFOP) Values (@Nombre,@Clave,@CVEFOP) Returning FormaPagoId";
+            return sql;
+        }
+
+        public static string FormaPagoUpdate()
+        {
+            string sql = "";
+            sql = "Update FormasPago set Nombre = @Nombre,Clave=@Clave,CVEFOP=@CVEFOP Where FormaPagoId = @FormaPagoId";
+            return sql;
+        }
+
+        public static string FormaPagoDelete()
+        {
+            string sql = "";
+            sql = "Delete From FormasPago Where FormaPagoId = @FormaPagoId";
+            return sql;
+        }
+
+
+
+        #endregion
+
+        #region Almacenes
+        public static string AlmacenesSelect()
+        {
+            string sql = "";
+            sql = "Select AlmacenId,Nombre,Defa From Almacenes Order By Nombre";
+            return sql;
+        }
+
+        public static string AlmacenSelect()
+        {
+            string sql = "";
+            sql = "Select AlmacenId,Nombre,Defa From Almacenes Where AlmacenId=@AlmacenId";
+            return sql;
+        }
+
+
+        public static string AlmacenInsert()
+        {
+            string sql = "";
+            sql = "Insert Into Almacenes (Nombre,Defa) Values (@Nombre,defa) Returning AlmacenId";
+            return sql;
+        }
+
+
+        public static string AlmacenUpdate()
+        {
+            string sql = "";
+            sql = "Update Almacenes Set Nombre = @Nombre, defa = @Defa Where AlmacenId=@AlmacenId";
+            return sql;
+        }
+
+        public static string AlmacenesQuitaDefault()
+        {
+            string sql = "";
+            sql = "Update Almacenes Set defa = false Where AlmacenId>0";
+            return sql;
+        }
+
+
+        public static string AlmacenDelete()
+        {
+            string sql = "";
+            sql = "Delete From Almacenes Where AlmacenId=@AlmacenId";
+            return sql;
+        }
+
+
+        #endregion
 
         #region CFDi
 
@@ -39,8 +143,12 @@ namespace ClinicaFB.Helpers
         public static string FacturasSelectxFechas()
         {
             string sql = "";
-            sql = "Select Cfdis.CfdiId,Cfdis.IngresoId,Cfdis.EmisorId,Emisores.RFC As EmisorRFC,Emisores.Nombre As EmisorNombre,Cfdis.Fecha,Cfdis.Serie,Cfdis.Folio," +
-                "Cfdis.PacienteId, Cfdis.Cancelado, Pacientes.NombreCompleto As PacienteNombre, " +
+            sql = "Select Cfdis.CfdiId,Cfdis.Fecha,Cfdis.Serie,Cfdis.Folio," +
+                "Cfdis.FormaPago,Cfdis.MetodoPago,cfdis.UsoCfdi," +
+                "Cfdis.IngresoId," +
+                "Cfdis.EmisorId,Emisores.RFC As EmisorRFC,Emisores.Nombre As EmisorNombre," +
+                "Cfdis.Cancelado, cfdis.AcuseCan," +
+                "Cfdis.PacienteId, Pacientes.NombreCompleto As PacienteNombre, " +
                 "Cfdis.RazonSocialId,RazonesSociales.RazonSoc as ReceptorNombre," +
                 "Cfdis.Total " +
                 "From cfdis " +
@@ -50,6 +158,27 @@ namespace ClinicaFB.Helpers
                 " Where Cfdis.TipoComprobante='I' and " +
                 " Cfdis.Fecha Between @FechaIni and @FechaFin " +
                 " Order By Cfdis.Fecha Desc";
+            return sql;
+
+
+        }
+
+        public static string FacturaSelect()
+        {
+            string sql = "";
+            sql = "Select Cfdis.CfdiId,Cfdis.Fecha,Cfdis.Serie,Cfdis.Folio," +
+                "Cfdis.FormaPago,Cfdis.MetodoPago,cfdis.UsoCfdi," +
+                "Cfdis.IngresoId," +
+                "Cfdis.EmisorId,Emisores.RFC As EmisorRFC,Emisores.Nombre As EmisorNombre," +
+                "Cfdis.UID,Cfdis.Cancelado, cfdis.AcuseCan," +
+                "Cfdis.PacienteId, Pacientes.NombreCompleto As PacienteNombre, " +
+                "Cfdis.RazonSocialId,RazonesSociales.RazonSoc as ReceptorNombre," +
+                "Cfdis.Total " +
+                "From cfdis " +
+                " Left Join Emisores On Cfdis.Emisorid = Emisores.EmisorId " +
+                " Left Join Pacientes On Cfdis.Pacienteid = Pacientes.Paciente_Id " +
+                " Left Join RazonesSociales On Cfdis.RazonSocialId = RazonesSociales.RazonSocialId " +
+                " Where Cfdis.CfdiId = @CfdiId";
             return sql;
 
 
@@ -195,8 +324,12 @@ namespace ClinicaFB.Helpers
         public static string IngresoSelect()
         {
             string sql = "";
-            sql = " Select SucursalId,Serie,Folio,PacienteId,RazonSocialId,Fecha,Hora,SubTotal,Impuesto,Descuento,RetIVA,RetISR,Total,Cancelado," +
-                "Pago1,Pago2,Pago3,Pago4,Pago5,Pago6,Pago7,Pago8,Pago9,Pago10,Webid From  Ingresos Where IngresoId = @IngresoId";
+            sql = " Select IngresoId,Tipo,SucursalId,Serie,Folio,Fecha,Hora,PacienteId,Pacientes.NombreCompleto as PacienteNombre, " +
+                "Ingresos.RazonSocialId,Ingresos.CveFOP,Ingresos.CveMEP, Ingresos.CveUSO,RazonesSociales.RazonSoc,SubTotal,Impuesto,Descuento,RetIVA,RetISR,Total,Cancelado,WebId " +
+                "From  Ingresos " +
+                " Left Join Pacientes On Ingresos.PacienteId = Pacientes.Paciente_Id " +
+                " Left Join razonesSociales On Ingresos.RazonSocialId = RazonesSociales.RazonSocialId "+
+                "Where IngresoId = @IngresoId";
             return sql;
         }
 
@@ -204,14 +337,14 @@ namespace ClinicaFB.Helpers
         public static string IngresosSelectxSucursalYFechas()
         {
             string sql = "";
-            sql = " Select IngresoId,SucursalId,Serie,Folio,Fecha,Hora,PacienteId,Pacientes.NombreCompleto as PacienteNombre, " +
-                "Ingresos.RazonSocialId,RazonesSociales.RazonSoc,SubTotal,Impuesto,Descuento,RetIVA,RetISR,Total,Cancelado," +
-                "Pago1,Pago2,Pago3,Pago4,Pago5,Pago6,Pago7,Pago8,Pago9,Pago10,Webid " +
+            sql = " Select IngresoId,Tipo,SucursalId,Serie,Folio,Fecha,Hora,PacienteId,Pacientes.NombreCompleto as PacienteNombre, " +
+                "Ingresos.RazonSocialId,Ingresos.CveFOP,Ingresos.CveMEP, Ingresos.CveUSO,RazonesSociales.RazonSoc,SubTotal,Impuesto,Descuento,RetIVA,RetISR,Total,Cancelado,WebId " +
                 "From  Ingresos " +
                 " Left Join Pacientes On Ingresos.PacienteId = Pacientes.Paciente_Id " +
                 " Left Join razonesSociales On Ingresos.RazonSocialId = RazonesSociales.RazonSocialId " +
                 " Where  " +
                 " Ingresos.SucursalId = @SucursalId " +
+                " And Tipo = @Tipo " +
                 " And Ingresos.Fecha Between @FechaInicial and @FechaFinal ";
             return sql;
         }
@@ -222,12 +355,10 @@ namespace ClinicaFB.Helpers
         {
             string sql = "";
             sql = "Insert Into Ingresos " +
-                "(SucursalId,Serie,Folio,PacienteId,RazonSocialId,Fecha,Hora,SubTotal,Impuesto,Descuento,RetIVA,RetISR,Total,Cancelado," +
-                "Pago1,Pago2,Pago3,Pago4,Pago5,Pago6,Pago7,Pago8,Pago9,Pago10,Webid)" +
+                "(SucursalId,Tipo,Serie,Folio,PacienteId,RazonSocialId,CveFOP,CveMEP, CveUSO,Fecha,Hora,SubTotal,Impuesto,Descuento,RetIVA,RetISR,Total,Cancelado,WebId)" +
                 " values " +
-                "(@SucursalId,@Serie,@Folio,@PacienteId,@RazonSocialId,@Fecha,@Hora,@SubTotal,@Impuesto,@Descuento,@RetIVA,@RetISR,@Total,@Cancelado," +
-                "@Pago1,@Pago2,@Pago3,@Pago4,@Pago5,@Pago6,@Pago7,@Pago8,@Pago9,@Pago10,@WebId) " +
-                "Returning IngresoId";
+                "(@SucursalId,@Tipo,@Serie,@Folio,@PacienteId,@RazonSocialId,@CveFOP,@CveMEP,@CveUSO,@Fecha,@Hora,@SubTotal,@Impuesto,@Descuento,@RetIVA,@RetISR,@Total,@Cancelado,@WebId)" +
+                " Returning IngresoId";
             return sql;
         }
 
@@ -238,7 +369,7 @@ namespace ClinicaFB.Helpers
                 "(IngresoId,ArticuloId,Clave,Descripcion,UDM,Cantidad,Precio,CveProSer,CveUni,PorceDes,Descuento,BaseIVA,TipoIVA,TasaIVA,IVA,BaseRetISR,PorceRetISR,RetISR,PorceRetIVA,RetIVA,EmisorId,Serie)" +
                 " values " +
                 "(@IngresoId,@ArticuloId,@Clave,@Descripcion,@UDM,@Cantidad,@Precio,@CveProSer,@CveUni,@PorceDes,@Descuento,@BaseIVA,@TipoIVA,@TasaIVA,@IVA,@BaseRetISR,@PorceRetISR,@RetISR,@PorceRetIVA,@RetIVA,@EmisorId,@Serie) " +
-                "Returning IngresoDetalleId";
+                " Returning IngresoDetalleId";
             return sql;
         }
 
@@ -320,6 +451,16 @@ namespace ClinicaFB.Helpers
                 " Where RazonSocialId=@RazonSocialId";
             return sql;
         }
+
+
+        public static string RazonSocialSelectXRFC()
+        {
+            string sql = "";
+            sql = "Select RazonSocialId,RFC,RazonSoc,Direccion,LocalidadId,CiudadId,EstadoId,PaisId,CP,CveRef,CveUso,CveFop,Cvemep,Email From RazonesSociales" +
+                " Where RFC=@RFC";
+            return sql;
+        }
+
 
         public static string RazonSocialInsert()
         {
@@ -428,6 +569,13 @@ namespace ClinicaFB.Helpers
         {
             string sql = "";
             sql = "Delete From SeriesConceptos Where SerieConceptoId = @SerieConceptoId";
+            return sql;
+        }
+
+        public static string SerieConceptosDelete()
+        {
+            string sql = "";
+            sql = "Delete From SeriesConceptos Where SerieId = @SerieId";
             return sql;
         }
 
@@ -634,7 +782,7 @@ namespace ClinicaFB.Helpers
         public static string EmisoresSelect()
         {
             string sql = "";
-            sql = "Select EmisorId,RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa" +
+            sql = "Select EmisorId,RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa,PDV" +
                 " From Emisores Order by Nombre";
             return sql; 
         }
@@ -642,7 +790,7 @@ namespace ClinicaFB.Helpers
         public static string EmisorSelect()
         {
             string sql = "";
-            sql = "Select RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa" +
+            sql = "Select RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa,PDV" +
                 " From Emisores Where EmisorId = @EmisorId";
             return sql;
         }
@@ -650,9 +798,9 @@ namespace ClinicaFB.Helpers
         public static string EmisorInsert()
         {
             string sql = "";
-            sql = "Insert Into Emisores (RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa)" +
+            sql = "Insert Into Emisores (RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa,PDV)" +
                 " Values " +
-                "(@RFC,@Nombre,@Direccion,@Colonia,@CiudadId,@EstadoId,@Paisid,@CP,@CveRef,@Certificado,@LlavePrivada,@PassWord,@Defa)" +
+                "(@RFC,@Nombre,@Direccion,@Colonia,@CiudadId,@EstadoId,@Paisid,@CP,@CveRef,@Certificado,@LlavePrivada,@PassWord,@Defa,@PDV)" +
                 " Returning EmisorId";
             return sql;
         }
@@ -673,7 +821,8 @@ namespace ClinicaFB.Helpers
                 "Certificado=@Certificado," +
                 "LlavePrivada=@LlavePrivada," +
                 "PassWord=@PassWord," +
-                "Defa=@Defa" +
+                "Defa=@Defa," +
+                "PDV=@PDV " +
                 " Where EmisorId = @EmisorId";
             return sql;
         }
@@ -875,6 +1024,13 @@ namespace ClinicaFB.Helpers
 
         }
 
+        public static string RecetasDoctorSelect()
+        {
+            string sql = "Select PacienteRecetaId,PacienteId,Fecha,Texto,Etiquetas,UsuarioId From PacienteRecetas Where UsuarioId = @UsuarioId Order By Fecha desc,PacienteRecetaId Desc";
+            return sql;
+        }
+
+
         public static string RecetasPacienteSelect()
         {
             string sql = "Select PacienteRecetaId,PacienteId,Fecha,Texto,Etiquetas,UsuarioId From PacienteRecetas Where PacienteId = @PacienteId Order By Fecha desc,PacienteRecetaId Desc";
@@ -921,6 +1077,15 @@ namespace ClinicaFB.Helpers
         #endregion
 
         #region Doctores
+        public static string DoctorSelectXUsuario()
+        {
+            string sql;
+            sql = "Select Doctor_Id,Nombres,Apellido_Paterno,Apellido_Materno,Correos,Telefonos,CedProf,CedEsp,Curriculum,UsuarioId,MostrarEnConsultaAgenda From Doctores ";
+            sql += " Where UsuarioId = @UsuarioId";
+            return sql;
+
+        }
+
         public static string DoctoresSelect()
         {
             string sql;

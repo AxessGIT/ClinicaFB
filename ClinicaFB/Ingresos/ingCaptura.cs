@@ -27,27 +27,55 @@ namespace ClinicaFB.Ingresos
     {
         private int _pacienteId = 0;
         private int _razonSocialId=0;
+
+        private string _tipo;
+
+        private string _cveFOP;
+        private string _cveMEP;
+        private string _cveUSO;
+
+
+        private bool _imprimir;
+        private string _impresora;
+
+
+        private bool _mandarCorreos;
+        private string _correos;
+
+
         private Color _colorFondo = Color.White;
         private Color _colorFuente = Color.Black;
         private BindingList<IngresoDetalle> _conceptos = new BindingList<IngresoDetalle>();
         private BindingList<Emisor> _emisores = new BindingList<Emisor>();
+        private BindingList<Almacen> _almacenes = new BindingList<Almacen>();
 
         private int _ingresoId = 0;
         private int _sucursalId = Properties.Settings.Default.SucursalId;
 
 
-        public ingCaptura(int pacienteId=0)
+        public ingCaptura(string tipo, int pacienteId=0)
         {
             _pacienteId = pacienteId;
+            _tipo = tipo;
             InitializeComponent();
         }
 
         private void ingCaptura_Load(object sender, EventArgs e)
         {
+
+
             CambiaColores();
             txtPorceRetISR.NumberFormatInfo = General.GetFormatoPorcentajeRetencion();
             txtPorceRetIVA.NumberFormatInfo = General.GetFormatoPorcentajeRetencion();
 
+            if (_tipo == "PDV")
+            {
+                Text = "Captura de ventas";
+                CargaAlmacenes();
+
+                lblAlmacen.Visible = true;
+                cboAlmacenes.Visible = true;
+            }
             CargaDatosPaciente();
             SetGrid();
             CargaEmisores();
@@ -55,97 +83,8 @@ namespace ClinicaFB.Ingresos
         }
 
 
-        public static void ImprimeTicket(Ingreso ing, BindingList<IngresoDetalle> conceptos)
-        {
+   
 
-            string datosSucursal = "";
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = Queries.SucursalSelect();
-                Sucursal suc = db.Query<Sucursal>(sql, new {SucursalId = ing.SucursalId}).FirstOrDefault(); 
-
-                if (suc != null)
-                {
-                    datosSucursal = suc.DatosAdicionales;
-                }
-            }
-
-            List<Ingreso> datosTicket = new List<Ingreso> { ing };
-
-
-            List<ReportDataSource> reportDataSources = new List<ReportDataSource>();
-
-            reportDataSources.Add(
-                new ReportDataSource { Name = "dsIngreso", Value = datosTicket }
-            );
-
-            reportDataSources.Add(
-                new ReportDataSource { Name = "dsDetalle", Value = conceptos }
-            );
-
-            ReportViewer rptTicket = new ReportViewer();
-
-            rptTicket.ProcessingMode = ProcessingMode.Local;
-            rptTicket.LocalReport.ReportPath = @"C:\Users\Felipe  Juan\source\repos\ClinicaFB\ClinicaFB\Reportes\Ingresos\Ticket.rdlc";
-            rptTicket.LocalReport.DataSources.Clear();
-
-
-            foreach (var dato in reportDataSources)
-            {
-                rptTicket.LocalReport.DataSources.Add(dato);
-            }
-
-            Warning[] warnings;
-            string[] streamids;
-            string mimeType;
-            string encoding;
-            string filenameExtension;
-
-            string archivoPDF = GetTempPDF();
-
-
-            ReportParameter datos = new ReportParameter("DatosSucursal", datosSucursal);
-
-
-
-
-            ReportParameter[] parametros =
-            {
-                datos
-            };
-
-            rptTicket.LocalReport.EnableExternalImages = true;
-
-            rptTicket.LocalReport.SetParameters(parametros);
-
-
-
-
-
-            byte[] bytes = rptTicket.LocalReport.Render(
-                 "PDF", null, out mimeType, out encoding, out filenameExtension,
-                 out streamids, out warnings);
-
-            using (FileStream fs = new FileStream(archivoPDF, FileMode.Create))
-            {
-                fs.Write(bytes, 0, bytes.Length);
-            }
-
-
-
-        }
-
-
-        private static string GetTempPDF()
-        {
-            string carpetaTemporal = Path.GetTempPath();
-            string archivoPDF = Path.GetRandomFileName();
-            archivoPDF = Path.GetFileNameWithoutExtension(archivoPDF);
-            archivoPDF = carpetaTemporal + archivoPDF + ".pdf";
-            return archivoPDF;
-
-        }
 
 
         private async Task RegistraIngreso(bool facturar)
@@ -160,18 +99,7 @@ namespace ClinicaFB.Ingresos
             int emisorDefaultId = (int) cboEmisores.SelectedValue;
             SerieDoc serieDocumento = new SerieDoc();
 
-            if (_conceptos.Count == 0)
-            {
-                MessageBox.Show("No se ha agregado ningún concepto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
 
-            }
-            string queGenerar = facturar ? "la factura" : "el ticket";
-
-            if (MessageBox.Show($"¿Desea generar {queGenerar}?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-            {
-                return;
-            }
 
 
             string serie = "";
@@ -201,11 +129,16 @@ namespace ClinicaFB.Ingresos
 
             Ingreso ing = new Ingreso();
             ing.SucursalId = _sucursalId;
+
+            ing.Tipo = _tipo;
             
             ing.Serie = serie;
             ing.Folio= folio;
             ing.PacienteId = _pacienteId;
             ing.RazonSocialId= _razonSocialId;
+            ing.CveFOP = _cveFOP;
+            ing.CveMEP = _cveMEP;
+            ing.CveUSO = _cveUSO;
             ing.Fecha = txtFecha.Value;
             ing.Hora = DateTime.Now.TimeOfDay.ToString(); 
             ing.Hora = ing.Hora.Substring(0, 8);
@@ -216,16 +149,6 @@ namespace ClinicaFB.Ingresos
             ing.RetISR = txtRetISR.DecimalValue;
             ing.Total = txtTotal.DecimalValue;
             ing.Cancelado = false;
-            ing.Pago1 = txtPago1.DecimalValue;
-            ing.Pago2 = txtPago2.DecimalValue;
-            ing.Pago3 = txtPago3.DecimalValue;
-            ing.Pago4 = txtPago4.DecimalValue;
-            ing.Pago5 = txtPago5.DecimalValue;
-            ing.Pago6 = txtPago6.DecimalValue;
-            ing.Pago7 = txtPago7.DecimalValue;
-            ing.Pago8 = 0;
-            ing.Pago9 = 0;
-            ing.Pago10 = 0;
             ing.WebId = General.RandomString(5);
 
 
@@ -277,11 +200,11 @@ namespace ClinicaFB.Ingresos
 
             if (facturar)
             {
-                ManejaCFDIs.IngresoFacturar(_ingresoId);
+                ManejaCFDIs.IngresoFacturar(_ingresoId,_imprimir,_impresora,_mandarCorreos,_correos);
             }
             else
             {
-                ImprimeTicket(ing, _conceptos);
+                ManejaCFDIs.ImprimeTicket(ing, _conceptos,_imprimir,_impresora,_mandarCorreos,_correos);
             }
             Inicializa();
 
@@ -340,13 +263,6 @@ namespace ClinicaFB.Ingresos
             SetGrid();
             CalculaTotales();
 
-            txtPago1.DecimalValue = 0;
-            txtPago2.DecimalValue = 0;
-            txtPago3.DecimalValue = 0;
-            txtPago4.DecimalValue = 0;
-            txtPago5.DecimalValue = 0;
-            txtPago6.DecimalValue = 0;
-            txtPago7.DecimalValue = 0;
 
             txtConcepto.Focus();
 
@@ -386,6 +302,43 @@ namespace ClinicaFB.Ingresos
             cboEmisores.ValueMember = "EmisorId";
             cboEmisores.DisplayMember = "Nombre";
             cboEmisores.SelectedValue = emisorIdDefa;
+
+        }
+
+
+        private void CargaAlmacenes()
+        {
+
+            int almacenIdDefa = 0;
+            string nombreAlmacenDefa = "";
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.AlmacenesSelect();
+
+                var res = db.Query<Almacen>(sql).ToList();
+
+                foreach (var alma in res)
+                {
+                    if (alma.Defa)
+                    {
+                        almacenIdDefa = alma.AlmacenId;
+                        nombreAlmacenDefa= alma.Nombre;
+                        break;
+                    }
+
+                }
+                _almacenes = new BindingList<Almacen>(res);
+
+
+
+            }
+            cboAlmacenes.DataSource = null;
+            cboAlmacenes.DataSource = _almacenes;
+            cboAlmacenes.ValueMember = "AlmacenId";
+            cboAlmacenes.DisplayMember = "Nombre";
+            cboAlmacenes.SelectedValue = almacenIdDefa;
+
 
         }
         private void CambiaColores()
@@ -438,6 +391,10 @@ namespace ClinicaFB.Ingresos
                 {
                     txtRFC.Text = raz.RFC;
                     txtRazonSocial.Text = raz.RazonSoc;
+                    _cveFOP = raz.CveFOP;
+                    _cveMEP = raz.CveMEP;
+                    _cveUSO = raz.CveUSO;
+                    _correos = raz.Email;
                 }
             }
 
@@ -740,6 +697,25 @@ namespace ClinicaFB.Ingresos
 
         private void cmdTicket_Click(object sender, EventArgs e)
         {
+
+            if (_conceptos.Count == 0)
+            {
+                MessageBox.Show("No se ha agregado ningún concepto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+
+            }
+
+            TicketEnviarOpciones opciones = new TicketEnviarOpciones();
+            opciones.ShowDialog();
+
+            if (opciones.Aceptar == false)
+            {
+                return;
+            }
+
+            _imprimir = opciones.chkImprimir.Checked;
+            _mandarCorreos = opciones.chkMandarCorreo.Checked;
+            _correos=opciones.txtCorreos.Text.Trim();
            GuardaIngreso(false);
         }
 
@@ -758,7 +734,31 @@ namespace ClinicaFB.Ingresos
 
         private void cmdFactura_Click(object sender, EventArgs e)
         {
-             GuardaIngreso(true);
+            if (_conceptos.Count == 0)
+            {
+                MessageBox.Show("No se ha agregado ningún concepto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+
+            }
+
+            IngresoFacturarOpciones clavesSATSeleccionar = new IngresoFacturarOpciones(_razonSocialId,_cveFOP,_cveMEP,_cveUSO,_correos);
+            clavesSATSeleccionar.ShowDialog();
+
+            if (clavesSATSeleccionar.Aceptar == false)
+            {
+                return;
+            }
+
+            _cveFOP = clavesSATSeleccionar.txtCveFOP.Text.Trim();
+            _cveMEP = clavesSATSeleccionar.txtCveMEP.Text.Trim();
+            _cveUSO = clavesSATSeleccionar.txtCveUSO.Text.Trim();
+            _imprimir = clavesSATSeleccionar.chkImprimir.Checked;
+            _impresora = clavesSATSeleccionar.cboImpresoras.Text.Trim();
+            _mandarCorreos = clavesSATSeleccionar.chkMandarCorreo.Checked;
+            _correos = clavesSATSeleccionar.txtCorreos.Text.Trim();
+
+            GuardaIngreso(true);
+            
         }
 
         private void cmdConceptoModificar_Click(object sender, EventArgs e)
@@ -789,6 +789,16 @@ namespace ClinicaFB.Ingresos
         }
 
         private void txtConcepto_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtRFC_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtRazonSocial_TextChanged(object sender, EventArgs e)
         {
 
         }

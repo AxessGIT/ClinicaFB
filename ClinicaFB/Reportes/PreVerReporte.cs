@@ -17,12 +17,14 @@ namespace ClinicaFB.Reportes
         private string _reporte;
         private string _titulo;
         private List<ReportDataSource> _datos;
+        private bool _mediaCarta;
 
-        public PreVerReporte(string Reporte, List<ReportDataSource> datos,string titulo)
+        public PreVerReporte(string Reporte, List<ReportDataSource> datos,string titulo,bool mediaCarta = false)
         {
             _reporte = Reporte;
             _datos = datos;
             _titulo = titulo;
+            _mediaCarta = mediaCarta;
             InitializeComponent();
         }
 
@@ -39,11 +41,21 @@ namespace ClinicaFB.Reportes
             }
 
 
-            System.Drawing.Printing.PageSettings carta = new System.Drawing.Printing.PageSettings();
-            carta.PaperSize = new System.Drawing.Printing.PaperSize("Letter", 850, 1100);
-            carta.Margins = new System.Drawing.Printing.Margins(10, 10, 10, 0);
+            System.Drawing.Printing.PageSettings hoja = new System.Drawing.Printing.PageSettings();
 
-            Viewer.SetPageSettings(carta);
+            if (_mediaCarta)
+            {
+                hoja.PaperSize = new System.Drawing.Printing.PaperSize("850 x 11 in", 850, 550);
+
+            }
+            else
+            {
+                hoja.PaperSize = new System.Drawing.Printing.PaperSize("Letter", 850, 1100);
+
+            }
+            hoja.Margins = new System.Drawing.Printing.Margins(10, 10, 10, 0);
+
+            Viewer.SetPageSettings(hoja);
             Viewer.RefreshReport();
         }
     }

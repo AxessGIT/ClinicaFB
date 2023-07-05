@@ -55,10 +55,12 @@ namespace ClinicaFB.Configuracion
             this.cmdLineas = new System.Windows.Forms.Button();
             this.cmdMarcas = new System.Windows.Forms.Button();
             this.pagFacturacion = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.cmdImportarClientes = new System.Windows.Forms.Button();
             this.cmdImpuestos = new System.Windows.Forms.Button();
             this.cmdClavesSAT = new System.Windows.Forms.Button();
             this.cmdEmisores = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
+            this.cmdFormasPago = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.pagSucursales.SuspendLayout();
@@ -327,6 +329,7 @@ namespace ClinicaFB.Configuracion
             // 
             // pagPuntoDeventa
             // 
+            this.pagPuntoDeventa.Controls.Add(this.cmdFormasPago);
             this.pagPuntoDeventa.Controls.Add(this.cmdArticulos);
             this.pagPuntoDeventa.Controls.Add(this.cmdLineas);
             this.pagPuntoDeventa.Controls.Add(this.cmdMarcas);
@@ -345,9 +348,9 @@ namespace ClinicaFB.Configuracion
             // 
             this.cmdArticulos.Image = ((System.Drawing.Image)(resources.GetObject("cmdArticulos.Image")));
             this.cmdArticulos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdArticulos.Location = new System.Drawing.Point(279, 13);
+            this.cmdArticulos.Location = new System.Drawing.Point(281, 13);
             this.cmdArticulos.Name = "cmdArticulos";
-            this.cmdArticulos.Size = new System.Drawing.Size(130, 38);
+            this.cmdArticulos.Size = new System.Drawing.Size(137, 38);
             this.cmdArticulos.TabIndex = 15;
             this.cmdArticulos.Text = "&Artículos";
             this.cmdArticulos.UseVisualStyleBackColor = true;
@@ -357,9 +360,9 @@ namespace ClinicaFB.Configuracion
             // 
             this.cmdLineas.Image = ((System.Drawing.Image)(resources.GetObject("cmdLineas.Image")));
             this.cmdLineas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdLineas.Location = new System.Drawing.Point(143, 13);
+            this.cmdLineas.Location = new System.Drawing.Point(144, 13);
             this.cmdLineas.Name = "cmdLineas";
-            this.cmdLineas.Size = new System.Drawing.Size(130, 38);
+            this.cmdLineas.Size = new System.Drawing.Size(137, 38);
             this.cmdLineas.TabIndex = 14;
             this.cmdLineas.Text = "&Líneas";
             this.cmdLineas.UseVisualStyleBackColor = true;
@@ -371,7 +374,7 @@ namespace ClinicaFB.Configuracion
             this.cmdMarcas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cmdMarcas.Location = new System.Drawing.Point(7, 13);
             this.cmdMarcas.Name = "cmdMarcas";
-            this.cmdMarcas.Size = new System.Drawing.Size(130, 38);
+            this.cmdMarcas.Size = new System.Drawing.Size(137, 38);
             this.cmdMarcas.TabIndex = 13;
             this.cmdMarcas.Text = "&Marcas";
             this.cmdMarcas.UseVisualStyleBackColor = true;
@@ -379,6 +382,7 @@ namespace ClinicaFB.Configuracion
             // 
             // pagFacturacion
             // 
+            this.pagFacturacion.Controls.Add(this.cmdImportarClientes);
             this.pagFacturacion.Controls.Add(this.cmdImpuestos);
             this.pagFacturacion.Controls.Add(this.cmdClavesSAT);
             this.pagFacturacion.Controls.Add(this.cmdEmisores);
@@ -391,6 +395,18 @@ namespace ClinicaFB.Configuracion
             this.pagFacturacion.TabIndex = 4;
             this.pagFacturacion.Text = "Facturación";
             this.pagFacturacion.ThemesEnabled = false;
+            // 
+            // cmdImportarClientes
+            // 
+            this.cmdImportarClientes.Image = ((System.Drawing.Image)(resources.GetObject("cmdImportarClientes.Image")));
+            this.cmdImportarClientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdImportarClientes.Location = new System.Drawing.Point(16, 283);
+            this.cmdImportarClientes.Name = "cmdImportarClientes";
+            this.cmdImportarClientes.Size = new System.Drawing.Size(172, 47);
+            this.cmdImportarClientes.TabIndex = 16;
+            this.cmdImportarClientes.Text = "&Importar clientes FF";
+            this.cmdImportarClientes.UseVisualStyleBackColor = true;
+            this.cmdImportarClientes.Click += new System.EventHandler(this.cmdImportarClientes_Click);
             // 
             // cmdImpuestos
             // 
@@ -439,6 +455,19 @@ namespace ClinicaFB.Configuracion
             this.cmdSalir.Text = "&Salir";
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
+            // 
+            // cmdFormasPago
+            // 
+            this.cmdFormasPago.Image = ((System.Drawing.Image)(resources.GetObject("cmdFormasPago.Image")));
+            this.cmdFormasPago.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdFormasPago.Location = new System.Drawing.Point(418, 13);
+            this.cmdFormasPago.Name = "cmdFormasPago";
+            this.cmdFormasPago.Size = new System.Drawing.Size(137, 38);
+            this.cmdFormasPago.TabIndex = 16;
+            this.cmdFormasPago.Text = "&Formas de pago";
+            this.cmdFormasPago.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cmdFormasPago.UseVisualStyleBackColor = true;
+            this.cmdFormasPago.Click += new System.EventHandler(this.cmdFormasPago_Click);
             // 
             // ConfiguracionMenu
             // 
@@ -501,5 +530,7 @@ namespace ClinicaFB.Configuracion
         private System.Windows.Forms.Button cmdArticulos;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv pagSucursales;
         private System.Windows.Forms.Button cmdSucursales;
+        private System.Windows.Forms.Button cmdImportarClientes;
+        private System.Windows.Forms.Button cmdFormasPago;
     }
 }

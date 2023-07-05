@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClinicaFB.Ingresos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,6 +27,19 @@ namespace ClinicaFB.PuntoDeVenta
         {
             ArticulosListado articulosListado = new ArticulosListado();
             articulosListado.Show();
+
+        }
+
+        private void cmdAlmacenes_Click(object sender, EventArgs e)
+        {
+            AlmacenesListado almacenesListado = new AlmacenesListado();
+            almacenesListado.ShowDialog();
+        }
+
+        private void cmdPuntoDeVenta_Click(object sender, EventArgs e)
+        {
+            ingCaptura ingCaptura = new ingCaptura("PDV");
+            ingCaptura.ShowDialog();
 
         }
     }

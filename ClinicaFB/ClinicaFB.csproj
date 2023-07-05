@@ -57,7 +57,35 @@
   <PropertyGroup>
     <ApplicationIcon>Clinicadb.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Video.2.2.5\lib\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Video.DirectShow.2.2.5\lib\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -69,53 +97,53 @@
       <HintPath>..\..\CFDiLib\CFDiLib\bin\Debug\CFDiLib.dll</HintPath>
     </Reference>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.2.0.123\lib\net461\Dapper.dll</HintPath>
+      <HintPath>..\packages\Dapper.2.0.143\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="FirebirdSql.Data.FirebirdClient, Version=9.1.1.0, Culture=neutral, PublicKeyToken=3750abcc3150b00c, processorArchitecture=MSIL">
       <HintPath>..\packages\FirebirdSql.Data.FirebirdClient.9.1.1\lib\net48\FirebirdSql.Data.FirebirdClient.dll</HintPath>
     </Reference>
-    <Reference Include="MailKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailKit.4.0.0\lib\net48\MailKit.dll</HintPath>
+    <Reference Include="MailKit, Version=4.1.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.4.1.0\lib\net48\MailKit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.30.1\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.31.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.31.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.30.1\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.31.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.31.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.30.1\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.31.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.31.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.30.1\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.31.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.31.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1586.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1586.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1586.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1586.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1586.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.160.1000.6\lib\net462\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
-    <Reference Include="MimeKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
-      <HintPath>..\packages\MimeKit.4.0.0\lib\net48\MimeKit.dll</HintPath>
+    <Reference Include="MimeKit, Version=4.1.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.4.1.0\lib\net48\MimeKit.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -123,79 +151,82 @@
     <Reference Include="QRCoder, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ZKWeb.Fork.QRCoder.1.3.0\lib\net461\QRCoder.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Chart.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Chart.Base.21.2.4\lib\net46\Syncfusion.Chart.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Chart.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Chart.Base.22.1.36\lib\net46\Syncfusion.Chart.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Chart.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Chart.Windows.21.2.4\lib\net46\Syncfusion.Chart.Windows.dll</HintPath>
+    <Reference Include="Syncfusion.Chart.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Chart.Windows.22.1.36\lib\net46\Syncfusion.Chart.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Compression.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Compression.Base.21.2.4\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Compression.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.22.1.36\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Core.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Data.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.DataSource.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.DocIO.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.DocIO.WinForms.21.2.4\lib\net46\Syncfusion.DocIO.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Core.WinForms, Version=22.1460.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Data.WinForms, Version=22.1460.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.DataSource.WinForms, Version=22.1460.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.DocIO.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.DocIO.WinForms.22.1.36\lib\net46\Syncfusion.DocIO.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Edit.Windows, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.Grid.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Grid.Base.21.2.4\lib\net46\Syncfusion.Grid.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Edit.Windows, Version=22.1460.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grid.Base.22.1.36\lib\net46\Syncfusion.Grid.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Grid.Grouping.Windows.21.2.4\lib\net46\Syncfusion.Grid.Grouping.Windows.dll</HintPath>
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grid.Grouping.Windows.22.1.36\lib\net46\Syncfusion.Grid.Grouping.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Grid.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Grid.Windows.21.2.4\lib\net46\Syncfusion.Grid.Windows.dll</HintPath>
+    <Reference Include="Syncfusion.Grid.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grid.Windows.22.1.36\lib\net46\Syncfusion.Grid.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.GridCommon.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Gridconverter.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.GridExport.WinForms.21.2.4\lib\net46\Syncfusion.Gridconverter.Windows.dll</HintPath>
+    <Reference Include="Syncfusion.GridCommon.WinForms, Version=22.1460.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Gridconverter.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.GridExport.WinForms.22.1.36\lib\net46\Syncfusion.Gridconverter.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.GridHelperClasses.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.GridHelperClasses.Windows.21.2.4\lib\net46\Syncfusion.GridHelperClasses.Windows.dll</HintPath>
+    <Reference Include="Syncfusion.GridHelperClasses.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.GridHelperClasses.Windows.22.1.36\lib\net46\Syncfusion.GridHelperClasses.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Grouping.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Grouping.Base.21.2.4\lib\net46\Syncfusion.Grouping.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Grouping.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grouping.Base.22.1.36\lib\net46\Syncfusion.Grouping.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Licensing, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Licensing.21.2.4\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Licensing, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.22.1.36\lib\net46\Syncfusion.Licensing.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Linq.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Linq.Base.21.2.4\lib\net46\Syncfusion.Linq.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Linq.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Linq.Base.22.1.36\lib\net46\Syncfusion.Linq.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.OfficeChart.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.OfficeChart.Base.21.2.4\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.OfficeChart.Base.22.1.36\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Pdf.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Pdf.WinForms.21.2.4\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Pdf.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.WinForms.22.1.36\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.PivotAnalysis.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.PivotAnalysis.Base.21.2.4\lib\net46\Syncfusion.PivotAnalysis.Base.dll</HintPath>
+    <Reference Include="Syncfusion.PdfViewer.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.PdfViewer.Windows.22.1.36\lib\net46\Syncfusion.PdfViewer.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.PivotAnalysis.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.PivotTable.WinForms.21.2.4\lib\net46\Syncfusion.PivotAnalysis.Windows.dll</HintPath>
+    <Reference Include="Syncfusion.PivotAnalysis.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.PivotAnalysis.Base.22.1.36\lib\net46\Syncfusion.PivotAnalysis.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SfDataGrid.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.SfInput.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.SfListView.WinForms, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.Shared.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Shared.Base.21.2.4\lib\net46\Syncfusion.Shared.Base.dll</HintPath>
+    <Reference Include="Syncfusion.PivotAnalysis.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.PivotTable.WinForms.22.1.36\lib\net46\Syncfusion.PivotAnalysis.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Shared.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Shared.Windows.21.2.4\lib\net46\Syncfusion.Shared.Windows.dll</HintPath>
+    <Reference Include="Syncfusion.SfDataGrid.WinForms, Version=22.1460.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfInput.WinForms, Version=22.1460.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.SfListView.WinForms, Version=22.1460.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Shared.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.Base.22.1.36\lib\net46\Syncfusion.Shared.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SpellChecker.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.SpellChecker.Base.21.2.4\lib\net46\Syncfusion.SpellChecker.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.Windows.22.1.36\lib\net46\Syncfusion.Shared.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Tools.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Tools.Base.21.2.4\lib\net46\Syncfusion.Tools.Base.dll</HintPath>
+    <Reference Include="Syncfusion.SpellChecker.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SpellChecker.Base.22.1.36\lib\net46\Syncfusion.SpellChecker.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Tools.Windows, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Tools.Windows.21.2.4\lib\net46\Syncfusion.Tools.Windows.dll</HintPath>
+    <Reference Include="Syncfusion.Tools.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Tools.Base.22.1.36\lib\net46\Syncfusion.Tools.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.XlsIO.Base, Version=21.2460.4.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.XlsIO.WinForms.21.2.4\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Tools.Windows, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Tools.Windows.22.1.36\lib\net46\Syncfusion.Tools.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=22.1460.36.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.XlsIO.WinForms.22.1.36\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -205,8 +236,11 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.30.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.30.1\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.Formats.Asn1, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Formats.Asn1.7.0.0\lib\net462\System.Formats.Asn1.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.31.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.31.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
@@ -232,8 +266,8 @@
     <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.7.0.2\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=7.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.7.0.3\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -251,8 +285,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Twilio, Version=6.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Twilio.6.6.0\lib\net451\Twilio.dll</HintPath>
+    <Reference Include="Twilio, Version=6.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.6.9.0\lib\net451\Twilio.dll</HintPath>
     </Reference>
     <Reference Include="ZKWeb.System.Drawing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ZKWeb.System.Drawing.4.0.1\lib\net45\ZKWeb.System.Drawing.dll</HintPath>
@@ -337,6 +371,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Agenda\Recurso.cs" />
+    <Compile Include="Configuracion\ClientesFFImportar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\ClientesFFImportar.Designer.cs">
+      <DependentUpon>ClientesFFImportar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuracion\Facturacion\ClaveSATBuscar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -475,6 +515,18 @@
     <Compile Include="Agenda\DiaImprimir.Designer.cs">
       <DependentUpon>DiaImprimir.cs</DependentUpon>
     </Compile>
+    <Compile Include="Configuracion\PuntoDeVenta\FormapagoAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\PuntoDeVenta\FormapagoAltasCambios.Designer.cs">
+      <DependentUpon>FormapagoAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\PuntoDeVenta\FormasPagoListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\PuntoDeVenta\FormasPagoListado.Designer.cs">
+      <DependentUpon>FormasPagoListado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuracion\PuntoDeVenta\ImpuestoAltasCambios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -553,6 +605,12 @@
     <Compile Include="Expedientes\PacienteDatosAgenda.Designer.cs">
       <DependentUpon>PacienteDatosAgenda.cs</DependentUpon>
     </Compile>
+    <Compile Include="Expedientes\PacienteFotoTomar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expedientes\PacienteFotoTomar.Designer.cs">
+      <DependentUpon>PacienteFotoTomar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Expedientes\PacientesAltasCambios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -578,11 +636,29 @@
       <DependentUpon>TabletPacienteVer.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Conversion.cs" />
+    <Compile Include="Ingresos\CfdiCancelar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\CfdiCancelar.Designer.cs">
+      <DependentUpon>CfdiCancelar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ingresos\CFDisLIstado.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Ingresos\CFDisLIstado.Designer.cs">
       <DependentUpon>CFDisLIstado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresos\CfdiVisor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\CfdiVisor.Designer.cs">
+      <DependentUpon>CfdiVisor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresos\IngresoFacturarOpciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\IngresoFacturarOpciones.Designer.cs">
+      <DependentUpon>IngresoFacturarOpciones.cs</DependentUpon>
     </Compile>
     <Compile Include="Ingresos\ConceptoModificar.cs">
       <SubType>Form</SubType>
@@ -590,11 +666,23 @@
     <Compile Include="Ingresos\ConceptoModificar.Designer.cs">
       <DependentUpon>ConceptoModificar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ingresos\IngresoFacturar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\IngresoFacturar.Designer.cs">
+      <DependentUpon>IngresoFacturar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ingresos\IngresosListado.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Ingresos\IngresosListado.Designer.cs">
       <DependentUpon>IngresosListado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresos\IngresoVer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\IngresoVer.Designer.cs">
+      <DependentUpon>IngresoVer.cs</DependentUpon>
     </Compile>
     <Compile Include="Ingresos\RazonesSocialesListado.cs">
       <SubType>Form</SubType>
@@ -628,6 +716,12 @@
     <Compile Include="Ingresos\IngMenu.Designer.cs">
       <DependentUpon>IngMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ingresos\TicketEnviarOpciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ingresos\TicketEnviarOpciones.Designer.cs">
+      <DependentUpon>TicketEnviarOpciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -645,6 +739,7 @@
     <Compile Include="ModeloWEB\CitaWEB.cs" />
     <Compile Include="ModeloWEB\DoctorWEB.cs" />
     <Compile Include="Modelo\ActDatos.cs" />
+    <Compile Include="Modelo\Almacen.cs" />
     <Compile Include="Modelo\Articulo.cs" />
     <Compile Include="Modelo\CFDIDetalle.cs" />
     <Compile Include="Modelo\Cita.cs" />
@@ -658,11 +753,10 @@
     <Compile Include="Modelo\DescripcionCat.cs" />
     <Compile Include="Modelo\Doctor.cs" />
     <Compile Include="ModeloConfiguracion\Empresa.cs" />
-    <Compile Include="Modelo\Documento.cs" />
-    <Compile Include="Modelo\DocumentoDetalle.cs" />
     <Compile Include="Modelo\Emisor.cs" />
     <Compile Include="Modelo\Equipo.cs" />
     <Compile Include="Modelo\CFDI.cs" />
+    <Compile Include="Modelo\FormaPago.cs" />
     <Compile Include="Modelo\Impuesto.cs" />
     <Compile Include="Modelo\Ingreso.cs" />
     <Compile Include="Modelo\IngresoDetalle.cs" />
@@ -675,12 +769,25 @@
     <Compile Include="Modelo\Procedimiento.cs" />
     <Compile Include="Modelo\RazonSocial.cs" />
     <Compile Include="Modelo\Receta.cs" />
+    <Compile Include="Modelo\RecetaDatos.cs" />
     <Compile Include="Modelo\RecetaMedipiel.cs" />
     <Compile Include="Modelo\SerieConcepto.cs" />
     <Compile Include="Modelo\SerieDoc.cs" />
     <Compile Include="Modelo\Sucursal.cs" />
     <Compile Include="Modelo\TextoRapido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuntoDeVenta\AlmacenesAltasCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PuntoDeVenta\AlmacenesAltasCambios.Designer.cs">
+      <DependentUpon>AlmacenesAltasCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PuntoDeVenta\AlmacenesListado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PuntoDeVenta\AlmacenesListado.Designer.cs">
+      <DependentUpon>AlmacenesListado.cs</DependentUpon>
+    </Compile>
     <Compile Include="PuntoDeVenta\ArticuloAltaCambio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -756,6 +863,9 @@
     <EmbeddedResource Include="Agenda\MenuCita.resx">
       <DependentUpon>MenuCita.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\ClientesFFImportar.resx">
+      <DependentUpon>ClientesFFImportar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuracion\Facturacion\ClaveSATBuscar.resx">
       <DependentUpon>ClaveSATBuscar.cs</DependentUpon>
     </EmbeddedResource>
@@ -825,6 +935,12 @@
     <EmbeddedResource Include="Agenda\DiaImprimir.resx">
       <DependentUpon>DiaImprimir.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\PuntoDeVenta\FormapagoAltasCambios.resx">
+      <DependentUpon>FormapagoAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\PuntoDeVenta\FormasPagoListado.resx">
+      <DependentUpon>FormasPagoListado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuracion\PuntoDeVenta\ImpuestoAltasCambios.resx">
       <DependentUpon>ImpuestoAltasCambios.cs</DependentUpon>
     </EmbeddedResource>
@@ -864,6 +980,9 @@
     <EmbeddedResource Include="Expedientes\PacienteDatosAgenda.resx">
       <DependentUpon>PacienteDatosAgenda.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Expedientes\PacienteFotoTomar.resx">
+      <DependentUpon>PacienteFotoTomar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Expedientes\PacientesAltasCambios.resx">
       <DependentUpon>PacientesAltasCambios.cs</DependentUpon>
     </EmbeddedResource>
@@ -876,14 +995,29 @@
     <EmbeddedResource Include="Expedientes\TabletPacienteVer.resx">
       <DependentUpon>TabletPacienteVer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\CfdiCancelar.resx">
+      <DependentUpon>CfdiCancelar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ingresos\CFDisLIstado.resx">
       <DependentUpon>CFDisLIstado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\CfdiVisor.resx">
+      <DependentUpon>CfdiVisor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\IngresoFacturarOpciones.resx">
+      <DependentUpon>IngresoFacturarOpciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Ingresos\ConceptoModificar.resx">
       <DependentUpon>ConceptoModificar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\IngresoFacturar.resx">
+      <DependentUpon>IngresoFacturar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ingresos\IngresosListado.resx">
       <DependentUpon>IngresosListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\IngresoVer.resx">
+      <DependentUpon>IngresoVer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Ingresos\RazonesSocialesListado.resx">
       <DependentUpon>RazonesSocialesListado.cs</DependentUpon>
@@ -896,6 +1030,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Ingresos\IngMenu.resx">
       <DependentUpon>IngMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingresos\TicketEnviarOpciones.resx">
+      <DependentUpon>TicketEnviarOpciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -913,6 +1050,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="PuntoDeVenta\AlmacenesAltasCambios.resx">
+      <DependentUpon>AlmacenesAltasCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PuntoDeVenta\AlmacenesListado.resx">
+      <DependentUpon>AlmacenesListado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PuntoDeVenta\ArticuloAltaCambio.resx">
       <DependentUpon>ArticuloAltaCambio.cs</DependentUpon>
     </EmbeddedResource>
@@ -938,6 +1081,7 @@
       <DependentUpon>PreVerReporte.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\PuntoDeVenta\Impuestos.rdlc" />
+    <EmbeddedResource Include="Reportes\Recetas\RecetaFormato.rdlc" />
     <None Include="imagenes\Cuartos.ai" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ClinicaFB.Modelo.CFDI.datasource" />
@@ -947,6 +1091,8 @@
     <None Include="Properties\DataSources\ClinicaFB.Modelo.Ingreso.datasource" />
     <None Include="Properties\DataSources\ClinicaFB.Modelo.IngresoDetalle.datasource" />
     <None Include="Properties\DataSources\ClinicaFB.Modelo.Nota.datasource" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.RecetaDatos.datasource" />
+    <None Include="Properties\DataSources\ClinicaFB.Modelo.RecetaMedipiel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

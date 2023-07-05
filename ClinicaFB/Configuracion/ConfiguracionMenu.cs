@@ -225,5 +225,17 @@ namespace ClinicaFB.Configuracion
             SucursalesListado sucursalesListado = new SucursalesListado();
             sucursalesListado.Show();
         }
+
+        private void cmdImportarClientes_Click(object sender, EventArgs e)
+        {
+            ClientesFFImportar clientesFFImportar = new ClientesFFImportar();
+            clientesFFImportar.ShowDialog();
+        }
+
+        private void cmdFormasPago_Click(object sender, EventArgs e)
+        {
+            FormasPagoListado formasPagoListado = new FormasPagoListado();  
+            formasPagoListado.ShowDialog();
+        }
     }
 }

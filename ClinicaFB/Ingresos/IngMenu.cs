@@ -25,7 +25,7 @@ namespace ClinicaFB.Ingresos
 
         private void cmdCapturaIngreso_Click(object sender, EventArgs e)
         {
-            ingCaptura ingCaptura = new ingCaptura();
+            ingCaptura ingCaptura = new ingCaptura("CLI");
             ingCaptura.Show();
         }
 
@@ -49,7 +49,7 @@ namespace ClinicaFB.Ingresos
 
         private void cmdListadoIngresos_Click(object sender, EventArgs e)
         {
-            IngresosListado ingresosListado=new IngresosListado();
+            IngresosListado ingresosListado=new IngresosListado("CLI");
             ingresosListado.Show();
         }
     }

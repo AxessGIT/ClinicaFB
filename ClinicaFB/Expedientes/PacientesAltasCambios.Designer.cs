@@ -48,6 +48,8 @@ namespace ClinicaFB.Expedientes
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.tabPaciente = new System.Windows.Forms.TabControl();
             this.pagGenerales = new System.Windows.Forms.TabPage();
+            this.cmdCapturar = new System.Windows.Forms.Button();
+            this.picFoto = new System.Windows.Forms.PictureBox();
             this.cboOrigen = new System.Windows.Forms.ComboBox();
             this.label62 = new System.Windows.Forms.Label();
             this.cboPaises = new Syncfusion.WinForms.ListView.SfComboBox();
@@ -172,16 +174,17 @@ namespace ClinicaFB.Expedientes
             this.cmdImagenAgregar = new System.Windows.Forms.Button();
             this.cmdImagenBorrar = new System.Windows.Forms.Button();
             this.grdImagenes = new System.Windows.Forms.DataGridView();
+            this.colImagen = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDiagnostico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPalabrasClave = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblNombrePaciente = new System.Windows.Forms.Label();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.cmdImprimirExpedienteRDLC = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
-            this.colImagen = new System.Windows.Forms.DataGridViewImageColumn();
-            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDiagnostico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colComentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPaciente.SuspendLayout();
             this.pagGenerales.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboPaises)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboLocalidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboEstados)).BeginInit();
@@ -344,6 +347,8 @@ namespace ClinicaFB.Expedientes
             // 
             // pagGenerales
             // 
+            this.pagGenerales.Controls.Add(this.cmdCapturar);
+            this.pagGenerales.Controls.Add(this.picFoto);
             this.pagGenerales.Controls.Add(this.cboOrigen);
             this.pagGenerales.Controls.Add(this.label62);
             this.pagGenerales.Controls.Add(this.cboPaises);
@@ -393,6 +398,27 @@ namespace ClinicaFB.Expedientes
             this.pagGenerales.UseVisualStyleBackColor = true;
             this.pagGenerales.Click += new System.EventHandler(this.pagGenerales_Click);
             // 
+            // cmdCapturar
+            // 
+            this.cmdCapturar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCapturar.Image")));
+            this.cmdCapturar.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.cmdCapturar.Location = new System.Drawing.Point(855, 265);
+            this.cmdCapturar.Name = "cmdCapturar";
+            this.cmdCapturar.Size = new System.Drawing.Size(291, 31);
+            this.cmdCapturar.TabIndex = 40;
+            this.cmdCapturar.Text = "&Tomar foto al paciente";
+            this.cmdCapturar.UseVisualStyleBackColor = true;
+            this.cmdCapturar.Click += new System.EventHandler(this.cmdCapturar_Click);
+            // 
+            // picFoto
+            // 
+            this.picFoto.Location = new System.Drawing.Point(855, 6);
+            this.picFoto.Name = "picFoto";
+            this.picFoto.Size = new System.Drawing.Size(291, 253);
+            this.picFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picFoto.TabIndex = 38;
+            this.picFoto.TabStop = false;
+            // 
             // cboOrigen
             // 
             this.cboOrigen.FormattingEnabled = true;
@@ -424,6 +450,7 @@ namespace ClinicaFB.Expedientes
             this.cboPaises.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboPaises.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboPaises.TabIndex = 29;
+            this.cboPaises.TabStop = false;
             // 
             // cboLocalidades
             // 
@@ -436,6 +463,7 @@ namespace ClinicaFB.Expedientes
             this.cboLocalidades.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboLocalidades.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboLocalidades.TabIndex = 31;
+            this.cboLocalidades.TabStop = false;
             this.cboLocalidades.SelectedIndexChanged += new System.EventHandler(this.cboLocalidades_SelectedIndexChanged);
             // 
             // cboEstados
@@ -449,6 +477,7 @@ namespace ClinicaFB.Expedientes
             this.cboEstados.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboEstados.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboEstados.TabIndex = 25;
+            this.cboEstados.TabStop = false;
             // 
             // cboCiudades
             // 
@@ -461,6 +490,7 @@ namespace ClinicaFB.Expedientes
             this.cboCiudades.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboCiudades.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboCiudades.TabIndex = 33;
+            this.cboCiudades.TabStop = false;
             // 
             // label17
             // 
@@ -558,6 +588,7 @@ namespace ClinicaFB.Expedientes
             this.cboCiudadesOrigen.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboCiudadesOrigen.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboCiudadesOrigen.TabIndex = 21;
+            this.cboCiudadesOrigen.TabStop = false;
             // 
             // cboReferentes
             // 
@@ -570,6 +601,7 @@ namespace ClinicaFB.Expedientes
             this.cboReferentes.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboReferentes.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboReferentes.TabIndex = 19;
+            this.cboReferentes.TabStop = false;
             // 
             // cboOcupaciones
             // 
@@ -582,6 +614,7 @@ namespace ClinicaFB.Expedientes
             this.cboOcupaciones.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboOcupaciones.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboOcupaciones.TabIndex = 17;
+            this.cboOcupaciones.TabStop = false;
             // 
             // cboEstadosCiviles
             // 
@@ -594,6 +627,7 @@ namespace ClinicaFB.Expedientes
             this.cboEstadosCiviles.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboEstadosCiviles.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboEstadosCiviles.TabIndex = 15;
+            this.cboEstadosCiviles.TabStop = false;
             // 
             // label18
             // 
@@ -688,6 +722,7 @@ namespace ClinicaFB.Expedientes
             this.cboDiagnosticos.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboDiagnosticos.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboDiagnosticos.TabIndex = 1;
+            this.cboDiagnosticos.TabStop = false;
             // 
             // label26
             // 
@@ -709,6 +744,7 @@ namespace ClinicaFB.Expedientes
             this.cboMaquillajes.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboMaquillajes.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboMaquillajes.TabIndex = 9;
+            this.cboMaquillajes.TabStop = false;
             // 
             // label25
             // 
@@ -778,6 +814,7 @@ namespace ClinicaFB.Expedientes
             this.cboMedicos.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboMedicos.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboMedicos.TabIndex = 7;
+            this.cboMedicos.TabStop = false;
             // 
             // label21
             // 
@@ -799,6 +836,7 @@ namespace ClinicaFB.Expedientes
             this.cboExposicionesSolares.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboExposicionesSolares.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboExposicionesSolares.TabIndex = 5;
+            this.cboExposicionesSolares.TabStop = false;
             // 
             // label20
             // 
@@ -820,6 +858,7 @@ namespace ClinicaFB.Expedientes
             this.cboColoresDePiel.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboColoresDePiel.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboColoresDePiel.TabIndex = 3;
+            this.cboColoresDePiel.TabStop = false;
             // 
             // label19
             // 
@@ -1640,6 +1679,7 @@ namespace ClinicaFB.Expedientes
             // 
             // cmdImagenBorrar
             // 
+            this.cmdImagenBorrar.Image = global::ClinicaFB.Properties.Resources.Borrar24;
             this.cmdImagenBorrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cmdImagenBorrar.Location = new System.Drawing.Point(976, 111);
             this.cmdImagenBorrar.Name = "cmdImagenBorrar";
@@ -1647,6 +1687,7 @@ namespace ClinicaFB.Expedientes
             this.cmdImagenBorrar.TabIndex = 31;
             this.cmdImagenBorrar.Text = "&Borrar";
             this.cmdImagenBorrar.UseVisualStyleBackColor = true;
+            this.cmdImagenBorrar.Click += new System.EventHandler(this.cmdImagenBorrar_Click);
             // 
             // grdImagenes
             // 
@@ -1657,13 +1698,43 @@ namespace ClinicaFB.Expedientes
             this.colImagen,
             this.colFecha,
             this.colDiagnostico,
-            this.colComentario});
+            this.colPalabrasClave});
             this.grdImagenes.Location = new System.Drawing.Point(24, 29);
             this.grdImagenes.Name = "grdImagenes";
             this.grdImagenes.ReadOnly = true;
             this.grdImagenes.RowTemplate.Height = 50;
             this.grdImagenes.Size = new System.Drawing.Size(947, 439);
             this.grdImagenes.TabIndex = 0;
+            // 
+            // colImagen
+            // 
+            this.colImagen.DataPropertyName = "Imagen";
+            this.colImagen.HeaderText = "Imagen";
+            this.colImagen.Name = "colImagen";
+            this.colImagen.ReadOnly = true;
+            // 
+            // colFecha
+            // 
+            this.colFecha.DataPropertyName = "Fecha";
+            this.colFecha.HeaderText = "Fecha";
+            this.colFecha.Name = "colFecha";
+            this.colFecha.ReadOnly = true;
+            // 
+            // colDiagnostico
+            // 
+            this.colDiagnostico.DataPropertyName = "Diagnostico";
+            this.colDiagnostico.HeaderText = "Diagnóstico";
+            this.colDiagnostico.Name = "colDiagnostico";
+            this.colDiagnostico.ReadOnly = true;
+            this.colDiagnostico.Width = 300;
+            // 
+            // colPalabrasClave
+            // 
+            this.colPalabrasClave.DataPropertyName = "PalabrasClave";
+            this.colPalabrasClave.HeaderText = "Palabras clave";
+            this.colPalabrasClave.Name = "colPalabrasClave";
+            this.colPalabrasClave.ReadOnly = true;
+            this.colPalabrasClave.Width = 400;
             // 
             // lblNombrePaciente
             // 
@@ -1707,36 +1778,6 @@ namespace ClinicaFB.Expedientes
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
-            // colImagen
-            // 
-            this.colImagen.DataPropertyName = "Imagen";
-            this.colImagen.HeaderText = "Imagen";
-            this.colImagen.Name = "colImagen";
-            this.colImagen.ReadOnly = true;
-            // 
-            // colFecha
-            // 
-            this.colFecha.DataPropertyName = "Fecha";
-            this.colFecha.HeaderText = "Fecha";
-            this.colFecha.Name = "colFecha";
-            this.colFecha.ReadOnly = true;
-            // 
-            // colDiagnostico
-            // 
-            this.colDiagnostico.DataPropertyName = "Diagnostico";
-            this.colDiagnostico.HeaderText = "Diagnóstico";
-            this.colDiagnostico.Name = "colDiagnostico";
-            this.colDiagnostico.ReadOnly = true;
-            this.colDiagnostico.Width = 300;
-            // 
-            // colComentario
-            // 
-            this.colComentario.DataPropertyName = "Comentario";
-            this.colComentario.HeaderText = "Comentario";
-            this.colComentario.Name = "colComentario";
-            this.colComentario.ReadOnly = true;
-            this.colComentario.Width = 400;
-            // 
             // PacientesAltasCambios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -1761,6 +1802,7 @@ namespace ClinicaFB.Expedientes
             this.tabPaciente.ResumeLayout(false);
             this.pagGenerales.ResumeLayout(false);
             this.pagGenerales.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFoto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboPaises)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboLocalidades)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboEstados)).EndInit();
@@ -1938,6 +1980,8 @@ namespace ClinicaFB.Expedientes
         private System.Windows.Forms.DataGridViewImageColumn colImagen;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFecha;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDiagnostico;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colComentario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPalabrasClave;
+        private System.Windows.Forms.PictureBox picFoto;
+        private System.Windows.Forms.Button cmdCapturar;
     }
 }
