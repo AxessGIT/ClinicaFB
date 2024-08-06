@@ -26,6 +26,51 @@ namespace ClinicaFB.Helpers
     public class General
     {
 
+        public static async Task  GuardaPagos(List<Pago> pagos)
+        {
+            string sql = Queries.PagoInsert;
+            int origenTipo = pagos[0].OrigenTipo;
+            int doctoOrigenId = pagos[0].DoctoOrigenId;
+
+            foreach (var pagoDocto in pagos)
+            {
+                Pago pago = new Pago();
+                pago.OrigenTipo = origenTipo;
+                pago.DoctoOrigenId = doctoOrigenId;
+                pago.Tipo = pagoDocto.Tipo;
+                pago.Importe = pagoDocto.Importe;
+                pago.Referencia = pagoDocto.Referencia;
+
+                using (FbConnection db = General.GetDB())
+                {
+                    await db.ExecuteAsync(sql, pago);
+                }
+            }
+        }
+
+        public static bool IngresoFacturado(int ingresoId)
+        {
+            bool facturado=false;
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.IngresoFacturado();
+                CFDI cfdi = db.Query<CFDI>(sql, new {IngresoId = ingresoId }).FirstOrDefault();
+
+                facturado = cfdi != null;
+            }
+            return facturado;
+        }
+
+
+        public static Doctor GetDoctorXUsuario()
+        {
+            Doctor doc = new Doctor();
+            int usuarioId = (int) Properties.Settings.Default.Usuario_ID;
+            doc = GetDoctorXUsuario(usuarioId);
+            return doc;
+        }
+
         public static Doctor GetDoctorXUsuario(int usuarioId)
         {
             Doctor doc = new Doctor();
@@ -604,7 +649,12 @@ namespace ClinicaFB.Helpers
 
         public static void LlenaComboHoras(ref ComboBox combo)
         {
+            List<string> horas = GeneraHoras();
             combo.Items.Clear();
+            foreach (var hora in horas)
+            {
+                combo.Items.Add(hora);
+            }
 
         }
 

@@ -14,10 +14,8 @@ namespace ClinicaFB.Expedientes
 
     public partial class ExpedientesMenu : Form
     {
-        FbConnection _db;
-        public ExpedientesMenu(FbConnection db)
+        public ExpedientesMenu()
         {
-            _db = db;
             InitializeComponent();
         }
 
@@ -31,6 +29,12 @@ namespace ClinicaFB.Expedientes
         private void cmdSalir_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void cmdPacientesDia_Click(object sender, EventArgs e)
+        {
+            PacientesFecha pacientesFecha = new PacientesFecha();
+            pacientesFecha.ShowDialog();
         }
     }
 }

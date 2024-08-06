@@ -31,6 +31,10 @@ namespace ClinicaFB.Helpers
             {
                 dec = " " + decimales.ToString() + "/100";
             }
+            else
+            {
+                dec = " 00/100";
+            }
 
             string mon = dolares?" Dolares ":" Pesos ";
             res = toText(Convert.ToDouble(entero)) + mon +dec;

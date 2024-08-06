@@ -35,17 +35,19 @@
             // 
             this.Viewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Viewer.Location = new System.Drawing.Point(0, 0);
+            this.Viewer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Viewer.Name = "Viewer";
             this.Viewer.ServerReport.BearerToken = null;
-            this.Viewer.Size = new System.Drawing.Size(726, 573);
+            this.Viewer.Size = new System.Drawing.Size(921, 670);
             this.Viewer.TabIndex = 0;
             // 
             // PreVerReporte
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(726, 573);
+            this.ClientSize = new System.Drawing.Size(921, 670);
             this.Controls.Add(this.Viewer);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "PreVerReporte";
             this.Text = "PreVerReporte";
             this.Load += new System.EventHandler(this.PreVerReporte_Load);

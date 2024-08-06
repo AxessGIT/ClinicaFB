@@ -103,6 +103,16 @@ namespace ClinicaFB.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cancelar20 {
+            get {
+                object obj = ResourceManager.GetObject("Cancelar20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap colores20 {
             get {
                 object obj = ResourceManager.GetObject("colores20", resourceCulture);

@@ -49,6 +49,8 @@
             this.cmdCancelar = new System.Windows.Forms.Button();
             this.cmdArchivos = new System.Windows.Forms.Button();
             this.cmdCerrar = new System.Windows.Forms.Button();
+            this.cmdimprimir = new System.Windows.Forms.Button();
+            this.cmdMandarCorreo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdCfdis)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,7 +69,7 @@
             this.label2.Location = new System.Drawing.Point(368, 17);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 16);
-            this.label2.TabIndex = 1;
+            this.label2.TabIndex = 2;
             this.label2.Text = "Fecha inicial";
             // 
             // label3
@@ -76,7 +78,7 @@
             this.label3.Location = new System.Drawing.Point(578, 17);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(69, 16);
-            this.label3.TabIndex = 2;
+            this.label3.TabIndex = 4;
             this.label3.Text = "Fecha final";
             // 
             // cboEmisores
@@ -86,7 +88,7 @@
             this.cboEmisores.Location = new System.Drawing.Point(64, 13);
             this.cboEmisores.Name = "cboEmisores";
             this.cboEmisores.Size = new System.Drawing.Size(298, 24);
-            this.cboEmisores.TabIndex = 3;
+            this.cboEmisores.TabIndex = 1;
             // 
             // dtpFechaInicial
             // 
@@ -94,7 +96,7 @@
             this.dtpFechaInicial.Location = new System.Drawing.Point(451, 14);
             this.dtpFechaInicial.Name = "dtpFechaInicial";
             this.dtpFechaInicial.Size = new System.Drawing.Size(121, 23);
-            this.dtpFechaInicial.TabIndex = 4;
+            this.dtpFechaInicial.TabIndex = 3;
             // 
             // dtpFechaFinal
             // 
@@ -132,7 +134,7 @@
             this.grdCfdis.Name = "grdCfdis";
             this.grdCfdis.ReadOnly = true;
             this.grdCfdis.Size = new System.Drawing.Size(998, 394);
-            this.grdCfdis.TabIndex = 7;
+            this.grdCfdis.TabIndex = 13;
             // 
             // colEmisor
             // 
@@ -186,10 +188,10 @@
             // 
             this.cmdVer.Image = ((System.Drawing.Image)(resources.GetObject("cmdVer.Image")));
             this.cmdVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdVer.Location = new System.Drawing.Point(1019, 108);
+            this.cmdVer.Location = new System.Drawing.Point(1019, 59);
             this.cmdVer.Name = "cmdVer";
             this.cmdVer.Size = new System.Drawing.Size(111, 43);
-            this.cmdVer.TabIndex = 11;
+            this.cmdVer.TabIndex = 7;
             this.cmdVer.Text = "&Ver";
             this.cmdVer.UseVisualStyleBackColor = true;
             this.cmdVer.Click += new System.EventHandler(this.cmdVer_Click);
@@ -198,10 +200,10 @@
             // 
             this.cmdCancelar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCancelar.Image")));
             this.cmdCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCancelar.Location = new System.Drawing.Point(1019, 157);
+            this.cmdCancelar.Location = new System.Drawing.Point(1019, 255);
             this.cmdCancelar.Name = "cmdCancelar";
             this.cmdCancelar.Size = new System.Drawing.Size(111, 43);
-            this.cmdCancelar.TabIndex = 10;
+            this.cmdCancelar.TabIndex = 11;
             this.cmdCancelar.Text = "&Cancelar";
             this.cmdCancelar.UseVisualStyleBackColor = true;
             this.cmdCancelar.Click += new System.EventHandler(this.cmdCancelar_Click);
@@ -210,10 +212,10 @@
             // 
             this.cmdArchivos.Image = ((System.Drawing.Image)(resources.GetObject("cmdArchivos.Image")));
             this.cmdArchivos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdArchivos.Location = new System.Drawing.Point(1019, 59);
+            this.cmdArchivos.Location = new System.Drawing.Point(1019, 108);
             this.cmdArchivos.Name = "cmdArchivos";
             this.cmdArchivos.Size = new System.Drawing.Size(111, 43);
-            this.cmdArchivos.TabIndex = 9;
+            this.cmdArchivos.TabIndex = 8;
             this.cmdArchivos.Text = "&Archivos";
             this.cmdArchivos.UseVisualStyleBackColor = true;
             this.cmdArchivos.Click += new System.EventHandler(this.cmdArchivos_Click);
@@ -222,19 +224,45 @@
             // 
             this.cmdCerrar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCerrar.Image")));
             this.cmdCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCerrar.Location = new System.Drawing.Point(1019, 206);
+            this.cmdCerrar.Location = new System.Drawing.Point(1019, 304);
             this.cmdCerrar.Name = "cmdCerrar";
             this.cmdCerrar.Size = new System.Drawing.Size(111, 43);
-            this.cmdCerrar.TabIndex = 8;
+            this.cmdCerrar.TabIndex = 12;
             this.cmdCerrar.Text = "C&errar";
             this.cmdCerrar.UseVisualStyleBackColor = true;
             this.cmdCerrar.Click += new System.EventHandler(this.cmdCerrar_Click);
+            // 
+            // cmdimprimir
+            // 
+            this.cmdimprimir.Image = ((System.Drawing.Image)(resources.GetObject("cmdimprimir.Image")));
+            this.cmdimprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdimprimir.Location = new System.Drawing.Point(1019, 206);
+            this.cmdimprimir.Name = "cmdimprimir";
+            this.cmdimprimir.Size = new System.Drawing.Size(111, 43);
+            this.cmdimprimir.TabIndex = 10;
+            this.cmdimprimir.Text = "&Reporte";
+            this.cmdimprimir.UseVisualStyleBackColor = true;
+            this.cmdimprimir.Click += new System.EventHandler(this.cmdimprimir_Click);
+            // 
+            // cmdMandarCorreo
+            // 
+            this.cmdMandarCorreo.Image = ((System.Drawing.Image)(resources.GetObject("cmdMandarCorreo.Image")));
+            this.cmdMandarCorreo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdMandarCorreo.Location = new System.Drawing.Point(1019, 157);
+            this.cmdMandarCorreo.Name = "cmdMandarCorreo";
+            this.cmdMandarCorreo.Size = new System.Drawing.Size(111, 43);
+            this.cmdMandarCorreo.TabIndex = 9;
+            this.cmdMandarCorreo.Text = "&Enviar";
+            this.cmdMandarCorreo.UseVisualStyleBackColor = true;
+            this.cmdMandarCorreo.Click += new System.EventHandler(this.cmdMandarCorreo_Click);
             // 
             // CFDisLIstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1142, 465);
+            this.Controls.Add(this.cmdMandarCorreo);
+            this.Controls.Add(this.cmdimprimir);
             this.Controls.Add(this.cmdVer);
             this.Controls.Add(this.cmdCancelar);
             this.Controls.Add(this.cmdArchivos);
@@ -254,6 +282,7 @@
             this.Name = "CFDisLIstado";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Listado de facturas";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CFDisLIstado_FormClosing);
             this.Load += new System.EventHandler(this.CFDisLIstado_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdCfdis)).EndInit();
             this.ResumeLayout(false);
@@ -283,5 +312,7 @@
         private System.Windows.Forms.Button cmdArchivos;
         private System.Windows.Forms.Button cmdCancelar;
         private System.Windows.Forms.Button cmdVer;
+        private System.Windows.Forms.Button cmdimprimir;
+        private System.Windows.Forms.Button cmdMandarCorreo;
     }
 }

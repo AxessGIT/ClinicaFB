@@ -32,24 +32,16 @@ namespace ClinicaFB.Configuracion.PuntoDeVenta
             if (_esalta)
             {
                 Text = "Agregar forma de pago";
+                cboTipos.SelectedIndex = 0;
 
-                using (FbConnection db = General.GetDB())
-                {
-                    string sql = Queries.FormaPagoUltimaClave();
-                    int cve = db.ExecuteScalar<int>(sql);
-                    cve++;
-                    spnClave.Value = cve;
-                    txtNombre.Focus();
 
-                }
             }
             else
             {
-                spnClave.Enabled = false;
                 Text = "Modificar forma de pago";
                 CargaFormaPago();
             }
-
+            ActiveControl = txtNombre;
         }
 
 
@@ -68,9 +60,10 @@ namespace ClinicaFB.Configuracion.PuntoDeVenta
 
                 if (formaPago != null)
                 {
-                    spnClave.Value = formaPago.Clave;
+                    cboTipos.SelectedIndex = formaPago.Tipo-1;
                     txtNombre.Text = formaPago.Nombre;
                     txtCveFOP.Text = formaPago.CveFOP;
+                    chkTodos.Checked = formaPago.Todos;
                     txtCveFOP_Validated(new { }, new EventArgs { });
 
                 }
@@ -97,12 +90,6 @@ namespace ClinicaFB.Configuracion.PuntoDeVenta
 
         private void cmdGuardar_Click(object sender, EventArgs e)
         {
-            if (spnClave.Value < 1)
-            {
-                MessageBox.Show("Indique la clave","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                spnClave.Focus();
-                return;
-            }
 
 
 
@@ -116,26 +103,13 @@ namespace ClinicaFB.Configuracion.PuntoDeVenta
             string sql = "";
             using (FbConnection db = General.GetDB())
             {
-                sql = Queries.FormaPagoExisteClave();
+                
                 FormaPago fp = new FormaPago();
-
-                if (_esalta) { 
-                    fp = db.Query<FormaPago>(sql, new {Clave = spnClave.Value}).FirstOrDefault();
-
-                    if (fp!= null)
-                    {
-                        MessageBox.Show("Esa clave ya existe", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        txtNombre.Focus();
-                        return;
-
-                    }
-                }
-
-                fp = new FormaPago();
                 fp.FormaPagoId = _formaPagoId;
-                fp.Clave = (int) spnClave.Value;
+                fp.Tipo = cboTipos.SelectedIndex + 1;
                 fp.Nombre = txtNombre.Text;
                 fp.CveFOP = txtCveFOP.Text;
+                fp.Todos = chkTodos.Checked;
 
                 sql = _esalta ? Queries.FormaPagoInsert() : Queries.FormaPagoUpdate();
                 db.Execute(sql, fp);

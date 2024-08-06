@@ -166,8 +166,8 @@ namespace ClinicaFB
 
         private void cmdExpedientes_Click(object sender, EventArgs e)
         {
-            PacientesListado pacientesListado = new PacientesListado();
-            pacientesListado.Show();
+            ExpedientesMenu expedientesMenu = new ExpedientesMenu();
+            expedientesMenu.ShowDialog();
 
         }
 
@@ -192,8 +192,10 @@ namespace ClinicaFB
 
         private void cmdExpediente_Click(object sender, EventArgs e)
         {
-            TabletListadoPacientes tabletListadoPacientes = new TabletListadoPacientes();
-            tabletListadoPacientes.Show();    
+            TabletPacienteVer tabletPacienteVer = new TabletPacienteVer();
+            tabletPacienteVer.Show();
+            //TabletListadoPacientes tabletListadoPacientes = new TabletListadoPacientes();
+            //tabletListadoPacientes.Show();    
         }
 
 

@@ -2,6 +2,7 @@
 using ClinicaFB.Modelo;
 using Dapper;
 using FirebirdSql.Data.FirebirdClient;
+using SplashScreen.WindowsForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -176,6 +177,9 @@ namespace ClinicaFB.Ingresos
 
         }
 
+
+
+
         private void cmdFacturar_Click(object sender, EventArgs e)
         {
             if (HayIngresoSeleccionado() == false)
@@ -183,8 +187,84 @@ namespace ClinicaFB.Ingresos
                 return;
             }
 
+            if (_ingresos[grdIngresos.CurrentRow.Index].Cancelado)
+            {
+                MessageBox.Show("El Ingreso está cancelado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+
+            }
+
+
+
+
             int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
-            ManejaCFDIs.IngresoFacturar(ingresoId);
+            if (General.IngresoFacturado(ingresoId))
+            {
+                MessageBox.Show("El Ingreso ya está facturado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            Ingreso ing = _ingresos[grdIngresos.CurrentRow.Index];
+
+            IngresoFacturarOpciones clavesSATSeleccionar = new IngresoFacturarOpciones(ing.RazonSocialId, ing.CveFOP, ing.CveMEP, ing.CveUSO,selRazon:true);
+            clavesSATSeleccionar.ShowDialog();
+
+            if (clavesSATSeleccionar.Aceptar == false)
+            {
+                return;
+            }
+
+            ing.IngresoId = ingresoId;
+            ing.RazonSocialId = clavesSATSeleccionar.RazonSocialId;
+            ing.CveFOP = clavesSATSeleccionar.txtCveFOP.Text.Trim();
+            ing.CveMEP = clavesSATSeleccionar.txtCveMEP.Text.Trim();
+            ing.CveUSO = clavesSATSeleccionar.txtCveUSO.Text.Trim();
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.IngresoUpdateFacturacion();
+                db.Execute(sql, ing);
+            }
+            bool _imprimir = clavesSATSeleccionar.chkImprimir.Checked;
+            string _impresora = clavesSATSeleccionar.cboImpresoras.Text.Trim();
+            bool _mandarCorreos = clavesSATSeleccionar.chkMandarCorreo.Checked;
+            string _correos = clavesSATSeleccionar.txtCorreos.Text.Trim();
+
+            Splasher splasher = new Splasher("Generando factura");
+            splasher.Show();
+
+           ManejaCFDIs.IngresoFacturar(ingresoId, _imprimir, _impresora, _mandarCorreos, _correos);
+            splasher.Close();
+
+
+        }
+
+        private void cmdCancelar_Click(object sender, EventArgs e)
+        {
+            if (HayIngresoSeleccionado() == false)
+            {
+                return;
+            }
+            if (MessageBox.Show("¿Desea cancelar el ingreso?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                return;
+            }
+
+            using (FbConnection db = General.GetDB())
+            {
+                int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
+                string sql = Queries.IngresoCancelar();
+                db.Execute(sql, new {IngresoId= ingresoId });
+                _ingresos[grdIngresos.CurrentRow.Index].Cancelado = true;
+                grdIngresos.DataSource = _ingresos;
+                grdIngresos.Refresh();  
+                MessageBox.Show("Ingreso Cancelado","Aviso",MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+
+        private void cmdExportar_Click(object sender, EventArgs e)
+        {
 
         }
     }

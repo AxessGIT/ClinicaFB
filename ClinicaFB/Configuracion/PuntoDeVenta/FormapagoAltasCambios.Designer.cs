@@ -38,18 +38,18 @@
             this.cmdBuscarCveFOP = new System.Windows.Forms.Button();
             this.txtDescripcionFOP = new System.Windows.Forms.TextBox();
             this.txtCveFOP = new System.Windows.Forms.TextBox();
-            this.spnClave = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.spnClave)).BeginInit();
+            this.cboTipos = new System.Windows.Forms.ComboBox();
+            this.chkTodos = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // cmdSalir
             // 
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
             this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSalir.Location = new System.Drawing.Point(319, 137);
+            this.cmdSalir.Location = new System.Drawing.Point(306, 156);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(112, 50);
-            this.cmdSalir.TabIndex = 8;
+            this.cmdSalir.TabIndex = 7;
             this.cmdSalir.Text = "&Salir";
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
@@ -58,10 +58,10 @@
             // 
             this.cmdGuardar.Image = ((System.Drawing.Image)(resources.GetObject("cmdGuardar.Image")));
             this.cmdGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdGuardar.Location = new System.Drawing.Point(201, 137);
+            this.cmdGuardar.Location = new System.Drawing.Point(188, 156);
             this.cmdGuardar.Name = "cmdGuardar";
             this.cmdGuardar.Size = new System.Drawing.Size(112, 50);
-            this.cmdGuardar.TabIndex = 7;
+            this.cmdGuardar.TabIndex = 6;
             this.cmdGuardar.Text = "&Guardar";
             this.cmdGuardar.UseVisualStyleBackColor = true;
             this.cmdGuardar.Click += new System.EventHandler(this.cmdGuardar_Click);
@@ -69,19 +69,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 24);
+            this.label1.Location = new System.Drawing.Point(8, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 16);
+            this.label1.Size = new System.Drawing.Size(32, 16);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Clave";
+            this.label1.Text = "Tipo";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 51);
+            this.label2.Location = new System.Drawing.Point(8, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 16);
-            this.label2.TabIndex = 2;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Nombre";
             // 
             // label3
@@ -90,23 +90,23 @@
             this.label3.Location = new System.Drawing.Point(8, 83);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 16);
-            this.label3.TabIndex = 4;
+            this.label3.TabIndex = 2;
             this.label3.Text = "Clave SAT";
             // 
             // txtNombre
             // 
             this.txtNombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtNombre.Location = new System.Drawing.Point(93, 48);
+            this.txtNombre.Location = new System.Drawing.Point(93, 49);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(380, 23);
-            this.txtNombre.TabIndex = 3;
+            this.txtNombre.TabIndex = 1;
             // 
             // cmdBuscarCveFOP
             // 
             this.cmdBuscarCveFOP.Location = new System.Drawing.Point(243, 80);
             this.cmdBuscarCveFOP.Name = "cmdBuscarCveFOP";
             this.cmdBuscarCveFOP.Size = new System.Drawing.Size(32, 23);
-            this.cmdBuscarCveFOP.TabIndex = 6;
+            this.cmdBuscarCveFOP.TabIndex = 4;
             this.cmdBuscarCveFOP.Text = "...";
             this.cmdBuscarCveFOP.UseVisualStyleBackColor = true;
             this.cmdBuscarCveFOP.Click += new System.EventHandler(this.cmdBuscarCveFOP_Click);
@@ -117,30 +117,50 @@
             this.txtDescripcionFOP.Name = "txtDescripcionFOP";
             this.txtDescripcionFOP.ReadOnly = true;
             this.txtDescripcionFOP.Size = new System.Drawing.Size(307, 23);
-            this.txtDescripcionFOP.TabIndex = 27;
+            this.txtDescripcionFOP.TabIndex = 7;
             // 
             // txtCveFOP
             // 
             this.txtCveFOP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCveFOP.Location = new System.Drawing.Point(93, 80);
+            this.txtCveFOP.Location = new System.Drawing.Point(93, 79);
             this.txtCveFOP.Name = "txtCveFOP";
             this.txtCveFOP.Size = new System.Drawing.Size(144, 23);
-            this.txtCveFOP.TabIndex = 5;
+            this.txtCveFOP.TabIndex = 3;
             this.txtCveFOP.Validated += new System.EventHandler(this.txtCveFOP_Validated);
             // 
-            // spnClave
+            // cboTipos
             // 
-            this.spnClave.Location = new System.Drawing.Point(93, 17);
-            this.spnClave.Name = "spnClave";
-            this.spnClave.Size = new System.Drawing.Size(76, 23);
-            this.spnClave.TabIndex = 1;
+            this.cboTipos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTipos.FormattingEnabled = true;
+            this.cboTipos.Items.AddRange(new object[] {
+            "Efectivo",
+            "Tarjeta",
+            "Transferencia",
+            "Cheque"});
+            this.cboTipos.Location = new System.Drawing.Point(93, 18);
+            this.cboTipos.Name = "cboTipos";
+            this.cboTipos.Size = new System.Drawing.Size(159, 24);
+            this.cboTipos.TabIndex = 1;
+            // 
+            // chkTodos
+            // 
+            this.chkTodos.AutoSize = true;
+            this.chkTodos.Checked = true;
+            this.chkTodos.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTodos.Location = new System.Drawing.Point(93, 119);
+            this.chkTodos.Name = "chkTodos";
+            this.chkTodos.Size = new System.Drawing.Size(190, 20);
+            this.chkTodos.TabIndex = 5;
+            this.chkTodos.Text = "Incluir en todos los emisores";
+            this.chkTodos.UseVisualStyleBackColor = true;
             // 
             // FormapagoAltasCambios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 213);
-            this.Controls.Add(this.spnClave);
+            this.ClientSize = new System.Drawing.Size(606, 212);
+            this.Controls.Add(this.chkTodos);
+            this.Controls.Add(this.cboTipos);
             this.Controls.Add(this.cmdBuscarCveFOP);
             this.Controls.Add(this.txtDescripcionFOP);
             this.Controls.Add(this.txtCveFOP);
@@ -156,7 +176,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormapagoAltasCambios";
             this.Load += new System.EventHandler(this.FormapagoAltasCambios_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.spnClave)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,6 +192,7 @@
         private System.Windows.Forms.Button cmdBuscarCveFOP;
         private System.Windows.Forms.TextBox txtDescripcionFOP;
         private System.Windows.Forms.TextBox txtCveFOP;
-        private System.Windows.Forms.NumericUpDown spnClave;
+        private System.Windows.Forms.ComboBox cboTipos;
+        private System.Windows.Forms.CheckBox chkTodos;
     }
 }

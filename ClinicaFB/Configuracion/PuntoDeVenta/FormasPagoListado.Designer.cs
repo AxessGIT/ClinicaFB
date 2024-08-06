@@ -34,7 +34,7 @@
             this.cmdModificar = new System.Windows.Forms.Button();
             this.cmdAgregar = new System.Windows.Forms.Button();
             this.grdFormasPago = new System.Windows.Forms.DataGridView();
-            this.colClave = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTipoNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCveFOP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdFormasPago)).BeginInit();
@@ -93,7 +93,7 @@
             this.grdFormasPago.AllowUserToDeleteRows = false;
             this.grdFormasPago.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdFormasPago.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colClave,
+            this.colTipoNombre,
             this.colNombre,
             this.colCveFOP});
             this.grdFormasPago.Location = new System.Drawing.Point(25, 14);
@@ -102,12 +102,12 @@
             this.grdFormasPago.Size = new System.Drawing.Size(497, 439);
             this.grdFormasPago.TabIndex = 15;
             // 
-            // colClave
+            // colTipoNombre
             // 
-            this.colClave.DataPropertyName = "Clave";
-            this.colClave.HeaderText = "Clave";
-            this.colClave.Name = "colClave";
-            this.colClave.ReadOnly = true;
+            this.colTipoNombre.DataPropertyName = "TipoNombre";
+            this.colTipoNombre.HeaderText = "Tipo";
+            this.colTipoNombre.Name = "colTipoNombre";
+            this.colTipoNombre.ReadOnly = true;
             // 
             // colNombre
             // 
@@ -154,7 +154,7 @@
         private System.Windows.Forms.Button cmdModificar;
         private System.Windows.Forms.Button cmdAgregar;
         private System.Windows.Forms.DataGridView grdFormasPago;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colClave;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTipoNombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCveFOP;
     }

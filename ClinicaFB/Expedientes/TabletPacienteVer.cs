@@ -32,9 +32,10 @@ namespace ClinicaFB.Expedientes
         BindingList<RecetaMedipiel> _listRecetasMedipiel = new BindingList<RecetaMedipiel>();
 
         BindingList<PacientesImagenes> _PacienteImagenes = new BindingList<PacientesImagenes>();
+        BindingList<string> _medicamentos = new BindingList<string>();  
 
 
-        public TabletPacienteVer(int pacienteId)
+        public TabletPacienteVer(int pacienteId=0)
         {
             _pacienteId = pacienteId;
             InitializeComponent();
@@ -42,6 +43,30 @@ namespace ClinicaFB.Expedientes
 
         private void TabletPacienteVer_Load(object sender, EventArgs e)
         {
+            if (_pacienteId == 0)
+            {
+                VerPacientesFecha();
+            }
+            CargaPaciente();
+
+        }
+
+        private void ChecaPaciente()
+        {
+            if (_pacienteId == 0)
+            {
+                MessageBox.Show("No se ha seleccionado un paciente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tabPaciente.SelectedIndex = 0;
+                return;
+            }
+        }
+
+        private void CargaPaciente()
+        {
+            if (_pacienteId == 0)
+            {
+                return;
+            }
 
             using (FbConnection db = General.GetDB())
             {
@@ -57,13 +82,14 @@ namespace ClinicaFB.Expedientes
             MuestraDatos();
             CargaNotas();
 
-
         }
 
         private void MuestraDatos()
         {
 
 
+            this.Text = "Paciente: " + _paciente.NombreCompleto;
+            lblNombrePaciente.Text = _paciente.NombreCompleto;
 
             if (_paciente.Fecha_Nacimiento>=dtpFechaNacimiento.MinDate)
                 dtpFechaNacimiento.Value = _paciente.Fecha_Nacimiento;
@@ -155,6 +181,7 @@ namespace ClinicaFB.Expedientes
 
         private void pagDatosACT_Enter(object sender, EventArgs e)
         {
+            ChecaPaciente();
 
                 using (FbConnection db = General.GetDB())
                 {
@@ -219,7 +246,23 @@ namespace ClinicaFB.Expedientes
 
         private void pagRecetas_Enter(object sender, EventArgs e)
         {
+                
+            ChecaPaciente();
             CargaTextosRapidos();
+            CargaMedicamentos();
+        }
+
+        private void CargaMedicamentos()
+        {
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.MedicamentosSelect();
+                var res = db.Query<string>(sql).ToList();
+                _medicamentos = new BindingList<string>(res);
+            }
+            autoCompleteMed.DataSource = _medicamentos;
+            autoCompleteMed.AutoAddItem = true;
         }
 
         private void CargaTextosRapidos()
@@ -314,6 +357,7 @@ namespace ClinicaFB.Expedientes
 
         private void pagRecetasPaciente_Enter(object sender, EventArgs e)
         {
+            ChecaPaciente();
             txtRecetaGuardada.BackColor = Color.White;
             txtRecetaGuardada.ForeColor = Color.Black;
 
@@ -471,6 +515,8 @@ namespace ClinicaFB.Expedientes
 
         private void pagRecetasMedipiel_Enter(object sender, EventArgs e)
         {
+            ChecaPaciente();
+
             txtRecetaMedipiel.BackColor = Color.White;
             txtRecetaMedipiel.ForeColor = Color.Black;
 
@@ -603,6 +649,7 @@ namespace ClinicaFB.Expedientes
 
         private void pagImagenes_Enter(object sender, EventArgs e)
         {
+            ChecaPaciente();
             RefrescaImagenes();
         }
 
@@ -721,6 +768,8 @@ namespace ClinicaFB.Expedientes
 
         private void pagRecetasUsuario_Enter(object sender, EventArgs e)
         {
+            ChecaPaciente();
+
             txtRecetaGuardadaDoctor.BackColor = Color.White;
             txtRecetaGuardadaDoctor.ForeColor = Color.Black;
 
@@ -839,12 +888,91 @@ namespace ClinicaFB.Expedientes
                 );
 
 
-            PreVerReporte reporte = new PreVerReporte($@"{carpetaReportes}\Recetas\RecetaFormato.rdlc", reportDataSources, "Receta",true);
+            PreVerReporte reporte = new PreVerReporte($@"{carpetaReportes}\Recetas\RecetaCarta.rdlc", reportDataSources, "Receta");
             reporte.ShowDialog();
 
 
 
 
         }
+
+        private void cmdPacientesFecha_Click(object sender, EventArgs e)
+        {
+            VerPacientesFecha();
+
+        }
+
+        private void VerPacientesFecha()
+        {
+            TabletPacientesFecha tabletPacientesFecha = new TabletPacientesFecha();
+            tabletPacientesFecha.ShowDialog();
+            _pacienteId = tabletPacientesFecha.PacienteId;
+            CargaPaciente();
+
+        }
+
+        private void cmdBuscarPaciente_Click(object sender, EventArgs e)
+        {
+            TabletListadoPacientes tabletListadoPacientes = new TabletListadoPacientes();
+            tabletListadoPacientes.ShowDialog();
+
+            if (tabletListadoPacientes.PacienteId == 0)
+                return;
+            _pacienteId = tabletListadoPacientes.PacienteId;
+            CargaPaciente();
+        }
+
+        private void autoCompleteMed_BeforeAddItem(object sender, Syncfusion.Windows.Forms.Tools.AutoCompleteAddItemCancelEventArgs args)
+        {
+            string  med = args.RowItem.ItemArray[0].ToString();
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.MedicamentoExists();
+                var res = db.Query(sql, new { Medicamento = med });
+
+                if (res.Count() == 0)
+                {
+
+                    sql = Queries.MedicamentoInsert();
+                    db.Execute(sql, new { Medicamento = med });
+                    CargaMedicamentos();
+                }
+
+            }
+
+
+        }
+
+        private void txtMedicamento_Validated(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMedicamento_Validating(object sender, CancelEventArgs e)
+        {
+            //txtTexto.Text += txtMedicamento.Text;
+
+        }
+
+        private void PasaMedATexto()
+        {
+            txtTexto.Text += txtMedicamento.Text;
+
+        }
+
+        private void txtTexto_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        private void txtMedicamento_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                PasaMedATexto();
+            }
+        }
     }
 }
+

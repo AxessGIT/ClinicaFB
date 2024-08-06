@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClinicaFB.Modelo
 {
-    internal class Emisor
+    public class Emisor
     {
         public int EmisorId { get; set; }
         public string RFC { get; set; }

@@ -124,7 +124,7 @@
   <data name="cmdPuntoDeVenta.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAAAZJJREFUSEutlD9KBTEQh3MOUdBOFBHU0kLQyisIll5A8A9YiDavEGzsXmFnr4Uo
+        DAAACwwBP0AiyAAAAZJJREFUSEutlD9KBTEQh3MOUdBOFBHU0kLQyisIll5A8A9YiDavEGzsXmFnr4Uo
         KhZ6AAtL8QZ6Bn/fkgkhJmbd3YHv7exk9jc7k7dxLW1fvIiHCuTsiaJtCMRiiF2KWcHD6brBGjnkFo3F
         LYEo4BODVXEvbC2FNXKqBVaEtYw/SIE5cSfexYLY9OATA9o/FaMCrJFDLlpoBjsS64LqJM17bKbM+D+b
         jBaawY7FmkBsmoA3/GzLGZsRjIorWmgGswKf4lt8efCJLYpnceJ5zfi8yJW/FguwqTsJxCbEoeBhOCv4
@@ -209,7 +209,7 @@
   <data name="cmdIngresos.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DgAACw4BQL7hQQAAArBJREFUWEfVlsuODVEUhosBEpcIITE1aR5BMEEwEK9gxlSnpU0khu7vIOa8AYkw
+        DQAACw0B7QfALAAAArBJREFUWEfVlsuODVEUhosBEpcIITE1aR5BMEEwEK9gxlSnpU0khu7vIOa8AYkw
         QFwSEneaQTN0nbl+X+UsKevsOn26VXXiT750r7X3qb1q77XWrup/1w34Ck/gOpyD7bAUFkUG8KvAe5iC
         5dC7VsIW2ANn4TlEIG/gICy6DOYeGMRPOA29HEszB67AIVgLygWPwjcwkEuwBDpVKQc+wHFYAWovfATH
         TuroWqtgKxyGaxCB3IZNoAzCnfA4es+JXfASDOItRBAeh74Z6Kw6PALJWg83wQVvgQuaE5GYlmgn8mFS

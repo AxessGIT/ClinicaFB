@@ -76,6 +76,8 @@ namespace ClinicaFB.Configuracion
                 suc.DatosAdicionales = txtDatosAdicionales.Text.Trim();
                 suc.SerieIngresos= txtSerie.Text.Trim();
                 suc.FolioIngresos = (int) spnFolio.Value;
+                suc.SerieFacGlobal = txtSerieFacturaGlobal.Text.Trim();
+                suc.FolioFacGlobal = (int)spnFolioFacturaGlobal.Value;
 
                 db.Execute(sql, suc);
 
@@ -101,6 +103,9 @@ namespace ClinicaFB.Configuracion
                 txtDatosAdicionales.Text = suc.DatosAdicionales;
                 txtSerie.Text = suc.SerieIngresos;
                 spnFolio.Value = suc.FolioIngresos;
+                txtSerieFacturaGlobal.Text = suc.SerieFacGlobal;
+                spnFolioFacturaGlobal.Value = suc.FolioFacGlobal;
+
             }
         }
 

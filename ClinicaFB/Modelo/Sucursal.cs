@@ -13,5 +13,7 @@ namespace ClinicaFB.Modelo
         public string DatosAdicionales { get; set; }
         public string SerieIngresos { get; set; }
         public int FolioIngresos { get; set; }
+        public string SerieFacGlobal { get; set; }
+        public int FolioFacGlobal { get; set; }
     }
 }

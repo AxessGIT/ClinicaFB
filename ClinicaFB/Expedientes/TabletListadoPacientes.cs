@@ -16,6 +16,7 @@ namespace ClinicaFB.Expedientes
 {
     public partial class TabletListadoPacientes : Form
     {
+        public int PacienteId { get; set; } = 0;
         private BindingList<Paciente> _pacientes = null;
 
         public TabletListadoPacientes()
@@ -99,12 +100,16 @@ namespace ClinicaFB.Expedientes
             if (grdPacientes.CurrentRow==null)
                 return;
 
-            int pacienteId = (int) _pacientes[grdPacientes.CurrentRow.Index].Paciente_Id;
+
+
+            PacienteId = (int) _pacientes[grdPacientes.CurrentRow.Index].Paciente_Id;
+            Close();
+            /*
             TabletPacienteVer tabletPacienteVer = new TabletPacienteVer(pacienteId);
             tabletPacienteVer.Text = _pacientes[grdPacientes.CurrentRow.Index].NombreCompleto;
             tabletPacienteVer.lblNombrePaciente.Text= _pacientes[grdPacientes.CurrentRow.Index].NombreCompleto;
 
-            tabletPacienteVer.Show();
+            tabletPacienteVer.Show();*/
         }
 
         private void grdPacientes_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)

@@ -11,10 +11,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using Syncfusion.XlsIO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SplashScreen.WindowsForms;
 
 namespace ClinicaFB.Ingresos
 {
@@ -74,7 +78,7 @@ namespace ClinicaFB.Ingresos
             grdCfdis.RowHeadersVisible = true;
 
 
-            grdCfdis.ColumnHeadersDefaultCellStyle.Font = new Font(grdCfdis.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
+            grdCfdis.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(grdCfdis.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
             grdCfdis.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             grdCfdis.Columns[0].HeaderText = "Emisor";
@@ -255,74 +259,12 @@ namespace ClinicaFB.Ingresos
                 return;
             }
 
-
-            if (MessageBox.Show("¿Desea cancelar la factura?","Confirme",MessageBoxButtons.YesNo,MessageBoxIcon.Question)== DialogResult.No)
-            {
-                return;
-            }
-
-
             int cfdId = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
 
-
-            string uid = "";
-            string rfc = "";
-            string cer = "";
-            string key = "";
-            string pas = "";
-
-            using (FbConnection db = General.GetDB())
-            {
-                CFDI cfdi = new CFDI();
-
-                string sql = Queries.CfdiSelect();
-                cfdi = db.Query<CFDI>(sql, new {Id = cfdId }).FirstOrDefault();
-
-                if (cfdi == null) {
-                    MessageBox.Show("No se encuentra el CFDi", "Confirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-
-                sql = Queries.EmisorSelect();
-                int emisorId = cfdi.EmisorId;
-
-
-                Emisor emi = db.Query<Emisor>(sql, new {EmisorId = emisorId}).FirstOrDefault(); 
-
-                if (emi == null)
-                {
-                    return;
-                }
-
-                uid = cfdi.uid;
-                rfc = emi.RFC;
-                cer = emi.Certificado;
-                key = emi.LlavePrivada;
-                pas = emi.PassWord;
-            }
-
-            ComprobanteCFDI comprobante = new ComprobanteCFDI();
-            string res =comprobante.CancelaSW(rfc, cer, key,pas,uid,"02");
-
-            if (res.Substring(0,3)=="999") 
-            {
-                MessageBox.Show("No fue posible cancelar la factura "+res, "Confirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-
-            }
-
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = Queries.CfdiCancela();
-                db.Execute(sql, new { Id = cfdId, Acuse=res });
-            }
-            MessageBox.Show("Factura cancelada","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            CfdiCancelar cfdiCancelar = new CfdiCancelar(cfdId);
+            cfdiCancelar.ShowDialog();
             CargaFacturas();
             SetGrid();
-
-
 
         }
 
@@ -336,6 +278,235 @@ namespace ClinicaFB.Ingresos
             int id = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
             CfdiVisor cfdiVisor = new CfdiVisor(id);
             cfdiVisor.ShowDialog();
+
+        }
+
+        private void Splash()
+        {
+            SplashScreen.WindowsForms.Splasher splasher = new SplashScreen.WindowsForms.Splasher("Generando reporte...");
+            splasher.Show();
+
+        }
+
+        private void GeneraExcel(int emisorId, DateTime fechaIni, DateTime fechaFin)
+        {
+            SplashScreen.WindowsForms.Splasher splasher = new SplashScreen.WindowsForms.Splasher("Generando reporte...");
+            splasher.Show();
+
+
+            List<CFDI> facturas = new List<CFDI>();
+
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.FacturasReporte();
+                facturas = 
+                    db.Query<CFDI>(sql, 
+                    new {EmisorId = emisorId, FechaIni = fechaIni, FechaFin= fechaFin}).ToList();
+            }
+
+
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            application.DefaultVersion = ExcelVersion.Xlsx;
+            IWorkbook workbook = application.Workbooks.Create(1);
+            IWorksheet worksheet = workbook.Worksheets[0];
+
+
+            int renTitulos = 5;
+            int ren = 6;
+
+            worksheet.Range[1, 3].Text = "REPORTE DE FACTURAS";
+            worksheet.Range[1, 3].CellStyle.Font.Bold = true;
+
+            worksheet.Range[renTitulos, 1].Text = "Fecha";
+            worksheet.Range[renTitulos, 2].Text = "Folio";
+            worksheet.Range[renTitulos, 3].Text = "Cliente";
+            worksheet.Range[renTitulos, 4].Text = "Subtotal";
+            worksheet.Range[renTitulos, 5].Text = "I.V.A.";
+            worksheet.Range[renTitulos, 6].Text = "Total";
+            worksheet.Range[renTitulos, 7].Text = "Cancelada";
+
+            worksheet.Range[renTitulos, 1, renTitulos, 7].CellStyle.Font.Bold = true;
+
+            worksheet.Columns[0].ColumnWidth = 10;
+            worksheet.Columns[1].ColumnWidth = 8;
+            worksheet.Columns[2].ColumnWidth = 30;
+            worksheet.Columns[3].ColumnWidth = 10;
+            worksheet.Columns[4].ColumnWidth = 10;
+            worksheet.Columns[5].ColumnWidth = 10;
+
+
+            int facturasSinCancelar = 0, facturasCanceladas = 0;
+            double subTotalSinCancelar = 0,subTotalCancelado = 0;
+            double ivaSinCancelar = 0,ivaCancelado = 0;
+            foreach (var factura in facturas)
+            {
+                worksheet.Range[ren, 1].DateTime = factura.Fecha;
+                worksheet.Range[ren, 2].Text = factura.Serie.Trim() +" "+ factura.Folio.ToString();
+                worksheet.Range[ren, 3].Text = string.IsNullOrEmpty(factura.ReceptorNombre)?"PUBLICO EN GENERAL":factura.ReceptorNombre;
+                worksheet.Range[ren, 4].Number = (double)factura.SubTotal;
+                worksheet.Range[ren, 4].NumberFormat = "$###,###,##0.00";
+                worksheet.Range[ren, 5].Number = (double)factura.IVA;
+                worksheet.Range[ren, 5].NumberFormat = "$###,###,##0.00";
+                worksheet.Range[ren, 6].Number = (double)factura.Total;
+                worksheet.Range[ren, 6].NumberFormat = "$###,###,##0.00";
+                worksheet.Range[ren, 7].Text = factura.Cancelado ? "*" : "";
+
+                if (factura.Cancelado)
+                {
+                    facturasCanceladas++;
+                    subTotalCancelado += (double) factura.SubTotal;
+                    ivaCancelado += (double)factura.IVA;
+                }
+                else
+                {
+                    facturasSinCancelar++;
+                    subTotalSinCancelar += (double)factura.SubTotal;
+                    ivaSinCancelar += (double)factura.IVA;  
+
+                }
+
+
+                ren++;
+
+
+
+            }
+            ren += 5;
+            worksheet.Range[ren, 1].Text = "TOTAL GENERAL";
+            worksheet.Range[ren, 1].CellStyle.Font.Bold = true;
+
+            double totalCancelado = subTotalCancelado + ivaCancelado;
+            double totalSinCancelar = subTotalSinCancelar + ivaSinCancelar;
+
+
+            worksheet.Range[ren, 3].Text = $"Facturas sin cancelar ({facturasSinCancelar})";
+            worksheet.Range[ren, 4].Number = (double)subTotalSinCancelar;
+            worksheet.Range[ren, 4].NumberFormat = "$###,###,##0.00";
+            worksheet.Range[ren, 5].Number = (double)ivaSinCancelar;
+            worksheet.Range[ren, 5].NumberFormat = "$###,###,##0.00";
+            worksheet.Range[ren, 6].Number = (double)totalSinCancelar;
+            worksheet.Range[ren, 6].NumberFormat = "$###,###,##0.00";
+
+            ren++;
+
+            worksheet.Range[ren, 3].Text = $"Facturas canceladas ({facturasCanceladas})";
+            worksheet.Range[ren, 4].Number = (double)subTotalCancelado;
+            worksheet.Range[ren, 4].NumberFormat = "$###,###,##0.00";
+            worksheet.Range[ren, 5].Number = (double)ivaCancelado;
+            worksheet.Range[ren, 5].NumberFormat = "$###,###,##0.00";
+            worksheet.Range[ren, 6].Number = (double)totalCancelado;
+            worksheet.Range[ren, 6].NumberFormat = "$###,###,##0.00";
+
+
+            ren++;
+            worksheet.Range[ren, 3].Text = $"Total facturas ({facturasSinCancelar+ facturasCanceladas})";
+
+            worksheet.Range[ren, 4].Number = (double)subTotalCancelado + subTotalSinCancelar;
+            worksheet.Range[ren, 4].NumberFormat = "$###,###,##0.00";
+            worksheet.Range[ren, 5].Number = (double)ivaCancelado + ivaSinCancelar;
+            worksheet.Range[ren, 5].NumberFormat = "$###,###,##0.00";
+            worksheet.Range[ren, 6].Number = (double)totalCancelado+ totalSinCancelar;
+            worksheet.Range[ren, 6].NumberFormat = "$###,###,##0.00";
+
+
+
+
+            string tempfile = "rptFac"+ Path.GetFileNameWithoutExtension(Path.GetRandomFileName())+".xlsx";
+            tempfile = Path.GetTempPath() + "\\" + tempfile;
+            workbook.SaveAs(tempfile);
+
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            process.StartInfo = new System.Diagnostics.ProcessStartInfo(tempfile)
+            {
+                UseShellExecute = true
+            };
+
+            excelEngine.Dispose();
+            process.Start();
+            splasher.Close();
+            splasher = null;
+
+        }
+
+        private void BorraTemporales() {
+            foreach (string Libro in Directory.EnumerateFiles(Path.GetTempPath(),"rptFac*.xlsx"))
+            {
+                try
+                {
+                    File.Delete(Libro);
+                }
+                catch (Exception)
+                {
+
+                    
+                }
+
+            }
+
+        }
+
+        private async Task GeneraReporte(int emisorId, DateTime fechaIni, DateTime fechaFin)
+        {
+            await Task.Run(()=> GeneraExcel(emisorId,fechaIni,fechaFin));
+
+        }
+
+        private async void cmdimprimir_Click(object sender, EventArgs e)
+        {
+            int emisorId = (int)cboEmisores.SelectedValue;
+            if (emisorId == 0)
+            {
+                MessageBox.Show("Indique el emisor","Aviso", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+            await GeneraReporte(emisorId, dtpFechaInicial.Value, dtpFechaFinal.Value);
+        }
+
+        private void CFDisLIstado_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           BorraTemporales();
+        }
+
+        private void cmdMandarCorreo_Click(object sender, EventArgs e)
+        {
+            if (CfdiSeleccionado() == false)
+            {
+                return;
+            }
+
+            int razonSocialId = _cfdis[grdCfdis.CurrentRow.Index].RazonSocialId;
+            CorreosDirecciones correosDirecciones = new CorreosDirecciones(razonSocialId);
+            correosDirecciones.ShowDialog();
+
+            if (correosDirecciones.Aceptar == false)
+            {
+                return;
+            }
+
+            CFDI cfdi = _cfdis[grdCfdis.CurrentRow.Index];
+
+            string carpetaCfdi = General.CarpetaCfdi(cfdi.EmisorRFC, cfdi.Fecha);
+            string archivoCfdi = carpetaCfdi + @"\" + General.NombreArchivoCfdi("FAC", cfdi.Serie, cfdi.Folio);
+            string archivoPDF = carpetaCfdi + @"\" + General.NombreArchivoPDF("FAC", cfdi.Serie, cfdi.Folio);
+
+            string[] dirs = correosDirecciones.txtDirecciones.Text.Split(new string[] { Environment.NewLine },StringSplitOptions.None);
+
+            string direcciones = dirs[0];
+
+            if (dirs.Length > 1) { 
+                foreach (var d in dirs)
+                {
+                    direcciones = "," + direcciones + d;
+                }
+
+            }
+
+            ManejaCFDIs.MandaCorreo(direcciones,archivoCfdi,archivoPDF);
+            MessageBox.Show("Se envío el correo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
 
         }
     }

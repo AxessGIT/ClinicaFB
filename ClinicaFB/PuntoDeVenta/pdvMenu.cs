@@ -38,9 +38,21 @@ namespace ClinicaFB.PuntoDeVenta
 
         private void cmdPuntoDeVenta_Click(object sender, EventArgs e)
         {
-            ingCaptura ingCaptura = new ingCaptura("PDV");
-            ingCaptura.ShowDialog();
+            PdV pdV = new PdV();
+            pdV.ShowDialog();
 
+        }
+
+        private void cmdProveedores_Click(object sender, EventArgs e)
+        {
+            ProveedoresListado proveedoresListado = new ProveedoresListado();
+            proveedoresListado.ShowDialog();
+        }
+
+        private void cmdCompras_Click(object sender, EventArgs e)
+        {
+            ComprasListado comprasListado = new ComprasListado();
+            comprasListado.ShowDialog();
         }
     }
 }

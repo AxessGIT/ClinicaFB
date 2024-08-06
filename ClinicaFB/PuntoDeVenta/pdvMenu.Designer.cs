@@ -30,12 +30,59 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pdvMenu));
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cmdProveedores = new System.Windows.Forms.Button();
+            this.cmdAlmacenes = new System.Windows.Forms.Button();
+            this.cmdPuntoDeVenta = new System.Windows.Forms.Button();
             this.cmdArticulos = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
-            this.cmdPuntoDeVenta = new System.Windows.Forms.Button();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.cmdAlmacenes = new System.Windows.Forms.Button();
+            this.cmdCompras = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // cmdProveedores
+            // 
+            this.cmdProveedores.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmdProveedores.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdProveedores.Image = ((System.Drawing.Image)(resources.GetObject("cmdProveedores.Image")));
+            this.cmdProveedores.Location = new System.Drawing.Point(288, 13);
+            this.cmdProveedores.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cmdProveedores.Name = "cmdProveedores";
+            this.cmdProveedores.Size = new System.Drawing.Size(63, 47);
+            this.cmdProveedores.TabIndex = 12;
+            this.cmdProveedores.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip.SetToolTip(this.cmdProveedores, "Proveedores");
+            this.cmdProveedores.UseVisualStyleBackColor = false;
+            this.cmdProveedores.Click += new System.EventHandler(this.cmdProveedores_Click);
+            // 
+            // cmdAlmacenes
+            // 
+            this.cmdAlmacenes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmdAlmacenes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdAlmacenes.Image = ((System.Drawing.Image)(resources.GetObject("cmdAlmacenes.Image")));
+            this.cmdAlmacenes.Location = new System.Drawing.Point(150, 13);
+            this.cmdAlmacenes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cmdAlmacenes.Name = "cmdAlmacenes";
+            this.cmdAlmacenes.Size = new System.Drawing.Size(63, 47);
+            this.cmdAlmacenes.TabIndex = 11;
+            this.cmdAlmacenes.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip.SetToolTip(this.cmdAlmacenes, "Almacenes");
+            this.cmdAlmacenes.UseVisualStyleBackColor = false;
+            this.cmdAlmacenes.Click += new System.EventHandler(this.cmdAlmacenes_Click);
+            // 
+            // cmdPuntoDeVenta
+            // 
+            this.cmdPuntoDeVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmdPuntoDeVenta.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdPuntoDeVenta.Image = ((System.Drawing.Image)(resources.GetObject("cmdPuntoDeVenta.Image")));
+            this.cmdPuntoDeVenta.Location = new System.Drawing.Point(12, 13);
+            this.cmdPuntoDeVenta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cmdPuntoDeVenta.Name = "cmdPuntoDeVenta";
+            this.cmdPuntoDeVenta.Size = new System.Drawing.Size(63, 47);
+            this.cmdPuntoDeVenta.TabIndex = 10;
+            this.cmdPuntoDeVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip.SetToolTip(this.cmdPuntoDeVenta, "Ventas");
+            this.cmdPuntoDeVenta.UseVisualStyleBackColor = false;
+            this.cmdPuntoDeVenta.Click += new System.EventHandler(this.cmdPuntoDeVenta_Click);
             // 
             // cmdArticulos
             // 
@@ -57,7 +104,7 @@
             this.cmdSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmdSalir.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
-            this.cmdSalir.Location = new System.Drawing.Point(359, 13);
+            this.cmdSalir.Location = new System.Drawing.Point(421, 13);
             this.cmdSalir.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(63, 47);
@@ -66,41 +113,28 @@
             this.cmdSalir.UseVisualStyleBackColor = false;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
-            // cmdPuntoDeVenta
+            // cmdCompras
             // 
-            this.cmdPuntoDeVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cmdPuntoDeVenta.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdPuntoDeVenta.Image = ((System.Drawing.Image)(resources.GetObject("cmdPuntoDeVenta.Image")));
-            this.cmdPuntoDeVenta.Location = new System.Drawing.Point(12, 13);
-            this.cmdPuntoDeVenta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmdPuntoDeVenta.Name = "cmdPuntoDeVenta";
-            this.cmdPuntoDeVenta.Size = new System.Drawing.Size(63, 47);
-            this.cmdPuntoDeVenta.TabIndex = 10;
-            this.cmdPuntoDeVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.toolTip.SetToolTip(this.cmdPuntoDeVenta, "Ventas");
-            this.cmdPuntoDeVenta.UseVisualStyleBackColor = false;
-            this.cmdPuntoDeVenta.Click += new System.EventHandler(this.cmdPuntoDeVenta_Click);
-            // 
-            // cmdAlmacenes
-            // 
-            this.cmdAlmacenes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cmdAlmacenes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdAlmacenes.Image = ((System.Drawing.Image)(resources.GetObject("cmdAlmacenes.Image")));
-            this.cmdAlmacenes.Location = new System.Drawing.Point(150, 13);
-            this.cmdAlmacenes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmdAlmacenes.Name = "cmdAlmacenes";
-            this.cmdAlmacenes.Size = new System.Drawing.Size(63, 47);
-            this.cmdAlmacenes.TabIndex = 11;
-            this.cmdAlmacenes.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.toolTip.SetToolTip(this.cmdAlmacenes, "Almacenes");
-            this.cmdAlmacenes.UseVisualStyleBackColor = false;
-            this.cmdAlmacenes.Click += new System.EventHandler(this.cmdAlmacenes_Click);
+            this.cmdCompras.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmdCompras.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdCompras.Image = ((System.Drawing.Image)(resources.GetObject("cmdCompras.Image")));
+            this.cmdCompras.Location = new System.Drawing.Point(219, 13);
+            this.cmdCompras.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cmdCompras.Name = "cmdCompras";
+            this.cmdCompras.Size = new System.Drawing.Size(63, 47);
+            this.cmdCompras.TabIndex = 13;
+            this.cmdCompras.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip.SetToolTip(this.cmdCompras, "Compras");
+            this.cmdCompras.UseVisualStyleBackColor = false;
+            this.cmdCompras.Click += new System.EventHandler(this.cmdCompras_Click);
             // 
             // pdvMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 67);
+            this.ClientSize = new System.Drawing.Size(496, 67);
+            this.Controls.Add(this.cmdCompras);
+            this.Controls.Add(this.cmdProveedores);
             this.Controls.Add(this.cmdAlmacenes);
             this.Controls.Add(this.cmdPuntoDeVenta);
             this.Controls.Add(this.cmdSalir);
@@ -123,5 +157,7 @@
         private System.Windows.Forms.Button cmdPuntoDeVenta;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button cmdAlmacenes;
+        private System.Windows.Forms.Button cmdProveedores;
+        private System.Windows.Forms.Button cmdCompras;
     }
 }

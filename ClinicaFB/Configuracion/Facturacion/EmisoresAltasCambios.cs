@@ -276,47 +276,6 @@ namespace ClinicaFB.Configuracion.Facturacion
             grdSeries.ReadOnly = true;
             grdSeries.DataSource = null;
             grdSeries.DataSource = _series;
-            return;
-
-
-
-
-            grdSeries.AllowUserToAddRows = false;
-            grdSeries.AllowUserToDeleteRows = false;
-
-
-            grdSeries.AutoGenerateColumns = false;
-            grdSeries.ReadOnly = true;
-            grdSeries.AllowUserToResizeColumns = false;
-            grdSeries.AllowUserToResizeRows = false;
-
-            grdSeries.ColumnCount = 2;
-
-            grdSeries.RowHeadersVisible = true;
-
-
-            //grdSeries.ColumnHeadersDefaultCellStyle.Font = new Font(grdSeries.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
-            grdSeries.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            grdSeries.Columns[0].HeaderText = "Serie";
-
-            grdSeries.Columns[0].DataPropertyName = "Serie";
-            grdSeries.Columns[0].Width = 80;
-
-            grdSeries.Columns[1].HeaderText = "Siguiente Folio";
-            grdSeries.Columns[1].DataPropertyName = "Folio";
-            grdSeries.Columns[1].Width = 80;
-
-
-            grdSeries.Columns[2].HeaderText = "Activa";
-            grdSeries.Columns[2].DataPropertyName = "Activa";
-            grdSeries.Columns[2].Width = 70;
-
-
-            grdSeries.Columns[3].HeaderText = "Default";
-            grdSeries.Columns[3].DataPropertyName = "Defa";
-            grdSeries.Columns[3].Width = 70;
-
 
 
         }

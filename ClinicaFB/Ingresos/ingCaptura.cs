@@ -65,16 +65,11 @@ namespace ClinicaFB.Ingresos
 
 
             CambiaColores();
-            txtPorceRetISR.NumberFormatInfo = General.GetFormatoPorcentajeRetencion();
-            txtPorceRetIVA.NumberFormatInfo = General.GetFormatoPorcentajeRetencion();
 
             if (_tipo == "PDV")
             {
                 Text = "Captura de ventas";
-                CargaAlmacenes();
 
-                lblAlmacen.Visible = true;
-                cboAlmacenes.Visible = true;
             }
             CargaDatosPaciente();
             SetGrid();
@@ -87,13 +82,9 @@ namespace ClinicaFB.Ingresos
 
 
 
-        private async Task RegistraIngreso(bool facturar)
-        {
-            await Task.Run(() => GuardaIngreso(facturar));
-        }
+        
 
-
-        private void GuardaIngreso(bool facturar)
+        private async Task  GuardaIngreso(bool facturar)
         {
 
             int emisorDefaultId = (int) cboEmisores.SelectedValue;
@@ -129,6 +120,7 @@ namespace ClinicaFB.Ingresos
 
             Ingreso ing = new Ingreso();
             ing.SucursalId = _sucursalId;
+            ing.EmisorId = (int) cboEmisores.SelectedValue;
 
             ing.Tipo = _tipo;
             
@@ -144,9 +136,9 @@ namespace ClinicaFB.Ingresos
             ing.Hora = ing.Hora.Substring(0, 8);
             ing.SubTotal = txtSubTotal.DecimalValue;
             ing.Impuesto = txtIVA.DecimalValue;
-            ing.Descuento =txtDescuento.DecimalValue;
-            ing.RetIVA = txtRetIVA.DecimalValue;
-            ing.RetISR = txtRetISR.DecimalValue;
+            //ing.Descuento =txtDescuento.DecimalValue;
+            //ing.RetIVA = txtRetIVA.DecimalValue;
+            //ing.RetISR = txtRetISR.DecimalValue;
             ing.Total = txtTotal.DecimalValue;
             ing.Cancelado = false;
             ing.WebId = General.RandomString(5);
@@ -197,6 +189,24 @@ namespace ClinicaFB.Ingresos
 
                 }
             }
+
+            List<Pago> pagos = new List<Pago>();
+            if (txtEfectivo.DecimalValue > 0)
+            {
+                pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId= _ingresoId, Tipo = 1, Importe = txtEfectivo.DecimalValue});
+            }
+
+            if (txtTarjeta.DecimalValue > 0)
+            {
+                pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 2, Importe = txtTarjeta.DecimalValue, Referencia = txtReferencia.Text });
+            }
+
+            if (txtTransferencia.DecimalValue > 0)
+            {
+                pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 3, Importe = txtTransferencia.DecimalValue, Referencia = txtReferencia.Text });
+            }
+
+            await Task.Run( ()=> General.GuardaPagos(pagos));
 
             if (facturar)
             {
@@ -263,6 +273,11 @@ namespace ClinicaFB.Ingresos
             SetGrid();
             CalculaTotales();
 
+            txtEfectivo.DecimalValue = 0;
+            txtTarjeta.DecimalValue = 0;
+            txtTransferencia.DecimalValue = 0;
+            txtTotalPago.DecimalValue = 0;
+
 
             txtConcepto.Focus();
 
@@ -306,41 +321,7 @@ namespace ClinicaFB.Ingresos
         }
 
 
-        private void CargaAlmacenes()
-        {
 
-            int almacenIdDefa = 0;
-            string nombreAlmacenDefa = "";
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = Queries.AlmacenesSelect();
-
-                var res = db.Query<Almacen>(sql).ToList();
-
-                foreach (var alma in res)
-                {
-                    if (alma.Defa)
-                    {
-                        almacenIdDefa = alma.AlmacenId;
-                        nombreAlmacenDefa= alma.Nombre;
-                        break;
-                    }
-
-                }
-                _almacenes = new BindingList<Almacen>(res);
-
-
-
-            }
-            cboAlmacenes.DataSource = null;
-            cboAlmacenes.DataSource = _almacenes;
-            cboAlmacenes.ValueMember = "AlmacenId";
-            cboAlmacenes.DisplayMember = "Nombre";
-            cboAlmacenes.SelectedValue = almacenIdDefa;
-
-
-        }
         private void CambiaColores()
         {
             txtNombrePaciente.BackColor = Color.LightGreen;
@@ -686,16 +667,22 @@ namespace ClinicaFB.Ingresos
             }
 
             txtSubTotal.DecimalValue = subTotal;
-            txtDescuento.DecimalValue = descuento;
+            //txtDescuento.DecimalValue = descuento;
             txtIVA.DecimalValue = IVA;
-            txtRetISR.DecimalValue = retISR;
-            txtRetIVA.DecimalValue = retIVA;
+            //txtRetISR.DecimalValue = retISR;
+            //txtRetIVA.DecimalValue = retIVA;
             txtTotal.DecimalValue = subTotal - descuento + IVA - retISR - retIVA;
 
 
         }
 
-        private void cmdTicket_Click(object sender, EventArgs e)
+        private bool PagoCompleto()
+        {
+            return txtTotal.DecimalValue == txtTotalPago.DecimalValue;
+
+        }
+
+        private async void cmdTicket_Click(object sender, EventArgs e)
         {
 
             if (_conceptos.Count == 0)
@@ -703,6 +690,11 @@ namespace ClinicaFB.Ingresos
                 MessageBox.Show("No se ha agregado ningún concepto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
 
+            }
+            if (!PagoCompleto())
+            {
+                MessageBox.Show("El total de los pagos no coincide con el total de la venta", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
 
             TicketEnviarOpciones opciones = new TicketEnviarOpciones();
@@ -716,7 +708,7 @@ namespace ClinicaFB.Ingresos
             _imprimir = opciones.chkImprimir.Checked;
             _mandarCorreos = opciones.chkMandarCorreo.Checked;
             _correos=opciones.txtCorreos.Text.Trim();
-           GuardaIngreso(false);
+           await GuardaIngreso(false);
         }
 
         private void cmdConceptoBorrar_Click(object sender, EventArgs e)
@@ -732,13 +724,19 @@ namespace ClinicaFB.Ingresos
             CalculaTotales();
         }
 
-        private void cmdFactura_Click(object sender, EventArgs e)
+        private async void cmdFactura_Click(object sender, EventArgs e)
         {
             if (_conceptos.Count == 0)
             {
                 MessageBox.Show("No se ha agregado ningún concepto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
 
+            }
+
+            if (!PagoCompleto())
+            {
+                MessageBox.Show("El total de los pagos no coincide con el total de la venta", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
 
             IngresoFacturarOpciones clavesSATSeleccionar = new IngresoFacturarOpciones(_razonSocialId,_cveFOP,_cveMEP,_cveUSO,_correos);
@@ -757,7 +755,7 @@ namespace ClinicaFB.Ingresos
             _mandarCorreos = clavesSATSeleccionar.chkMandarCorreo.Checked;
             _correos = clavesSATSeleccionar.txtCorreos.Text.Trim();
 
-            GuardaIngreso(true);
+            await GuardaIngreso(true);
             
         }
 
@@ -801,6 +799,95 @@ namespace ClinicaFB.Ingresos
         private void txtRazonSocial_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdEfectivo_Click(object sender, EventArgs e)
+        {
+            ChecaPago(1);
+            ActiveControl = txtEfectivo;
+        }
+
+        private void ChecaImportesPago(int cualPago)
+        {
+            txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue;
+            if (txtTotalPago.DecimalValue > txtTotal.DecimalValue)
+            {
+                MessageBox.Show("El total de los pagos no puede ser mayor al total de la venta", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                switch (cualPago)
+                {
+                    case 1:
+                        txtEfectivo.DecimalValue = txtTotal.DecimalValue - txtTarjeta.DecimalValue - txtTransferencia.DecimalValue;
+                        break;
+                    case 2:
+                        txtTarjeta.DecimalValue = txtTotal.DecimalValue - txtEfectivo.DecimalValue - txtTransferencia.DecimalValue;
+                        break;
+                    case 3:
+                        txtTransferencia.DecimalValue = txtTotal.DecimalValue - txtEfectivo.DecimalValue - txtTarjeta.DecimalValue;
+                        break;
+                    default:
+                        break;
+                }
+                txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue;
+            }
+
+        }
+        private void ChecaPago(int tipoPago)
+        {
+            decimal importe = txtTotal.DecimalValue - txtTotalPago.DecimalValue;
+            switch (tipoPago)
+            {
+                case 1:
+                    txtEfectivo.DecimalValue = importe;
+                    break;
+                case 2:
+                    txtTarjeta.DecimalValue = importe;
+                    break;
+                case 3:
+                    txtTransferencia.DecimalValue = importe;
+                    break;
+
+                default:
+                    break;
+            }
+            txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue;
+
+        }
+
+        private void cmdTransferencia_Click(object sender, EventArgs e)
+        {
+            ChecaPago(3);
+            ActiveControl = txtTransferencia;
+        }
+
+        private void txtTransferencia_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdTarjeta_Click(object sender, EventArgs e)
+        {
+            ChecaPago(2);
+            ActiveControl = txtTarjeta;
+        }
+
+        private void txtEfectivo_Validated(object sender, EventArgs e)
+        {
+            ChecaImportesPago(1);
+        }
+
+        private void txtTarjeta_Validated(object sender, EventArgs e)
+        {
+            ChecaImportesPago(2);
+        }
+
+        private void txtTransferencia_Validated(object sender, EventArgs e)
+        {
+            ChecaImportesPago(3);
         }
     }
 }

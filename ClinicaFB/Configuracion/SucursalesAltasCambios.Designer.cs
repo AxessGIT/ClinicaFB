@@ -39,7 +39,12 @@
             this.txtDatosAdicionales = new System.Windows.Forms.TextBox();
             this.txtSerie = new System.Windows.Forms.TextBox();
             this.spnFolio = new System.Windows.Forms.NumericUpDown();
+            this.spnFolioFacturaGlobal = new System.Windows.Forms.NumericUpDown();
+            this.txtSerieFacturaGlobal = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.spnFolio)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnFolioFacturaGlobal)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -82,11 +87,11 @@
             // 
             this.cmdGuardar.Image = ((System.Drawing.Image)(resources.GetObject("cmdGuardar.Image")));
             this.cmdGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdGuardar.Location = new System.Drawing.Point(231, 246);
+            this.cmdGuardar.Location = new System.Drawing.Point(213, 260);
             this.cmdGuardar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdGuardar.Name = "cmdGuardar";
             this.cmdGuardar.Size = new System.Drawing.Size(129, 43);
-            this.cmdGuardar.TabIndex = 8;
+            this.cmdGuardar.TabIndex = 12;
             this.cmdGuardar.Text = "&Guardar";
             this.cmdGuardar.UseVisualStyleBackColor = true;
             this.cmdGuardar.Click += new System.EventHandler(this.cmdGuardar_Click);
@@ -95,11 +100,11 @@
             // 
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
             this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSalir.Location = new System.Drawing.Point(367, 246);
+            this.cmdSalir.Location = new System.Drawing.Point(349, 260);
             this.cmdSalir.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(129, 43);
-            this.cmdSalir.TabIndex = 9;
+            this.cmdSalir.TabIndex = 13;
             this.cmdSalir.Text = "&Salir";
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
@@ -131,15 +136,62 @@
             // spnFolio
             // 
             this.spnFolio.Location = new System.Drawing.Point(119, 195);
+            this.spnFolio.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
             this.spnFolio.Name = "spnFolio";
             this.spnFolio.Size = new System.Drawing.Size(120, 23);
             this.spnFolio.TabIndex = 7;
+            // 
+            // spnFolioFacturaGlobal
+            // 
+            this.spnFolioFacturaGlobal.Location = new System.Drawing.Point(407, 198);
+            this.spnFolioFacturaGlobal.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.spnFolioFacturaGlobal.Name = "spnFolioFacturaGlobal";
+            this.spnFolioFacturaGlobal.Size = new System.Drawing.Size(120, 23);
+            this.spnFolioFacturaGlobal.TabIndex = 11;
+            // 
+            // txtSerieFacturaGlobal
+            // 
+            this.txtSerieFacturaGlobal.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtSerieFacturaGlobal.Location = new System.Drawing.Point(407, 168);
+            this.txtSerieFacturaGlobal.Name = "txtSerieFacturaGlobal";
+            this.txtSerieFacturaGlobal.Size = new System.Drawing.Size(114, 23);
+            this.txtSerieFacturaGlobal.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(269, 201);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(116, 16);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Folio factura global";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(266, 171);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(138, 16);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Serie facturas globales";
             // 
             // SucursalesAltasCambios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(681, 310);
+            this.ClientSize = new System.Drawing.Size(681, 317);
+            this.Controls.Add(this.spnFolioFacturaGlobal);
+            this.Controls.Add(this.txtSerieFacturaGlobal);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.spnFolio);
             this.Controls.Add(this.txtSerie);
             this.Controls.Add(this.txtDatosAdicionales);
@@ -152,13 +204,14 @@
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "SucursalesAltasCambios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SucursalesAltasCambios";
             this.Load += new System.EventHandler(this.SucursalesAltasCambios_Load);
             ((System.ComponentModel.ISupportInitialize)(this.spnFolio)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnFolioFacturaGlobal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -176,5 +229,9 @@
         private System.Windows.Forms.TextBox txtDatosAdicionales;
         private System.Windows.Forms.TextBox txtSerie;
         private System.Windows.Forms.NumericUpDown spnFolio;
+        private System.Windows.Forms.NumericUpDown spnFolioFacturaGlobal;
+        private System.Windows.Forms.TextBox txtSerieFacturaGlobal;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }

@@ -127,8 +127,9 @@ namespace ClinicaFB.Configuracion
 
                 if (ser.Defa)
                 {
+                    ser.SerieDocId = _serieId;
                     sql = Queries.SerieDocUpdateQuitaDefault();
-                    db.Execute(sql, new {SerieDocId = _serieId });
+                    db.Execute(sql, ser);
                 }
 
             }

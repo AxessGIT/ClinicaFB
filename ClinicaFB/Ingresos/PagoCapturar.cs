@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClinicaFB.Recetas
+namespace ClinicaFB.Ingresos
 {
-    public partial class RecetaElaboracion : Form
+    public partial class PagoCapturar : Form
     {
-        public RecetaElaboracion()
+        public PagoCapturar()
         {
             InitializeComponent();
         }

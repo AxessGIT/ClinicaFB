@@ -31,7 +31,7 @@ namespace ClinicaFB.Expedientes
         public int PacienteID = 0;
         private bool _esAlta = false;
         private Paciente _paciente = null;
-        private FilterInfoCollection _dispositivosVideo;
+        //private FilterInfoCollection _dispositivosVideo;
 
         ObservableCollection<Nota> notas = new ObservableCollection<Nota>();
         BindingList<Receta> _listRecetas = new BindingList<Receta>();

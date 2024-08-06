@@ -47,8 +47,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtPrecio5 = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
             this.label9 = new System.Windows.Forms.Label();
-            this.cmdSalir = new System.Windows.Forms.Button();
-            this.cmdGuardar = new System.Windows.Forms.Button();
             this.txtCveProSer = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtCveUni = new System.Windows.Forms.TextBox();
@@ -146,6 +144,7 @@
             // 
             // 
             // 
+            this.txtUltimoCosto.TextBox.AccessibilityEnabled = true;
             this.txtUltimoCosto.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtUltimoCosto.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -169,6 +168,7 @@
             // 
             // 
             // 
+            this.txtPrecio1.TextBox.AccessibilityEnabled = true;
             this.txtPrecio1.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPrecio1.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -201,6 +201,7 @@
             // 
             // 
             // 
+            this.txtPrecio2.TextBox.AccessibilityEnabled = true;
             this.txtPrecio2.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPrecio2.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -233,6 +234,7 @@
             // 
             // 
             // 
+            this.txtPrecio3.TextBox.AccessibilityEnabled = true;
             this.txtPrecio3.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPrecio3.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -267,6 +269,7 @@
             // 
             // 
             // 
+            this.txtPrecio4.TextBox.AccessibilityEnabled = true;
             this.txtPrecio4.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPrecio4.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -299,6 +302,7 @@
             // 
             // 
             // 
+            this.txtPrecio5.TextBox.AccessibilityEnabled = true;
             this.txtPrecio5.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPrecio5.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -319,30 +323,6 @@
             this.label9.Size = new System.Drawing.Size(53, 16);
             this.label9.TabIndex = 18;
             this.label9.Text = "Precio 5";
-            // 
-            // cmdSalir
-            // 
-            this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
-            this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSalir.Location = new System.Drawing.Point(378, 349);
-            this.cmdSalir.Name = "cmdSalir";
-            this.cmdSalir.Size = new System.Drawing.Size(110, 35);
-            this.cmdSalir.TabIndex = 29;
-            this.cmdSalir.Text = "&Salir";
-            this.cmdSalir.UseVisualStyleBackColor = true;
-            this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
-            // 
-            // cmdGuardar
-            // 
-            this.cmdGuardar.Image = ((System.Drawing.Image)(resources.GetObject("cmdGuardar.Image")));
-            this.cmdGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdGuardar.Location = new System.Drawing.Point(262, 349);
-            this.cmdGuardar.Name = "cmdGuardar";
-            this.cmdGuardar.Size = new System.Drawing.Size(110, 35);
-            this.cmdGuardar.TabIndex = 28;
-            this.cmdGuardar.Text = "&Guardar";
-            this.cmdGuardar.UseVisualStyleBackColor = true;
-            this.cmdGuardar.Click += new System.EventHandler(this.cmdGuardar_Click);
             // 
             // txtCveProSer
             // 
@@ -436,6 +416,7 @@
             this.cboImpuestos.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboImpuestos.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboImpuestos.TabIndex = 27;
+            this.cboImpuestos.TabStop = false;
             // 
             // label13
             // 
@@ -475,8 +456,6 @@
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtCveProSer);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.cmdGuardar);
-            this.Controls.Add(this.cmdSalir);
             this.Controls.Add(this.txtPrecio5);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtPrecio4);
@@ -542,8 +521,6 @@
         private System.Windows.Forms.Label label8;
         private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtPrecio5;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button cmdSalir;
-        private System.Windows.Forms.Button cmdGuardar;
         private System.Windows.Forms.TextBox txtCveProSer;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtCveUni;

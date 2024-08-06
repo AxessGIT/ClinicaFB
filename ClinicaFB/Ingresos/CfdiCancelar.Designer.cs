@@ -45,23 +45,26 @@
             this.cmdCancelar = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.cboMotivos = new System.Windows.Forms.ComboBox();
-            this.txtFolioNueva = new System.Windows.Forms.TextBox();
             this.txtSerieNueva = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtReceptor = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtReceptorNueva = new System.Windows.Forms.TextBox();
+            this.txtReceptorNuevo = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.txtUIDNueva = new System.Windows.Forms.TextBox();
-            this.txtImporteNueva = new System.Windows.Forms.TextBox();
+            this.txtUIDNuevo = new System.Windows.Forms.TextBox();
+            this.txtImporteNuevo = new System.Windows.Forms.TextBox();
             this.txtFechaNueva = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.cmdValidar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.spnFolioNuevo = new System.Windows.Forms.NumericUpDown();
+            this.txtEmisorNuevo = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spnFolioNuevo)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -173,9 +176,10 @@
             this.cmdSalir.Location = new System.Drawing.Point(242, 478);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(111, 43);
-            this.cmdSalir.TabIndex = 18;
+            this.cmdSalir.TabIndex = 1;
             this.cmdSalir.Text = "&Salir";
             this.cmdSalir.UseVisualStyleBackColor = true;
+            this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
             // cmdCancelar
             // 
@@ -184,9 +188,10 @@
             this.cmdCancelar.Location = new System.Drawing.Point(125, 478);
             this.cmdCancelar.Name = "cmdCancelar";
             this.cmdCancelar.Size = new System.Drawing.Size(111, 43);
-            this.cmdCancelar.TabIndex = 17;
+            this.cmdCancelar.TabIndex = 0;
             this.cmdCancelar.Text = "&Cancelar";
             this.cmdCancelar.UseVisualStyleBackColor = true;
+            this.cmdCancelar.Click += new System.EventHandler(this.cmdCancelar_Click);
             // 
             // label7
             // 
@@ -208,18 +213,12 @@
             "04. Operación nominativa relacionada en la factura global."});
             this.cboMotivos.Location = new System.Drawing.Point(150, 214);
             this.cboMotivos.Name = "cboMotivos";
-            this.cboMotivos.Size = new System.Drawing.Size(263, 24);
+            this.cboMotivos.Size = new System.Drawing.Size(336, 24);
             this.cboMotivos.TabIndex = 15;
-            // 
-            // txtFolioNueva
-            // 
-            this.txtFolioNueva.Location = new System.Drawing.Point(227, 33);
-            this.txtFolioNueva.Name = "txtFolioNueva";
-            this.txtFolioNueva.Size = new System.Drawing.Size(77, 23);
-            this.txtFolioNueva.TabIndex = 3;
             // 
             // txtSerieNueva
             // 
+            this.txtSerieNueva.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSerieNueva.Location = new System.Drawing.Point(86, 33);
             this.txtSerieNueva.Name = "txtSerieNueva";
             this.txtSerieNueva.Size = new System.Drawing.Size(77, 23);
@@ -237,7 +236,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 36);
+            this.label9.Location = new System.Drawing.Point(43, 36);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(37, 16);
             this.label9.TabIndex = 0;
@@ -260,42 +259,42 @@
             this.label11.TabIndex = 12;
             this.label11.Text = "Receptor";
             // 
-            // txtReceptorNueva
+            // txtReceptorNuevo
             // 
-            this.txtReceptorNueva.Location = new System.Drawing.Point(86, 120);
-            this.txtReceptorNueva.Name = "txtReceptorNueva";
-            this.txtReceptorNueva.ReadOnly = true;
-            this.txtReceptorNueva.Size = new System.Drawing.Size(315, 23);
-            this.txtReceptorNueva.TabIndex = 12;
+            this.txtReceptorNuevo.Location = new System.Drawing.Point(86, 141);
+            this.txtReceptorNuevo.Name = "txtReceptorNuevo";
+            this.txtReceptorNuevo.ReadOnly = true;
+            this.txtReceptorNuevo.Size = new System.Drawing.Size(315, 23);
+            this.txtReceptorNuevo.TabIndex = 12;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(13, 123);
+            this.label12.Location = new System.Drawing.Point(22, 147);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(58, 16);
             this.label12.TabIndex = 11;
             this.label12.Text = "Receptor";
             // 
-            // txtUIDNueva
+            // txtUIDNuevo
             // 
-            this.txtUIDNueva.Location = new System.Drawing.Point(86, 91);
-            this.txtUIDNueva.Name = "txtUIDNueva";
-            this.txtUIDNueva.ReadOnly = true;
-            this.txtUIDNueva.Size = new System.Drawing.Size(315, 23);
-            this.txtUIDNueva.TabIndex = 10;
+            this.txtUIDNuevo.Location = new System.Drawing.Point(86, 114);
+            this.txtUIDNuevo.Name = "txtUIDNuevo";
+            this.txtUIDNuevo.ReadOnly = true;
+            this.txtUIDNuevo.Size = new System.Drawing.Size(315, 23);
+            this.txtUIDNuevo.TabIndex = 10;
             // 
-            // txtImporteNueva
+            // txtImporteNuevo
             // 
-            this.txtImporteNueva.Location = new System.Drawing.Point(227, 62);
-            this.txtImporteNueva.Name = "txtImporteNueva";
-            this.txtImporteNueva.ReadOnly = true;
-            this.txtImporteNueva.Size = new System.Drawing.Size(140, 23);
-            this.txtImporteNueva.TabIndex = 8;
+            this.txtImporteNuevo.Location = new System.Drawing.Point(227, 86);
+            this.txtImporteNuevo.Name = "txtImporteNuevo";
+            this.txtImporteNuevo.ReadOnly = true;
+            this.txtImporteNuevo.Size = new System.Drawing.Size(140, 23);
+            this.txtImporteNuevo.TabIndex = 8;
             // 
             // txtFechaNueva
             // 
-            this.txtFechaNueva.Location = new System.Drawing.Point(86, 62);
+            this.txtFechaNueva.Location = new System.Drawing.Point(86, 87);
             this.txtFechaNueva.Name = "txtFechaNueva";
             this.txtFechaNueva.ReadOnly = true;
             this.txtFechaNueva.Size = new System.Drawing.Size(77, 23);
@@ -304,7 +303,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(13, 94);
+            this.label13.Location = new System.Drawing.Point(13, 118);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(67, 16);
             this.label13.TabIndex = 9;
@@ -313,7 +312,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(169, 65);
+            this.label14.Location = new System.Drawing.Point(169, 89);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(52, 16);
             this.label14.TabIndex = 7;
@@ -322,7 +321,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(13, 65);
+            this.label15.Location = new System.Drawing.Point(39, 89);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(41, 16);
             this.label15.TabIndex = 5;
@@ -340,18 +339,21 @@
             this.cmdValidar.Text = "&Validar";
             this.cmdValidar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdValidar.UseVisualStyleBackColor = true;
+            this.cmdValidar.Click += new System.EventHandler(this.cmdValidar_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtReceptorNueva);
+            this.groupBox1.Controls.Add(this.txtEmisorNuevo);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.spnFolioNuevo);
+            this.groupBox1.Controls.Add(this.txtReceptorNuevo);
             this.groupBox1.Controls.Add(this.cmdValidar);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.txtSerieNueva);
-            this.groupBox1.Controls.Add(this.txtUIDNueva);
-            this.groupBox1.Controls.Add(this.txtFolioNueva);
-            this.groupBox1.Controls.Add(this.txtImporteNueva);
+            this.groupBox1.Controls.Add(this.txtUIDNuevo);
+            this.groupBox1.Controls.Add(this.txtImporteNuevo);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.txtFechaNueva);
             this.groupBox1.Controls.Add(this.label14);
@@ -362,6 +364,35 @@
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de la factura que sustituirá a la que  está cancelando";
+            // 
+            // spnFolioNuevo
+            // 
+            this.spnFolioNuevo.Location = new System.Drawing.Point(228, 33);
+            this.spnFolioNuevo.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.spnFolioNuevo.Name = "spnFolioNuevo";
+            this.spnFolioNuevo.Size = new System.Drawing.Size(68, 23);
+            this.spnFolioNuevo.TabIndex = 3;
+            // 
+            // txtEmisorNuevo
+            // 
+            this.txtEmisorNuevo.Location = new System.Drawing.Point(86, 60);
+            this.txtEmisorNuevo.Name = "txtEmisorNuevo";
+            this.txtEmisorNuevo.ReadOnly = true;
+            this.txtEmisorNuevo.Size = new System.Drawing.Size(315, 23);
+            this.txtEmisorNuevo.TabIndex = 14;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(34, 61);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(46, 16);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "Emisor";
             // 
             // CfdiCancelar
             // 
@@ -397,6 +428,7 @@
             this.Load += new System.EventHandler(this.CfdiCancelar_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spnFolioNuevo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -420,21 +452,23 @@
         private System.Windows.Forms.Button cmdCancelar;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboMotivos;
-        private System.Windows.Forms.TextBox txtFolioNueva;
         private System.Windows.Forms.TextBox txtSerieNueva;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtReceptor;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtReceptorNueva;
+        private System.Windows.Forms.TextBox txtReceptorNuevo;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtUIDNueva;
-        private System.Windows.Forms.TextBox txtImporteNueva;
+        private System.Windows.Forms.TextBox txtUIDNuevo;
+        private System.Windows.Forms.TextBox txtImporteNuevo;
         private System.Windows.Forms.TextBox txtFechaNueva;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button cmdValidar;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.NumericUpDown spnFolioNuevo;
+        private System.Windows.Forms.TextBox txtEmisorNuevo;
+        private System.Windows.Forms.Label label10;
     }
 }

@@ -135,7 +135,7 @@ namespace ClinicaFB.Expedientes
             {
                 //FileInfo infoOrigen = new FileInfo(_imagenOrigen);
 
-                string ext = "png";
+                string ext = ".png";
                 carpeta =  General.CarpetaImagenesPaciente(_pacienteId) + $@"\{anio}\{mes}\{dia}\";
 
                 if (General.CarpetaImagenes(_carpetaImagenes, carpeta) == false)

@@ -31,18 +31,32 @@ namespace ClinicaFB.Facturacion
             if (_mostrarSeleccionar == false)
                 cmdSeleccionar.Visible = false;
 
-            CargaRazones();
-            SetGrid();
+            //CargaRazones();
+            //SetGrid();
         }
 
 
-        private void CargaRazones()
+        private void CargaRazon(int razonId)
         {
 
             using (FbConnection db = General.GetDB())
             {
-                string sql = Queries.RazonesSocialesSelect();
-                var res = db.Query<RazonSocial>(sql).ToList();
+                string sql = Queries.RazonSocialSelect();
+                var res = db.Query<RazonSocial>(sql, new {RazonSocialId = razonId }).ToList();
+                _razonesSociales = new BindingList<RazonSocial>(res);
+
+            }
+        }
+
+
+        private void BuscaRazones()
+        {
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.RazonesSocialesBuscar();
+                string buscar = $"%{txtBuscar.Text.Trim().ToUpper()}%";
+                var res = db.Query<RazonSocial>(sql, new {Buscar=buscar}).ToList();
                 _razonesSociales = new BindingList<RazonSocial>(res);
 
             }
@@ -105,7 +119,8 @@ namespace ClinicaFB.Facturacion
             RazSocAltasCambios razSocAltasCambios = new RazSocAltasCambios(esAlta, razonId);
             razSocAltasCambios.ShowDialog();
 
-            CargaRazones();
+
+            CargaRazon(razSocAltasCambios.RazonId);
             SetGrid();
                 
 
@@ -140,6 +155,20 @@ namespace ClinicaFB.Facturacion
             }
             RazonId = _razonesSociales[grdRazones.CurrentRow.Index].RazonSocialId;
             Close();
+        }
+
+        private void cmdBuscar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtBuscar.Text))
+            {
+                MessageBox.Show("Indique el texto a buscar","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                return;
+
+            }
+
+            BuscaRazones();
+            SetGrid();
+
         }
     }
 }

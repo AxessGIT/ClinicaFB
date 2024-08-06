@@ -52,5 +52,11 @@ namespace ClinicaFB.Ingresos
             IngresosListado ingresosListado=new IngresosListado("CLI");
             ingresosListado.Show();
         }
+
+        private void cmdFacturaGlobal_Click(object sender, EventArgs e)
+        {
+            FacturaGlobalGenerar facturaGlobal= new FacturaGlobalGenerar();
+            facturaGlobal.ShowDialog();
+        }
     }
 }

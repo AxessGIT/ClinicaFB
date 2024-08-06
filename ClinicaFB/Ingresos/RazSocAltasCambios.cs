@@ -17,12 +17,13 @@ namespace ClinicaFB.Facturacion
     public partial class RazSocAltasCambios : Form
     {
         private bool _esAlta = false;
-        private int _razonId;
+        public int RazonId { get; set; }=0;
+
         public RazSocAltasCambios(bool esAlta,int razonId)
         {
             InitializeComponent();
             _esAlta = esAlta;
-            _razonId = razonId;
+            RazonId = razonId;
         }
 
         private void RazSocAltasCambios_Load(object sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace ClinicaFB.Facturacion
             using (FbConnection db = General.GetDB())
             {
                 string sql = Queries.RazonSocialSelect();
-                RazonSocial razSoc = db.Query<RazonSocial>(sql, new { RazonSocialId = _razonId }).FirstOrDefault();
+                RazonSocial razSoc = db.Query<RazonSocial>(sql, new { RazonSocialId = RazonId }).FirstOrDefault();
                 if (razSoc != null)
                 {
                     txtRFC.Text = razSoc.RFC;
@@ -133,7 +134,7 @@ namespace ClinicaFB.Facturacion
 
 
             RazonSocial razSoc = new RazonSocial();
-            razSoc.RazonSocialId = _razonId;
+            razSoc.RazonSocialId = RazonId;
             razSoc.RFC = txtRFC.Text;
             razSoc.RazonSoc = txtRazonSocial.Text;
             razSoc.Direccion = txtDireccion.Text;
@@ -157,7 +158,16 @@ namespace ClinicaFB.Facturacion
 
             using (FbConnection db = General.GetDB())
             {
-                db.Execute(sql, razSoc);
+                if (_esAlta)
+                {
+                    RazonId = db.ExecuteScalar<int>(sql, razSoc);
+
+                }
+                else
+                {
+                    db.Execute(sql, razSoc);
+
+                }
             }
             Close();
 

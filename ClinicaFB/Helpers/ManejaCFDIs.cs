@@ -30,16 +30,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Net.Mail;
+using System.Net.NetworkInformation;
 
 namespace ClinicaFB.Helpers
 {
     public static class ManejaCFDIs
     {
 
-        public static async void MandaCorreo(string correos,string archivoXML = "", string archivoPDF = "")
+        public static async void MandaCorreo(string correos, string archivoXML = "", string archivoPDF = "")
         {
-            await Task.Run(()=> EnviaArchivos(correos, archivoXML,archivoPDF));
-        
+            await Task.Run(() => EnviaArchivos(correos, archivoXML, archivoPDF));
+
         }
 
         public static void EnviaArchivos(string correos, string archivoXML = "", string archivoPDF = "")
@@ -78,18 +79,18 @@ namespace ClinicaFB.Helpers
             builder.HtmlBody = "Favor de no responder a esta dirección. Envío automático. Saludos";
 
 
-            if (string.IsNullOrEmpty(archivoXML) == false)
+            if (string.IsNullOrEmpty(archivoXML) == false && File.Exists(archivoXML))
             {
                 builder.Attachments.Add(archivoXML);
             }
 
-            if (string.IsNullOrEmpty(archivoPDF) == false)
+            if (string.IsNullOrEmpty(archivoPDF) == false && File.Exists(archivoPDF))
             {
                 builder.Attachments.Add(archivoPDF);
             }
 
 
-            mensaje.Body= builder.ToMessageBody();
+            mensaje.Body = builder.ToMessageBody();
 
             MailKit.Net.Smtp.SmtpClient server = new MailKit.Net.Smtp.SmtpClient();
 
@@ -97,7 +98,7 @@ namespace ClinicaFB.Helpers
             server.Connect("mx46.hostgator.mx", 587, MailKit.Security.SecureSocketOptions.StartTls);
             //server.Authenticate("novedades@sifiscalapp.com", "Ab369741@");
             server.Authenticate("facturacion@medipielapp.com", "Ab369741@");
-            string res =server.Send(mensaje);
+            string res = server.Send(mensaje);
             server.Disconnect(true);
 
             //MessageBox.Show(res);
@@ -110,7 +111,7 @@ namespace ClinicaFB.Helpers
 
         public static async void ImprimeTicket
             (Ingreso ing, BindingList<IngresoDetalle> conceptos,
-            bool imprimir = false, string impresora="",bool mandarCorreo=false, string correos="")
+            bool imprimir = false, string impresora = "", bool mandarCorreo = false, string correos = "")
         {
 
             string datosSucursal = "";
@@ -142,7 +143,7 @@ namespace ClinicaFB.Helpers
             ReportViewer rptTicket = new ReportViewer();
 
             rptTicket.ProcessingMode = ProcessingMode.Local;
-            rptTicket.LocalReport.ReportPath = @"C:\Users\Felipe  Juan\source\repos\ClinicaFB\ClinicaFB\Reportes\Ingresos\Ticket.rdlc";
+            rptTicket.LocalReport.ReportPath = General.GetCarpetaReportes() + @"\Ingresos\Ticket.rdlc";
             rptTicket.LocalReport.DataSources.Clear();
 
 
@@ -197,9 +198,9 @@ namespace ClinicaFB.Helpers
 
             if (mandarCorreo)
             {
-                await Task.Run(()=>MandaCorreo(correos:correos, archivoPDF:archivoPDF));
+                await Task.Run(() => MandaCorreo(correos: correos, archivoPDF: archivoPDF));
             }
-            
+
 
 
         }
@@ -215,7 +216,7 @@ namespace ClinicaFB.Helpers
         }
 
 
-        public static async void IngresoFacturar(int ingresoId,bool imprimir= false, string impresora="",bool mandarCorreos=false,string direcciones="")
+        public static async void IngresoFacturar(int ingresoId, bool imprimir = false, string impresora = "", bool mandarCorreos = false, string direcciones = "")
         {
             Ingreso ing = new Ingreso();
 
@@ -224,7 +225,7 @@ namespace ClinicaFB.Helpers
             using (FbConnection db = General.GetDB())
             {
                 string sql = Queries.IngresoSelect();
-                ing = db.Query<Ingreso>(sql, new {IngresoId = ingresoId}).FirstOrDefault();
+                ing = db.Query<Ingreso>(sql, new { IngresoId = ingresoId }).FirstOrDefault();
                 if (ing == null)
                 {
                     return;
@@ -232,7 +233,7 @@ namespace ClinicaFB.Helpers
 
                 sql = Queries.IngresoDetallesSelect();
 
-                detalle = db.Query<IngresoDetalle>(sql, new {IngresoId = ingresoId}).ToList();
+                detalle = db.Query<IngresoDetalle>(sql, new { IngresoId = ingresoId }).ToList();
 
             }
 
@@ -246,13 +247,17 @@ namespace ClinicaFB.Helpers
 
             List<IngresoDetalle> conceptos = new List<IngresoDetalle>();
 
+            int res = 0;
             foreach (var concepto in conceptosOrdenados)
             {
                 if (concepto.EmisorId != emisorId || concepto.Serie != serie)
                 {
 
-                    await Task.Run(() => GeneraFactura(ing, conceptos, imprimir, impresora, mandarCorreos, direcciones));
-                    //GeneraFactura(ing, conceptos);
+                    res = await Task.Run(() => GeneraFactura(ing, conceptos, imprimir, impresora, mandarCorreos, direcciones));
+                    if (res != 0)
+                    {
+                        return;
+                    }
                     emisorId = concepto.EmisorId;
                     serie = concepto.Serie;
                     conceptos = new List<IngresoDetalle>();
@@ -261,13 +266,334 @@ namespace ClinicaFB.Helpers
 
             }
 
-           await Task.Run(()=>GeneraFactura(ing, conceptos,imprimir,impresora,mandarCorreos,direcciones));
+            res = await Task.Run(() => GeneraFactura(ing, conceptos, imprimir, impresora, mandarCorreos, direcciones));
 
 
 
         }
 
-        private static void  GeneraFactura(Ingreso ing,
+
+        public static int GeneraFacturaGlobal(Emisor emisor, List<IngresoNoFacturado> ingresos)
+        {
+            int res = 0;
+            decimal subtotal = 0, iva = 0, total = 0;
+
+            subtotal = ingresos.Sum(x => x.SubTotal);
+            iva = ingresos.Sum(x => x.Impuesto);
+            total = ingresos.Sum(x => x.Total);
+
+            string sql = "";
+            string serie = "";
+            int folio = 0;
+
+            using (FbConnection db = General.GetDB())
+            {
+
+                sql = Queries.SucursalSelect();
+
+                Sucursal suc = db.Query<Sucursal>(sql, new { SucursalId = Properties.Settings.Default.SucursalId }).FirstOrDefault();
+
+                if (suc == null)
+                    return 1;
+
+                serie = suc.SerieFacGlobal;
+                folio = suc.FolioFacGlobal;
+
+                if (string.IsNullOrEmpty(serie) || folio == 0)
+                    return 1;
+
+                CFDI cfdi = new CFDI();
+
+                cfdi.EmisorId = emisor.EmisorId;
+                cfdi.EmisorRFC = emisor.RFC;
+                cfdi.EmisorNombre = emisor.Nombre;
+                cfdi.EmisorRegimenFiscal = emisor.CveRef;
+                cfdi.Serie = serie;
+                cfdi.Folio = folio;
+                cfdi.Fecha = DateTime.Now;
+                cfdi.PacienteId = 0;
+                cfdi.RazonSocialId = 0;
+                cfdi.ReceptorRFC = "XAXX010101000";
+                cfdi.ReceptorNombre = "PUBLICO EN GENERAL";
+                cfdi.ReceptorRegimenFiscal = "616";
+                cfdi.FormaPago = "01";
+                cfdi.MetodoPago = "PUE";
+                cfdi.UsoCFdi = "S01";
+                cfdi.TipoComprobante = "I";
+                cfdi.Moneda = "MXN";
+                cfdi.LugarExpedicion = emisor.CP;
+                cfdi.SubTotal = subtotal;
+                cfdi.IVA = iva;
+                cfdi.Total = total;
+
+                ComprobanteCFDI comprobante = new ComprobanteCFDI();
+
+                comprobante.Serie = serie;
+                comprobante.Folio = folio;
+                comprobante.Fecha = DateTime.Now;
+                comprobante.FormaPago = "01";
+                comprobante.MetodoPago = "PUE";
+                comprobante.LugarExpedicion = emisor.CP;
+
+                comprobante.ComprobanteEmisor.RFC = emisor.RFC;
+                comprobante.ComprobanteEmisor.Nombre = emisor.Nombre;
+                comprobante.ComprobanteEmisor.RegimenFiscal = emisor.CveRef;
+
+
+                comprobante.Certificado = emisor.Certificado;
+                comprobante.LlavePrivada = emisor.LlavePrivada;
+                comprobante.PassWord = emisor.PassWord;
+
+                comprobante.ComprobanteReceptor.RFC = "XAXX010101000";
+                comprobante.ComprobanteReceptor.Nombre = "PUBLICO EN GENERAL";
+                comprobante.ComprobanteReceptor.DomicilioFiscalReceptor = emisor.CP;
+                comprobante.ComprobanteReceptor.RegimenFiscalReceptor = "616";
+                comprobante.ComprobanteReceptor.UsoCFDI = "S01";
+
+
+
+                List<CFDIDetalle> conceptos = new List<CFDIDetalle>();
+
+                foreach (var ing in ingresos)
+                {
+
+
+                    decimal IVAExento = 0;
+                    decimal IVA16 = 0;
+                    decimal IVA0 = 0;
+
+                    decimal BaseIVA16 = 0;
+                    decimal BaseIVA0 = 0;
+                    decimal BaseIVAExento = 0;
+
+                    sql = Queries.IngresoDetallesSelect();
+                    var ingresoDetalles = db.Query<IngresoDetalle>(sql, new { IngresoId = ing.IngresoId }).ToList();
+
+                    foreach (var det in ingresoDetalles)
+                    {
+                        if (det.TipoIVA == 1)
+                        {
+                            if (det.TasaIVA == 16)
+                            {
+                                IVA16 = det.IVA;
+                                BaseIVA16 = det.BaseIVA;
+                            }
+                            else
+                            {
+                                IVA0 = det.IVA;
+                                BaseIVA0 = det.BaseIVA;
+                            }
+                        }
+                        else
+                        {
+                            IVAExento = det.IVA;
+                            BaseIVAExento = det.BaseIVA;
+                        }
+
+                    }
+
+                    string noIden = "TIC";
+                    string descripcion = $"TICKET {folio}";
+                    string cveProSer = "01010101";
+                    string cveUni = "ACT";
+
+                    if (BaseIVAExento > 0)
+                    {
+                        CFDIDetalle det = new CFDIDetalle();
+                        det.ArticuloId = ing.IngresoId;
+                        det.NoIden = noIden;
+                        det.Descripcion = descripcion + " IVA Exento";
+                        det.Cantidad = 1;
+                        det.ValorUnitario = BaseIVAExento;
+                        det.CveProSer = cveProSer;
+                        det.CveUni = cveUni;
+                        det.Descuento = 0;
+                        det.TipoIVA = 2;
+                        det.TasaIVA = 0;
+                        det.IVA = 0;
+                        det.RetISR = 0;
+                        det.RetIVA = 0;
+
+                        conceptos.Add(det);
+
+                    }
+
+
+                    if (BaseIVA0 > 0)
+                    {
+                        CFDIDetalle det = new CFDIDetalle();
+                        det.ArticuloId = ing.IngresoId;
+                        det.NoIden = noIden;
+                        det.Descripcion = descripcion + " IVA 0";
+                        det.Cantidad = 1;
+                        det.ValorUnitario = BaseIVA0;
+                        det.CveProSer = cveProSer;
+                        det.CveUni = cveUni;
+                        det.Descuento = 0;
+                        det.TipoIVA = 1;
+                        det.TasaIVA = 0;
+                        det.IVA = 0;
+                        det.RetISR = 0;
+                        det.RetIVA = 0;
+
+                        conceptos.Add(det);
+                    }
+
+
+                    if (BaseIVA16 > 0)
+                    {
+                        CFDIDetalle det = new CFDIDetalle();
+                        det.ArticuloId = ing.IngresoId;
+                        det.NoIden = noIden;
+                        det.Descripcion = descripcion + " IVA 16";
+                        det.Cantidad = 1;
+                        det.ValorUnitario = BaseIVA16;
+                        det.CveProSer = cveProSer;
+                        det.CveUni = cveUni;
+                        det.Descuento = 0;
+                        det.TipoIVA = 1;
+                        det.TasaIVA = 16;
+                        det.IVA = IVA16;
+                        det.RetISR = 0;
+                        det.RetIVA = 0;
+
+                        conceptos.Add(det);
+
+                    }
+
+
+
+
+
+                    //////////////////
+
+                    ConceptoCFDI conce = new ConceptoCFDI();
+
+                    conce.NoIdentificacion = noIden;
+                    conce.Descripcion = descripcion;
+                    conce.Unidad = "ACT";
+                    conce.Cantidad = 1;
+                    conce.ValorUnitario = ing.SubTotal;
+                    conce.ClaveProdServ = cveProSer;
+                    conce.ClaveUnidad = cveUni;
+                    conce.ObjetoImp = "02";
+
+
+
+                    if (BaseIVA16 > 0)
+                    {
+                        DatosImpuestoCFDI tras = new DatosImpuestoCFDI();
+
+                        tras.Impuesto = "002";
+                        tras.TipoFactor = "Tasa";
+                        tras.Base = BaseIVA16;
+                        tras.Importe = IVA16;
+                        tras.TasaOCuota = (decimal)0.16;
+                        conce.Traslados.Add(tras);
+                    }
+
+                    if (BaseIVA0 > 0)
+                    {
+                        DatosImpuestoCFDI tras = new DatosImpuestoCFDI();
+
+                        tras.Impuesto = "002";
+                        tras.TipoFactor = "Tasa";
+                        tras.Base = BaseIVA0;
+                        tras.Importe = 0;
+                        tras.TasaOCuota = 0;
+                        conce.Traslados.Add(tras);
+                    }
+
+                    if (BaseIVAExento > 0)
+                    {
+                        DatosImpuestoCFDI tras = new DatosImpuestoCFDI();
+                        tras.Base = BaseIVAExento;
+                        tras.Impuesto = "002";
+                        tras.TipoFactor = "Exento";
+                        //tras.TasaOCuota = 0;
+                        conce.Traslados.Add(tras);
+                    }
+
+                    comprobante.ComprobanteConceptos.Add(conce);
+
+
+
+                    /////////////////////
+
+
+                }
+
+                comprobante.archivoXMLBase = GetTempXML();
+                comprobante.archivoXMLFirmado = GetTempXML();
+                comprobante.archivoXMLTimbrado = General.CarpetaCfdi(emisor.RFC, cfdi.Fecha) + General.NombreArchivoCfdi("FAG", serie, folio);
+
+                comprobante.CreaXML();
+                string resultado = comprobante.SellaXML();
+                string xml = "";
+
+                if (resultado != "0")
+                {
+                    return Convert.ToInt32(resultado);
+                }
+                else
+                {
+                    resultado = comprobante.TimbraSW();
+                    if (resultado != "000")
+                    {
+                        return Convert.ToInt32(resultado);
+
+
+                    }
+
+                    if (File.Exists(comprobante.archivoXMLTimbrado))
+                    {
+                        xml = File.ReadAllText(comprobante.archivoXMLTimbrado);
+                        cfdi.EmisorCSD = comprobante.GetEmisorCSD();
+
+
+                        sql = Queries.SucursalSetSiguienteFolioGlobal();
+                        db.Execute(sql, new { SucursalId = Properties.Settings.Default.SucursalId });
+
+                        cfdi.uid = comprobante.GetFolioFiscal(xml);
+                        cfdi.EmisorCSD = comprobante.GetEmisorCSD();
+
+                        //int cfdiId = 0;
+                        sql = Queries.CfdiInsert();
+                        int cfdiId = db.ExecuteScalar<int>(sql, cfdi);
+
+                        sql = Queries.CfdiDetalleInsert();
+
+                        foreach (var det in conceptos)
+                        {
+                            det.CFDIId = cfdiId;
+                            db.Execute(sql, det);
+                        }
+
+                        foreach (var ing in ingresos)
+                        {
+                            sql = Queries.IngresoSetFacturado;
+                            db.Execute(sql, new { CFDiId=cfdiId, IngresoId = ing.IngresoId });
+                        }
+
+                        string archivoPDF = GeneraPDFFactura(cfdi, conceptos, xml);
+
+                    }
+
+                }
+
+
+            }
+
+            //////////
+
+            return res;
+
+        }
+
+
+
+
+        private static int  GeneraFactura(Ingreso ing,
             List<IngresoDetalle> conceptos,bool imprimir=false, string impresora="",
             bool mandarCorreos = false, string direcciones = "")
         {
@@ -281,6 +607,7 @@ namespace ClinicaFB.Helpers
             RazonSocial razonSocial = new RazonSocial();
             Emisor emi = new Emisor();
 
+            int serieId = 0;
 
             using (FbConnection db = General.GetDB())
             {
@@ -288,12 +615,12 @@ namespace ClinicaFB.Helpers
                 SerieDoc serDoc = db.Query<SerieDoc>(sql, new {EmisorId=emisorId,Tipo =tipoDoc, Serie=serie }).FirstOrDefault();
 
                 if (serDoc == null)
-                    return;
+                    return 1;
 
                 folioFac = serDoc.Folio;
 
-                sql = Queries.SerieFolioIncrementa();
-                db.Execute(sql, new { SerieDocId = serDoc.SerieDocId });
+                serieId = serDoc.SerieDocId;
+
 
                 sql = Queries.RazonSocialSelect();
 
@@ -308,7 +635,7 @@ namespace ClinicaFB.Helpers
                 emi = db.Query<Emisor>(sql, new { EmisorId = emisorId }).FirstOrDefault();
 
                 if (emi == null)
-                    return;
+                    return 1;
             }
 
             decimal subTotal = 0;
@@ -317,6 +644,7 @@ namespace ClinicaFB.Helpers
             decimal retIVA = 0;
             decimal iva = 0;
             decimal total = 0;
+
             foreach (var conce in conceptos)
             {
                 subTotal += Math.Round(conce.Cantidad * conce.Precio, 2);
@@ -330,8 +658,6 @@ namespace ClinicaFB.Helpers
 
             CFDI cfdi = new CFDI();
 
-
-
             cfdi.IngresoId = ing.IngresoId;
             cfdi.EmisorId = emisorId;
             cfdi.EmisorRFC = emi.RFC;
@@ -339,15 +665,9 @@ namespace ClinicaFB.Helpers
             cfdi.EmisorRegimenFiscal = emi.CveRef;
             cfdi.Serie = serie;
             cfdi.Folio = folioFac;
-            cfdi.Fecha = ing.Fecha;
+            cfdi.Fecha = DateTime.Now; //ing.Fecha;
             cfdi.PacienteId= ing.PacienteId;
 
-            /*cfdi.RazonSocialId= ing.RazonSocialId;
-            cfdi.ReceptorRFC = razonSocial.RFC;
-            cfdi.ReceptorNombre = razonSocial.RazonSoc;
-            cfdi.ReceptorRegimenFiscal = razonSocial.CveREF;
-            cfdi.MetodoPago = razonSocial.CveMEP;
-            cfdi.UsoCFdi = razonSocial.CveUSO;*/
 
 
             if (publico)
@@ -362,9 +682,13 @@ namespace ClinicaFB.Helpers
             }
             else
             {
+                string ciudad = General.GetDescripcion("CIU", razonSocial.CiudadId);
+                string estado = General.GetDescripcion("EDO", razonSocial.EstadoId);                
                 cfdi.RazonSocialId = ing.RazonSocialId;
                 cfdi.ReceptorRFC = razonSocial.RFC;
                 cfdi.ReceptorNombre = razonSocial.RazonSoc;
+                cfdi.ReceptorDireccion = razonSocial.Direccion.Trim()+" "+ciudad.Trim()+" "+estado.Trim();
+
                 cfdi.ReceptorRegimenFiscal = razonSocial.CveREF;
                 cfdi.FormaPago = ing.CveFOP;
                 cfdi.MetodoPago = ing.CveMEP;
@@ -385,6 +709,8 @@ namespace ClinicaFB.Helpers
             cfdi.RetIVA= retIVA;
             cfdi.IVA = iva;
             cfdi.Total = total;
+
+
 
             ComprobanteCFDI comprobante = new ComprobanteCFDI();
 
@@ -462,9 +788,12 @@ namespace ClinicaFB.Helpers
                 comprobante.ComprobanteConceptos.Add(conce);
             }
 
+            List<CFDIDetalle> cfdiDetalle = new List<CFDIDetalle>();
+
+
             comprobante.archivoXMLBase = GetTempXML();
             comprobante.archivoXMLFirmado = GetTempXML();
-            comprobante.archivoXMLTimbrado = General.CarpetaCfdi(emi.RFC,ing.Fecha) + General.NombreArchivoCfdi(tipoDoc,serie,folioFac);
+            comprobante.archivoXMLTimbrado = General.CarpetaCfdi(emi.RFC,cfdi.Fecha) + General.NombreArchivoCfdi(tipoDoc,serie,folioFac);
 
             comprobante.CreaXML();
             string res  = comprobante.SellaXML();
@@ -477,52 +806,67 @@ namespace ClinicaFB.Helpers
             else
             {
                 res = comprobante.TimbraSW();
+                if (res != "000")
+                {
+                    MessageBox.Show($"Una factura no se pudó timbrar {res} ", "Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    return 1;
+
+
+                }
 
                 if (File.Exists(comprobante.archivoXMLTimbrado))
                 {
                     xml = File.ReadAllText(comprobante.archivoXMLTimbrado);
-
-                    cfdi.uid = comprobante.GetFolioFiscal(xml);
                     cfdi.EmisorCSD = comprobante.GetEmisorCSD();
 
+                    using (FbConnection db = General.GetDB())
+                    {
+                        string sql = "";
+                        sql = Queries.SerieFolioIncrementa();
+                        db.Execute(sql, new { SerieDocId = serieId });
+
+                        cfdi.uid = comprobante.GetFolioFiscal(xml);
+                        cfdi.EmisorCSD = comprobante.GetEmisorCSD();
+
+                        int cfdiId = 0;
+                        sql = Queries.CfdiInsert();
+                        cfdiId = db.ExecuteScalar<int>(sql, cfdi);
+
+
+                        foreach (var det in conceptos)
+                        {
+                            CFDIDetalle newDet = new CFDIDetalle();
+                            newDet.CFDIId = cfdiId;
+                            newDet.ArticuloId = det.ArticuloId;
+                            newDet.NoIden = det.Clave;
+                            newDet.Descripcion = det.Descripcion;
+                            newDet.Cantidad = det.Cantidad;
+                            newDet.ValorUnitario = det.Precio;
+                            newDet.CveProSer = det.CveProSer;
+                            newDet.CveUni = det.CveUni;
+                            newDet.Descuento = det.Descuento;
+                            newDet.TipoIVA = det.TipoIVA;
+                            newDet.TasaIVA = det.TasaIVA;
+                            newDet.IVA = det.IVA;
+                            newDet.RetISR = det.RetISR;
+                            newDet.RetIVA = det.RetIVA;
+
+                            cfdiDetalle.Add(newDet);
+
+                            sql = Queries.CfdiDetalleInsert();
+                            db.Execute(sql, newDet);
+
+                        }
+
+
+                    }
+
                 }
 
 
             }
 
 
-           List<CFDIDetalle> cfdiDetalle = new List<CFDIDetalle>(); 
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = Queries.CfdiInsert();
-                int cfdiId = db.ExecuteScalar<int>(sql,cfdi);
-
-                foreach (var det in conceptos)
-                {
-                    CFDIDetalle newDet = new CFDIDetalle();
-                    newDet.CFDIId = cfdiId;
-                    newDet.ArticuloId = det.ArticuloId;
-                    newDet.NoIden = det.Clave;
-                    newDet.Descripcion= det.Descripcion;
-                    newDet.Cantidad = det.Cantidad;
-                    newDet.ValorUnitario = det.Precio;
-                    newDet.CveProSer=det.CveProSer;
-                    newDet.CveUni=det.CveUni;
-                    newDet.Descuento=det.Descuento;
-                    newDet.TipoIVA = det.TipoIVA.ToString();
-                    newDet.TasaIVA= det.TasaIVA;
-                    newDet.IVA=det.IVA;
-                    newDet.RetISR=det.RetISR;
-                    newDet.RetIVA=det.RetIVA;
-
-                    cfdiDetalle.Add(newDet);   
-
-                    sql = Queries.CfdiDetalleInsert();
-                    db.Execute(sql, newDet);
-
-                }
-            }
 
             string archivoPDF=  GeneraPDFFactura(cfdi, cfdiDetalle,xml);
 
@@ -535,6 +879,7 @@ namespace ClinicaFB.Helpers
             {
                 MandaCorreo(direcciones, comprobante.archivoXMLTimbrado, archivoPDF);
             }
+            return 0;
 
 
         }
@@ -593,13 +938,37 @@ namespace ClinicaFB.Helpers
                     datosSucursal = suc.DatosAdicionales;
 
 
+                if (cfdi.RazonSocialId == 0)
+                {
+                    cfdi.ReceptorRFC = "XAXX010101000";
+                    cfdi.ReceptorNombre = "PUBLICO EN GENERAL";
+                    cfdi.ReceptorRegimenFiscal = "616";
+
+                }
+                else
+                { 
+                    sql = Queries.RazonSocialSelect();
+                    RazonSocial razonSocial = db.Query<RazonSocial>(sql, new {RazonSocialId =cfdi.RazonSocialId }).FirstOrDefault();
+                    string ciudad = General.GetDescripcion("CIU", razonSocial.CiudadId);
+                    string estado = General.GetDescripcion("EDO", razonSocial.EstadoId);
+
+                    cfdi.ReceptorRFC = razonSocial.RFC;
+                    cfdi.ReceptorNombre = razonSocial.RazonSoc;
+                    cfdi.ReceptorRegimenFiscal = razonSocial.CveREF;
+                    cfdi.ReceptorDireccion = razonSocial.Direccion.Trim() + " " + ciudad.Trim() + " " + estado.Trim();
+
+                }
+
+
 
             }
 
             List<CFDI> datosFactura = new List<CFDI>();
 
-
-
+            cfdi.ReceptorRegimenFiscal = cfdi.ReceptorRegimenFiscal.Trim() + ": " + General.GetDescripcionClaveSAT("REF", cfdi.ReceptorRegimenFiscal);
+            cfdi.FormaPago = cfdi.FormaPago.Trim() + ": " + General.GetDescripcionClaveSAT("FOP", cfdi.FormaPago);
+            cfdi.MetodoPago = cfdi.MetodoPago.Trim() + ": " + General.GetDescripcionClaveSAT("MEP", cfdi.MetodoPago);
+            cfdi.UsoCFdi = cfdi.UsoCFdi.Trim() + ": " + General.GetDescripcionClaveSAT("USO", cfdi.UsoCFdi); ;
             datosFactura.Add(cfdi);
 
 
@@ -617,9 +986,11 @@ namespace ClinicaFB.Helpers
            ReportViewer rptFactura = new ReportViewer();
 
            rptFactura.ProcessingMode = ProcessingMode.Local;
-           rptFactura.LocalReport.ReportPath = @"C:\Users\Felipe  Juan\source\repos\ClinicaFB\ClinicaFB\Reportes\Ingresos\Factura.rdlc";
-            
-           rptFactura.LocalReport.DataSources.Clear();
+            rptFactura.LocalReport.ReportPath = @"C:\Users\Felipe  Juan\source\repos\ClinicaFB\ClinicaFB\Reportes\Ingresos\Factura.rdlc";
+            string rep = General.GetCarpetaReportes() + @"\Ingresos\Factura.rdlc";
+            rptFactura.LocalReport.ReportPath = rep; // @"C:\Users\Felipe  Juan\source\repos\ClinicaFB\ClinicaFB\Reportes\Ingresos\Factura.rdlc";
+
+            rptFactura.LocalReport.DataSources.Clear();
 
 
            foreach (var dato in reportDataSources)

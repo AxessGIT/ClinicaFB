@@ -9,6 +9,7 @@ namespace ClinicaFB.Modelo
     public class Ingreso
     {
         public int IngresoId { get; set; }
+        public int EmisorId { get; set; }   
         public string Tipo { get; set; }
         public int SucursalId { get; set; }
         public string Serie { get; set; }
@@ -30,6 +31,7 @@ namespace ClinicaFB.Modelo
         public decimal Total { get; set; }
         public bool Cancelado { get; set; }
         public string WebId { get; set; }
+        public int FacturaGlobalId { get; set; }
         public string NomPac
         {
             get { return string.IsNullOrEmpty(PacienteNombre) ? "PUBLICO EN GENERAL" : PacienteNombre; }

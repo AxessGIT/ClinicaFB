@@ -28,7 +28,7 @@ namespace ClinicaFB.Modelo
 
         public decimal Descuento { get; set; } = 0;
         public decimal TasaIVA { get; set; } = 0;
-        public string TipoIVA { get; set; }
+        public int TipoIVA { get; set; }
         public decimal IVA { get; set; } = 0;
         public decimal RetIVA { get; set; } = 0;
         public decimal RetISR { get; set; } = 0;

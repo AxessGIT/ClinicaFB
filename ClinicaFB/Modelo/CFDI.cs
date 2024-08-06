@@ -34,6 +34,8 @@ namespace ClinicaFB.Modelo
         public string ReceptorRFC { get; set; }
         public string ReceptorNombre { get; set; }
         public string ReceptorRegimenFiscal { get; set; }
+        public string ReceptorDireccion { get; set; }
+
         public string UsoCFdi { get; set; }
 
         public decimal SubTotal { get; set; } = 0;

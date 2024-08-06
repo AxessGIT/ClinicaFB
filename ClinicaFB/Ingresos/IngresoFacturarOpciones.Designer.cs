@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IngresoFacturarOpciones));
             this.label1 = new System.Windows.Forms.Label();
             this.txtRazonSocial = new System.Windows.Forms.TextBox();
@@ -51,6 +52,9 @@
             this.txtCorreos = new System.Windows.Forms.TextBox();
             this.cmdCancelar = new System.Windows.Forms.Button();
             this.cmdAceptar = new System.Windows.Forms.Button();
+            this.cmdSeleccionarRazonSocial = new System.Windows.Forms.Button();
+            this.cmdPublico = new System.Windows.Forms.Button();
+            this.toolTip = new Syncfusion.Windows.Forms.SfToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -206,7 +210,8 @@
             this.chkImprimir.AutoSize = true;
             this.chkImprimir.Checked = true;
             this.chkImprimir.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkImprimir.Location = new System.Drawing.Point(23, 232);
+            this.chkImprimir.Enabled = false;
+            this.chkImprimir.Location = new System.Drawing.Point(23, 234);
             this.chkImprimir.Name = "chkImprimir";
             this.chkImprimir.Size = new System.Drawing.Size(119, 20);
             this.chkImprimir.TabIndex = 8;
@@ -216,7 +221,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(25, 260);
+            this.label5.Location = new System.Drawing.Point(25, 262);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 16);
             this.label5.TabIndex = 9;
@@ -225,8 +230,9 @@
             // cboImpresoras
             // 
             this.cboImpresoras.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboImpresoras.Enabled = false;
             this.cboImpresoras.FormattingEnabled = true;
-            this.cboImpresoras.Location = new System.Drawing.Point(97, 257);
+            this.cboImpresoras.Location = new System.Drawing.Point(97, 259);
             this.cboImpresoras.Name = "cboImpresoras";
             this.cboImpresoras.Size = new System.Drawing.Size(372, 24);
             this.cboImpresoras.TabIndex = 10;
@@ -236,7 +242,7 @@
             this.chkMandarCorreo.AutoSize = true;
             this.chkMandarCorreo.Checked = true;
             this.chkMandarCorreo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMandarCorreo.Location = new System.Drawing.Point(24, 288);
+            this.chkMandarCorreo.Location = new System.Drawing.Point(24, 290);
             this.chkMandarCorreo.Name = "chkMandarCorreo";
             this.chkMandarCorreo.Size = new System.Drawing.Size(177, 20);
             this.chkMandarCorreo.TabIndex = 11;
@@ -245,7 +251,8 @@
             // 
             // txtCorreos
             // 
-            this.txtCorreos.Location = new System.Drawing.Point(23, 314);
+            this.txtCorreos.Enabled = false;
+            this.txtCorreos.Location = new System.Drawing.Point(23, 316);
             this.txtCorreos.Name = "txtCorreos";
             this.txtCorreos.Size = new System.Drawing.Size(441, 23);
             this.txtCorreos.TabIndex = 12;
@@ -254,7 +261,7 @@
             // 
             this.cmdCancelar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCancelar.Image")));
             this.cmdCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCancelar.Location = new System.Drawing.Point(333, 379);
+            this.cmdCancelar.Location = new System.Drawing.Point(384, 352);
             this.cmdCancelar.Name = "cmdCancelar";
             this.cmdCancelar.Size = new System.Drawing.Size(120, 54);
             this.cmdCancelar.TabIndex = 14;
@@ -266,7 +273,7 @@
             // 
             this.cmdAceptar.Image = ((System.Drawing.Image)(resources.GetObject("cmdAceptar.Image")));
             this.cmdAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdAceptar.Location = new System.Drawing.Point(207, 379);
+            this.cmdAceptar.Location = new System.Drawing.Point(258, 352);
             this.cmdAceptar.Name = "cmdAceptar";
             this.cmdAceptar.Size = new System.Drawing.Size(120, 54);
             this.cmdAceptar.TabIndex = 13;
@@ -274,11 +281,37 @@
             this.cmdAceptar.UseVisualStyleBackColor = true;
             this.cmdAceptar.Click += new System.EventHandler(this.cmdAceptar_Click);
             // 
+            // cmdSeleccionarRazonSocial
+            // 
+            this.cmdSeleccionarRazonSocial.Location = new System.Drawing.Point(705, 38);
+            this.cmdSeleccionarRazonSocial.Name = "cmdSeleccionarRazonSocial";
+            this.cmdSeleccionarRazonSocial.Size = new System.Drawing.Size(48, 27);
+            this.cmdSeleccionarRazonSocial.TabIndex = 15;
+            this.cmdSeleccionarRazonSocial.Text = "...";
+            this.toolTip.SetToolTip(this.cmdSeleccionarRazonSocial, "Buscar razón social");
+            this.cmdSeleccionarRazonSocial.UseVisualStyleBackColor = true;
+            this.cmdSeleccionarRazonSocial.Visible = false;
+            this.cmdSeleccionarRazonSocial.Click += new System.EventHandler(this.cmdSeleccionarRazonSocial_Click);
+            // 
+            // cmdPublico
+            // 
+            this.cmdPublico.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdPublico.Location = new System.Drawing.Point(650, 38);
+            this.cmdPublico.Name = "cmdPublico";
+            this.cmdPublico.Size = new System.Drawing.Size(48, 27);
+            this.cmdPublico.TabIndex = 16;
+            this.cmdPublico.Text = "P";
+            this.toolTip.SetToolTip(this.cmdPublico, "Facturar a publico en general");
+            this.cmdPublico.UseVisualStyleBackColor = true;
+            this.cmdPublico.Click += new System.EventHandler(this.cmdPublico_Click);
+            // 
             // IngresoFacturarOpciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 448);
+            this.ClientSize = new System.Drawing.Size(762, 441);
+            this.Controls.Add(this.cmdPublico);
+            this.Controls.Add(this.cmdSeleccionarRazonSocial);
             this.Controls.Add(this.txtCorreos);
             this.Controls.Add(this.chkMandarCorreo);
             this.Controls.Add(this.cboImpresoras);
@@ -338,5 +371,8 @@
         public System.Windows.Forms.ComboBox cboImpresoras;
         public System.Windows.Forms.CheckBox chkMandarCorreo;
         public System.Windows.Forms.TextBox txtCorreos;
+        private System.Windows.Forms.Button cmdSeleccionarRazonSocial;
+        private Syncfusion.Windows.Forms.SfToolTip toolTip;
+        private System.Windows.Forms.Button cmdPublico;
     }
 }

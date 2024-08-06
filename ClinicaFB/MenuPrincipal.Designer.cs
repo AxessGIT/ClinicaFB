@@ -156,7 +156,7 @@ namespace ClinicaFB
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(193, 16);
             this.label1.TabIndex = 11;
-            this.label1.Text = "Menú principal. Versión 2023";
+            this.label1.Text = "Menú principal. Versión 2024";
             // 
             // MenuPrincipal
             // 

@@ -12,82 +12,43 @@ using System.Drawing.Printing;
 using ClinicaFB.Modelo;
 using FirebirdSql.Data.FirebirdClient;
 using Dapper;
+using ClinicaFB.Facturacion;
 
 namespace ClinicaFB.Ingresos
 {
     public partial class IngresoFacturarOpciones : Form
     {
-        private int _razonSocialId;
+        public int RazonSocialId { get; set; } = 0;
         private string _cveFOP;
         private string _cveMEP;
         private string _cveUSO;
         private string _correos;
+        private bool _selRazon = false;
 
         public bool Aceptar { get; set; }
 
 
-        public IngresoFacturarOpciones(int razonSocialId,string cveFOP="", string cveMEP = "",string cveUSO = "",string correos="" )
+        public IngresoFacturarOpciones(int razonSocialId,string cveFOP="", string cveMEP = "",string cveUSO = "",string correos="", bool selRazon=false )
         {
             InitializeComponent();
-            _razonSocialId = razonSocialId; 
+            RazonSocialId = razonSocialId; 
             _cveFOP= cveFOP;
             _cveMEP= cveMEP;
             _cveUSO = cveUSO;
             _correos = correos;
+            _selRazon= selRazon;    
         }
 
         private void ClavesSATSeleccionar_Load(object sender, EventArgs e)
         {
             CargaImpresoras();
+            cmdSeleccionarRazonSocial.Visible = _selRazon;
 
-            if (_razonSocialId == 0)
-            {
-                chkMandarCorreo.Checked=false;
-                txtCorreos.Enabled =false;
-            }
-            else
-            {
-
-                using (FbConnection db = General.GetDB())
-                {
-                    string sql = Queries.RazonSocialSelect();
-                    RazonSocial raz = db.Query<RazonSocial>(sql, new {RazonSocialId = _razonSocialId }).FirstOrDefault();
-
-                    if (raz!= null)
-                    {
-                        txtRFC.Text = raz.RFC;
-                        txtRazonSocial.Text = raz.RazonSoc;
-                        txtCveFOP.Text = raz.CveFOP;
-                        txtCveMEP.Text = raz.CveMEP;
-                        txtCveUSO.Text = raz.CveUSO;
-                        txtCorreos.Text = raz.Email;
-
-                    }
-                    else
-                    {
-                        txtCveFOP.Text = _cveFOP;
-                        txtCveMEP.Text = _cveMEP;
-                        txtCveUSO.Text = _cveUSO;
-                        txtCorreos.Text = _correos;
-
-                    }
-
-                }
-                txtCveMEP.Enabled = true;
-                cmdBuscarCveMEP.Enabled =true;
-
-                txtCveUSO.Enabled = true;
-                cmdBuscarCveUSO.Enabled=true;
-
-
-                General.ClaveSATValidar("FOP", ref txtCveFOP, ref txtDescripcionFOP);
-                General.ClaveSATValidar("MEP", ref txtCveMEP, ref txtDescripcionMEP);
-                General.ClaveSATValidar("USO", ref txtCveUSO, ref txtDescripcionUSO);
-
-            }
+            CargaDatosRazonSocial();
 
 
         }
+
 
         private void CargaImpresoras()
         {
@@ -155,6 +116,87 @@ namespace ClinicaFB.Ingresos
             }
             Aceptar = true;
             Close();
+        }
+
+        private void cmdSeleccionarRazonSocial_Click(object sender, EventArgs e)
+        {
+            RazonesSocialesListado razonesSocialesListado = new RazonesSocialesListado(true);
+            razonesSocialesListado.ShowDialog();
+            RazonSocialId = razonesSocialesListado.RazonId;
+            CargaDatosRazonSocial();
+        }
+
+        private void CargaDatosRazonSocial()
+        {
+            if (RazonSocialId == 0)
+            {
+                DatosPublico();
+                chkMandarCorreo.Checked = false;
+                txtCorreos.Enabled = false;
+            }
+            else
+            {
+
+                using (FbConnection db = General.GetDB())
+                {
+                    string sql = Queries.RazonSocialSelect();
+                    RazonSocial raz = db.Query<RazonSocial>(sql, new { RazonSocialId = RazonSocialId }).FirstOrDefault();
+
+                    if (raz != null)
+                    {
+                        txtRFC.Text = raz.RFC;
+                        txtRazonSocial.Text = raz.RazonSoc;
+                        txtCveFOP.Text = raz.CveFOP;
+                        txtCveMEP.Text = raz.CveMEP;
+                        txtCveUSO.Text = raz.CveUSO;
+                        txtCorreos.Text = raz.Email;
+
+                    }
+                    else
+                    {
+                        txtCveFOP.Text = _cveFOP;
+                        txtCveMEP.Text = _cveMEP;
+                        txtCveUSO.Text = _cveUSO;
+                        txtCorreos.Text = _correos;
+
+                    }
+
+                }
+
+                txtCveMEP.Enabled = true;
+                cmdBuscarCveMEP.Enabled = true;
+
+                txtCveUSO.Enabled = true;
+                cmdBuscarCveUSO.Enabled = true;
+
+
+                General.ClaveSATValidar("FOP", ref txtCveFOP, ref txtDescripcionFOP);
+                General.ClaveSATValidar("MEP", ref txtCveMEP, ref txtDescripcionMEP);
+                General.ClaveSATValidar("USO", ref txtCveUSO, ref txtDescripcionUSO);
+
+            }
+
+
+        }
+
+        private void cmdPublico_Click(object sender, EventArgs e)
+        {
+
+            DatosPublico();
+        }
+
+        private void DatosPublico()
+        {
+            RazonSocialId = 0;
+            txtRFC.Text = "XAXX010101000";
+            txtRazonSocial.Text = "PUBLICO EN GENERAL";
+            txtCveFOP.Text = "01";
+            txtDescripcionFOP.Text = "Efectivo";
+            txtCveMEP.Text = "PUE";
+            txtDescripcionMEP.Text = "Pago en una exhibición";
+            txtCveUSO.Text = "S01";
+            txtDescripcionUSO.Text = "Sin efectos fiscales";
+
         }
     }
 }

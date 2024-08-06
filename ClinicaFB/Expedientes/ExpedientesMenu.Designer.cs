@@ -30,21 +30,22 @@ namespace ClinicaFB.Expedientes
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExpedientesMenu));
-            this.cmdPacientes = new System.Windows.Forms.Button();
+            this.cmdPacientesDia = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
+            this.cmdPacientes = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // cmdPacientes
+            // cmdPacientesDia
             // 
-            this.cmdPacientes.Image = ((System.Drawing.Image)(resources.GetObject("cmdPacientes.Image")));
-            this.cmdPacientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdPacientes.Location = new System.Drawing.Point(12, 12);
-            this.cmdPacientes.Name = "cmdPacientes";
-            this.cmdPacientes.Size = new System.Drawing.Size(153, 47);
-            this.cmdPacientes.TabIndex = 10;
-            this.cmdPacientes.Text = "&Pacientes";
-            this.cmdPacientes.UseVisualStyleBackColor = true;
-            this.cmdPacientes.Click += new System.EventHandler(this.cmdPacientes_Click);
+            this.cmdPacientesDia.Image = ((System.Drawing.Image)(resources.GetObject("cmdPacientesDia.Image")));
+            this.cmdPacientesDia.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdPacientesDia.Location = new System.Drawing.Point(171, 12);
+            this.cmdPacientesDia.Name = "cmdPacientesDia";
+            this.cmdPacientesDia.Size = new System.Drawing.Size(153, 47);
+            this.cmdPacientesDia.TabIndex = 12;
+            this.cmdPacientesDia.Text = "&Pacientes del día";
+            this.cmdPacientesDia.UseVisualStyleBackColor = true;
+            this.cmdPacientesDia.Click += new System.EventHandler(this.cmdPacientesDia_Click);
             // 
             // cmdSalir
             // 
@@ -58,11 +59,24 @@ namespace ClinicaFB.Expedientes
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
+            // cmdPacientes
+            // 
+            this.cmdPacientes.Image = ((System.Drawing.Image)(resources.GetObject("cmdPacientes.Image")));
+            this.cmdPacientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdPacientes.Location = new System.Drawing.Point(12, 12);
+            this.cmdPacientes.Name = "cmdPacientes";
+            this.cmdPacientes.Size = new System.Drawing.Size(153, 47);
+            this.cmdPacientes.TabIndex = 10;
+            this.cmdPacientes.Text = "&Pacientes";
+            this.cmdPacientes.UseVisualStyleBackColor = true;
+            this.cmdPacientes.Click += new System.EventHandler(this.cmdPacientes_Click);
+            // 
             // ExpedientesMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(650, 97);
+            this.Controls.Add(this.cmdPacientesDia);
             this.Controls.Add(this.cmdSalir);
             this.Controls.Add(this.cmdPacientes);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -80,5 +94,6 @@ namespace ClinicaFB.Expedientes
 
         private System.Windows.Forms.Button cmdPacientes;
         private System.Windows.Forms.Button cmdSalir;
+        private System.Windows.Forms.Button cmdPacientesDia;
     }
 }
