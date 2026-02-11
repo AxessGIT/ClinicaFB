@@ -8,7 +8,7 @@ namespace ClinicaFB.Modelo
 {
     public class Emisor
     {
-        public int EmisorId { get; set; }
+        public long EmisorId { get; set; }
         public string RFC { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
@@ -23,6 +23,9 @@ namespace ClinicaFB.Modelo
         public string PassWord { get; set; }
         public bool Defa { get; set; }
         public bool PDV { get; set; }
+        public byte[] Cer { get; set; }
+        public byte[] Llave { get; set; }
+
 
     }
 }

@@ -44,17 +44,19 @@ namespace ClinicaFB.Agenda
             this.cboRecursos = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboTipos = new System.Windows.Forms.ComboBox();
+            this.cboDias = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cmdSalir
             // 
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
             this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSalir.Location = new System.Drawing.Point(228, 228);
+            this.cmdSalir.Location = new System.Drawing.Point(237, 266);
             this.cmdSalir.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(142, 49);
-            this.cmdSalir.TabIndex = 27;
+            this.cmdSalir.TabIndex = 15;
             this.cmdSalir.Text = "&Cerrar";
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
@@ -63,11 +65,11 @@ namespace ClinicaFB.Agenda
             // 
             this.cmdDesBloquear.Image = ((System.Drawing.Image)(resources.GetObject("cmdDesBloquear.Image")));
             this.cmdDesBloquear.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdDesBloquear.Location = new System.Drawing.Point(79, 228);
+            this.cmdDesBloquear.Location = new System.Drawing.Point(88, 266);
             this.cmdDesBloquear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdDesBloquear.Name = "cmdDesBloquear";
             this.cmdDesBloquear.Size = new System.Drawing.Size(142, 49);
-            this.cmdDesBloquear.TabIndex = 26;
+            this.cmdDesBloquear.TabIndex = 14;
             this.cmdDesBloquear.Text = "&Desbloquear";
             this.cmdDesBloquear.UseVisualStyleBackColor = true;
             this.cmdDesBloquear.Click += new System.EventHandler(this.cmdDesBloquear_Click);
@@ -75,40 +77,40 @@ namespace ClinicaFB.Agenda
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(46, 181);
+            this.label6.Location = new System.Drawing.Point(50, 214);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 16);
-            this.label6.TabIndex = 24;
+            this.label6.Size = new System.Drawing.Size(62, 16);
+            this.label6.TabIndex = 12;
             this.label6.Text = "Hora final";
             // 
             // cboHorasFinales
             // 
             this.cboHorasFinales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboHorasFinales.FormattingEnabled = true;
-            this.cboHorasFinales.Location = new System.Drawing.Point(119, 177);
+            this.cboHorasFinales.Location = new System.Drawing.Point(119, 210);
             this.cboHorasFinales.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cboHorasFinales.Name = "cboHorasFinales";
             this.cboHorasFinales.Size = new System.Drawing.Size(285, 24);
-            this.cboHorasFinales.TabIndex = 25;
+            this.cboHorasFinales.TabIndex = 13;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(38, 148);
+            this.label5.Location = new System.Drawing.Point(42, 181);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 16);
-            this.label5.TabIndex = 22;
+            this.label5.Size = new System.Drawing.Size(70, 16);
+            this.label5.TabIndex = 10;
             this.label5.Text = "Hora inicial";
             // 
             // cboHorasIniciales
             // 
             this.cboHorasIniciales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboHorasIniciales.FormattingEnabled = true;
-            this.cboHorasIniciales.Location = new System.Drawing.Point(119, 144);
+            this.cboHorasIniciales.Location = new System.Drawing.Point(119, 177);
             this.cboHorasIniciales.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cboHorasIniciales.Name = "cboHorasIniciales";
             this.cboHorasIniciales.Size = new System.Drawing.Size(285, 24);
-            this.cboHorasIniciales.TabIndex = 23;
+            this.cboHorasIniciales.TabIndex = 11;
             // 
             // dtpFechaFinal
             // 
@@ -116,7 +118,7 @@ namespace ClinicaFB.Agenda
             this.dtpFechaFinal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtpFechaFinal.Name = "dtpFechaFinal";
             this.dtpFechaFinal.Size = new System.Drawing.Size(285, 23);
-            this.dtpFechaFinal.TabIndex = 21;
+            this.dtpFechaFinal.TabIndex = 7;
             // 
             // dtpFechaInicial
             // 
@@ -124,33 +126,33 @@ namespace ClinicaFB.Agenda
             this.dtpFechaInicial.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtpFechaInicial.Name = "dtpFechaInicial";
             this.dtpFechaInicial.Size = new System.Drawing.Size(285, 23);
-            this.dtpFechaInicial.TabIndex = 19;
+            this.dtpFechaInicial.TabIndex = 5;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 115);
+            this.label4.Location = new System.Drawing.Point(43, 115);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 16);
-            this.label4.TabIndex = 20;
+            this.label4.Size = new System.Drawing.Size(69, 16);
+            this.label4.TabIndex = 6;
             this.label4.Text = "Fecha final";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(31, 83);
+            this.label3.Location = new System.Drawing.Point(35, 83);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 16);
-            this.label3.TabIndex = 18;
+            this.label3.Size = new System.Drawing.Size(77, 16);
+            this.label3.TabIndex = 4;
             this.label3.Text = "Fecha inicial";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(55, 51);
+            this.label2.Location = new System.Drawing.Point(59, 51);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 16);
-            this.label2.TabIndex = 16;
+            this.label2.Size = new System.Drawing.Size(53, 16);
+            this.label2.TabIndex = 2;
             this.label2.Text = "Recurso";
             // 
             // cboRecursos
@@ -161,15 +163,15 @@ namespace ClinicaFB.Agenda
             this.cboRecursos.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cboRecursos.Name = "cboRecursos";
             this.cboRecursos.Size = new System.Drawing.Size(285, 24);
-            this.cboRecursos.TabIndex = 17;
+            this.cboRecursos.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 18);
+            this.label1.Location = new System.Drawing.Point(15, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 16);
-            this.label1.TabIndex = 14;
+            this.label1.Size = new System.Drawing.Size(97, 16);
+            this.label1.TabIndex = 0;
             this.label1.Text = "Tipo de recurso";
             // 
             // cboTipos
@@ -184,14 +186,43 @@ namespace ClinicaFB.Agenda
             this.cboTipos.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cboTipos.Name = "cboTipos";
             this.cboTipos.Size = new System.Drawing.Size(285, 24);
-            this.cboTipos.TabIndex = 15;
+            this.cboTipos.TabIndex = 1;
             this.cboTipos.SelectedIndexChanged += new System.EventHandler(this.cboTipos_SelectedIndexChanged);
+            // 
+            // cboDias
+            // 
+            this.cboDias.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDias.FormattingEnabled = true;
+            this.cboDias.Items.AddRange(new object[] {
+            "TODOS",
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes",
+            "Sabado",
+            "Domigo"});
+            this.cboDias.Location = new System.Drawing.Point(119, 144);
+            this.cboDias.Name = "cboDias";
+            this.cboDias.Size = new System.Drawing.Size(245, 24);
+            this.cboDias.TabIndex = 9;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(87, 148);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(25, 16);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Dia";
             // 
             // FechasDesbloquear
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 301);
+            this.ClientSize = new System.Drawing.Size(467, 343);
+            this.Controls.Add(this.cboDias);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.cmdSalir);
             this.Controls.Add(this.cmdDesBloquear);
             this.Controls.Add(this.label6);
@@ -237,5 +268,7 @@ namespace ClinicaFB.Agenda
         private System.Windows.Forms.ComboBox cboRecursos;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboTipos;
+        private System.Windows.Forms.ComboBox cboDias;
+        private System.Windows.Forms.Label label8;
     }
 }

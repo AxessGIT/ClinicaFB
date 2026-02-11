@@ -62,6 +62,7 @@
             this.cmdEfectivo = new System.Windows.Forms.Button();
             this.cmdTarjeta = new System.Windows.Forms.Button();
             this.cmdTransferencia = new System.Windows.Forms.Button();
+            this.cmdTarjetaCredito = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.txtConcepto = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -72,13 +73,18 @@
             this.txtIVA = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
             this.txtTotal = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtTotalPago = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
             this.txtEfectivo = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
             this.txtTarjeta = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
             this.txtTransferencia = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
             this.label10 = new System.Windows.Forms.Label();
             this.txtReferencia = new System.Windows.Forms.TextBox();
+            this.txtTarjetaCredito = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
+            this.txtCambio = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtTotalPago = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtCheque = new Syncfusion.Windows.Forms.Tools.CurrencyEdit();
+            this.cmdCheque = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdConceptos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spnCantidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboEmisores)).BeginInit();
@@ -88,14 +94,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtIVA.TextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotal.TextBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPago)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPago.TextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEfectivo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEfectivo.TextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTarjeta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTarjeta.TextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTransferencia)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTransferencia.TextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTarjetaCredito)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTarjetaCredito.TextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCambio)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCambio.TextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPago)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPago.TextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCheque)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCheque.TextBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -104,7 +116,7 @@
             this.label1.Location = new System.Drawing.Point(16, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 16);
-            this.label1.TabIndex = 38;
+            this.label1.TabIndex = 19;
             this.label1.Text = "Fecha";
             // 
             // txtFecha
@@ -113,7 +125,7 @@
             this.txtFecha.Location = new System.Drawing.Point(63, 12);
             this.txtFecha.Name = "txtFecha";
             this.txtFecha.Size = new System.Drawing.Size(127, 23);
-            this.txtFecha.TabIndex = 39;
+            this.txtFecha.TabIndex = 20;
             // 
             // label2
             // 
@@ -216,7 +228,7 @@
             this.label3.Location = new System.Drawing.Point(232, 15);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 16);
-            this.label3.TabIndex = 40;
+            this.label3.TabIndex = 21;
             this.label3.Text = "Paciente";
             // 
             // txtNombrePaciente
@@ -283,7 +295,7 @@
             this.cmdBuscaPaciente.Location = new System.Drawing.Point(801, 12);
             this.cmdBuscaPaciente.Name = "cmdBuscaPaciente";
             this.cmdBuscaPaciente.Size = new System.Drawing.Size(36, 23);
-            this.cmdBuscaPaciente.TabIndex = 42;
+            this.cmdBuscaPaciente.TabIndex = 22;
             this.cmdBuscaPaciente.Text = "...";
             this.cmdBuscaPaciente.UseVisualStyleBackColor = true;
             this.cmdBuscaPaciente.Click += new System.EventHandler(this.cmdBuscaPaciente_Click);
@@ -293,7 +305,7 @@
             this.cmdBuscaRazonSocial.Location = new System.Drawing.Point(801, 41);
             this.cmdBuscaRazonSocial.Name = "cmdBuscaRazonSocial";
             this.cmdBuscaRazonSocial.Size = new System.Drawing.Size(36, 23);
-            this.cmdBuscaRazonSocial.TabIndex = 46;
+            this.cmdBuscaRazonSocial.TabIndex = 23;
             this.cmdBuscaRazonSocial.Text = "...";
             this.cmdBuscaRazonSocial.UseVisualStyleBackColor = true;
             this.cmdBuscaRazonSocial.Click += new System.EventHandler(this.cmdBuscaRazonSocial_Click);
@@ -316,7 +328,7 @@
             this.cmdSalir.Location = new System.Drawing.Point(898, 488);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(112, 58);
-            this.cmdSalir.TabIndex = 50;
+            this.cmdSalir.TabIndex = 18;
             this.cmdSalir.Text = "Salir";
             this.cmdSalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdSalir, "Cierra el módulo");
@@ -330,7 +342,7 @@
             this.cmdFactura.Location = new System.Drawing.Point(780, 488);
             this.cmdFactura.Name = "cmdFactura";
             this.cmdFactura.Size = new System.Drawing.Size(112, 58);
-            this.cmdFactura.TabIndex = 49;
+            this.cmdFactura.TabIndex = 17;
             this.cmdFactura.Text = "Factura";
             this.cmdFactura.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdFactura, "Genera la factura");
@@ -366,7 +378,7 @@
             this.cmdTicket.Location = new System.Drawing.Point(662, 488);
             this.cmdTicket.Name = "cmdTicket";
             this.cmdTicket.Size = new System.Drawing.Size(112, 58);
-            this.cmdTicket.TabIndex = 48;
+            this.cmdTicket.TabIndex = 16;
             this.cmdTicket.Text = "Ticket";
             this.cmdTicket.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdTicket, "Emite el ticket");
@@ -380,7 +392,7 @@
             this.cmdEfectivo.Location = new System.Drawing.Point(19, 375);
             this.cmdEfectivo.Name = "cmdEfectivo";
             this.cmdEfectivo.Size = new System.Drawing.Size(112, 58);
-            this.cmdEfectivo.TabIndex = 67;
+            this.cmdEfectivo.TabIndex = 6;
             this.cmdEfectivo.Text = "Efectivo";
             this.cmdEfectivo.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdEfectivo, "Emite el ticket");
@@ -391,11 +403,11 @@
             // 
             this.cmdTarjeta.Image = ((System.Drawing.Image)(resources.GetObject("cmdTarjeta.Image")));
             this.cmdTarjeta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.cmdTarjeta.Location = new System.Drawing.Point(178, 375);
+            this.cmdTarjeta.Location = new System.Drawing.Point(156, 375);
             this.cmdTarjeta.Name = "cmdTarjeta";
             this.cmdTarjeta.Size = new System.Drawing.Size(112, 58);
-            this.cmdTarjeta.TabIndex = 71;
-            this.cmdTarjeta.Text = "Tarjeta";
+            this.cmdTarjeta.TabIndex = 8;
+            this.cmdTarjeta.Text = "Tarjeta débito";
             this.cmdTarjeta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdTarjeta, "Emite el ticket");
             this.cmdTarjeta.UseVisualStyleBackColor = true;
@@ -405,15 +417,29 @@
             // 
             this.cmdTransferencia.Image = ((System.Drawing.Image)(resources.GetObject("cmdTransferencia.Image")));
             this.cmdTransferencia.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.cmdTransferencia.Location = new System.Drawing.Point(337, 375);
+            this.cmdTransferencia.Location = new System.Drawing.Point(430, 375);
             this.cmdTransferencia.Name = "cmdTransferencia";
             this.cmdTransferencia.Size = new System.Drawing.Size(112, 58);
-            this.cmdTransferencia.TabIndex = 73;
+            this.cmdTransferencia.TabIndex = 12;
             this.cmdTransferencia.Text = "Transferencia";
             this.cmdTransferencia.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdTransferencia, "Emite el ticket");
             this.cmdTransferencia.UseVisualStyleBackColor = true;
             this.cmdTransferencia.Click += new System.EventHandler(this.cmdTransferencia_Click);
+            // 
+            // cmdTarjetaCredito
+            // 
+            this.cmdTarjetaCredito.Image = ((System.Drawing.Image)(resources.GetObject("cmdTarjetaCredito.Image")));
+            this.cmdTarjetaCredito.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.cmdTarjetaCredito.Location = new System.Drawing.Point(293, 375);
+            this.cmdTarjetaCredito.Name = "cmdTarjetaCredito";
+            this.cmdTarjetaCredito.Size = new System.Drawing.Size(112, 58);
+            this.cmdTarjetaCredito.TabIndex = 10;
+            this.cmdTarjetaCredito.Text = "Tarjeta crédito";
+            this.cmdTarjetaCredito.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip.SetToolTip(this.cmdTarjetaCredito, "Emite el ticket");
+            this.cmdTarjetaCredito.UseVisualStyleBackColor = true;
+            this.cmdTarjetaCredito.Click += new System.EventHandler(this.cmdTarjetaCredito_Click);
             // 
             // label19
             // 
@@ -464,7 +490,7 @@
             this.label21.Location = new System.Drawing.Point(80, 79);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(46, 16);
-            this.label21.TabIndex = 51;
+            this.label21.TabIndex = 24;
             this.label21.Text = "Emisor";
             // 
             // cboEmisores
@@ -482,7 +508,7 @@
             this.cboEmisores.Style.ReadOnlyEditorStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.cboEmisores.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboEmisores.Style.TokenStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.cboEmisores.TabIndex = 52;
+            this.cboEmisores.TabIndex = 25;
             // 
             // txtSubTotal
             // 
@@ -498,6 +524,7 @@
             // 
             // 
             this.txtSubTotal.TextBox.AccessibilityEnabled = true;
+            this.txtSubTotal.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
             this.txtSubTotal.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSubTotal.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -527,6 +554,7 @@
             // 
             // 
             this.txtIVA.TextBox.AccessibilityEnabled = true;
+            this.txtIVA.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
             this.txtIVA.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtIVA.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -556,6 +584,7 @@
             // 
             // 
             this.txtTotal.TextBox.AccessibilityEnabled = true;
+            this.txtTotal.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
             this.txtTotal.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTotal.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -581,45 +610,6 @@
             this.label7.TabIndex = 66;
             this.label7.Text = "Formas de pago";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(16, 499);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(86, 18);
-            this.label8.TabIndex = 68;
-            this.label8.Text = "Total pago";
-            // 
-            // txtTotalPago
-            // 
-            this.txtTotalPago.BeforeTouchSize = new System.Drawing.Size(112, 26);
-            this.txtTotalPago.Enabled = false;
-            this.txtTotalPago.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotalPago.Location = new System.Drawing.Point(19, 520);
-            this.txtTotalPago.Name = "txtTotalPago";
-            this.txtTotalPago.ShowCalculator = false;
-            this.txtTotalPago.Size = new System.Drawing.Size(112, 26);
-            this.txtTotalPago.TabIndex = 69;
-            // 
-            // 
-            // 
-            this.txtTotalPago.TextBox.AccessibilityEnabled = true;
-            this.txtTotalPago.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtTotalPago.TextBox.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            131072});
-            this.txtTotalPago.TextBox.Location = new System.Drawing.Point(2, 4);
-            this.txtTotalPago.TextBox.Name = "";
-            this.txtTotalPago.TextBox.Size = new System.Drawing.Size(108, 18);
-            this.txtTotalPago.TextBox.TabIndex = 0;
-            this.txtTotalPago.TextBox.Text = "$0.00";
-            this.txtTotalPago.TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtTotalPago.ThemeName = "WindowsXP";
-            this.txtTotalPago.UseVisualStyle = true;
-            // 
             // txtEfectivo
             // 
             this.txtEfectivo.BeforeTouchSize = new System.Drawing.Size(112, 26);
@@ -628,11 +618,12 @@
             this.txtEfectivo.Name = "txtEfectivo";
             this.txtEfectivo.ShowCalculator = false;
             this.txtEfectivo.Size = new System.Drawing.Size(112, 26);
-            this.txtEfectivo.TabIndex = 70;
+            this.txtEfectivo.TabIndex = 7;
             // 
             // 
             // 
             this.txtEfectivo.TextBox.AccessibilityEnabled = true;
+            this.txtEfectivo.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
             this.txtEfectivo.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEfectivo.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -653,15 +644,16 @@
             // 
             this.txtTarjeta.BeforeTouchSize = new System.Drawing.Size(112, 26);
             this.txtTarjeta.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTarjeta.Location = new System.Drawing.Point(178, 439);
+            this.txtTarjeta.Location = new System.Drawing.Point(156, 439);
             this.txtTarjeta.Name = "txtTarjeta";
             this.txtTarjeta.ShowCalculator = false;
             this.txtTarjeta.Size = new System.Drawing.Size(112, 26);
-            this.txtTarjeta.TabIndex = 72;
+            this.txtTarjeta.TabIndex = 9;
             // 
             // 
             // 
             this.txtTarjeta.TextBox.AccessibilityEnabled = true;
+            this.txtTarjeta.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
             this.txtTarjeta.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTarjeta.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -682,15 +674,16 @@
             // 
             this.txtTransferencia.BeforeTouchSize = new System.Drawing.Size(112, 26);
             this.txtTransferencia.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTransferencia.Location = new System.Drawing.Point(337, 439);
+            this.txtTransferencia.Location = new System.Drawing.Point(430, 439);
             this.txtTransferencia.Name = "txtTransferencia";
             this.txtTransferencia.ShowCalculator = false;
             this.txtTransferencia.Size = new System.Drawing.Size(112, 26);
-            this.txtTransferencia.TabIndex = 74;
+            this.txtTransferencia.TabIndex = 13;
             // 
             // 
             // 
             this.txtTransferencia.TextBox.AccessibilityEnabled = true;
+            this.txtTransferencia.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
             this.txtTransferencia.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTransferencia.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -711,26 +704,191 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(104, 477);
+            this.label10.Location = new System.Drawing.Point(18, 491);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(68, 16);
-            this.label10.TabIndex = 75;
+            this.label10.TabIndex = 14;
             this.label10.Text = "Referencia";
             // 
             // txtReferencia
             // 
             this.txtReferencia.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtReferencia.Location = new System.Drawing.Point(178, 477);
+            this.txtReferencia.Location = new System.Drawing.Point(92, 488);
             this.txtReferencia.Multiline = true;
             this.txtReferencia.Name = "txtReferencia";
             this.txtReferencia.Size = new System.Drawing.Size(271, 22);
-            this.txtReferencia.TabIndex = 76;
+            this.txtReferencia.TabIndex = 15;
+            // 
+            // txtTarjetaCredito
+            // 
+            this.txtTarjetaCredito.BeforeTouchSize = new System.Drawing.Size(112, 26);
+            this.txtTarjetaCredito.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTarjetaCredito.Location = new System.Drawing.Point(293, 439);
+            this.txtTarjetaCredito.Name = "txtTarjetaCredito";
+            this.txtTarjetaCredito.ShowCalculator = false;
+            this.txtTarjetaCredito.Size = new System.Drawing.Size(112, 26);
+            this.txtTarjetaCredito.TabIndex = 11;
+            // 
+            // 
+            // 
+            this.txtTarjetaCredito.TextBox.AccessibilityEnabled = true;
+            this.txtTarjetaCredito.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
+            this.txtTarjetaCredito.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtTarjetaCredito.TextBox.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            131072});
+            this.txtTarjetaCredito.TextBox.Location = new System.Drawing.Point(2, 4);
+            this.txtTarjetaCredito.TextBox.Name = "";
+            this.txtTarjetaCredito.TextBox.Size = new System.Drawing.Size(108, 18);
+            this.txtTarjetaCredito.TextBox.TabIndex = 0;
+            this.txtTarjetaCredito.TextBox.Text = "$0.00";
+            this.txtTarjetaCredito.TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtTarjetaCredito.ThemeName = "WindowsXP";
+            this.txtTarjetaCredito.UseVisualStyle = true;
+            this.txtTarjetaCredito.Validated += new System.EventHandler(this.txtTarjetaCredito_Validated);
+            // 
+            // txtCambio
+            // 
+            this.txtCambio.BackColor = System.Drawing.Color.Yellow;
+            this.txtCambio.BeforeTouchSize = new System.Drawing.Size(112, 26);
+            this.txtCambio.Enabled = false;
+            this.txtCambio.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCambio.Location = new System.Drawing.Point(708, 439);
+            this.txtCambio.Name = "txtCambio";
+            this.txtCambio.ShowCalculator = false;
+            this.txtCambio.Size = new System.Drawing.Size(112, 26);
+            this.txtCambio.TabIndex = 112;
+            // 
+            // 
+            // 
+            this.txtCambio.TextBox.AccessibilityEnabled = true;
+            this.txtCambio.TextBox.BackGroundColor = System.Drawing.Color.Yellow;
+            this.txtCambio.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
+            this.txtCambio.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCambio.TextBox.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            131072});
+            this.txtCambio.TextBox.Location = new System.Drawing.Point(2, 4);
+            this.txtCambio.TextBox.Name = "";
+            this.txtCambio.TextBox.Size = new System.Drawing.Size(108, 18);
+            this.txtCambio.TextBox.TabIndex = 0;
+            this.txtCambio.TextBox.Text = "$0.00";
+            this.txtCambio.TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCambio.ThemeName = "WindowsXP";
+            this.txtCambio.UseVisualStyle = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(705, 418);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(63, 18);
+            this.label11.TabIndex = 111;
+            this.label11.Text = "Cambio";
+            // 
+            // txtTotalPago
+            // 
+            this.txtTotalPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.txtTotalPago.BeforeTouchSize = new System.Drawing.Size(112, 26);
+            this.txtTotalPago.Enabled = false;
+            this.txtTotalPago.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTotalPago.Location = new System.Drawing.Point(708, 383);
+            this.txtTotalPago.Name = "txtTotalPago";
+            this.txtTotalPago.ShowCalculator = false;
+            this.txtTotalPago.Size = new System.Drawing.Size(112, 26);
+            this.txtTotalPago.TabIndex = 110;
+            // 
+            // 
+            // 
+            this.txtTotalPago.TextBox.AccessibilityEnabled = true;
+            this.txtTotalPago.TextBox.BackGroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.txtTotalPago.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
+            this.txtTotalPago.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtTotalPago.TextBox.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            131072});
+            this.txtTotalPago.TextBox.Location = new System.Drawing.Point(2, 4);
+            this.txtTotalPago.TextBox.Name = "";
+            this.txtTotalPago.TextBox.Size = new System.Drawing.Size(108, 18);
+            this.txtTotalPago.TextBox.TabIndex = 0;
+            this.txtTotalPago.TextBox.Text = "$0.00";
+            this.txtTotalPago.TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtTotalPago.ThemeName = "WindowsXP";
+            this.txtTotalPago.UseVisualStyle = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(705, 362);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(86, 18);
+            this.label8.TabIndex = 109;
+            this.label8.Text = "Total pago";
+            // 
+            // txtCheque
+            // 
+            this.txtCheque.BeforeTouchSize = new System.Drawing.Size(112, 26);
+            this.txtCheque.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCheque.Location = new System.Drawing.Point(567, 439);
+            this.txtCheque.Name = "txtCheque";
+            this.txtCheque.ShowCalculator = false;
+            this.txtCheque.Size = new System.Drawing.Size(112, 26);
+            this.txtCheque.TabIndex = 114;
+            // 
+            // 
+            // 
+            this.txtCheque.TextBox.AccessibilityEnabled = true;
+            this.txtCheque.TextBox.BeforeTouchSize = new System.Drawing.Size(100, 22);
+            this.txtCheque.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCheque.TextBox.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            131072});
+            this.txtCheque.TextBox.Location = new System.Drawing.Point(2, 4);
+            this.txtCheque.TextBox.Name = "";
+            this.txtCheque.TextBox.Size = new System.Drawing.Size(108, 18);
+            this.txtCheque.TextBox.TabIndex = 0;
+            this.txtCheque.TextBox.Text = "$0.00";
+            this.txtCheque.TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCheque.ThemeName = "WindowsXP";
+            this.txtCheque.UseVisualStyle = true;
+            this.txtCheque.Validated += new System.EventHandler(this.txtCheque_Validated);
+            // 
+            // cmdCheque
+            // 
+            this.cmdCheque.Image = ((System.Drawing.Image)(resources.GetObject("cmdCheque.Image")));
+            this.cmdCheque.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.cmdCheque.Location = new System.Drawing.Point(567, 375);
+            this.cmdCheque.Name = "cmdCheque";
+            this.cmdCheque.Size = new System.Drawing.Size(112, 58);
+            this.cmdCheque.TabIndex = 113;
+            this.cmdCheque.Text = "Cheque";
+            this.cmdCheque.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.cmdCheque.UseVisualStyleBackColor = true;
+            this.cmdCheque.Click += new System.EventHandler(this.cmdCheque_Click);
             // 
             // ingCaptura
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 558);
+            this.Controls.Add(this.txtCheque);
+            this.Controls.Add(this.cmdCheque);
+            this.Controls.Add(this.txtCambio);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.txtTotalPago);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtTarjetaCredito);
+            this.Controls.Add(this.cmdTarjetaCredito);
             this.Controls.Add(this.txtReferencia);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtTransferencia);
@@ -738,8 +896,6 @@
             this.Controls.Add(this.txtTarjeta);
             this.Controls.Add(this.cmdTarjeta);
             this.Controls.Add(this.txtEfectivo);
-            this.Controls.Add(this.txtTotalPago);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.cmdEfectivo);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtTotal);
@@ -788,14 +944,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtIVA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotal.TextBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotal)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPago.TextBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPago)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEfectivo.TextBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEfectivo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTarjeta.TextBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTarjeta)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTransferencia.TextBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTransferencia)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTarjetaCredito.TextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTarjetaCredito)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCambio.TextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCambio)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPago.TextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPago)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCheque.TextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCheque)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -843,8 +1005,6 @@
         private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtTotal;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button cmdEfectivo;
-        private System.Windows.Forms.Label label8;
-        private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtTotalPago;
         private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtEfectivo;
         private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtTarjeta;
         private System.Windows.Forms.Button cmdTarjeta;
@@ -852,5 +1012,13 @@
         private System.Windows.Forms.Button cmdTransferencia;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtReferencia;
+        private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtTarjetaCredito;
+        private System.Windows.Forms.Button cmdTarjetaCredito;
+        private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtCambio;
+        private System.Windows.Forms.Label label11;
+        private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtTotalPago;
+        private System.Windows.Forms.Label label8;
+        private Syncfusion.Windows.Forms.Tools.CurrencyEdit txtCheque;
+        private System.Windows.Forms.Button cmdCheque;
     }
 }

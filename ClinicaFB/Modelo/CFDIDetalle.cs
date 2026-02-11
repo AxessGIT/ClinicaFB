@@ -7,7 +7,7 @@ using Twilio.Rest.Api.V2010.Account.Sip.Domain.AuthTypes.AuthTypeCalls;
 
 namespace ClinicaFB.Modelo
 {
-    public class CFDIDetalle
+    public class CfdiDetalle
     {
         public int CFDIDetId { get; set; }
         public int CFDIId { get; set; }

@@ -51,6 +51,8 @@ namespace ClinicaFB.Configuracion
             this.pagRecetas = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.cmdTextosRapidos = new System.Windows.Forms.Button();
             this.pagPuntoDeventa = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.cmdArticulosImportar = new System.Windows.Forms.Button();
+            this.cmdFormasPago = new System.Windows.Forms.Button();
             this.cmdArticulos = new System.Windows.Forms.Button();
             this.cmdLineas = new System.Windows.Forms.Button();
             this.cmdMarcas = new System.Windows.Forms.Button();
@@ -60,7 +62,7 @@ namespace ClinicaFB.Configuracion
             this.cmdClavesSAT = new System.Windows.Forms.Button();
             this.cmdEmisores = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
-            this.cmdFormasPago = new System.Windows.Forms.Button();
+            this.cmdInicializar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.pagSucursales.SuspendLayout();
@@ -329,6 +331,8 @@ namespace ClinicaFB.Configuracion
             // 
             // pagPuntoDeventa
             // 
+            this.pagPuntoDeventa.Controls.Add(this.cmdInicializar);
+            this.pagPuntoDeventa.Controls.Add(this.cmdArticulosImportar);
             this.pagPuntoDeventa.Controls.Add(this.cmdFormasPago);
             this.pagPuntoDeventa.Controls.Add(this.cmdArticulos);
             this.pagPuntoDeventa.Controls.Add(this.cmdLineas);
@@ -343,6 +347,32 @@ namespace ClinicaFB.Configuracion
             this.pagPuntoDeventa.Text = "Punto de venta";
             this.pagPuntoDeventa.ThemesEnabled = false;
             this.pagPuntoDeventa.Click += new System.EventHandler(this.pagPuntoDeventa_Click);
+            // 
+            // cmdArticulosImportar
+            // 
+            this.cmdArticulosImportar.Image = ((System.Drawing.Image)(resources.GetObject("cmdArticulosImportar.Image")));
+            this.cmdArticulosImportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdArticulosImportar.Location = new System.Drawing.Point(144, 57);
+            this.cmdArticulosImportar.Name = "cmdArticulosImportar";
+            this.cmdArticulosImportar.Size = new System.Drawing.Size(137, 38);
+            this.cmdArticulosImportar.TabIndex = 17;
+            this.cmdArticulosImportar.Text = "&Impor. artículos";
+            this.cmdArticulosImportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cmdArticulosImportar.UseVisualStyleBackColor = true;
+            this.cmdArticulosImportar.Click += new System.EventHandler(this.cmdArticulosImportar_Click);
+            // 
+            // cmdFormasPago
+            // 
+            this.cmdFormasPago.Image = ((System.Drawing.Image)(resources.GetObject("cmdFormasPago.Image")));
+            this.cmdFormasPago.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdFormasPago.Location = new System.Drawing.Point(418, 13);
+            this.cmdFormasPago.Name = "cmdFormasPago";
+            this.cmdFormasPago.Size = new System.Drawing.Size(137, 38);
+            this.cmdFormasPago.TabIndex = 16;
+            this.cmdFormasPago.Text = "&Formas de pago";
+            this.cmdFormasPago.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cmdFormasPago.UseVisualStyleBackColor = true;
+            this.cmdFormasPago.Click += new System.EventHandler(this.cmdFormasPago_Click);
             // 
             // cmdArticulos
             // 
@@ -456,18 +486,18 @@ namespace ClinicaFB.Configuracion
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
-            // cmdFormasPago
+            // cmdInicializar
             // 
-            this.cmdFormasPago.Image = ((System.Drawing.Image)(resources.GetObject("cmdFormasPago.Image")));
-            this.cmdFormasPago.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdFormasPago.Location = new System.Drawing.Point(418, 13);
-            this.cmdFormasPago.Name = "cmdFormasPago";
-            this.cmdFormasPago.Size = new System.Drawing.Size(137, 38);
-            this.cmdFormasPago.TabIndex = 16;
-            this.cmdFormasPago.Text = "&Formas de pago";
-            this.cmdFormasPago.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cmdFormasPago.UseVisualStyleBackColor = true;
-            this.cmdFormasPago.Click += new System.EventHandler(this.cmdFormasPago_Click);
+            this.cmdInicializar.Image = ((System.Drawing.Image)(resources.GetObject("cmdInicializar.Image")));
+            this.cmdInicializar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdInicializar.Location = new System.Drawing.Point(7, 57);
+            this.cmdInicializar.Name = "cmdInicializar";
+            this.cmdInicializar.Size = new System.Drawing.Size(137, 38);
+            this.cmdInicializar.TabIndex = 18;
+            this.cmdInicializar.Text = "&Inicializar inventarios";
+            this.cmdInicializar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cmdInicializar.UseVisualStyleBackColor = true;
+            this.cmdInicializar.Click += new System.EventHandler(this.cmdInicializar_Click);
             // 
             // ConfiguracionMenu
             // 
@@ -532,5 +562,7 @@ namespace ClinicaFB.Configuracion
         private System.Windows.Forms.Button cmdSucursales;
         private System.Windows.Forms.Button cmdImportarClientes;
         private System.Windows.Forms.Button cmdFormasPago;
+        private System.Windows.Forms.Button cmdArticulosImportar;
+        private System.Windows.Forms.Button cmdInicializar;
     }
 }

@@ -53,7 +53,7 @@ namespace ClinicaFB
             this.cmdPuntoDeVenta.Size = new System.Drawing.Size(63, 47);
             this.cmdPuntoDeVenta.TabIndex = 9;
             this.cmdPuntoDeVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.toolTip.SetToolTip(this.cmdPuntoDeVenta, "Punto de venta");
+            this.toolTip.SetToolTip(this.cmdPuntoDeVenta, "Punto de venta e inventarios");
             this.cmdPuntoDeVenta.UseVisualStyleBackColor = false;
             this.cmdPuntoDeVenta.Click += new System.EventHandler(this.cmdPuntoDeVenta_Click);
             // 
@@ -152,11 +152,11 @@ namespace ClinicaFB
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 73);
+            this.label1.Location = new System.Drawing.Point(19, 70);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(193, 16);
             this.label1.TabIndex = 11;
-            this.label1.Text = "Menú principal. Versión 2024";
+            this.label1.Text = "Menú principal. Versión 2026";
             // 
             // MenuPrincipal
             // 
@@ -177,7 +177,7 @@ namespace ClinicaFB
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "MenuPrincipal";
-            this.Text = "Clinica FB";
+            this.Text = "Clinica integral";
             this.Load += new System.EventHandler(this.MenuPrincipal_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

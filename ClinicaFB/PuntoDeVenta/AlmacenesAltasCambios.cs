@@ -50,6 +50,13 @@ namespace ClinicaFB.PuntoDeVenta
                 if (al != null)
                 {
                     txtNombre.Text = al.Nombre;
+                    txtSerieVentas.Text = al.SerieVen;
+                    spnFolioVentas.Value = al.FolioVen;
+                    txtSerieFac.Text = al.SerieFac;
+                    spnFolioFac.Value = al.FolioFac;
+                    txtSerieNC.Text = al.SerieNC;
+                    spnFolioNC.Value = al.FolioNC;
+
                     chkPrincipal.Checked = al.Defa;
                 }
             }
@@ -68,6 +75,14 @@ namespace ClinicaFB.PuntoDeVenta
                 Almacen al = new Almacen();
                 al.AlmacenId = _almacenId;
                 al.Nombre = txtNombre.Text; 
+                al.SerieVen = txtSerieVentas.Text;
+                al.FolioVen = (int)spnFolioVentas.Value;
+                al.SerieFac = txtSerieFac.Text;
+                al.FolioFac = (int)spnFolioFac.Value;
+                al.SerieNC = txtSerieNC.Text;
+                al.FolioNC = (int)spnFolioNC.Value;
+
+
                 al.Defa = chkPrincipal.Checked;
                 string sql = "";
 

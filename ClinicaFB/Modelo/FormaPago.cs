@@ -20,11 +20,11 @@ namespace ClinicaFB.Modelo
                     case 1:
                         return "Efectivo";
                     case 2:
-                        return "Tarjeta";
+                        return "Tarjeta debito";
                     case 3:
                         return "Transferencia";
                     case 4:
-                        return "Cheque";
+                        return "Tarjeta crédito";
                     default:
                         return "Otro";
 

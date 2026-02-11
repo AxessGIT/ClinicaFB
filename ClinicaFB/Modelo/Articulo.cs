@@ -10,10 +10,11 @@ namespace ClinicaFB.Modelo
     {
         public long ArticuloId { get; set; }
         public string Clave { get; set; }
+        public string CodigoBarras { get; set; }
         public string Descripcion { get; set; }
         public int Tipo { get; set; }
         public string UDM { get; set; }
-        public string Moneda { get; set; }
+        public string Moneda { get; set; }= "MXN";
         public decimal Costo { get; set; }
         public decimal Precio1 { get; set; }
         public decimal Precio2 { get; set; }
@@ -23,8 +24,13 @@ namespace ClinicaFB.Modelo
         public string CveProSer { get; set; }
         public string CveUni { get; set; }
         public decimal PorceIVA { get; set; }
-        public int ImpuestoId { get; set; }
-        public int MarcaId { get; set; }
-        public int LineaId { get; set; }
+        public long ImpuestoId { get; set; }
+        public long MarcaId { get; set; }
+        public long LineaId { get; set; }
+        public decimal PrecioNeto   
+        { get { return Math.Round(Precio1 * (1 + PorceIVA / 100), 2); } }
+        public DateTime FechaUltimaCompra { get; set; }
+        public string SKU { get; set; }
+
     }
 }

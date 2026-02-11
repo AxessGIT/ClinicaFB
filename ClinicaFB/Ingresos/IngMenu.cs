@@ -1,4 +1,5 @@
 ﻿using ClinicaFB.Facturacion;
+using ClinicaFB.PuntoDeVenta;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,6 +58,19 @@ namespace ClinicaFB.Ingresos
         {
             FacturaGlobalGenerar facturaGlobal= new FacturaGlobalGenerar();
             facturaGlobal.ShowDialog();
+        }
+
+        private void cmdNotasDeCredito_Click(object sender, EventArgs e)
+        {
+            NotasDeCreditoListado notasDeCreditoListado = new NotasDeCreditoListado(esPDV: false);
+            notasDeCreditoListado.Show();
+        }
+
+        private void cmdComplementosDePago_Click(object sender, EventArgs e)
+        {
+            PagosListado pagosListado = new PagosListado(esPDV: false);
+            pagosListado.Show();
+
         }
     }
 }

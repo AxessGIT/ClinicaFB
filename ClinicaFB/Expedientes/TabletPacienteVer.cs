@@ -32,10 +32,10 @@ namespace ClinicaFB.Expedientes
         BindingList<RecetaMedipiel> _listRecetasMedipiel = new BindingList<RecetaMedipiel>();
 
         BindingList<PacientesImagenes> _PacienteImagenes = new BindingList<PacientesImagenes>();
-        BindingList<string> _medicamentos = new BindingList<string>();  
+        BindingList<string> _medicamentos = new BindingList<string>();
 
 
-        public TabletPacienteVer(int pacienteId=0)
+        public TabletPacienteVer(int pacienteId = 0)
         {
             _pacienteId = pacienteId;
             InitializeComponent();
@@ -91,7 +91,7 @@ namespace ClinicaFB.Expedientes
             this.Text = "Paciente: " + _paciente.NombreCompleto;
             lblNombrePaciente.Text = _paciente.NombreCompleto;
 
-            if (_paciente.Fecha_Nacimiento>=dtpFechaNacimiento.MinDate)
+            if (_paciente.Fecha_Nacimiento >= dtpFechaNacimiento.MinDate)
                 dtpFechaNacimiento.Value = _paciente.Fecha_Nacimiento;
 
             txtEdad.Text = General.calculaEdad(dtpFechaNacimiento.Value).ToString() + " años";
@@ -111,9 +111,10 @@ namespace ClinicaFB.Expedientes
             txtMedicamentos.Text = _paciente.Medicamentos;
             txtAntecedentes.Text = _paciente.Antecedentes;
             txtAlergias.Text = _paciente.Alergias;
+            txtObservaciones.Text = _paciente.Observaciones;
 
 
-            MuestraFoto();
+            //MuestraFoto();
 
 
         }
@@ -127,7 +128,8 @@ namespace ClinicaFB.Expedientes
 
 
 
-            if (File.Exists(archivo)) {
+            if (File.Exists(archivo))
+            {
 
 
                 using (var fs = new FileStream(archivo, FileMode.Open, FileAccess.Read))
@@ -183,57 +185,57 @@ namespace ClinicaFB.Expedientes
         {
             ChecaPaciente();
 
-                using (FbConnection db = General.GetDB())
-                {
-                    string sql = Queries.ActDatosSelect();
-                    ActDatos actDatos = db.QueryFirstOrDefault<ActDatos>(sql, new { PacienteId = _pacienteId });
-                    if (actDatos == null)
-                        return;
-                    txtActPrefijo.Text = actDatos.Prefijo;
-                    txtActSaludo.Text = actDatos.Saludo;
-                    txtActCategoria.Text = actDatos.Categoria;
-                    txtActTitulo.Text = actDatos.Titulo;
-                    txtActEstadoCivil.Text = actDatos.EstadoCivil;
-                    txtActSexo.Text = actDatos.Sexo;
-                    txtActCiudadOrigen.Text = actDatos.CiudadOrigen;
-                    txtActAlergias1.Text = actDatos.Alergias1;
-                    txtActAlergias2.Text = actDatos.Alergias2;
-                    txtActMedico.Text = actDatos.Medico;
-                    txtActTipoPiel.Text = actDatos.TipoPiel;
-                    txtActMedicamentos.Text = actDatos.Medicamentos;
-                    txtActMaquillaje.Text = actDatos.Maquillaje;
-                    txtActTxPrevio.Text = actDatos.TxPrevio;
-                    txtActEdad.Text = actDatos.Edad;
-                    txtActEnfer1.Text = actDatos.Enfer1;
-                    txtActEnfer2.Text = actDatos.Enfer2;
-                    txtActEnfer3.Text = actDatos.Enfer3;
-                    txtActEnfer4.Text = actDatos.Enfer4;
-                    txtActEnfer5.Text = actDatos.Enfer5;
-                    txtActEnfer6.Text = actDatos.Enfer6;
-                    txtActEnfer7.Text = actDatos.Enfer7;
-                    txtActEnfer8.Text = actDatos.Enfer8;
-                    txtActEnfer9.Text = actDatos.Enfer9;
-                    txtActTelefono.Text = actDatos.Telefono;
-                    txtActRFC.Text = actDatos.RFC;
-                    txtActCURP.Text = actDatos.CURP;
-                    txtActDir1.Text = actDatos.Dir1;
-                    txtActDir2.Text = actDatos.Dir2;
-                    txtActDir3.Text = actDatos.Dir3;
-                    txtActCiudad.Text = actDatos.Ciudad;
-                    txtActEstado.Text = actDatos.Estado;
-                    txtActCodigoPostal.Text = actDatos.CP;
-                    txtActPais.Text = actDatos.Pais;
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.ActDatosSelect();
+                ActDatos actDatos = db.QueryFirstOrDefault<ActDatos>(sql, new { PacienteId = _pacienteId });
+                if (actDatos == null)
+                    return;
+                txtActPrefijo.Text = actDatos.Prefijo;
+                txtActSaludo.Text = actDatos.Saludo;
+                txtActCategoria.Text = actDatos.Categoria;
+                txtActTitulo.Text = actDatos.Titulo;
+                txtActEstadoCivil.Text = actDatos.EstadoCivil;
+                txtActSexo.Text = actDatos.Sexo;
+                txtActCiudadOrigen.Text = actDatos.CiudadOrigen;
+                txtActAlergias1.Text = actDatos.Alergias1;
+                txtActAlergias2.Text = actDatos.Alergias2;
+                txtActMedico.Text = actDatos.Medico;
+                txtActTipoPiel.Text = actDatos.TipoPiel;
+                txtActMedicamentos.Text = actDatos.Medicamentos;
+                txtActMaquillaje.Text = actDatos.Maquillaje;
+                txtActTxPrevio.Text = actDatos.TxPrevio;
+                txtActEdad.Text = actDatos.Edad;
+                txtActEnfer1.Text = actDatos.Enfer1;
+                txtActEnfer2.Text = actDatos.Enfer2;
+                txtActEnfer3.Text = actDatos.Enfer3;
+                txtActEnfer4.Text = actDatos.Enfer4;
+                txtActEnfer5.Text = actDatos.Enfer5;
+                txtActEnfer6.Text = actDatos.Enfer6;
+                txtActEnfer7.Text = actDatos.Enfer7;
+                txtActEnfer8.Text = actDatos.Enfer8;
+                txtActEnfer9.Text = actDatos.Enfer9;
+                txtActTelefono.Text = actDatos.Telefono;
+                txtActRFC.Text = actDatos.RFC;
+                txtActCURP.Text = actDatos.CURP;
+                txtActDir1.Text = actDatos.Dir1;
+                txtActDir2.Text = actDatos.Dir2;
+                txtActDir3.Text = actDatos.Dir3;
+                txtActCiudad.Text = actDatos.Ciudad;
+                txtActEstado.Text = actDatos.Estado;
+                txtActCodigoPostal.Text = actDatos.CP;
+                txtActPais.Text = actDatos.Pais;
 
 
 
-                }
+            }
 
         }
 
         private void grdNotas_QueryRowHeight_1(object sender, Syncfusion.WinForms.DataGrid.Events.QueryRowHeightEventArgs e)
         {
             RowAutoFitOptions autoFitOptions = new RowAutoFitOptions();
-            int autoHeight=0;
+            int autoHeight = 0;
             if (this.grdNotas.AutoSizeController.GetAutoRowHeight(e.RowIndex, autoFitOptions, out autoHeight))
             {
                 if (autoHeight > 24)
@@ -242,11 +244,11 @@ namespace ClinicaFB.Expedientes
                     e.Handled = true;
                 }
             }
-    }
+        }
 
         private void pagRecetas_Enter(object sender, EventArgs e)
         {
-                
+
             ChecaPaciente();
             CargaTextosRapidos();
             CargaMedicamentos();
@@ -271,17 +273,17 @@ namespace ClinicaFB.Expedientes
             using (FbConnection db = General.GetDB())
             {
                 BindingList<string> textosRapidos = new BindingList<string>();
-                int usuarioId = (int) Properties.Settings.Default.Usuario_ID;
+                int usuarioId = (int)Properties.Settings.Default.Usuario_ID;
                 string sql = Queries.TRSelectByUsr();
-                TextoRapido tr = db.QueryFirstOrDefault<TextoRapido>(sql, new {UsuarioId = usuarioId });
+                TextoRapido tr = db.QueryFirstOrDefault<TextoRapido>(sql, new { UsuarioId = usuarioId });
                 if (tr != null)
                 {
-                    string[] lineas = tr.Texto.Split(new string[] { Environment.NewLine },StringSplitOptions.None);
+                    string[] lineas = tr.Texto.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
                     Array.Sort(lineas);
 
                     textosRapidos = new BindingList<string>(lineas);
 
-                    
+
                     cboTextosRapidos.DataSource = textosRapidos;
                     cmdBoton1.Text = tr.Boton1;
                     cmdBoton2.Text = tr.Boton2;
@@ -306,7 +308,7 @@ namespace ClinicaFB.Expedientes
 
         private void PonTextoBoton(Button boton)
         {
-            txtTexto.Text += boton.Text+" ";
+            txtTexto.Text += boton.Text + " ";
 
         }
 
@@ -352,7 +354,7 @@ namespace ClinicaFB.Expedientes
 
         private void cboTextosRapidos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtTexto.Text += cboTextosRapidos.SelectedValue+" ";
+            txtTexto.Text += cboTextosRapidos.SelectedValue + " ";
         }
 
         private void pagRecetasPaciente_Enter(object sender, EventArgs e)
@@ -375,9 +377,9 @@ namespace ClinicaFB.Expedientes
             {
                 case 1:
                     query = Queries.RecetasPacienteSelect();
-                    break; 
+                    break;
                 case 2:
-                    query= Queries.RecetasDoctorSelect();
+                    query = Queries.RecetasDoctorSelect();
                     break;
                 case 3:
                     query = Queries.RecetasBuscar(txtBuscarRecetas.Text);
@@ -392,7 +394,7 @@ namespace ClinicaFB.Expedientes
             {
                 string sql = query;
                 List<Receta> res = new List<Receta>();
-                if (tipo==1 )
+                if (tipo == 1)
                     res = db.Query<Receta>(sql, new { Pacienteid = _pacienteId }).ToList();
                 else
                     res = db.Query<Receta>(sql, new { UsuarioId = ClinicaFB.Properties.Settings.Default.Usuario_ID }).ToList();
@@ -401,8 +403,8 @@ namespace ClinicaFB.Expedientes
                 _listRecetas = new BindingList<Receta>(res);
             }
 
-            if (tipo==1 || tipo==3)
-            { 
+            if (tipo == 1 || tipo == 3)
+            {
                 grdRecetas.DataSource = null;
 
                 grdRecetas.AutoGenerateColumns = false;
@@ -420,7 +422,7 @@ namespace ClinicaFB.Expedientes
                 grdRecetas.DataSource = _listRecetas;
             }
 
-            if (tipo==2 || tipo==4)
+            if (tipo == 2 || tipo == 4)
             {
                 grdRecetasDoctor.DataSource = null;
 
@@ -445,23 +447,23 @@ namespace ClinicaFB.Expedientes
         {
             if (string.IsNullOrEmpty(txtTexto.Text))
             {
-                MessageBox.Show("Indique el texto de la receta","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Indique el texto de la receta", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            
+
             DateTime fecha = DateTime.Now;
             string sql = Queries.RecetasPacienteSelectByPacAndFec();
 
             using (FbConnection db = General.GetDB())
             {
-                Receta rec = db.QueryFirstOrDefault<Receta>(sql, new {PacienteId= _pacienteId, Fecha=fecha });
+                Receta rec = db.QueryFirstOrDefault<Receta>(sql, new { PacienteId = _pacienteId, Fecha = fecha });
 
                 if (rec != null)
                 {
-                   if ( MessageBox.Show("Ya existe(n) otra(s) receta(s) guardada(s) en esta fecha ¿Desea guardar una nueva receta?",
-                        "Confirme", 
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question)==DialogResult.No)
+                    if (MessageBox.Show("Ya existe(n) otra(s) receta(s) guardada(s) en esta fecha ¿Desea guardar una nueva receta?",
+                         "Confirme",
+                         MessageBoxButtons.YesNo,
+                         MessageBoxIcon.Question) == DialogResult.No)
                         return;
 
                 }
@@ -470,12 +472,12 @@ namespace ClinicaFB.Expedientes
                 rec = new Receta();
                 rec.PacienteId = _pacienteId;
                 rec.Fecha = fecha;
-                rec.Texto = txtTexto.Text;  
-                rec.Etiquetas= txtEtiquetas.Text;
+                rec.Texto = txtTexto.Text;
+                rec.Etiquetas = txtEtiquetas.Text;
                 rec.UsuarioId = (int)Properties.Settings.Default.Usuario_ID;
 
                 db.Execute(sql, rec);
-                MessageBox.Show("Se guardó la receta","Aviso",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Se guardó la receta", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
             }
@@ -498,7 +500,7 @@ namespace ClinicaFB.Expedientes
                 Receta rec = db.QueryFirstOrDefault<Receta>(sql, new { PacienteId = _pacienteId });
                 if (rec == null)
                 {
-                    MessageBox.Show("No existen recetas guardadas para ese paciente","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show("No existen recetas guardadas para ese paciente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -520,8 +522,8 @@ namespace ClinicaFB.Expedientes
             txtRecetaMedipiel.BackColor = Color.White;
             txtRecetaMedipiel.ForeColor = Color.Black;
 
-            txtCompletoMedipiel.BackColor= Color.White;
-            txtCompletoMedipiel.ForeColor= Color.Black;
+            txtCompletoMedipiel.BackColor = Color.White;
+            txtCompletoMedipiel.ForeColor = Color.Black;
             CargaRecetasMedipiel(Queries.RecetasMedipielSelect());
         }
 
@@ -567,7 +569,7 @@ namespace ClinicaFB.Expedientes
             if (string.IsNullOrEmpty(txtRecetaGuardada.Text) && string.IsNullOrEmpty(txtEtiquetasGuardadas.Text))
                 return;
 
-            if (string.IsNullOrEmpty(txtRecetaGuardada.Text)==false)
+            if (string.IsNullOrEmpty(txtRecetaGuardada.Text) == false)
                 txtTexto.Text = txtRecetaGuardada.Text;
 
 
@@ -582,7 +584,7 @@ namespace ClinicaFB.Expedientes
         {
             if (grdRecetas.CurrentRow == null)
             {
-                MessageBox.Show("Indique la receta que desea borrar","Verifique",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Indique la receta que desea borrar", "Verifique", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -604,7 +606,7 @@ namespace ClinicaFB.Expedientes
         {
             if (string.IsNullOrEmpty(txtBuscarRecetasMedipiel.Text))
             {
-                MessageBox.Show("Indique lo que desea buscar","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Indique lo que desea buscar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             string sql = Queries.RecetasMedipielBuscar(txtBuscarRecetasMedipiel.Text);
@@ -626,7 +628,7 @@ namespace ClinicaFB.Expedientes
         {
             if (string.IsNullOrEmpty(txtBuscarRecetas.Text))
             {
-                MessageBox.Show("Indique el texto a buscar","Confime",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Indique el texto a buscar", "Confime", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             CargaRecetas(3);
@@ -848,7 +850,7 @@ namespace ClinicaFB.Expedientes
         {
             if (string.IsNullOrWhiteSpace(txtTexto.Text))
             {
-                MessageBox.Show("Indique el texto de la receta","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Indique el texto de la receta", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -870,10 +872,10 @@ namespace ClinicaFB.Expedientes
 
 
 
-            resDat.Fecha = DateTime.Now.ToShortDateString();
+            resDat.Fecha = dtpFecha.Value.ToShortDateString();
             resDat.PacienteNombre = lblNombrePaciente.Text;
-            resDat.PacienteEdad= txtEdad.Text;
-            resDat.PacienteDireccion = dir;
+            resDat.PacienteEdad = chkImprimirEdad.Checked ? $"Fecha de nacimiento: {dtpFechaNacimiento.Value.ToShortDateString()} Edad: {txtEdad.Text}" : " ";
+            resDat.PacienteDireccion = "--";
             resDat.Indicaciones = txtTexto.Text;
 
             string carpetaReportes = General.GetCarpetaReportes();
@@ -924,7 +926,7 @@ namespace ClinicaFB.Expedientes
 
         private void autoCompleteMed_BeforeAddItem(object sender, Syncfusion.Windows.Forms.Tools.AutoCompleteAddItemCancelEventArgs args)
         {
-            string  med = args.RowItem.ItemArray[0].ToString();
+            string med = args.RowItem.ItemArray[0].ToString();
 
             using (FbConnection db = General.GetDB())
             {
@@ -971,6 +973,96 @@ namespace ClinicaFB.Expedientes
             if (e.KeyCode == Keys.Enter)
             {
                 PasaMedATexto();
+            }
+        }
+
+        private void cmdNotaAgregar_Click(object sender, EventArgs e)
+        {
+            NotaEditar(true);
+        }
+
+        private void NotaEditar(bool esAlta)
+        {
+
+            if (_pacienteId == 0)
+            {
+                MessageBox.Show("No se ha seleccionado un paciente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            int notaId = 0;
+
+            if (!esAlta)
+            {
+                if (SinRenglon())
+                {
+                    MessageBox.Show("Indique la nota a editar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                int rowIndex = grdNotas.SelectionController.DataGrid.CurrentCell.RowIndex;
+                notaId = (int)_notas[rowIndex - 1].NotaId;
+
+            }
+
+            NotaEditar notaEditar = new NotaEditar(_pacienteId, esAlta, notaId);
+            notaEditar.ShowDialog();
+
+            CargaNotas();
+
+        }
+
+        private bool SinRenglon()
+        {
+            bool norow = false;
+            if (grdNotas.SelectionController.DataGrid.CurrentCell.ColumnIndex == -1 || grdNotas.SelectionController.DataGrid.CurrentCell.RowIndex < 1)
+                norow = true;
+
+            return norow;
+        }
+
+        private void cmdNotaBorrar_Click(object sender, EventArgs e)
+        {
+            if (SinRenglon())
+                return;
+
+            DialogResult SiNo = MessageBox.Show("¿Desea borrar la nota?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (SiNo == DialogResult.No)
+                return;
+
+            int rowIndex = grdNotas.SelectionController.DataGrid.CurrentCell.RowIndex;
+            int notaId = (int)_notas[rowIndex - 1].NotaId;
+            string sql = Queries.NotaDelete();
+
+            using (FbConnection db = General.GetDB())
+            {
+                db.Execute(sql, new { NotaId = notaId });
+            }
+
+            grdNotas.View.BeginInit();
+
+            _notas.RemoveAt(rowIndex - 1);
+
+            grdNotas.View.EndInit();
+            grdNotas.View.Refresh();
+
+
+
+
+        }
+
+        private void cmdNotaEditar_Click(object sender, EventArgs e)
+        {
+            NotaEditar(false);
+        }
+
+        private void TabletPacienteVer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            string sql = "Update Pacientes Set Observaciones =@Observaciones Where Paciente_ID=@PacienteId";
+            using (FbConnection db = General.GetDB())
+            {
+                db.Execute(sql, new { Observaciones = txtObservaciones.Text, PacienteId = _pacienteId });
             }
         }
     }

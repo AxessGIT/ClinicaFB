@@ -14,5 +14,6 @@ namespace ClinicaFB.Modelo
         public int Tipo { get; set; }
         public decimal Importe { get; set; }
         public string Referencia { get; set; }
+        public decimal Cambio { get; set; }
     }
 }

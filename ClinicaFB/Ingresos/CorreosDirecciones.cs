@@ -16,10 +16,10 @@ namespace ClinicaFB.Ingresos
 {
     public partial class CorreosDirecciones : Form
     {
-        int _razonSocialId = 0;
+        long _razonSocialId = 0;
         public bool Aceptar { get; set; } = false;
 
-        public CorreosDirecciones(int razonSocialId =0)
+        public CorreosDirecciones(long razonSocialId =0)
         {
             InitializeComponent();
             _razonSocialId = razonSocialId;

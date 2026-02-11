@@ -29,12 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TabletPacienteVer));
             Syncfusion.WinForms.DataGrid.GridDateTimeColumn gridDateTimeColumn1 = new Syncfusion.WinForms.DataGrid.GridDateTimeColumn();
             Syncfusion.WinForms.DataGrid.GridTextColumn gridTextColumn1 = new Syncfusion.WinForms.DataGrid.GridTextColumn();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TabletPacienteVer));
             this.lblNombrePaciente = new System.Windows.Forms.Label();
             this.tabPaciente = new System.Windows.Forms.TabControl();
             this.pagGenerales = new System.Windows.Forms.TabPage();
+            this.cmdNotaBorrar = new System.Windows.Forms.Button();
+            this.cmdNotaEditar = new System.Windows.Forms.Button();
+            this.cmdNotaAgregar = new System.Windows.Forms.Button();
             this.cmdVideo = new System.Windows.Forms.Button();
             this.picFoto = new System.Windows.Forms.PictureBox();
             this.grdNotas = new Syncfusion.WinForms.DataGrid.SfDataGrid();
@@ -136,13 +139,15 @@
             this.label28 = new System.Windows.Forms.Label();
             this.txtActPrefijo = new System.Windows.Forms.TextBox();
             this.pagReceta = new System.Windows.Forms.TabPage();
+            this.dtpFecha = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtMedicamento = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.cmdTraerUltimaReceta = new System.Windows.Forms.Button();
             this.cmdImprimirReceta = new System.Windows.Forms.Button();
             this.txtEtiquetas = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.chkImprimirEdad = new System.Windows.Forms.CheckBox();
-            this.chkImprimirDireccion = new System.Windows.Forms.CheckBox();
             this.cmdBoton7 = new System.Windows.Forms.Button();
             this.cmdBoton6 = new System.Windows.Forms.Button();
             this.cmdBoton5 = new System.Windows.Forms.Button();
@@ -195,7 +200,8 @@
             this.cmdSalir = new System.Windows.Forms.Button();
             this.cmdBuscarPaciente = new System.Windows.Forms.Button();
             this.autoCompleteMed = new Syncfusion.Windows.Forms.Tools.AutoComplete(this.components);
-            this.txtMedicamento = new System.Windows.Forms.TextBox();
+            this.pagObservaciones = new System.Windows.Forms.TabPage();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.tabPaciente.SuspendLayout();
             this.pagGenerales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
@@ -212,6 +218,7 @@
             this.pagImagenes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdImagenes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.autoCompleteMed)).BeginInit();
+            this.pagObservaciones.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblNombrePaciente
@@ -233,6 +240,7 @@
             this.tabPaciente.Controls.Add(this.pagRecetasUsuario);
             this.tabPaciente.Controls.Add(this.pagRecetasMedipiel);
             this.tabPaciente.Controls.Add(this.pagImagenes);
+            this.tabPaciente.Controls.Add(this.pagObservaciones);
             this.tabPaciente.Location = new System.Drawing.Point(4, 64);
             this.tabPaciente.Name = "tabPaciente";
             this.tabPaciente.SelectedIndex = 0;
@@ -241,6 +249,9 @@
             // 
             // pagGenerales
             // 
+            this.pagGenerales.Controls.Add(this.cmdNotaBorrar);
+            this.pagGenerales.Controls.Add(this.cmdNotaEditar);
+            this.pagGenerales.Controls.Add(this.cmdNotaAgregar);
             this.pagGenerales.Controls.Add(this.cmdVideo);
             this.pagGenerales.Controls.Add(this.picFoto);
             this.pagGenerales.Controls.Add(this.grdNotas);
@@ -280,13 +291,43 @@
             this.pagGenerales.Text = "Generales";
             this.pagGenerales.UseVisualStyleBackColor = true;
             // 
+            // cmdNotaBorrar
+            // 
+            this.cmdNotaBorrar.Image = ((System.Drawing.Image)(resources.GetObject("cmdNotaBorrar.Image")));
+            this.cmdNotaBorrar.Location = new System.Drawing.Point(824, 181);
+            this.cmdNotaBorrar.Name = "cmdNotaBorrar";
+            this.cmdNotaBorrar.Size = new System.Drawing.Size(66, 45);
+            this.cmdNotaBorrar.TabIndex = 100;
+            this.cmdNotaBorrar.UseVisualStyleBackColor = true;
+            this.cmdNotaBorrar.Click += new System.EventHandler(this.cmdNotaBorrar_Click);
+            // 
+            // cmdNotaEditar
+            // 
+            this.cmdNotaEditar.Image = ((System.Drawing.Image)(resources.GetObject("cmdNotaEditar.Image")));
+            this.cmdNotaEditar.Location = new System.Drawing.Point(752, 181);
+            this.cmdNotaEditar.Name = "cmdNotaEditar";
+            this.cmdNotaEditar.Size = new System.Drawing.Size(66, 45);
+            this.cmdNotaEditar.TabIndex = 99;
+            this.cmdNotaEditar.UseVisualStyleBackColor = true;
+            this.cmdNotaEditar.Click += new System.EventHandler(this.cmdNotaEditar_Click);
+            // 
+            // cmdNotaAgregar
+            // 
+            this.cmdNotaAgregar.Image = ((System.Drawing.Image)(resources.GetObject("cmdNotaAgregar.Image")));
+            this.cmdNotaAgregar.Location = new System.Drawing.Point(680, 181);
+            this.cmdNotaAgregar.Name = "cmdNotaAgregar";
+            this.cmdNotaAgregar.Size = new System.Drawing.Size(66, 45);
+            this.cmdNotaAgregar.TabIndex = 72;
+            this.cmdNotaAgregar.UseVisualStyleBackColor = true;
+            this.cmdNotaAgregar.Click += new System.EventHandler(this.cmdNotaAgregar_Click);
+            // 
             // cmdVideo
             // 
             this.cmdVideo.Image = ((System.Drawing.Image)(resources.GetObject("cmdVideo.Image")));
             this.cmdVideo.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.cmdVideo.Location = new System.Drawing.Point(1009, 178);
             this.cmdVideo.Name = "cmdVideo";
-            this.cmdVideo.Size = new System.Drawing.Size(200, 31);
+            this.cmdVideo.Size = new System.Drawing.Size(200, 45);
             this.cmdVideo.TabIndex = 98;
             this.cmdVideo.Text = "&Tomar foto al px.";
             this.cmdVideo.UseVisualStyleBackColor = true;
@@ -337,6 +378,7 @@
             this.grdNotas.Name = "grdNotas";
             this.grdNotas.RowHeight = 45;
             this.grdNotas.Size = new System.Drawing.Size(1114, 336);
+            this.grdNotas.Style.DragPreviewRowStyle.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.grdNotas.TabIndex = 96;
             this.grdNotas.Text = "sfDataGrid1";
             this.grdNotas.QueryRowHeight += new Syncfusion.WinForms.DataGrid.Events.QueryRowHeightEventHandler(this.grdNotas_QueryRowHeight_1);
@@ -565,6 +607,7 @@
             // 
             // dtpFechaNacimiento
             // 
+            this.dtpFechaNacimiento.Enabled = false;
             this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaNacimiento.Location = new System.Drawing.Point(150, 15);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
@@ -1239,6 +1282,8 @@
             // 
             // pagReceta
             // 
+            this.pagReceta.Controls.Add(this.dtpFecha);
+            this.pagReceta.Controls.Add(this.label11);
             this.pagReceta.Controls.Add(this.txtMedicamento);
             this.pagReceta.Controls.Add(this.label10);
             this.pagReceta.Controls.Add(this.cmdTraerUltimaReceta);
@@ -1246,7 +1291,6 @@
             this.pagReceta.Controls.Add(this.txtEtiquetas);
             this.pagReceta.Controls.Add(this.label5);
             this.pagReceta.Controls.Add(this.chkImprimirEdad);
-            this.pagReceta.Controls.Add(this.chkImprimirDireccion);
             this.pagReceta.Controls.Add(this.cmdBoton7);
             this.pagReceta.Controls.Add(this.cmdBoton6);
             this.pagReceta.Controls.Add(this.cmdBoton5);
@@ -1267,6 +1311,37 @@
             this.pagReceta.UseVisualStyleBackColor = true;
             this.pagReceta.Click += new System.EventHandler(this.pagRecetas_Click);
             this.pagReceta.Enter += new System.EventHandler(this.pagRecetas_Enter);
+            // 
+            // dtpFecha
+            // 
+            this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFecha.Location = new System.Drawing.Point(706, 243);
+            this.dtpFecha.Name = "dtpFecha";
+            this.dtpFecha.Size = new System.Drawing.Size(175, 26);
+            this.dtpFecha.TabIndex = 19;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(648, 248);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(54, 20);
+            this.label11.TabIndex = 18;
+            this.label11.Text = "Fecha";
+            // 
+            // txtMedicamento
+            // 
+            this.autoCompleteMed.SetAutoComplete(this.txtMedicamento, Syncfusion.Windows.Forms.Tools.AutoCompleteModes.Both);
+            this.txtMedicamento.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtMedicamento.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtMedicamento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtMedicamento.Location = new System.Drawing.Point(124, 7);
+            this.txtMedicamento.Name = "txtMedicamento";
+            this.txtMedicamento.Size = new System.Drawing.Size(522, 26);
+            this.txtMedicamento.TabIndex = 1;
+            this.txtMedicamento.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMedicamento_KeyDown);
+            this.txtMedicamento.Validating += new System.ComponentModel.CancelEventHandler(this.txtMedicamento_Validating);
+            this.txtMedicamento.Validated += new System.EventHandler(this.txtMedicamento_Validated);
             // 
             // label10
             // 
@@ -1329,16 +1404,6 @@
             this.chkImprimirEdad.TabIndex = 12;
             this.chkImprimirEdad.Text = "I&mprimir edad del paciente";
             this.chkImprimirEdad.UseVisualStyleBackColor = true;
-            // 
-            // chkImprimirDireccion
-            // 
-            this.chkImprimirDireccion.AutoSize = true;
-            this.chkImprimirDireccion.Location = new System.Drawing.Point(652, 256);
-            this.chkImprimirDireccion.Name = "chkImprimirDireccion";
-            this.chkImprimirDireccion.Size = new System.Drawing.Size(241, 24);
-            this.chkImprimirDireccion.TabIndex = 11;
-            this.chkImprimirDireccion.Text = "&Imprimir dirección del paciente";
-            this.chkImprimirDireccion.UseVisualStyleBackColor = true;
             // 
             // cmdBoton7
             // 
@@ -1914,7 +1979,7 @@
             // 
             this.cmdBuscarPaciente.Image = ((System.Drawing.Image)(resources.GetObject("cmdBuscarPaciente.Image")));
             this.cmdBuscarPaciente.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdBuscarPaciente.Location = new System.Drawing.Point(741, 12);
+            this.cmdBuscarPaciente.Location = new System.Drawing.Point(709, 12);
             this.cmdBuscarPaciente.Name = "cmdBuscarPaciente";
             this.cmdBuscarPaciente.Size = new System.Drawing.Size(205, 46);
             this.cmdBuscarPaciente.TabIndex = 71;
@@ -1928,23 +1993,27 @@
             this.autoCompleteMed.ItemFont = new System.Drawing.Font("Segoe UI", 8.25F);
             this.autoCompleteMed.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(158)))), ((int)(((byte)(218)))));
             this.autoCompleteMed.ParentForm = this;
-            this.autoCompleteMed.Style = Syncfusion.Windows.Forms.Tools.AutoCompleteStyle.Default;
             this.autoCompleteMed.ThemeName = "Default";
             this.autoCompleteMed.BeforeAddItem += new Syncfusion.Windows.Forms.Tools.AutoCompleteAddItemCancelEventHandler(this.autoCompleteMed_BeforeAddItem);
             // 
-            // txtMedicamento
+            // pagObservaciones
             // 
-            this.autoCompleteMed.SetAutoComplete(this.txtMedicamento, Syncfusion.Windows.Forms.Tools.AutoCompleteModes.Both);
-            this.txtMedicamento.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.txtMedicamento.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtMedicamento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtMedicamento.Location = new System.Drawing.Point(124, 7);
-            this.txtMedicamento.Name = "txtMedicamento";
-            this.txtMedicamento.Size = new System.Drawing.Size(522, 26);
-            this.txtMedicamento.TabIndex = 1;
-            this.txtMedicamento.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMedicamento_KeyDown);
-            this.txtMedicamento.Validating += new System.ComponentModel.CancelEventHandler(this.txtMedicamento_Validating);
-            this.txtMedicamento.Validated += new System.EventHandler(this.txtMedicamento_Validated);
+            this.pagObservaciones.Controls.Add(this.txtObservaciones);
+            this.pagObservaciones.Location = new System.Drawing.Point(4, 29);
+            this.pagObservaciones.Name = "pagObservaciones";
+            this.pagObservaciones.Padding = new System.Windows.Forms.Padding(3);
+            this.pagObservaciones.Size = new System.Drawing.Size(1215, 572);
+            this.pagObservaciones.TabIndex = 7;
+            this.pagObservaciones.Text = "Observaciones";
+            this.pagObservaciones.UseVisualStyleBackColor = true;
+            // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.Location = new System.Drawing.Point(8, 22);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(784, 430);
+            this.txtObservaciones.TabIndex = 0;
             // 
             // TabletPacienteVer
             // 
@@ -1962,6 +2031,7 @@
             this.Name = "TabletPacienteVer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Consultar paciente";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TabletPacienteVer_FormClosing);
             this.Load += new System.EventHandler(this.TabletPacienteVer_Load);
             this.tabPaciente.ResumeLayout(false);
             this.pagGenerales.ResumeLayout(false);
@@ -1985,6 +2055,8 @@
             this.pagImagenes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdImagenes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.autoCompleteMed)).EndInit();
+            this.pagObservaciones.ResumeLayout(false);
+            this.pagObservaciones.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2106,7 +2178,6 @@
         private System.Windows.Forms.TextBox txtEtiquetas;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox chkImprimirEdad;
-        private System.Windows.Forms.CheckBox chkImprimirDireccion;
         private System.Windows.Forms.Button cmdGurdarReceta;
         private System.Windows.Forms.Button cmdImprimirReceta;
         private System.Windows.Forms.Button cmdTraerUltimaReceta;
@@ -2155,5 +2226,12 @@
         private System.Windows.Forms.Label label10;
         private Syncfusion.Windows.Forms.Tools.AutoComplete autoCompleteMed;
         private System.Windows.Forms.TextBox txtMedicamento;
+        private System.Windows.Forms.Button cmdNotaAgregar;
+        private System.Windows.Forms.Button cmdNotaEditar;
+        private System.Windows.Forms.Button cmdNotaBorrar;
+        private System.Windows.Forms.DateTimePicker dtpFecha;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TabPage pagObservaciones;
+        private System.Windows.Forms.TextBox txtObservaciones;
     }
 }

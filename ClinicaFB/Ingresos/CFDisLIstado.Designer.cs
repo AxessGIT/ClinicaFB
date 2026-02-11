@@ -49,8 +49,15 @@
             this.cmdCancelar = new System.Windows.Forms.Button();
             this.cmdArchivos = new System.Windows.Forms.Button();
             this.cmdCerrar = new System.Windows.Forms.Button();
-            this.cmdimprimir = new System.Windows.Forms.Button();
+            this.cmdReporte = new System.Windows.Forms.Button();
             this.cmdMandarCorreo = new System.Windows.Forms.Button();
+            this.cmdChecarCancelacion = new System.Windows.Forms.Button();
+            this.cmdCancelacionGlobal = new System.Windows.Forms.Button();
+            this.cmdImprimir = new System.Windows.Forms.Button();
+            this.txtRazonSocial = new System.Windows.Forms.TextBox();
+            this.cmdBuscaRazonSocial = new System.Windows.Forms.Button();
+            this.txtRFC = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grdCfdis)).BeginInit();
             this.SuspendLayout();
             // 
@@ -130,11 +137,11 @@
             this.colRazonSocial,
             this.colImporte,
             this.colCancelado});
-            this.grdCfdis.Location = new System.Drawing.Point(15, 59);
+            this.grdCfdis.Location = new System.Drawing.Point(15, 72);
             this.grdCfdis.Name = "grdCfdis";
             this.grdCfdis.ReadOnly = true;
-            this.grdCfdis.Size = new System.Drawing.Size(998, 394);
-            this.grdCfdis.TabIndex = 13;
+            this.grdCfdis.Size = new System.Drawing.Size(998, 448);
+            this.grdCfdis.TabIndex = 14;
             // 
             // colEmisor
             // 
@@ -188,9 +195,9 @@
             // 
             this.cmdVer.Image = ((System.Drawing.Image)(resources.GetObject("cmdVer.Image")));
             this.cmdVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdVer.Location = new System.Drawing.Point(1019, 59);
+            this.cmdVer.Location = new System.Drawing.Point(1019, 71);
             this.cmdVer.Name = "cmdVer";
-            this.cmdVer.Size = new System.Drawing.Size(111, 43);
+            this.cmdVer.Size = new System.Drawing.Size(132, 43);
             this.cmdVer.TabIndex = 7;
             this.cmdVer.Text = "&Ver";
             this.cmdVer.UseVisualStyleBackColor = true;
@@ -200,10 +207,10 @@
             // 
             this.cmdCancelar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCancelar.Image")));
             this.cmdCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCancelar.Location = new System.Drawing.Point(1019, 255);
+            this.cmdCancelar.Location = new System.Drawing.Point(1019, 316);
             this.cmdCancelar.Name = "cmdCancelar";
-            this.cmdCancelar.Size = new System.Drawing.Size(111, 43);
-            this.cmdCancelar.TabIndex = 11;
+            this.cmdCancelar.Size = new System.Drawing.Size(132, 43);
+            this.cmdCancelar.TabIndex = 12;
             this.cmdCancelar.Text = "&Cancelar";
             this.cmdCancelar.UseVisualStyleBackColor = true;
             this.cmdCancelar.Click += new System.EventHandler(this.cmdCancelar_Click);
@@ -212,9 +219,9 @@
             // 
             this.cmdArchivos.Image = ((System.Drawing.Image)(resources.GetObject("cmdArchivos.Image")));
             this.cmdArchivos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdArchivos.Location = new System.Drawing.Point(1019, 108);
+            this.cmdArchivos.Location = new System.Drawing.Point(1019, 120);
             this.cmdArchivos.Name = "cmdArchivos";
-            this.cmdArchivos.Size = new System.Drawing.Size(111, 43);
+            this.cmdArchivos.Size = new System.Drawing.Size(132, 43);
             this.cmdArchivos.TabIndex = 8;
             this.cmdArchivos.Text = "&Archivos";
             this.cmdArchivos.UseVisualStyleBackColor = true;
@@ -224,45 +231,127 @@
             // 
             this.cmdCerrar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCerrar.Image")));
             this.cmdCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCerrar.Location = new System.Drawing.Point(1019, 304);
+            this.cmdCerrar.Location = new System.Drawing.Point(1019, 463);
             this.cmdCerrar.Name = "cmdCerrar";
-            this.cmdCerrar.Size = new System.Drawing.Size(111, 43);
-            this.cmdCerrar.TabIndex = 12;
+            this.cmdCerrar.Size = new System.Drawing.Size(132, 43);
+            this.cmdCerrar.TabIndex = 15;
             this.cmdCerrar.Text = "C&errar";
             this.cmdCerrar.UseVisualStyleBackColor = true;
             this.cmdCerrar.Click += new System.EventHandler(this.cmdCerrar_Click);
             // 
-            // cmdimprimir
+            // cmdReporte
             // 
-            this.cmdimprimir.Image = ((System.Drawing.Image)(resources.GetObject("cmdimprimir.Image")));
-            this.cmdimprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdimprimir.Location = new System.Drawing.Point(1019, 206);
-            this.cmdimprimir.Name = "cmdimprimir";
-            this.cmdimprimir.Size = new System.Drawing.Size(111, 43);
-            this.cmdimprimir.TabIndex = 10;
-            this.cmdimprimir.Text = "&Reporte";
-            this.cmdimprimir.UseVisualStyleBackColor = true;
-            this.cmdimprimir.Click += new System.EventHandler(this.cmdimprimir_Click);
+            this.cmdReporte.Image = ((System.Drawing.Image)(resources.GetObject("cmdReporte.Image")));
+            this.cmdReporte.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdReporte.Location = new System.Drawing.Point(1019, 267);
+            this.cmdReporte.Name = "cmdReporte";
+            this.cmdReporte.Size = new System.Drawing.Size(132, 43);
+            this.cmdReporte.TabIndex = 11;
+            this.cmdReporte.Text = "&Reporte";
+            this.cmdReporte.UseVisualStyleBackColor = true;
+            this.cmdReporte.Click += new System.EventHandler(this.cmdReeporte_Click);
             // 
             // cmdMandarCorreo
             // 
             this.cmdMandarCorreo.Image = ((System.Drawing.Image)(resources.GetObject("cmdMandarCorreo.Image")));
             this.cmdMandarCorreo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdMandarCorreo.Location = new System.Drawing.Point(1019, 157);
+            this.cmdMandarCorreo.Location = new System.Drawing.Point(1019, 218);
             this.cmdMandarCorreo.Name = "cmdMandarCorreo";
-            this.cmdMandarCorreo.Size = new System.Drawing.Size(111, 43);
-            this.cmdMandarCorreo.TabIndex = 9;
+            this.cmdMandarCorreo.Size = new System.Drawing.Size(132, 43);
+            this.cmdMandarCorreo.TabIndex = 10;
             this.cmdMandarCorreo.Text = "&Enviar";
             this.cmdMandarCorreo.UseVisualStyleBackColor = true;
             this.cmdMandarCorreo.Click += new System.EventHandler(this.cmdMandarCorreo_Click);
+            // 
+            // cmdChecarCancelacion
+            // 
+            this.cmdChecarCancelacion.Image = ((System.Drawing.Image)(resources.GetObject("cmdChecarCancelacion.Image")));
+            this.cmdChecarCancelacion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdChecarCancelacion.Location = new System.Drawing.Point(1019, 365);
+            this.cmdChecarCancelacion.Name = "cmdChecarCancelacion";
+            this.cmdChecarCancelacion.Size = new System.Drawing.Size(132, 43);
+            this.cmdChecarCancelacion.TabIndex = 13;
+            this.cmdChecarCancelacion.Text = "&Checar can.";
+            this.cmdChecarCancelacion.UseVisualStyleBackColor = true;
+            this.cmdChecarCancelacion.Click += new System.EventHandler(this.cmdChecarCancelacion_Click);
+            // 
+            // cmdCancelacionGlobal
+            // 
+            this.cmdCancelacionGlobal.Image = ((System.Drawing.Image)(resources.GetObject("cmdCancelacionGlobal.Image")));
+            this.cmdCancelacionGlobal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdCancelacionGlobal.Location = new System.Drawing.Point(1019, 414);
+            this.cmdCancelacionGlobal.Name = "cmdCancelacionGlobal";
+            this.cmdCancelacionGlobal.Size = new System.Drawing.Size(132, 43);
+            this.cmdCancelacionGlobal.TabIndex = 14;
+            this.cmdCancelacionGlobal.Text = "&Can. Glob.";
+            this.cmdCancelacionGlobal.UseVisualStyleBackColor = true;
+            this.cmdCancelacionGlobal.Click += new System.EventHandler(this.cmdCancelacionGlobal_Click);
+            // 
+            // cmdImprimir
+            // 
+            this.cmdImprimir.Image = ((System.Drawing.Image)(resources.GetObject("cmdImprimir.Image")));
+            this.cmdImprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdImprimir.Location = new System.Drawing.Point(1019, 169);
+            this.cmdImprimir.Name = "cmdImprimir";
+            this.cmdImprimir.Size = new System.Drawing.Size(132, 43);
+            this.cmdImprimir.TabIndex = 9;
+            this.cmdImprimir.Text = "&Imprimir";
+            this.cmdImprimir.UseVisualStyleBackColor = true;
+            this.cmdImprimir.Click += new System.EventHandler(this.cmdImprimir_Click);
+            // 
+            // txtRazonSocial
+            // 
+            this.txtRazonSocial.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRazonSocial.Location = new System.Drawing.Point(269, 43);
+            this.txtRazonSocial.Name = "txtRazonSocial";
+            this.txtRazonSocial.ReadOnly = true;
+            this.txtRazonSocial.Size = new System.Drawing.Size(340, 23);
+            this.txtRazonSocial.TabIndex = 53;
+            this.txtRazonSocial.Text = "PUBLICO EN GENERAL";
+            // 
+            // cmdBuscaRazonSocial
+            // 
+            this.cmdBuscaRazonSocial.Location = new System.Drawing.Point(615, 43);
+            this.cmdBuscaRazonSocial.Name = "cmdBuscaRazonSocial";
+            this.cmdBuscaRazonSocial.Size = new System.Drawing.Size(36, 23);
+            this.cmdBuscaRazonSocial.TabIndex = 50;
+            this.cmdBuscaRazonSocial.Text = "...";
+            this.cmdBuscaRazonSocial.UseVisualStyleBackColor = true;
+            this.cmdBuscaRazonSocial.Click += new System.EventHandler(this.cmdBuscaRazonSocial_Click);
+            // 
+            // txtRFC
+            // 
+            this.txtRFC.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRFC.Location = new System.Drawing.Point(107, 43);
+            this.txtRFC.Name = "txtRFC";
+            this.txtRFC.ReadOnly = true;
+            this.txtRFC.Size = new System.Drawing.Size(156, 23);
+            this.txtRFC.TabIndex = 52;
+            this.txtRFC.Text = "XAXX010101000";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 46);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(78, 16);
+            this.label4.TabIndex = 51;
+            this.label4.Text = "Razón social";
             // 
             // CFDisLIstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1142, 465);
+            this.ClientSize = new System.Drawing.Size(1160, 532);
+            this.Controls.Add(this.txtRazonSocial);
+            this.Controls.Add(this.cmdBuscaRazonSocial);
+            this.Controls.Add(this.txtRFC);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cmdImprimir);
+            this.Controls.Add(this.cmdCancelacionGlobal);
+            this.Controls.Add(this.cmdChecarCancelacion);
             this.Controls.Add(this.cmdMandarCorreo);
-            this.Controls.Add(this.cmdimprimir);
+            this.Controls.Add(this.cmdReporte);
             this.Controls.Add(this.cmdVer);
             this.Controls.Add(this.cmdCancelar);
             this.Controls.Add(this.cmdArchivos);
@@ -312,7 +401,14 @@
         private System.Windows.Forms.Button cmdArchivos;
         private System.Windows.Forms.Button cmdCancelar;
         private System.Windows.Forms.Button cmdVer;
-        private System.Windows.Forms.Button cmdimprimir;
+        private System.Windows.Forms.Button cmdReporte;
         private System.Windows.Forms.Button cmdMandarCorreo;
+        private System.Windows.Forms.Button cmdChecarCancelacion;
+        private System.Windows.Forms.Button cmdCancelacionGlobal;
+        private System.Windows.Forms.Button cmdImprimir;
+        private System.Windows.Forms.TextBox txtRazonSocial;
+        private System.Windows.Forms.Button cmdBuscaRazonSocial;
+        private System.Windows.Forms.TextBox txtRFC;
+        private System.Windows.Forms.Label label4;
     }
 }

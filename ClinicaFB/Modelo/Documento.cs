@@ -8,8 +8,14 @@ namespace ClinicaFB.Modelo
 {
     public class Documento
     {
-        public int DocumentoId { get; set; }
-        public int AlmacenId { get; set; }
+        public long DocumentoId { get; set; }
+        public long SucursalId { get; set; }
+        public long AlmacenId { get; set; }
+        public string AlmacenNombre { get; set; }
+        public long AlmacenDestinoId { get; set; }
+        public string AlmacenDestinoNombre { get; set; }
+        public long ConceptoId { get; set; }
+        public string ConceptoNombre { get; set; }
         public string Tipo { get; set; }
         public DateTime Fecha { get; set; }
         public string Serie { get; set; }
@@ -17,7 +23,9 @@ namespace ClinicaFB.Modelo
         public decimal SubTotal { get; set; }
         public decimal IVA { get; set; }
         public decimal Total { get; set; }
-        public int ProveedorId { get; set; }
+        public long ProveedorId { get; set; }
         public string ProveedorNombre { get; set; }
+        public string Observaciones { get; set; }
+        public bool Cancelado { get; set; }
     }
 }

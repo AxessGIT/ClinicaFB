@@ -88,17 +88,17 @@ namespace ClinicaFB.Agenda
                 switch (cita.Tipo)
                 {
                     case "DOC":
-                        sql = Queries.DoctorSelect();
+                        sql = ClinicaFB.Helpers.Queries.DoctorSelect();
                         Doctor doc = db.QueryFirstOrDefault<Doctor>(sql, new { Doctor_Id = cita.Recurso_Id });
                         NombreRecurso = doc.NombreCompleto;
                         break;
                     case "EQU":
-                        sql = Queries.EquipoSelect();
+                        sql = ClinicaFB.Helpers.Queries.EquipoSelect();
                         Equipo equ = db.QueryFirstOrDefault<Equipo>(sql, new { Equipo_Id = cita.Recurso_Id });
                         NombreRecurso = equ == null ? "" : equ.Nombre;
                         break;
                     case "CUA":
-                        sql = Queries.CuartosSelect();
+                        sql =   ClinicaFB.Helpers.Queries.CuartosSelect();
                         Cuarto cua = db.QueryFirstOrDefault<Cuarto>(sql, new { Cuarto_Id = cita.Recurso_Id });
                         NombreRecurso = cua == null ? "" : cua.Nombre;
                         break;

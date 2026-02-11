@@ -1,4 +1,5 @@
-﻿using ClinicaFB.Helpers;
+﻿using ClinicaFB.Facturacion;
+using ClinicaFB.Helpers;
 using ClinicaFB.Modelo;
 using Dapper;
 using FirebirdSql.Data.FirebirdClient;
@@ -19,6 +20,7 @@ namespace ClinicaFB.Ingresos
     {
         private BindingList<Ingreso> _ingresos = new BindingList<Ingreso>();
         private string _tipo;
+        long _razonSocialId = 0;
 
         public IngresosListado(string tipo)
         {
@@ -37,12 +39,16 @@ namespace ClinicaFB.Ingresos
 
             using (FbConnection db = General.GetDB())
             {
-                string sql = Queries.IngresosSelectxSucursalYFechas();
+                string sql = _razonSocialId == 0 ? Queries.IngresosSelectxSucursalYFechas() : Queries.IngresosSelectxSucursalFechasYRazonSocial;
 
                 DateTime fechaIni = dtpFechaInicial.Value;
                 DateTime fechaFin = dtpFechaFinal.Value;
 
-                var res = db.Query<Ingreso>(sql, new {SucursalId = Properties.Settings.Default.SucursalId, Tipo = _tipo, FechaInicial= fechaIni, FechaFinal= fechaFin }).ToList();
+                var res = _razonSocialId==0 
+                    ?
+                    db.Query<Ingreso>(sql, new {Properties.Settings.Default.SucursalId, Tipo = _tipo, FechaInicial= fechaIni, FechaFinal= fechaFin }).ToList()
+                    : db.Query<Ingreso>(sql, new { Properties.Settings.Default.SucursalId, Tipo = _tipo, FechaInicial = fechaIni, FechaFinal = fechaFin, RazonSocialId = _razonSocialId }).ToList()
+                    ;
 
                 _ingresos = new BindingList<Ingreso>(res);
             }
@@ -139,7 +145,7 @@ namespace ClinicaFB.Ingresos
             {
                 return;
             }
-            int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
+            long ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
             IngresoVer ingresoVer = new IngresoVer(ingresoId);
             ingresoVer.ShowDialog();
 
@@ -152,7 +158,7 @@ namespace ClinicaFB.Ingresos
                 return;
             }
 
-            int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
+            long ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
             Ingreso ing = new Ingreso();
             BindingList<IngresoDetalle> conceptos = new BindingList<IngresoDetalle>();
 
@@ -196,8 +202,7 @@ namespace ClinicaFB.Ingresos
 
 
 
-
-            int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
+            long ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
             if (General.IngresoFacturado(ingresoId))
             {
                 MessageBox.Show("El Ingreso ya está facturado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -206,14 +211,14 @@ namespace ClinicaFB.Ingresos
 
             Ingreso ing = _ingresos[grdIngresos.CurrentRow.Index];
 
-            IngresoFacturarOpciones clavesSATSeleccionar = new IngresoFacturarOpciones(ing.RazonSocialId, ing.CveFOP, ing.CveMEP, ing.CveUSO,selRazon:true);
+            FacturarOpciones clavesSATSeleccionar = new FacturarOpciones(ing.RazonSocialId, ing.CveFOP, ing.CveMEP, ing.CveUSO,selRazon:true);
             clavesSATSeleccionar.ShowDialog();
 
             if (clavesSATSeleccionar.Aceptar == false)
             {
                 return;
             }
-
+            //grdIngresos.CurrentRow.Visible = false;
             ing.IngresoId = ingresoId;
             ing.RazonSocialId = clavesSATSeleccionar.RazonSocialId;
             ing.CveFOP = clavesSATSeleccionar.txtCveFOP.Text.Trim();
@@ -236,6 +241,9 @@ namespace ClinicaFB.Ingresos
            ManejaCFDIs.IngresoFacturar(ingresoId, _imprimir, _impresora, _mandarCorreos, _correos);
             splasher.Close();
 
+            CargaIngresos();
+            SetGrid();
+
 
         }
 
@@ -252,7 +260,7 @@ namespace ClinicaFB.Ingresos
 
             using (FbConnection db = General.GetDB())
             {
-                int ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
+                long ingresoId = _ingresos[grdIngresos.CurrentRow.Index].IngresoId;
                 string sql = Queries.IngresoCancelar();
                 db.Execute(sql, new {IngresoId= ingresoId });
                 _ingresos[grdIngresos.CurrentRow.Index].Cancelado = true;
@@ -265,6 +273,44 @@ namespace ClinicaFB.Ingresos
 
         private void cmdExportar_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void cmdBuscaRazonSocial_Click(object sender, EventArgs e)
+        {
+            RazonesSocialesListado razonesSocialesListado = new RazonesSocialesListado(true);
+            razonesSocialesListado.ShowDialog();
+            if (razonesSocialesListado.RazonId != 0)
+            {
+                _razonSocialId = razonesSocialesListado.RazonId;
+                CargaDatosRazonSocial();
+            }
+            
+
+        }
+
+
+
+        private void CargaDatosRazonSocial()
+        {
+            if (_razonSocialId == 0)
+            {
+                return;
+            }
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.RazonSocialSelect();
+                RazonSocial raz = db.Query<RazonSocial>(sql, new { RazonSocialId = _razonSocialId }).FirstOrDefault();
+
+                if (raz != null)
+                {
+                    txtRFC.Text = raz.RFC;
+                    txtRazonSocial.Text = raz.RazonSoc;
+                  
+                }
+            }
+
 
         }
     }

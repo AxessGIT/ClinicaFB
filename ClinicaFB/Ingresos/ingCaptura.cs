@@ -87,176 +87,169 @@ namespace ClinicaFB.Ingresos
         private async Task  GuardaIngreso(bool facturar)
         {
 
-            int emisorDefaultId = (int) cboEmisores.SelectedValue;
+            long emisorDefaultId = (long) cboEmisores.SelectedValue;
             SerieDoc serieDocumento = new SerieDoc();
 
-
-
-
-            string serie = "";
-            int folio = 0;
-
             using (FbConnection db = General.GetDB())
             {
-                string sql = "";
+                await db.OpenAsync();
 
-                sql = Queries.SucursalSelect();
-                Sucursal suc = db.Query<Sucursal>(sql, new {SucursalId = _sucursalId }).FirstOrDefault();
-
-                if (suc == null)
-                {
-                    MessageBox.Show("No existe información de serie, folio para ingresos de la sucursal", "Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                    return;
-                }
-
-                sql = Queries.SucursalSetSiguienteFolioIngresos();
-                db.Execute(sql, new {SucursalId = _sucursalId});
-
-                serie = suc.SerieIngresos;
-                folio = suc.FolioIngresos;
-
-
-            }
-
-            Ingreso ing = new Ingreso();
-            ing.SucursalId = _sucursalId;
-            ing.EmisorId = (int) cboEmisores.SelectedValue;
-
-            ing.Tipo = _tipo;
-            
-            ing.Serie = serie;
-            ing.Folio= folio;
-            ing.PacienteId = _pacienteId;
-            ing.RazonSocialId= _razonSocialId;
-            ing.CveFOP = _cveFOP;
-            ing.CveMEP = _cveMEP;
-            ing.CveUSO = _cveUSO;
-            ing.Fecha = txtFecha.Value;
-            ing.Hora = DateTime.Now.TimeOfDay.ToString(); 
-            ing.Hora = ing.Hora.Substring(0, 8);
-            ing.SubTotal = txtSubTotal.DecimalValue;
-            ing.Impuesto = txtIVA.DecimalValue;
-            //ing.Descuento =txtDescuento.DecimalValue;
-            //ing.RetIVA = txtRetIVA.DecimalValue;
-            //ing.RetISR = txtRetISR.DecimalValue;
-            ing.Total = txtTotal.DecimalValue;
-            ing.Cancelado = false;
-            ing.WebId = General.RandomString(5);
-
-
-            
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = Queries.IngresoInsert();
-                _ingresoId = db.ExecuteScalar<int>(sql,ing);
-
-                foreach (IngresoDetalle det in _conceptos)
+                using (FbTransaction transaction = db.BeginTransaction())
                 {
 
+                    try
+                    {
+                        string serie = "";
+                        int folio = 0;
+
+                        string sql = "";
+
+                        sql = Queries.SucursalSelect();
+                        Sucursal suc = db.Query<Sucursal>(sql, new { SucursalId = _sucursalId },transaction).FirstOrDefault();
+
+                        if (suc == null)
+                        {
+                            MessageBox.Show("No existe información de serie, folio para ingresos de la sucursal", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+
+                        sql = Queries.SucursalSetSiguienteFolioIngresos();
+                        db.Execute(sql, new { SucursalId = _sucursalId },transaction);
+
+                        serie = suc.SerieIngresos;
+                        folio = suc.FolioIngresos;
+
+                        Ingreso ing = new Ingreso
+                        {
+                            SucursalId = _sucursalId,
+                            EmisorId = (long)cboEmisores.SelectedValue,
+
+                            Tipo = _tipo,
+
+                            Serie = serie,
+                            Folio = folio,
+                            PacienteId = _pacienteId,
+                            RazonSocialId = _razonSocialId,
+                            CveFOP = _cveFOP,
+                            CveMEP = _cveMEP,
+                            CveUSO = _cveUSO,
+                            Fecha = txtFecha.Value,
+                            Hora = DateTime.Now.TimeOfDay.ToString()
+                        };
+                        ing.Hora = ing.Hora.Substring(0, 8);
+                        ing.SubTotal = txtSubTotal.DecimalValue;
+                        ing.Impuesto = txtIVA.DecimalValue;
+                        ing.Total = txtTotal.DecimalValue;
+                        ing.Cancelado = false;
+                        ing.WebId = General.RandomString(5);
 
 
-                    IngresoDetalle ingDet = new IngresoDetalle();
-                    ingDet.IngresoId = _ingresoId;
-                    ingDet.ArticuloId= det.ArticuloId;
-                    ingDet.ArticuloId = det.ArticuloId;
-                    ingDet.Clave = det.Clave;
-                    ingDet.Descripcion= det.Descripcion;
-                    ingDet.UDM = det.UDM;
-                    ingDet.Cantidad= det.Cantidad;
-                    ingDet.Precio = det.Precio;
-                    ingDet.Descuento= det.Descuento;
+                        sql = Queries.IngresoInsert();
+                        _ingresoId = db.ExecuteScalar<int>(sql, ing,transaction);
 
-                    ingDet.CveProSer = det.CveProSer;
-                    ingDet.CveUni = det.CveUni;
+                        foreach (IngresoDetalle det in _conceptos)
+                        {
 
 
-                    ingDet.TipoIVA= det.TipoIVA; //1=tasa 2=exento
-                    ingDet.TasaIVA= det.TasaIVA;
 
-                    ingDet.BaseIVA= det.BaseIVA;
-                    ingDet.IVA= det.IVA;
-                    
-                    ingDet.PorceRetISR = det.PorceRetISR;
-                    ingDet.PorceRetIVA = det.PorceRetIVA;
+                            IngresoDetalle ingDet = new IngresoDetalle
+                            {
+                                IngresoId = _ingresoId,
+                                ArticuloId = det.ArticuloId
+                            };
+                            ingDet.ArticuloId = det.ArticuloId;
+                            ingDet.Clave = det.Clave;
+                            ingDet.Descripcion = det.Descripcion;
+                            ingDet.UDM = det.UDM;
+                            ingDet.Cantidad = det.Cantidad;
+                            ingDet.Precio = det.Precio;
+                            ingDet.Descuento = det.Descuento;
 
-                    ingDet.EmisorId = det.EmisorId;
-                    ingDet.Serie= det.Serie;
+                            ingDet.CveProSer = det.CveProSer;
+                            ingDet.CveUni = det.CveUni;
 
-                    sql = Queries.IngresoDetalleInsert();
 
-                    db.Execute(sql, ingDet);
+                            ingDet.TipoIVA = det.TipoIVA; //1=tasa 2=exento
+                            ingDet.TasaIVA = det.TasaIVA;
 
+                            ingDet.BaseIVA = det.BaseIVA;
+                            ingDet.IVA = det.IVA;
+
+                            ingDet.PorceRetISR = det.PorceRetISR;
+                            ingDet.PorceRetIVA = det.PorceRetIVA;
+
+                            ingDet.EmisorId = det.EmisorId;
+                            ingDet.Serie = det.Serie;
+
+                            sql = Queries.IngresoDetalleInsert();
+
+                            db.Execute(sql, ingDet,transaction);
+
+                        }
+
+
+                        List<Pago> pagos = new List<Pago>();
+                        if (txtEfectivo.DecimalValue > 0)
+                        {
+                            pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 1, Importe = txtEfectivo.DecimalValue });
+                        }
+
+                        if (txtTarjeta.DecimalValue > 0)
+                        {
+                            pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 2, Importe = txtTarjeta.DecimalValue, Referencia = txtReferencia.Text });
+                        }
+
+                        if (txtTransferencia.DecimalValue > 0)
+                        {
+                            pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 3, Importe = txtTransferencia.DecimalValue, Referencia = txtReferencia.Text });
+                        }
+
+                        if (txtTarjetaCredito.DecimalValue > 0)
+                        {
+                            pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 4, Importe = txtTarjetaCredito.DecimalValue, Referencia = txtReferencia.Text });
+                        }
+
+                        if (txtCheque.DecimalValue > 0)
+                        {
+                            pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 5, Importe = txtCheque.DecimalValue, Referencia = txtReferencia.Text });
+                        }
+
+                        if (pagos.Count > 0)
+                        {
+                            await Task.Run(() => UtilsInv.GuardaPagos(pagos, db, transaction));
+
+                        }
+
+                        if (facturar)
+                        {
+                            ManejaCFDIs.IngresoFacturar(_ingresoId, _imprimir, _impresora, _mandarCorreos, _correos);
+                        }
+                        else
+                        {
+                            ManejaCFDIs.ImprimeTicket(ing, _conceptos, _imprimir, _impresora, _mandarCorreos, _correos);
+                        }
+
+
+
+                        transaction.Commit();
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("Error al guardar el ingreso: " + err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        transaction.Rollback();
+
+
+                    }
                 }
+
+
             }
 
-            List<Pago> pagos = new List<Pago>();
-            if (txtEfectivo.DecimalValue > 0)
-            {
-                pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId= _ingresoId, Tipo = 1, Importe = txtEfectivo.DecimalValue});
-            }
-
-            if (txtTarjeta.DecimalValue > 0)
-            {
-                pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 2, Importe = txtTarjeta.DecimalValue, Referencia = txtReferencia.Text });
-            }
-
-            if (txtTransferencia.DecimalValue > 0)
-            {
-                pagos.Add(new Pago { OrigenTipo = 1, DoctoOrigenId = _ingresoId, Tipo = 3, Importe = txtTransferencia.DecimalValue, Referencia = txtReferencia.Text });
-            }
-
-            await Task.Run( ()=> General.GuardaPagos(pagos));
-
-            if (facturar)
-            {
-                ManejaCFDIs.IngresoFacturar(_ingresoId,_imprimir,_impresora,_mandarCorreos,_correos);
-            }
-            else
-            {
-                ManejaCFDIs.ImprimeTicket(ing, _conceptos,_imprimir,_impresora,_mandarCorreos,_correos);
-            }
             Inicializa();
 
-
-
-
-
         }
 
-        private void GeneraFacturas()
-        {
-            var conceptosOrdenados = new BindingList<IngresoDetalle>(_conceptos.OrderBy(x => x.EmisorId).ThenBy(x=>x.Serie).ToList());
 
-            int emisorId = conceptosOrdenados[0].EmisorId;
-            string serie = conceptosOrdenados[0].Serie;
-
-            List<IngresoDetalle> conceptos = new List<IngresoDetalle>();
-
-            foreach (var concepto in conceptosOrdenados)
-            {
-                if (concepto.EmisorId != emisorId || concepto.Serie != serie)
-                {
-
-                    GeneraFactura(conceptos);
-                    emisorId = concepto.EmisorId;
-                    serie = concepto.Serie;
-                    conceptos = new List<IngresoDetalle>();
-                }
-                conceptos.Add(concepto);
-
-            }
-
-
-
-        }
-
-        private void GeneraFactura(List<IngresoDetalle> conceptos)
-        {
-            //Comprobante comprobante= new Comprobante();
-
-
-        }
 
         private void Inicializa()
         {
@@ -289,13 +282,13 @@ namespace ClinicaFB.Ingresos
         {
 
 
-            int emisorIdDefa = 0;
+            long emisorIdDefa = 0;
             string nombreEmisorDefa = "";
 
             using (FbConnection db = General.GetDB())
             {
                 string sql = Queries.EmisoresSelect();
-                var res = db.Query<ClinicaFB.Modelo.Emisor>(sql).ToList();
+                var res = db.Query<Emisor>(sql).ToList();
 
                 foreach (var emi in res)
                 {
@@ -307,7 +300,7 @@ namespace ClinicaFB.Ingresos
                     }
 
                 }
-                _emisores = new BindingList<ClinicaFB.Modelo.Emisor>(res);
+                _emisores = new BindingList<Emisor>(res);
 
 
 
@@ -506,7 +499,7 @@ namespace ClinicaFB.Ingresos
                     break;
 
                 case Keys.F5:
-                    ArticulosBuscar articulosBuscar = new ArticulosBuscar(txtConcepto.Text.Trim());
+                    ArticulosBuscar articulosBuscar = new ArticulosBuscar(txtConcepto.Text.Trim(),1);
                     articulosBuscar.ShowDialog();
 
                     if (articulosBuscar.ArticuloId!= 0)
@@ -560,6 +553,12 @@ namespace ClinicaFB.Ingresos
                     return;
 
                 }
+                if (art.Tipo!=1)
+                {
+                    MessageBox.Show("Solo Servicios","Aviso",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+
+                }
 
                 Impuesto imp = new Impuesto();
 
@@ -595,8 +594,8 @@ namespace ClinicaFB.Ingresos
                 sql = Queries.SeriesConceptosSelectXArticulo();
 
 
-                SerieConcepto serCon = db.Query<SerieConcepto>(sql, new {ArticuloId =art.ArticuloId }).FirstOrDefault();
-                int emisorId = 0;
+                SerieConcepto serCon = db.Query<SerieConcepto>(sql, new {art.ArticuloId }).FirstOrDefault();
+                long emisorId = 0;
                 string serie = "";
                 string des = "";
 
@@ -614,7 +613,7 @@ namespace ClinicaFB.Ingresos
                 }
                 else
                 {
-                    emisorId = (int) cboEmisores.SelectedValue;
+                    emisorId = (long) cboEmisores.SelectedValue;
                     sql = Queries.SerieDefault();
                     SerieDoc serDefa = db.Query<SerieDoc>(sql, new {EmisorId = emisorId, Tipo="FAC"}).FirstOrDefault();
 
@@ -640,7 +639,7 @@ namespace ClinicaFB.Ingresos
                     BaseIVA= baseIVA,   
                     TasaIVA = tasaIVA,
                     IVA=importeIVA,
-                    EmisorId=emisorId,
+                    EmisorId=(int) emisorId,
                     Serie= serie
 
                     
@@ -678,7 +677,8 @@ namespace ClinicaFB.Ingresos
 
         private bool PagoCompleto()
         {
-            return txtTotal.DecimalValue == txtTotalPago.DecimalValue;
+            return true;
+            //return txtTotal.DecimalValue == txtTotalPago.DecimalValue;
 
         }
 
@@ -739,13 +739,34 @@ namespace ClinicaFB.Ingresos
                 return;
             }
 
-            IngresoFacturarOpciones clavesSATSeleccionar = new IngresoFacturarOpciones(_razonSocialId,_cveFOP,_cveMEP,_cveUSO,_correos);
+            decimal[] pagos = { txtEfectivo.DecimalValue, txtTarjeta.DecimalValue, txtTarjetaCredito.DecimalValue, txtTransferencia.DecimalValue , txtCheque.DecimalValue};
+
+            Array.Sort(pagos);
+
+            decimal pagoMayor = pagos[4];
+
+            if (pagoMayor==txtEfectivo.DecimalValue)
+                _cveFOP = "01";
+            else if (pagoMayor == txtTarjeta.DecimalValue)
+                _cveFOP = "28";
+            else if (pagoMayor == txtTarjetaCredito.DecimalValue)
+                _cveFOP = "04";
+            else if (pagoMayor == txtTransferencia.DecimalValue)
+                _cveFOP = "03";
+            else if (pagoMayor == txtCheque.DecimalValue)
+                _cveFOP = "02";
+
+
+
+            FacturarOpciones clavesSATSeleccionar = new FacturarOpciones(_razonSocialId,_cveFOP,_cveMEP,_cveUSO,_correos);
             clavesSATSeleccionar.ShowDialog();
 
             if (clavesSATSeleccionar.Aceptar == false)
             {
                 return;
             }
+
+
 
             _cveFOP = clavesSATSeleccionar.txtCveFOP.Text.Trim();
             _cveMEP = clavesSATSeleccionar.txtCveMEP.Text.Trim();
@@ -768,7 +789,7 @@ namespace ClinicaFB.Ingresos
             }
 
             IngresoDetalle concepto = _conceptos[grdConceptos.CurrentRow.Index];
-            ConceptoModificar conceptoModificar = new ConceptoModificar(concepto,txtNombrePaciente.Text.Trim(), (int)cboEmisores.SelectedValue);
+            ConceptoModificar conceptoModificar = new ConceptoModificar(concepto,txtNombrePaciente.Text.Trim(), (long)cboEmisores.SelectedValue);
             conceptoModificar.ShowDialog();
 
             if (conceptoModificar._guardar)
@@ -812,31 +833,34 @@ namespace ClinicaFB.Ingresos
             ActiveControl = txtEfectivo;
         }
 
-        private void ChecaImportesPago(int cualPago)
+        private void ChecaImportesPagoOrg(int cualPago)
         {
-            txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue;
+            txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue + txtTarjetaCredito.DecimalValue;
             if (txtTotalPago.DecimalValue > txtTotal.DecimalValue)
             {
                 MessageBox.Show("El total de los pagos no puede ser mayor al total de la venta", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 switch (cualPago)
                 {
                     case 1:
-                        txtEfectivo.DecimalValue = txtTotal.DecimalValue - txtTarjeta.DecimalValue - txtTransferencia.DecimalValue;
+                        txtEfectivo.DecimalValue = txtTotal.DecimalValue - txtTarjeta.DecimalValue - txtTransferencia.DecimalValue - txtTarjetaCredito.DecimalValue;
                         break;
                     case 2:
-                        txtTarjeta.DecimalValue = txtTotal.DecimalValue - txtEfectivo.DecimalValue - txtTransferencia.DecimalValue;
+                        txtTarjeta.DecimalValue = txtTotal.DecimalValue - txtEfectivo.DecimalValue - txtTransferencia.DecimalValue - txtTarjetaCredito.DecimalValue;
                         break;
                     case 3:
-                        txtTransferencia.DecimalValue = txtTotal.DecimalValue - txtEfectivo.DecimalValue - txtTarjeta.DecimalValue;
+                        txtTransferencia.DecimalValue = txtTotal.DecimalValue - txtEfectivo.DecimalValue - txtTarjeta.DecimalValue - txtTarjetaCredito.DecimalValue;
+                        break;
+                    case 4:
+                        txtTarjetaCredito.DecimalValue = txtTotal.DecimalValue - txtEfectivo.DecimalValue - txtTarjeta.DecimalValue - txtTransferencia.DecimalValue;
                         break;
                     default:
                         break;
                 }
-                txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue;
+                txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue + txtTarjetaCredito.DecimalValue;
             }
 
         }
-        private void ChecaPago(int tipoPago)
+        private void ChecaPagoAnt(int tipoPago)
         {
             decimal importe = txtTotal.DecimalValue - txtTotalPago.DecimalValue;
             switch (tipoPago)
@@ -851,12 +875,68 @@ namespace ClinicaFB.Ingresos
                     txtTransferencia.DecimalValue = importe;
                     break;
 
+                case 4:
+                    txtTarjetaCredito.DecimalValue = importe;
+                    break;
+
                 default:
                     break;
             }
-            txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue;
+            txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue + txtTarjetaCredito.DecimalValue;
 
         }
+
+
+        private void ChecaImportesPago(int cualPago)
+        {
+            txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue + txtTarjetaCredito.DecimalValue + txtCheque.DecimalValue;
+            txtCambio.DecimalValue = txtTotalPago.DecimalValue - txtTotal.DecimalValue;
+
+            if (txtCambio.DecimalValue < 0)
+            {
+                txtCambio.DecimalValue = 0;
+            }
+
+            if (txtCambio.DecimalValue > txtEfectivo.DecimalValue)
+            {
+                MessageBox.Show("El cambio no puede ser mayor al efectivo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+
+        private void ChecaPago(int tipoPago)
+        {
+            decimal importe = txtTotal.DecimalValue - txtTotalPago.DecimalValue;
+            if (importe <= 0 && tipoPago != 1)
+            {
+                return;
+            }
+
+            switch (tipoPago)
+            {
+                case 1:
+                    txtEfectivo.DecimalValue = importe;
+                    break;
+                case 2:
+                    txtTarjeta.DecimalValue = importe;
+                    break;
+                case 3:
+                    txtTransferencia.DecimalValue = importe;
+                    break;
+                case 4:
+                    txtTarjetaCredito.DecimalValue = importe;
+                    break;
+                case 5:
+                    txtCheque.DecimalValue = importe;
+                    break;
+                default:
+                    break;
+            }
+            txtTotalPago.DecimalValue = txtEfectivo.DecimalValue + txtTarjeta.DecimalValue + txtTransferencia.DecimalValue + txtTarjetaCredito.DecimalValue + txtCheque.DecimalValue;
+            txtCambio.DecimalValue = txtTotalPago.DecimalValue - txtTotal.DecimalValue;
+
+        }
+
 
         private void cmdTransferencia_Click(object sender, EventArgs e)
         {
@@ -888,6 +968,27 @@ namespace ClinicaFB.Ingresos
         private void txtTransferencia_Validated(object sender, EventArgs e)
         {
             ChecaImportesPago(3);
+        }
+
+        private void cmdTarjetaCredito_Click(object sender, EventArgs e)
+        {
+            ChecaPago(4);
+            ActiveControl = txtTarjetaCredito;
+        }
+
+        private void txtTarjetaCredito_Validated(object sender, EventArgs e)
+        {
+            ChecaImportesPago(4);
+        }
+
+        private void cmdCheque_Click(object sender, EventArgs e)
+        {
+            ChecaPago(5);
+        }
+
+        private void txtCheque_Validated(object sender, EventArgs e)
+        {
+            ChecaImportesPago(5);
         }
     }
 }

@@ -8,8 +8,15 @@ namespace ClinicaFB.Modelo
 {
     public class Almacen
     {
-        public int AlmacenId { get; set; }
+        public long AlmacenId { get; set; }
         public string Nombre { get; set; }
         public bool Defa { get; set; }
+        public string SerieVen { get; set; }
+        public int FolioVen { get; set; }
+        public string SerieFac { get; set; }
+        public int FolioFac { get; set; }
+        public string SerieNC { get; set; }
+        public int FolioNC { get; set; }
+        public string FormatoFac { get; set; }
     }
 }

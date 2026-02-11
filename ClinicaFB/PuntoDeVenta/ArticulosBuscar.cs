@@ -2,6 +2,7 @@
 using ClinicaFB.Modelo;
 using Dapper;
 using FirebirdSql.Data.FirebirdClient;
+using Syncfusion.WinForms.ListView.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,16 +20,18 @@ namespace ClinicaFB.PuntoDeVenta
         public int ArticuloId { get; set; }
         private BindingList<Articulo> _articulos = null;
         private string _inicial = "";
+        private int _tipo = 99; //99 todos, 0 productos, 1 servicios
 
         public ArticulosBuscar()
         {
             InitializeComponent();
         }
 
-        public ArticulosBuscar(string inicial)
+        public ArticulosBuscar(string inicial,int tipo=99)
         {
             InitializeComponent();
             _inicial= inicial;
+            _tipo= tipo;
         }
 
 
@@ -58,8 +61,8 @@ namespace ClinicaFB.PuntoDeVenta
 
             using (FbConnection db = General.GetDB())
             {
-                string sql = Queries.ArticulosSelectBuscar();
-                var res = db.Query<Articulo>(sql, new {Buscar=buscar}).ToList();
+                string sql = _tipo==99?Queries.ArticulosSelectxDes:Queries.ArticulosSelectxDesYTipo;
+                List<Articulo> res = db.Query<Articulo>(sql, new {Tipo=_tipo, Filtro=buscar}).ToList();
 
                 _articulos = new BindingList<Articulo>(res);
 
@@ -96,10 +99,10 @@ namespace ClinicaFB.PuntoDeVenta
 
             grdArticulos.Columns[1].HeaderText = "Descripción";
             grdArticulos.Columns[1].DataPropertyName = "Descripcion";
-            grdArticulos.Columns[1].Width = 200;
+            grdArticulos.Columns[1].Width = 400;
 
             grdArticulos.Columns[2].HeaderText = "Precio";
-            grdArticulos.Columns[2].DataPropertyName = "Precio1";
+            grdArticulos.Columns[2].DataPropertyName = "PrecioNeto";
             grdArticulos.Columns[2].Width = 100;
             grdArticulos.Columns[2].DefaultCellStyle.Format = "c";
 

@@ -19,6 +19,7 @@ namespace ClinicaFB.Expedientes
         private int _pacienteId;
         private bool _esAlta;
         private int _notaId;
+
         public NotaEditar(int pacienteId,bool esAlta, int notaId)
         {
             InitializeComponent();

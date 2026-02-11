@@ -18,9 +18,9 @@ namespace ClinicaFB.Facturacion
     {
         public int RazonId { get; set; }
         BindingList<RazonSocial> _razonesSociales = new BindingList<RazonSocial>();
-        private bool _mostrarSeleccionar=false;
+        private bool _mostrarSeleccionar = false;
 
-        public RazonesSocialesListado(bool mostrarSeleccionar=false)
+        public RazonesSocialesListado(bool mostrarSeleccionar = false)
         {
             _mostrarSeleccionar = mostrarSeleccionar;
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace ClinicaFB.Facturacion
             using (FbConnection db = General.GetDB())
             {
                 string sql = Queries.RazonSocialSelect();
-                var res = db.Query<RazonSocial>(sql, new {RazonSocialId = razonId }).ToList();
+                var res = db.Query<RazonSocial>(sql, new { RazonSocialId = razonId }).ToList();
                 _razonesSociales = new BindingList<RazonSocial>(res);
 
             }
@@ -56,7 +56,7 @@ namespace ClinicaFB.Facturacion
             {
                 string sql = Queries.RazonesSocialesBuscar();
                 string buscar = $"%{txtBuscar.Text.Trim().ToUpper()}%";
-                var res = db.Query<RazonSocial>(sql, new {Buscar=buscar}).ToList();
+                var res = db.Query<RazonSocial>(sql, new { Buscar = buscar }).ToList();
                 _razonesSociales = new BindingList<RazonSocial>(res);
 
             }
@@ -122,7 +122,7 @@ namespace ClinicaFB.Facturacion
 
             CargaRazon(razSocAltasCambios.RazonId);
             SetGrid();
-                
+
 
         }
 
@@ -135,7 +135,7 @@ namespace ClinicaFB.Facturacion
         {
             if (grdRazones.CurrentRow == null)
             {
-                MessageBox.Show("Indique la razón social","Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Indique la razón social", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             AltasCambios(false);
@@ -150,7 +150,7 @@ namespace ClinicaFB.Facturacion
         {
             if (grdRazones.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione una razón social", "Confirme",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Seleccione una razón social", "Confirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             RazonId = _razonesSociales[grdRazones.CurrentRow.Index].RazonSocialId;
@@ -161,13 +161,55 @@ namespace ClinicaFB.Facturacion
         {
             if (string.IsNullOrEmpty(txtBuscar.Text))
             {
-                MessageBox.Show("Indique el texto a buscar","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Indique el texto a buscar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
 
             }
 
             BuscaRazones();
             SetGrid();
+
+        }
+
+        private void cmdBorrar_Click(object sender, EventArgs e)
+        {
+            if (grdRazones.CurrentRow == null)
+            {
+                MessageBox.Show("Indique la razón social", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            int razonId = _razonesSociales[grdRazones.CurrentRow.Index].RazonSocialId;
+            var resp = MessageBox.Show("¿Confirma que desea borrar la razón social seleccionada?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (resp == DialogResult.No)
+                return;
+
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.RazonSocialTieneIngresos;
+                int cuantos = db.ExecuteScalar<int>(sql, new { RazonSocialId = razonId });
+
+                if (cuantos > 0)
+                {
+                    MessageBox.Show("La razón social no puede ser borrada porque tiene ingresos asociados", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                sql = Queries.RazonSocialTieneCFDis;
+                cuantos = db.ExecuteScalar<int>(sql, new { RazonSocialId = razonId });
+
+                if (cuantos > 0)
+                {
+                    MessageBox.Show("La razón social no puede ser borrada porque tiene CFDIs asociados", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                sql = Queries.RazonSocialDelete;
+                db.Execute(sql, new { RazonSocialId = razonId });
+            }
+            _razonesSociales.RemoveAt(grdRazones.CurrentRow.Index);
+            SetGrid();
+            MessageBox.Show("Razón social borrada", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
         }
     }

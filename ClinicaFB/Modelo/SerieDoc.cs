@@ -9,7 +9,7 @@ namespace ClinicaFB.Modelo
     public class SerieDoc
     {
         public int SerieDocId { get; set; }
-        public int EmisorId { get; set; }
+        public long EmisorId { get; set; }
         public string Tipo { get; set; }
         public string Serie { get; set; }
         public int Folio { get; set; }

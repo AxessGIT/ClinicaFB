@@ -15,5 +15,16 @@ namespace ClinicaFB.Modelo
         public int FolioIngresos { get; set; }
         public string SerieFacGlobal { get; set; }
         public int FolioFacGlobal { get; set; }
+        public string SerieFacPDV { get; set; }
+        public int FolioFacPDV { get; set; }
+        public string SerieVentas { get; set; }
+        public int FolioVentas { get; set; }
+        public string CarpetaReportes { get; set; }
+        public string CarpetaImagenes { get; set; }
+        public string SerieNC { get; set; }
+        public int FolioNC { get; set; }
+        public string SeriePagos { get; set; }
+        public int FolioPagos { get; set; }
+
     }
 }

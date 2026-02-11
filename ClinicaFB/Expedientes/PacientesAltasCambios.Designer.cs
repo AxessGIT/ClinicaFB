@@ -182,6 +182,8 @@ namespace ClinicaFB.Expedientes
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.cmdImprimirExpedienteRDLC = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
+            this.pagObservaciones = new System.Windows.Forms.TabPage();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.tabPaciente.SuspendLayout();
             this.pagGenerales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
@@ -206,6 +208,7 @@ namespace ClinicaFB.Expedientes
             ((System.ComponentModel.ISupportInitialize)(this.grdRecetas)).BeginInit();
             this.pagImagenes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdImagenes)).BeginInit();
+            this.pagObservaciones.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtTelefonos
@@ -339,6 +342,7 @@ namespace ClinicaFB.Expedientes
             this.tabPaciente.Controls.Add(this.pagDatosAct);
             this.tabPaciente.Controls.Add(this.pagRecetas);
             this.tabPaciente.Controls.Add(this.pagImagenes);
+            this.tabPaciente.Controls.Add(this.pagObservaciones);
             this.tabPaciente.Location = new System.Drawing.Point(12, 48);
             this.tabPaciente.Name = "tabPaciente";
             this.tabPaciente.SelectedIndex = 0;
@@ -937,6 +941,7 @@ namespace ClinicaFB.Expedientes
             this.grdNotas.PreviewRowHeight = 35;
             this.grdNotas.RowHeight = 45;
             this.grdNotas.Size = new System.Drawing.Size(1077, 471);
+            this.grdNotas.Style.DragPreviewRowStyle.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.grdNotas.TabIndex = 0;
             this.grdNotas.Text = "sfDataGrid1";
             this.grdNotas.QueryRowHeight += new Syncfusion.WinForms.DataGrid.Events.QueryRowHeightEventHandler(this.grdNotas_QueryRowHeight);
@@ -1778,6 +1783,25 @@ namespace ClinicaFB.Expedientes
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
+            // pagObservaciones
+            // 
+            this.pagObservaciones.Controls.Add(this.txtObservaciones);
+            this.pagObservaciones.Location = new System.Drawing.Point(4, 25);
+            this.pagObservaciones.Name = "pagObservaciones";
+            this.pagObservaciones.Padding = new System.Windows.Forms.Padding(3);
+            this.pagObservaciones.Size = new System.Drawing.Size(1152, 526);
+            this.pagObservaciones.TabIndex = 8;
+            this.pagObservaciones.Text = "Observaciones";
+            this.pagObservaciones.UseVisualStyleBackColor = true;
+            // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.Location = new System.Drawing.Point(29, 55);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(885, 380);
+            this.txtObservaciones.TabIndex = 0;
+            // 
             // PacientesAltasCambios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -1827,6 +1851,8 @@ namespace ClinicaFB.Expedientes
             ((System.ComponentModel.ISupportInitialize)(this.grdRecetas)).EndInit();
             this.pagImagenes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdImagenes)).EndInit();
+            this.pagObservaciones.ResumeLayout(false);
+            this.pagObservaciones.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1983,5 +2009,7 @@ namespace ClinicaFB.Expedientes
         private System.Windows.Forms.DataGridViewTextBoxColumn colPalabrasClave;
         private System.Windows.Forms.PictureBox picFoto;
         private System.Windows.Forms.Button cmdCapturar;
+        private System.Windows.Forms.TabPage pagObservaciones;
+        private System.Windows.Forms.TextBox txtObservaciones;
     }
 }

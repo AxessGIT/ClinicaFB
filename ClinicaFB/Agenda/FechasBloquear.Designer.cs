@@ -47,6 +47,8 @@ namespace ClinicaFB.Agenda
             this.cboRecursos = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboTipos = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cboDias = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.grdMotivos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,10 +56,10 @@ namespace ClinicaFB.Agenda
             // 
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
             this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSalir.Location = new System.Drawing.Point(308, 238);
+            this.cmdSalir.Location = new System.Drawing.Point(302, 288);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(122, 40);
-            this.cmdSalir.TabIndex = 33;
+            this.cmdSalir.TabIndex = 18;
             this.cmdSalir.Text = "&Cerrar";
             this.cmdSalir.UseVisualStyleBackColor = true;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
@@ -66,10 +68,10 @@ namespace ClinicaFB.Agenda
             // 
             this.cmdBloquear.Image = ((System.Drawing.Image)(resources.GetObject("cmdBloquear.Image")));
             this.cmdBloquear.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdBloquear.Location = new System.Drawing.Point(180, 238);
+            this.cmdBloquear.Location = new System.Drawing.Point(174, 288);
             this.cmdBloquear.Name = "cmdBloquear";
             this.cmdBloquear.Size = new System.Drawing.Size(122, 40);
-            this.cmdBloquear.TabIndex = 32;
+            this.cmdBloquear.TabIndex = 17;
             this.cmdBloquear.Text = "&Bloquear";
             this.cmdBloquear.UseVisualStyleBackColor = true;
             this.cmdBloquear.Click += new System.EventHandler(this.cmdBloquear_Click);
@@ -79,7 +81,7 @@ namespace ClinicaFB.Agenda
             this.btnAgregarMotivoBloqueo.Location = new System.Drawing.Point(561, 0);
             this.btnAgregarMotivoBloqueo.Name = "btnAgregarMotivoBloqueo";
             this.btnAgregarMotivoBloqueo.Size = new System.Drawing.Size(27, 23);
-            this.btnAgregarMotivoBloqueo.TabIndex = 31;
+            this.btnAgregarMotivoBloqueo.TabIndex = 15;
             this.btnAgregarMotivoBloqueo.Text = "+";
             this.btnAgregarMotivoBloqueo.UseVisualStyleBackColor = true;
             this.btnAgregarMotivoBloqueo.Click += new System.EventHandler(this.btnAgregarMotivoBloqueo_Click);
@@ -91,7 +93,7 @@ namespace ClinicaFB.Agenda
             this.label7.Location = new System.Drawing.Point(410, 10);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(110, 13);
-            this.label7.TabIndex = 29;
+            this.label7.TabIndex = 14;
             this.label7.Text = "Razón del bloqueo";
             // 
             // grdMotivos
@@ -106,96 +108,96 @@ namespace ClinicaFB.Agenda
             this.grdMotivos.RowHeadersWidth = 51;
             this.grdMotivos.RowTemplate.Height = 24;
             this.grdMotivos.Size = new System.Drawing.Size(178, 147);
-            this.grdMotivos.TabIndex = 30;
+            this.grdMotivos.TabIndex = 16;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(45, 185);
+            this.label6.Location = new System.Drawing.Point(45, 237);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 16);
-            this.label6.TabIndex = 27;
+            this.label6.Size = new System.Drawing.Size(62, 16);
+            this.label6.TabIndex = 12;
             this.label6.Text = "Hora final";
             // 
             // cboHorasFinales
             // 
             this.cboHorasFinales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboHorasFinales.FormattingEnabled = true;
-            this.cboHorasFinales.Location = new System.Drawing.Point(116, 181);
+            this.cboHorasFinales.Location = new System.Drawing.Point(114, 233);
             this.cboHorasFinales.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cboHorasFinales.Name = "cboHorasFinales";
             this.cboHorasFinales.Size = new System.Drawing.Size(245, 24);
-            this.cboHorasFinales.TabIndex = 28;
+            this.cboHorasFinales.TabIndex = 13;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(37, 151);
+            this.label5.Location = new System.Drawing.Point(37, 200);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 16);
-            this.label5.TabIndex = 25;
+            this.label5.Size = new System.Drawing.Size(70, 16);
+            this.label5.TabIndex = 10;
             this.label5.Text = "Hora inicial";
             // 
             // cboHorasIniciales
             // 
             this.cboHorasIniciales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboHorasIniciales.FormattingEnabled = true;
-            this.cboHorasIniciales.Location = new System.Drawing.Point(116, 147);
+            this.cboHorasIniciales.Location = new System.Drawing.Point(114, 196);
             this.cboHorasIniciales.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cboHorasIniciales.Name = "cboHorasIniciales";
             this.cboHorasIniciales.Size = new System.Drawing.Size(245, 24);
-            this.cboHorasIniciales.TabIndex = 26;
+            this.cboHorasIniciales.TabIndex = 11;
             // 
             // dtpFechaFinal
             // 
-            this.dtpFechaFinal.Location = new System.Drawing.Point(116, 114);
+            this.dtpFechaFinal.Location = new System.Drawing.Point(114, 123);
             this.dtpFechaFinal.Name = "dtpFechaFinal";
             this.dtpFechaFinal.Size = new System.Drawing.Size(245, 23);
-            this.dtpFechaFinal.TabIndex = 24;
+            this.dtpFechaFinal.TabIndex = 7;
             // 
             // dtpFechaInicial
             // 
-            this.dtpFechaInicial.Location = new System.Drawing.Point(116, 81);
+            this.dtpFechaInicial.Location = new System.Drawing.Point(114, 87);
             this.dtpFechaInicial.Name = "dtpFechaInicial";
             this.dtpFechaInicial.Size = new System.Drawing.Size(245, 23);
-            this.dtpFechaInicial.TabIndex = 22;
+            this.dtpFechaInicial.TabIndex = 5;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(38, 117);
+            this.label4.Location = new System.Drawing.Point(38, 126);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 16);
-            this.label4.TabIndex = 23;
+            this.label4.Size = new System.Drawing.Size(69, 16);
+            this.label4.TabIndex = 6;
             this.label4.Text = "Fecha final";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 84);
+            this.label3.Location = new System.Drawing.Point(30, 90);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 16);
-            this.label3.TabIndex = 21;
+            this.label3.Size = new System.Drawing.Size(77, 16);
+            this.label3.TabIndex = 4;
             this.label3.Text = "Fecha inicial";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(54, 51);
+            this.label2.Location = new System.Drawing.Point(54, 54);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 16);
-            this.label2.TabIndex = 19;
+            this.label2.Size = new System.Drawing.Size(53, 16);
+            this.label2.TabIndex = 2;
             this.label2.Text = "Recurso";
             // 
             // cboRecursos
             // 
             this.cboRecursos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboRecursos.FormattingEnabled = true;
-            this.cboRecursos.Location = new System.Drawing.Point(116, 47);
+            this.cboRecursos.Location = new System.Drawing.Point(114, 50);
             this.cboRecursos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cboRecursos.Name = "cboRecursos";
             this.cboRecursos.Size = new System.Drawing.Size(245, 24);
-            this.cboRecursos.TabIndex = 20;
+            this.cboRecursos.TabIndex = 3;
             this.cboRecursos.SelectedIndexChanged += new System.EventHandler(this.cboRecursos_SelectedIndexChanged);
             // 
             // label1
@@ -203,8 +205,8 @@ namespace ClinicaFB.Agenda
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(10, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 16);
-            this.label1.TabIndex = 17;
+            this.label1.Size = new System.Drawing.Size(97, 16);
+            this.label1.TabIndex = 0;
             this.label1.Text = "Tipo de recurso";
             // 
             // cboTipos
@@ -215,18 +217,47 @@ namespace ClinicaFB.Agenda
             "Doctor",
             "Equipo",
             "Cuarto"});
-            this.cboTipos.Location = new System.Drawing.Point(116, 13);
+            this.cboTipos.Location = new System.Drawing.Point(114, 13);
             this.cboTipos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cboTipos.Name = "cboTipos";
             this.cboTipos.Size = new System.Drawing.Size(245, 24);
-            this.cboTipos.TabIndex = 18;
+            this.cboTipos.TabIndex = 1;
             this.cboTipos.SelectedIndexChanged += new System.EventHandler(this.cboTipos_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(82, 163);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(25, 16);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Dia";
+            // 
+            // cboDias
+            // 
+            this.cboDias.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDias.FormattingEnabled = true;
+            this.cboDias.Items.AddRange(new object[] {
+            "TODOS",
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes",
+            "Sabado",
+            "Domigo"});
+            this.cboDias.Location = new System.Drawing.Point(114, 159);
+            this.cboDias.Name = "cboDias";
+            this.cboDias.Size = new System.Drawing.Size(245, 24);
+            this.cboDias.TabIndex = 9;
             // 
             // FechasBloquear
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 319);
+            this.ClientSize = new System.Drawing.Size(612, 367);
+            this.Controls.Add(this.cboDias);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.cmdSalir);
             this.Controls.Add(this.cmdBloquear);
             this.Controls.Add(this.btnAgregarMotivoBloqueo);
@@ -279,5 +310,7 @@ namespace ClinicaFB.Agenda
         private System.Windows.Forms.ComboBox cboRecursos;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboTipos;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cboDias;
     }
 }

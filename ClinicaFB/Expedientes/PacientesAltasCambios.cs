@@ -20,9 +20,11 @@ using ClinicaFB.Reportes;
 using Microsoft.Reporting.WinForms;
 using ClinicaFB.ModeloConfiguracion;
 using Syncfusion.Windows.Forms.Grid;
+using Syncfusion.WinForms.DataGrid.Enums;
 using System.IO;
 using AForge.Video.DirectShow;
 using AForge.Video;
+using Syncfusion.WinForms.ListView;
 
 namespace ClinicaFB.Expedientes
 {
@@ -36,18 +38,9 @@ namespace ClinicaFB.Expedientes
         ObservableCollection<Nota> notas = new ObservableCollection<Nota>();
         BindingList<Receta> _listRecetas = new BindingList<Receta>();
         BindingList<PacientesImagenes> _PacienteImagenes = new BindingList<PacientesImagenes>();
-        private VideoCaptureDevice _camara;
 
 
-        private void CerrarCamara()
-        {
-            if (_camara != null && _camara.IsRunning)
-            {
-                _camara.SignalToStop();
-                //_camara.Stop();
-                _camara = null;
-            }
-        }
+     
 
 
         public PacientesAltasCambios(bool esAlta, int pacienteId)
@@ -55,6 +48,54 @@ namespace ClinicaFB.Expedientes
             _esAlta = esAlta;
             PacienteID = pacienteId;
             InitializeComponent();
+
+            cboEstadosCiviles.Enter += Combo_Enter;
+            cboOcupaciones.Enter += Combo_Enter;
+            cboReferentes.Enter += Combo_Enter;
+            cboCiudadesOrigen.Enter += Combo_Enter;
+            cboLocalidades.Enter += Combo_Enter;
+            cboCiudades.Enter += Combo_Enter;
+            cboEstados.Enter += Combo_Enter;
+            cboPaises.Enter += Combo_Enter;
+            cboDiagnosticos.Enter += Combo_Enter;
+            cboColoresDePiel.Enter += Combo_Enter;
+            cboExposicionesSolares.Enter += Combo_Enter;
+            cboMedicos.Enter += Combo_Enter;
+            cboMaquillajes.Enter += Combo_Enter;
+
+
+        }
+
+        private void Combo_Enter(object sender, EventArgs e)
+        {
+            SfComboBox combo = sender as SfComboBox;
+
+            if (combo == null)
+                return;
+
+            string tipo = "";
+            object valor = null;
+
+            if (combo == cboEstadosCiviles) { tipo = "EDC"; valor = _paciente?.EdoCivilId; }
+            else if (combo == cboOcupaciones) { tipo = "OCU"; valor = _paciente?.OcupacionId; }
+            else if (combo == cboReferentes) { tipo = "REF"; valor = _paciente?.ReferenteId; }
+            else if (combo == cboCiudadesOrigen) { tipo = "CIU"; valor = _paciente?.CiudadOrigenId; }
+            else if (combo == cboLocalidades) { tipo = "LOC"; valor = _paciente?.LocalidadId; }
+            else if (combo == cboCiudades) { tipo = "CIU"; valor = _paciente?.CiudadId; }
+            else if (combo == cboEstados) { tipo = "EDO"; valor = _paciente?.EstadoId; }
+            else if (combo == cboPaises) { tipo = "PAI"; valor = _paciente?.PaisId; }
+            else if (combo == cboDiagnosticos) { tipo = "DIA"; valor = _paciente?.DiagnosticoId; }
+            else if (combo == cboColoresDePiel) { tipo = "PIE"; valor = _paciente?.PielId; }
+            else if (combo == cboExposicionesSolares) { tipo = "EXS"; valor = _paciente?.SolarId; }
+            else if (combo == cboMedicos) { tipo = "MED"; valor = _paciente?.MedicoId; }
+            else if (combo == cboMaquillajes) { tipo = "MAQ"; valor = _paciente?.MaquillajeId; }
+
+            if (combo.DataSource == null && !string.IsNullOrEmpty(tipo))
+                General.ConfiguraCombo(ref combo, tipo);
+
+            // Siempre asigna el valor seleccionado si hay valor
+            if (valor != null && Convert.ToInt64(valor) > 0)
+                combo.SelectedValue = valor;
         }
 
         private void PacientesAltasCambios_Load(object sender, EventArgs e)
@@ -92,7 +133,7 @@ namespace ClinicaFB.Expedientes
 
         private void SetCombos()
         {
-            General.ConfiguraCombo(ref cboEstadosCiviles, "EDC");
+            /*General.ConfiguraCombo(ref cboEstadosCiviles, "EDC");
             General.ConfiguraCombo(ref cboOcupaciones, "OCU");
             General.ConfiguraCombo(ref cboReferentes, "REF");
             General.ConfiguraCombo(ref cboCiudadesOrigen, "CIU");
@@ -104,7 +145,7 @@ namespace ClinicaFB.Expedientes
             General.ConfiguraCombo(ref cboColoresDePiel, "PIE");
             General.ConfiguraCombo(ref cboExposicionesSolares, "EXS");
             General.ConfiguraCombo(ref cboMedicos, "MED");
-            General.ConfiguraCombo(ref cboMaquillajes, "MAQ");
+            General.ConfiguraCombo(ref cboMaquillajes, "MAQ");*/
 
         }
 
@@ -159,31 +200,46 @@ namespace ClinicaFB.Expedientes
             if (_paciente.Fecha_Nacimiento.Year>=dtpFechaNacimiento.MinDate.Year)
                 dtpFechaNacimiento.Value = _paciente.Fecha_Nacimiento;
 
+            cboEstadosCiviles.Text = General.GetDescripcion("EDC", (int)_paciente.EdoCivilId);
+            cboOcupaciones.Text = General.GetDescripcion("OCU", (int)_paciente.OcupacionId);
+            cboReferentes.Text = General.GetDescripcion("REF", (int)_paciente.ReferenteId);
+            cboCiudadesOrigen.Text = General.GetDescripcion("CIU", (int)_paciente.CiudadOrigenId);
+            cboLocalidades.Text = General.GetDescripcion("LOC", (int)_paciente.LocalidadId);
+            cboCiudades.Text = General.GetDescripcion("CIU", (int)_paciente.CiudadId);
+            cboEstados.Text = General.GetDescripcion("EDO", (int)_paciente.EstadoId);
+            cboPaises.Text = General.GetDescripcion("PAI", (int)_paciente.PaisId);
+            cboDiagnosticos.Text = General.GetDescripcion("DIA", (int)_paciente.DiagnosticoId);
+            cboColoresDePiel.Text = General.GetDescripcion("PIE", (int)_paciente.PielId);
+            cboExposicionesSolares.Text = General.GetDescripcion("EXS", (int)_paciente.SolarId);
+            cboMedicos.Text = General.GetDescripcion("MED", (int)_paciente.MedicoId);
+            cboMaquillajes.Text = General.GetDescripcion("MAQ", (int)_paciente.MaquillajeId);
+            cboOrigen.Text = _paciente.Origen;
 
-            cboEstadosCiviles.SelectedValue = _paciente.EdoCivilId;
-            cboOcupaciones.SelectedValue = _paciente.OcupacionId;
-            cboReferentes.SelectedValue = _paciente.ReferenteId;
-
-            cboCiudadesOrigen.SelectedValue = _paciente.CiudadOrigenId;
-            txtDireccion.Text=_paciente.Direccion;
-            txtColonia.Text= _paciente.Colonia;
-            cboLocalidades.SelectedValue = _paciente.LocalidadId;
-            cboCiudades.SelectedValue = _paciente.CiudadId;
-            cboEstados.SelectedValue = _paciente.EstadoId;
-            cboPaises.SelectedValue = _paciente.PaisId;
-            txtCP.Text= _paciente.CP;
+            /* cboEstadosCiviles.SelectedValue = _paciente.EdoCivilId;
+             cboOcupaciones.SelectedValue = _paciente.OcupacionId;
+             cboReferentes.SelectedValue = _paciente.ReferenteId;
+             cboLocalidades.SelectedValue = _paciente.LocalidadId;
+             cboCiudades.SelectedValue = _paciente.CiudadId;
+             cboEstados.SelectedValue = _paciente.EstadoId;
+             cboPaises.SelectedValue = _paciente.PaisId;
             cboDiagnosticos.SelectedValue = _paciente.DiagnosticoId;
             cboColoresDePiel.SelectedValue = _paciente.PielId;
             cboExposicionesSolares.SelectedValue = _paciente.SolarId;
             cboMedicos.SelectedValue = _paciente.MedicoId;
             cboMaquillajes.SelectedValue = _paciente.MaquillajeId;
+            cboOrigen.Text = _paciente.Origen;
+
+             cboCiudadesOrigen.SelectedValue = _paciente.CiudadOrigenId;*/
+            txtDireccion.Text=_paciente.Direccion;
+            txtColonia.Text= _paciente.Colonia;
+            txtCP.Text= _paciente.CP;
             txtMedicamentos.Text = _paciente.Medicamentos;
             txtAlergias.Text = _paciente.Alergias;
             txtAntecedentes.Text = _paciente.Antecedentes;
-            cboOrigen.Text = _paciente.Origen;
+            txtObservaciones.Text = _paciente.Observaciones;
 
 
-            MuestraFoto();
+            //MuestraFoto();
 
 
         }
@@ -241,28 +297,29 @@ namespace ClinicaFB.Expedientes
             }
 
             _paciente.Fecha_Nacimiento = dtpFechaNacimiento.Value;
-            _paciente.EdoCivilId = General.DevuelveValorCombo(cboEstadosCiviles, "EDC");
-            _paciente.OcupacionId = General.DevuelveValorCombo(cboOcupaciones, "OCU");
-            _paciente.ReferenteId = General.DevuelveValorCombo(cboReferentes, "REF");
-            _paciente.CiudadOrigenId = General.DevuelveValorCombo(cboCiudadesOrigen, "CIU");
+            _paciente.OcupacionId = cboOcupaciones.DataSource != null? General.DevuelveValorCombo(cboOcupaciones, "OCU"): _paciente.OcupacionId;
+            _paciente.EdoCivilId = cboEstadosCiviles.DataSource != null ? General.DevuelveValorCombo(cboEstadosCiviles, "EDC") : _paciente.EdoCivilId;
+            _paciente.ReferenteId = cboReferentes.DataSource != null?  General.DevuelveValorCombo(cboReferentes, "REF"): _paciente.ReferenteId;
+            _paciente.CiudadOrigenId = cboCiudadesOrigen != null? General.DevuelveValorCombo(cboCiudadesOrigen, "CIU"): _paciente.CiudadOrigenId;
             _paciente.Direccion = txtDireccion.Text;
             _paciente.Colonia = txtColonia.Text;
-            _paciente.LocalidadId = General.DevuelveValorCombo(cboLocalidades, "LOC");
-            _paciente.CiudadId = General.DevuelveValorCombo(cboCiudades, "CIU");
-            _paciente.EstadoId = General.DevuelveValorCombo(cboEstados, "EDO");
-            _paciente.PaisId= General.DevuelveValorCombo(cboPaises, "PAI");
+            _paciente.LocalidadId = cboLocalidades.DataSource != null?General.DevuelveValorCombo(cboLocalidades, "LOC"): _paciente.LocalidadId;
+            _paciente.CiudadId = cboCiudades.DataSource != null? General.DevuelveValorCombo(cboCiudades, "CIU"): _paciente.CiudadId;
+            _paciente.EstadoId = cboEstados.DataSource !=null?General.DevuelveValorCombo(cboEstados, "EDO"): _paciente.EstadoId;
+            _paciente.PaisId= cboPaises.DataSource != null? General.DevuelveValorCombo(cboPaises, "PAI"): _paciente.PaisId;
             _paciente.CP = txtCP.Text;
-            _paciente.DiagnosticoId = General.DevuelveValorCombo(cboDiagnosticos, "DIA");
-            _paciente.PielId = General.DevuelveValorCombo(cboColoresDePiel, "PIE");
-            _paciente.SolarId = General.DevuelveValorCombo(cboExposicionesSolares, "EXS");
-            _paciente.MedicoId = General.DevuelveValorCombo(cboMedicos, "MED");
-            _paciente.MaquillajeId = General.DevuelveValorCombo(cboMaquillajes, "MAQ");
+            _paciente.DiagnosticoId = cboDiagnosticos.DataSource != null? General.DevuelveValorCombo(cboDiagnosticos, "DIA"): _paciente.DiagnosticoId;
+            _paciente.PielId = cboColoresDePiel.DataSource != null?General.DevuelveValorCombo(cboColoresDePiel, "PIE"): _paciente.PielId;
+            _paciente.SolarId = cboExposicionesSolares.DataSource != null? General.DevuelveValorCombo(cboExposicionesSolares, "EXS") : _paciente.SolarId;
+            _paciente.MedicoId = cboMedicos.DataSource != null?General.DevuelveValorCombo(cboMedicos, "MED"): _paciente.MedicoId;
+            _paciente.MaquillajeId = cboMaquillajes.DataSource != null?General.DevuelveValorCombo(cboMaquillajes, "MAQ"): _paciente.MaquillajeId;
 
 
             _paciente.Medicamentos= txtMedicamentos.Text;
             _paciente.Alergias= txtAlergias.Text;
             _paciente.Antecedentes= txtAntecedentes.Text;
             _paciente.Origen = cboOrigen.Text;
+            _paciente.Observaciones= txtObservaciones.Text;
 
 
 

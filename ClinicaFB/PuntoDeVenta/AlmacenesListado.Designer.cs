@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlmacenesListado));
             this.grdAlmacenes = new System.Windows.Forms.DataGridView();
+            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrincipal = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cmdBorrar = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
             this.cmdModificar = new System.Windows.Forms.Button();
             this.cmdAgregar = new System.Windows.Forms.Button();
-            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrincipal = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdAlmacenes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,6 +52,21 @@
             this.grdAlmacenes.ReadOnly = true;
             this.grdAlmacenes.Size = new System.Drawing.Size(435, 344);
             this.grdAlmacenes.TabIndex = 19;
+            // 
+            // colNombre
+            // 
+            this.colNombre.DataPropertyName = "Nombre";
+            this.colNombre.HeaderText = "Nombre";
+            this.colNombre.Name = "colNombre";
+            this.colNombre.ReadOnly = true;
+            this.colNombre.Width = 200;
+            // 
+            // colPrincipal
+            // 
+            this.colPrincipal.DataPropertyName = "Defa";
+            this.colPrincipal.HeaderText = "Principal";
+            this.colPrincipal.Name = "colPrincipal";
+            this.colPrincipal.ReadOnly = true;
             // 
             // cmdBorrar
             // 
@@ -100,21 +115,6 @@
             this.cmdAgregar.UseVisualStyleBackColor = true;
             this.cmdAgregar.Click += new System.EventHandler(this.cmdAgregar_Click);
             // 
-            // colNombre
-            // 
-            this.colNombre.DataPropertyName = "Nombre";
-            this.colNombre.HeaderText = "Nombre";
-            this.colNombre.Name = "colNombre";
-            this.colNombre.ReadOnly = true;
-            this.colNombre.Width = 200;
-            // 
-            // colPrincipal
-            // 
-            this.colPrincipal.DataPropertyName = "Defa";
-            this.colPrincipal.HeaderText = "Principal";
-            this.colPrincipal.Name = "colPrincipal";
-            this.colPrincipal.ReadOnly = true;
-            // 
             // AlmacenesListado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -132,7 +132,7 @@
             this.MinimizeBox = false;
             this.Name = "AlmacenesListado";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AlmacenesListado";
+            this.Text = "Almacenes";
             this.Load += new System.EventHandler(this.Almacenes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdAlmacenes)).EndInit();
             this.ResumeLayout(false);

@@ -58,7 +58,7 @@
             // 
             this.cmdGuardar.Image = ((System.Drawing.Image)(resources.GetObject("cmdGuardar.Image")));
             this.cmdGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdGuardar.Location = new System.Drawing.Point(142, 115);
+            this.cmdGuardar.Location = new System.Drawing.Point(157, 80);
             this.cmdGuardar.Name = "cmdGuardar";
             this.cmdGuardar.Size = new System.Drawing.Size(110, 43);
             this.cmdGuardar.TabIndex = 4;
@@ -70,7 +70,7 @@
             // 
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
             this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSalir.Location = new System.Drawing.Point(258, 115);
+            this.cmdSalir.Location = new System.Drawing.Point(273, 80);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(110, 43);
             this.cmdSalir.TabIndex = 5;
@@ -99,7 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 192);
+            this.ClientSize = new System.Drawing.Size(587, 132);
             this.Controls.Add(this.txtRFC);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtNombre);

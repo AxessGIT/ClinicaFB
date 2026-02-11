@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dapper;
 using ClinicaFB.Configuracion.Facturacion;
+using static Syncfusion.Windows.Forms.TabBar;
 
 namespace ClinicaFB.PuntoDeVenta
 {
@@ -39,7 +40,6 @@ namespace ClinicaFB.PuntoDeVenta
             else
             {
                 Text = "Modificar artículo";
-                txtClave.ReadOnly = true;
                 CargaArticulo();
 
             }
@@ -58,6 +58,9 @@ namespace ClinicaFB.PuntoDeVenta
                     cboImpuestos.SelectedValue = impuestoId;
                 }
             }
+            General.ConfiguraCombo(ref cboMarcas, "MAR");
+            General.ConfiguraCombo(ref cboLineas, "LIN");
+
         }
 
         private void CargaArticulo()
@@ -72,6 +75,8 @@ namespace ClinicaFB.PuntoDeVenta
                 if (art != null)
                 {
                     txtClave.Text = art.Clave;
+                    txtCodigoBarras.Text = art.CodigoBarras;
+                    txtSKU.Text = art.SKU;
                     txtDescripcion.Text = art.Descripcion;
                     cboTipos.SelectedIndex = art.Tipo;
                     txtUnidadDeMedida.Text = art.UDM;
@@ -84,6 +89,9 @@ namespace ClinicaFB.PuntoDeVenta
                     txtCveProSer.Text = art.CveProSer;
                     txtCveUni.Text = art.CveUni;
                     cboImpuestos.SelectedValue = art.ImpuestoId;
+                    cboMarcas.SelectedValue = art.MarcaId;
+                    cboLineas.SelectedValue = art.LineaId;
+
                     txtCveProSer_Validated(new { }, new EventArgs { });
                     txtCveUni_Validated(new { }, new EventArgs { });
 
@@ -109,35 +117,6 @@ namespace ClinicaFB.PuntoDeVenta
 
         private void cmdGuardar_Click(object sender, EventArgs e)
         {
-            if (ValidaDatos() == false)
-                return;
-
-            Articulo art = new Articulo();
-            art.ArticuloId = _articuloId;
-            art.Clave = txtClave.Text;
-            art.Descripcion = txtDescripcion.Text;
-            art.Tipo = cboTipos.SelectedIndex;
-            art.UDM = txtUnidadDeMedida.Text;
-            art.Costo = txtUltimoCosto.DecimalValue;
-            art.Precio1 = txtPrecio1.DecimalValue;
-            art.Precio2 = txtPrecio2.DecimalValue;
-            art.Precio3 = txtPrecio3.DecimalValue;
-            art.Precio4 = txtPrecio4.DecimalValue;
-            art.Precio5 = txtPrecio5.DecimalValue;
-            art.CveProSer = txtCveProSer.Text;
-            art.CveUni = txtCveUni.Text;
-            art.ImpuestoId = Convert.ToInt32(cboImpuestos.SelectedValue);
-            art.MarcaId = 0;
-            art.LineaId = 0;
-
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = _esAlta ? Queries.ArticuloInsert() : Queries.ArticuloUpdate();
-                db.Execute(sql, art);
-            }
-            Close();
-
 
         }
 
@@ -153,6 +132,27 @@ namespace ClinicaFB.PuntoDeVenta
             {
                 MessageBox.Show("Teclee la descripción", "Confirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
+            }
+            if (_esAlta == false)
+            {
+                using (FbConnection db = General.GetDB())
+                {
+                    string sql = Queries.ArticuloSelectExisteClave;
+                    Articulo art = db.Query<Articulo>(sql, new {ArticuloId=_articuloId, Clave = txtClave.Text.Trim() }).FirstOrDefault();
+                    if (art != null)
+                    {
+                        MessageBox.Show("Ya existe un artículo con esa clave", "Confirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return false;
+                    }
+                    sql = Queries.ArticuloSelectExisteCodigo;
+                    art = db.Query<Articulo>(sql, new { ArticuloId = _articuloId, CodigoBarras = txtCodigoBarras.Text.Trim() }).FirstOrDefault();
+                    if (art != null)
+                    {
+                        MessageBox.Show("Ya existe un artículo con ese código de barras", "Confirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return false;
+                    }
+                }
+
             }
 
             return true;
@@ -222,6 +222,79 @@ namespace ClinicaFB.PuntoDeVenta
                 txtCveUni_Validated(sender, e);
             }
 
+        }
+
+        private void cmdSalir_Click_1(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private async void cmdGuardar_Click_1(object sender, EventArgs e)
+        {
+            if (!ValidaDatos())
+            {
+                return;
+            }
+
+            using (FbConnection db = General.GetDB())
+            {
+                await db.OpenAsync();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+
+                        Articulo art = new Articulo
+                        {
+                            ArticuloId = _articuloId,
+                            Clave = txtClave.Text,
+                            CodigoBarras = txtClave.Text,
+                            SKU = txtSKU.Text,
+                            Descripcion = txtDescripcion.Text,
+                            Tipo = cboTipos.SelectedIndex,
+                            UDM = txtUnidadDeMedida.Text,
+                            Costo = txtUltimoCosto.DecimalValue,
+                            Moneda = "MXN",
+                            Precio1 = txtPrecio1.DecimalValue,
+                            Precio2 = txtPrecio2.DecimalValue,
+                            Precio3 = txtPrecio3.DecimalValue,
+                            Precio4 = txtPrecio4.DecimalValue,
+                            Precio5 = txtPrecio5.DecimalValue,
+                            CveProSer = txtCveProSer.Text,
+                            CveUni = txtCveUni.Text,
+                            ImpuestoId = (int)cboImpuestos.SelectedValue,
+                            MarcaId = (int)General.DevuelveValorCombo(cboMarcas, "MAR"),
+                            LineaId = (int)General.DevuelveValorCombo(cboLineas, "LIN")
+                        };
+
+
+                        string sql = "";
+
+                        if (_esAlta)
+                        {
+                            art.FechaUltimaCompra = DateTime.Now;
+                            sql = Queries.ArticuloInsert();
+                        }
+
+                        else
+                        {
+                            sql = Queries.ArticuloUpdate();
+
+                        }
+                        _articuloId = db.ExecuteScalar<int>(sql, art, transaction);
+
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Error al guardar el artículo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+                Close();
+            }
         }
     }
 }

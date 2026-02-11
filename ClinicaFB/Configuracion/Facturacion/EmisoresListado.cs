@@ -47,7 +47,7 @@ namespace ClinicaFB.Configuracion.Facturacion
 
         private void AltasCambios(bool esAlta)
         {
-            int emisorId = 0;
+            long emisorId = 0;
             if (!esAlta)
             {
                 emisorId = _emisores[grdEmisores.CurrentRow.Index].EmisorId;

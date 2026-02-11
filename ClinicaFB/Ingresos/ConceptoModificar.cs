@@ -22,9 +22,9 @@ namespace ClinicaFB.Ingresos
         private Articulo _articulo;
         private string _nombrePaciente = "";
         public bool _guardar = false;
-        private int _emisorId = 0;
+        private long _emisorId = 0;
 
-        public ConceptoModificar(IngresoDetalle concepto,string nombrePaciente,int emisorId)
+        public ConceptoModificar(IngresoDetalle concepto,string nombrePaciente,long emisorId)
         {
             InitializeComponent();
             _concepto = concepto;
@@ -33,8 +33,8 @@ namespace ClinicaFB.Ingresos
 
             using (FbConnection db = General.GetDB())
             {
-                string sql = Queries.ArticuloSelect();
-                _articulo= db.Query<Articulo>(sql, new {ArticuloId = _concepto.ArticuloId}).FirstOrDefault();
+                string sql = ClinicaFB.Helpers.Queries.ArticuloSelect();
+                _articulo= db.Query<Articulo>(sql, new {_concepto.ArticuloId}).FirstOrDefault();
                 _articulo.ArticuloId = _concepto.ArticuloId;
                 
             }
@@ -85,7 +85,7 @@ namespace ClinicaFB.Ingresos
         private void SetCombos()
         {
             General.ConfiguraComboImpuestos(ref cboImpuestos);
-            int impuestoId = 0;
+            long impuestoId = 0;
 
             impuestoId = 0;
             if (_articulo!= null)
@@ -103,7 +103,7 @@ namespace ClinicaFB.Ingresos
 
             using (FbConnection db = General.GetDB())
             {
-                string sql = Queries.ArticuloSelectxClave();
+                string sql = ClinicaFB.Helpers.Queries.ArticuloSelectxClave();
                 Articulo art = db.Query<Articulo>(sql, new { Clave = txtClave.Text.Trim() }).FirstOrDefault();
 
                 if (art == null)
@@ -120,7 +120,7 @@ namespace ClinicaFB.Ingresos
 
                 if (_articulo.ImpuestoId != 0)
                 {
-                    sql = Queries.ImpuestoSelect();
+                    sql = ClinicaFB.Helpers.Queries.ImpuestoSelect();
                     imp = db.Query<Impuesto>(sql, new { ImpuestoId = _articulo.ImpuestoId }).FirstOrDefault();
 
                     if (imp != null)
@@ -144,7 +144,7 @@ namespace ClinicaFB.Ingresos
 
 
 
-                sql = Queries.SeriesConceptosSelectXArticulo();
+                sql = ClinicaFB.Helpers.Queries.SeriesConceptosSelectXArticulo();
                 SerieConcepto serCon = db.Query<SerieConcepto>(sql, new { ArticuloId = _articulo.ArticuloId }).FirstOrDefault();
 
 
@@ -173,13 +173,13 @@ namespace ClinicaFB.Ingresos
                 }
                 else
                 {
-                    sql = Queries.SerieDefault();
+                    sql = ClinicaFB.Helpers.Queries.SerieDefault();
                     SerieDoc serDefa = db.Query<SerieDoc>(sql, new { EmisorId = _emisorId, Tipo = "FAC" }).FirstOrDefault();
 
                     if (serDefa != null)
                     {
                         serie = serDefa.Serie;
-                        _concepto.EmisorId= _emisorId;
+                        _concepto.EmisorId=(int) _emisorId;
                         _concepto.Serie= serie;
                     }
 
@@ -304,6 +304,11 @@ namespace ClinicaFB.Ingresos
         private void spnCantidad_ValueChanged(object sender, EventArgs e)
         {
             CalculaTotales();
+        }
+
+        private void cmdBuscarArticulo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

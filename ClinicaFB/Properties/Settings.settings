@@ -50,5 +50,8 @@
     <Setting Name="CorreoMensaje" Type="System.String" Scope="User">
       <Value Profile="(Default)">Envío automático de facturas, favor de no responder a esta cuenta</Value>
     </Setting>
+    <Setting Name="ImpresoraTicket" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

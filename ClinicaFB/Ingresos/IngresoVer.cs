@@ -16,11 +16,11 @@ namespace ClinicaFB.Ingresos
 {
     public partial class IngresoVer : Form
     {
-        private int _ingresoId;
+        private long _ingresoId;
         private BindingList<IngresoDetalle> _conceptos = new BindingList<IngresoDetalle>();
 
 
-        public IngresoVer(int ingresoId)
+        public IngresoVer(long ingresoId)
         {
             InitializeComponent();
             _ingresoId = ingresoId; 

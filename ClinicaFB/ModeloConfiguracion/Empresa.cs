@@ -24,5 +24,6 @@ namespace ClinicaFB.ModeloConfiguracion
         public string CarpetaImagenes { get; set; }
         public string BddWEB { get; set; }
         public bool CopiarWEB { get; set; }
+        public bool IncImpVta { get; set; }
     }
 }

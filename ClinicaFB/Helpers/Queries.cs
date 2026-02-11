@@ -1,45 +1,662 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClinicaFB.Modelo;
-using ClinicaFB.ModeloConfiguracion;
-using FirebirdSql.Data.FirebirdClient;
-using Microsoft.Office.Interop.Excel;
-using Org.BouncyCastle.Tls;
-using Twilio.TwiML.Voice;
-
+﻿using System.Windows.Forms;
 
 namespace ClinicaFB.Helpers
 {
     public static class Queries
     {
+        #region Colaboradores
+        public static string
+            ColaboradorSelect = "Select ColaboradorId,Nombre From Colaboradores Where ColaboradorId = @ColaboradorId";
+        public static string
+            ColaboradoresSelect = "Select ColaboradorId,Nombre From Colaboradores Order By Nombre";
+        public static string
+            ColaboradorInsert = "Insert Into Colaboradores (Nombre) Values (@Nombre) Returning ColaboradorId";
+        public static string
+            ColaboradorUpdate = "Update Colaboradores Set Nombre = @Nombre Where ColaboradorId = @ColaboradorId";
+        public static string
+            ColaboradorDelete = "Delete From Colaboradores Where ColaboradorId = @ColaboradorId";
+
+        #endregion
+        #region ComplementosDePago
+        public static string
+            ComplementosDePagoSelect =
+            "Select CompagId,EsPDV,EmisorId," +
+            "ComplementosPago.RazonSocialId,RazonesSociales.razonSoc as ReceptorNombre,Serie,Folio,Fecha," +
+            "ComplementosPago.CveFOP,CveMON,TipoDeCambio,Monto,UID,Cancelado,Acuse,CveMotCan " +
+            "From ComplementosPago " +
+            "Inner Join RazonesSociales On ComplementosPago.RazonSocialId = RazonesSociales.RazonSocialId " +
+            "Where EmisorId = @EmisorId and Fecha Between @FechaIni and @FechaFin Order By Fecha Desc";
+
+        public static string
+            ComplementoDePagoInsert =
+            "Insert Into ComplementosPago " +
+            "(EsPDV,EmisorId,RazonSocialId,Serie,Folio,Fecha,CveFOP,CveMON,TipoDeCambio,Monto,UID,Cancelado,Acuse,CveMotCan,xml) " +
+            "Values (@EsPDV,@EmisorId,@RazonSocialId,@Serie,@Folio,@Fecha,@CveFOP,@CveMON,@TipoDeCambio,@Monto,@UID,@Cancelado,@Acuse,@CveMotCan,@xml) " +
+            "Returning CompagId";
+
+        public static string
+            ComplementoDePagoUpdate =
+            "Update ComplementosPago Set " +
+            "EsPDV = @EsPDV,EmisorId = @EmisorId,RazonSocialId = @RazonSocialId," +
+            "Serie = @Serie,Folio = @Folio,Fecha = @Fecha,CveFOP = @CveFOP,CveMON = @CveMON," +
+            "TipoDeCambio = @TipoDeCambio,Monto = @Monto,UID = @UID,Cancelado = @Cancelado,Acuse = @Acuse," +
+            "CveMotCan = @CveMotCan," +
+            "xml=@xml " +
+            "Where CompagId = @CompagId";
+
+        public static string
+            ComplementoDePagoDelete = "Delete From ComplementosPago Where CompagId = @CompagId";
+
+
+        public static string
+            ComplementoDePagoSelect =
+            "Select CompagId,EsPDV,EmisorId," +
+            "ComplementosPago.RazonSocialId,RazonesSociales.razonSoc as ReceptorNombre,Serie,Folio,Fecha," +
+            "ComplementosPago.CveFOP,ComplementosPago.CveMON,TipoDeCambio,Monto,UID,Cancelado,Acuse,CveMotCan,xml " +
+            "From ComplementosPago " +
+            "Inner Join RazonesSociales On ComplementosPago.RazonSocialId = RazonesSociales.RazonSocialId " +
+            "Where CompagId = @CompagId";
+
+        public static string
+            ComplementoDePagoSelectXSerieYFolio =
+            "Select CompagId,EsPDV,EmisorId," +
+            "RazonSocialId,,Serie,Folio,Fecha," +
+            "Monto,UID,Cancelado,Acuse,CveMotCan,xml " +
+            "From ComplementosPago " +
+            "Where Serie = @Serie And Folio = @Folio";
+
+
+        public static string ComplementoDePagoUpdateTimbrado =
+            "Update ComplementosPago Set UID=@uid, xml=@xml Where CompagId=@CompagId";
+
+
+        public static string ComplementoDePagoUpdateCancelacion =
+        "Update ComplementosPago Set Cancelado=True, Acuse=@Acuse Where CompagId=@CompagId";
+
+
+        public static string
+            ComPagRelsSelect =
+            "Select ComPagRelId,ComPagoId,DocumentoId,UID,Serie,Folio,Fecha,CveMon,TipoDeCambio,CveMEP," +
+            "Parcialidad,Importe,SaldoAnterior,Pagado,SaldoInsoluto,FechaPago,BaseIVA16,IVA16,BaseIVA0,BaseIVAExento " +
+            "From ComPagosRelacionados " +
+            "Where ComPagoId = @ComPagoId";
+
+        public static string
+            ComPagRelsInsert =
+            "Insert Into ComPagosRelacionados " +
+            "(ComPagoId,DocumentoId,UID,Serie,Folio,Fecha,CveMon,TipoDeCambio,CveMEP," +
+            "Parcialidad,Importe,SaldoAnterior,Pagado,SaldoInsoluto,FechaPago,BaseIVA16,IVA16,BaseIVA0,BaseIVAExento) " +
+            "Values " +
+            "(@ComPagoId,@DocumentoId,@UID,@Serie,@Folio,@Fecha,@CveMon,@TipoDeCambio,@CveMEP," +
+            "@Parcialidad,@Importe,@SaldoAnterior,@Pagado,@SaldoInsoluto,@FechaPago,@BaseIVA16,@IVA16,@BaseIVA0,@BaseIVAExento) " +
+            "Returning ComPagRelId";
+
+
+        public static string
+        ComPagRelsDelete =
+        "Delete From ComPagosRelacionados " +
+        "Where ComPagoId = @ComPagoId";
+
+
+        #endregion
+        #region ArticulosClaves
+        public static string
+            ArticuloClaveSelect = "Select ArticuloClaveId,ProveedorId,ClaveProveedor,ArticuloId From ArticulosClaves Where ArticuloClaveId = @ArticuloClaveId";
+        public static string
+            ArticuloClaveInsert = "Insert Into ArticulosClaves (ProveedorId,ClaveProveedor,ArticuloId) Values (@ProveedorId,@ClaveProveedor,@ArticuloId) Returning ArticuloClaveId";
+        public static string
+            ArticuloClaveDelete = "Delete From ArticulosClaves Where ArticuloClaveId = @ArticuloClaveId";
+        public static string
+            ArticuloClaveSelectXCveProv = "Select ArticuloClaveId,ProveedorId,ClaveProveedor,ArticuloId From ArticulosClaves Where ProveedorId = @ProveedorId and ClaveProveedor = @ClaveProveedor";
+        public static string
+            ArticuloClaveDeleteXCveProv = "Delete From ArticulosClaves Where ProveedorId = @ProveedorId and ClaveProveedor = @ClaveProveedor";
+
+
+        #endregion
+
+        #region InventarioInicial
+        public static string
+            InventarioInicialSelect = "Select InventarioInicialId,ArticuloId,AlmacenId,Fecha,Cantidad From InventariosIniciales Where ArticuloId= @ArticuloId and AlmacenId = @AlmacenId";
+        public static string
+            InventarioInicialInsert = "Insert Into InventariosIniciales (ArticuloId,AlmacenId,Fecha,Cantidad) Values (@ArticuloId,@AlmacenId,@Fecha,@Cantidad) Returning InventarioInicialId";
+        public static string
+            InventarioInicialUpdate = "Update InventariosIniciales Set Cantidad = @Cantidad Where InventarioInicialId = @InventarioInicialId";
+        public static string
+            InventarioInicialDelete = "Delete From InventariosIniciales Where InventarioInicialId = @InventarioInicialId";
+
+        #endregion
+        #region PDV
+
+        public static string
+        VentasNoFacturadasSelect =
+            "Select VentaId,Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago," +
+            "LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac,UID,Cancelada,WebId,CSD,xml " +
+            "From Ventas " +
+            "Where Tipo = 'TIC' And Cancelada = False and " +
+            "(FacturaGlobalId  is null or FacturaGlobalId = 0) And " +
+            "(FolioFac Is Null Or FolioFac=0) And " +
+            "SucursalId = @SucursalId and AlmacenId = @AlmacenId And " +
+            "Fecha Between @FechaIni and @FechaFin Order By Fecha Desc";
+
+
+
+        public static string VentasDelete = "Delete From Ventas Where VentaId > 0";
+        public static string VentasDetalleDelete = "Delete From VentasDetalle Where VentaDetId > 0";
+        public static string DocumentosDelete = "Delete From Documentos Where DocumentoId > 0";
+        public static string DocumentosDetalleDelete = "Delete From DocumentosDetalle Where DocsDetId > 0";
+        public static string ArticulosExistenciasDelete = "Delete From ArticulosExistencias Where ArtExiId > 0";
+        public static string ArticulosMovimientosDelete = "Delete From ArticulosMovimientos Where ArtMovId > 0";
+        public static string VentaUpdateFacturaGlobal =
+            "Update Ventas Set FacturaGlobalId = @FacturaGlobalId Where VentaId = @VentaId";
+
+        public static string FormasPagoVentas =
+            "Select Pagos.Tipo as FormaPagoId,Pagos.Importe, Ventas.Serie, Ventas.Folio,Ventas.Fecha," +
+            "Ventas.ClienteId,RazonesSociales.RazonSoc as ClienteNombre " +
+            "From Pagos " +
+            "inner join Ventas on Pagos.DoctoOrigenId = Ventas.VentaId " +
+            "Left Join RazonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            "Where " +
+            "(Ventas.Tipo='TIC' Or Ventas.Tipo='FAC') and " +
+            "Ventas.Cancelada = False and " +
+            "Ventas.SucursalId = @SucursalId And " +
+            "Ventas.AlmacenId = @AlmacenId And " +
+            "Pagos.OrigenTipo = @OrigenTipo and " +
+            "Ventas.Fecha Between @FechaIni and @FechaFin " +
+            "Order By FormaPagoId,Fecha ";
+
+        public static string FormasDePagoFechas =
+        "select Sum(pagos.Importe) as Total, Sum(pagos.Cambio) as Cambio,Pagos.Tipo from pagos " +
+        "inner join Ventas on Pagos.DoctoOrigenId = Ventas.VentaId " +
+        "Where " +
+            "(Ventas.Tipo='TIC' Or Ventas.Tipo='FAC') and " +
+            "Ventas.Cancelada = False and " +
+            "Ventas.SucursalId = @SucursalId And " +
+            "Ventas.AlmacenId = @AlmacenId And " +
+            "Pagos.ORIGENTIPO = @OrigenTipo and " +
+            "Ventas.Fecha Between @FechaIni and @FechaFin " +
+        "group by Pagos.Tipo " +
+        "order by Pagos.Tipo ";
+
+
+        public static string
+            ArticulosVendidosXSucursalYFechas =
+            "Select VentasDetalle.ArticuloId,VentasDetalle.Descripcion,Sum(VentasDetalle.Cantidad) as Cantidad," +
+            "Sum(VentasDetalle.Cantidad * VentasDetalle.Precio) as Importe,Sum(VentasDetalle.IVA) as Impuesto " +
+            "From VentasDetalle " +
+            "Inner Join Articulos On VentasDetalle.ArticuloId = Articulos.ArticuloId " +
+            "Inner Join Ventas On VentasDetalle.VentaId = Ventas.VentaID " +
+            "Where " +
+            "(Ventas.Tipo='TIC' Or Ventas.Tipo='FAC') and " +
+            "Ventas.Cancelada = False and " +
+            "Ventas.SucursalId = @SucursalId and " +
+            "Ventas.AlmacenId = @AlmacenId And " +
+            "Ventas.Fecha Between @FechaIni and @FechaFin " +
+            "Group By VentasDetalle.ArticuloId,VentasDetalle.Descripcion " +
+            "Order By VentasDetalle.Descripcion";
+
+        public static string
+            VentaSetDatosFacturacion =
+            "Update Ventas " +
+            "Set Tipo = 'FAC'," +
+            "ClienteId=@ClienteId," +
+            "SerieFac=@SerieFac," +
+            "FolioFac=@FolioFac," +
+            "FechaFac=@FechaFac," +
+            "MetodoPago=@MetodoPago," +
+            "FormaPago=@FormaPago," +
+            "Uso=@Uso " +
+            "Where VentaId = @VentaId";
+
+        public static string
+            VentaQuitaDatosFactura =
+            "Update Ventas " +
+            "Set Tipo = 'TIC'," +
+            "SerieFac=''," +
+            "FolioFac=0," +
+            "MetodoPago=''," +
+            "FormaPago=''," +
+            "Uso='' " +
+            "Where VentaId = @VentaId";
+
+
+
+
+        public static string
+            VentaSetDatosCancelacion = "Update Ventas Set Cancelada = true, Acuse=@Acuse Where VentaId = @VentaId";
+        public static string
+            VentasSelectxSucursalYFechas =
+            "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId," +
+            "RazonesSociales.RazonSoc as ClienteNombre, " +
+            "Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago," +
+            "LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac,UID," +
+            "Cancelada,WebId,CSD,FacturaGlobalId,Acuse,Observaciones " +
+            "From Ventas " +
+            "Left Join razonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            "Where " +
+            "(Ventas.Tipo='TIC' Or Ventas.Tipo='FAC') and " +
+            "SucursalId = @SucursalId And " +
+            "Ventas.AlmacenId = @AlmacenId and " +
+            "Fecha Between @FechaIni and @FechaFin " +
+            "Order By Fecha Desc";
+
+        public static string
+            VentasSelectxSucursalYFechasSinCancelar =
+            "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId," +
+            "RazonesSociales.RazonSoc as ClienteNombre, Tipo,Serie,Folio,TipoComprobante," +
+            "Fecha,FormaPago,Moneda,TipoCambio,MetodoPago," +
+            "LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total," +
+            "SerieFac,FolioFac,UID,Cancelada,WebId,CSD,FacturaGlobalId,Observaciones,xml " +
+            "From Ventas " +
+            "Left Join razonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            "Where " +
+            "(Ventas.Tipo='TIC' Or Ventas.Tipo='FAC') and " +
+            "Ventas.Cancelada = false and " +
+            "SucursalId = @SucursalId And " +
+            "Ventas.AlmacenId = @AlmacenId and " +
+            "Fecha Between @FechaIni and @FechaFin " +
+            "Order By Fecha Desc";
+
+
+        public static string
+            FacturasGlobalesSelect =
+            "Select Fecha,VentaId,SucursalId,EmisorId,AlmacenId,Tipo,Serie,Folio,Subtotal,IVA,Total,SerieFac,FolioFac,UID,Cancelada,xml " +
+            "From Ventas " +
+            "Where Tipo = 'GLO' and " +
+            "SucursalId = @SucursalId and " +
+            "Fecha Between @FechaIni and @FechaFin " +
+            "Order By Fecha Desc";
+
+        public static string FacturaGlobalIdReset = "Update Ventas Set FacturaGlobalId = 0 Where FacturaGlobalId = @VentaId";
+
+
+
+        public static string
+            FacturasReporteSelect =
+            "Select VentaId,SucursalId,AlmacenId,DoctorId,ClienteId,RazonesSociales.RazonSoc As ClienteNombre," +
+            "Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal," +
+            "Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac,FechaFac,UID,Cancelada,WebId,CSD,Observaciones,xml " +
+                "From Ventas " +
+            "Left Join RazonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            "Where AlmacenId = @AlmacenId And FechaFac Between @FechaIni and @FechaFin and Trim(UID) <>'' and UID is Not NULL " +
+            "Order By SerieFac,FolioFac";
+
+
+
+        public static string
+            VentasSelect =
+            "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId," +
+            "Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion," +
+            "Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac,FechaFac,UID,Cancelada,WebId,CSD,Observaciones,xml " +
+            "From Ventas Where EmisorId = @EmisorId and Fecha Between @FechaIni and @FechaFin Order By Fecha Desc";
+
+        public static string
+            VentasFacturasSelect =
+            "Select VentaId,SucursalId,AlmacenId,DoctorId,ClienteId,RazonesSociales.RazonSoc As ClienteNombre," +
+            "Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal," +
+            "Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac,FechaFac,UID,Cancelada,WebId,CSD,Observaciones,xml " +
+                "From Ventas " +
+            "Left Join RazonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            "Where AlmacenId = @AlmacenId And Fecha Between @FechaIni and @FechaFin and Trim(UID) <>'' and UID is Not NULL " +
+            "Order By Fecha";
+
+
+
+        public static string
+        VentaSelectxSerieyFolio = "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId,Tipo,Serie,Folio,TipoComprobante," +
+        "Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac," +
+        "FechaFac,UID,Cancelada,WebId,CSD,Observaciones,xml " +
+        "From Ventas Where EmisorId=@EmisorId And AlmacenId = @AlmacenId and Serie = @Serie and Folio=@Folio";
+
+
+        public static string
+        TicketSelectxSerieyFolio = "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId,Tipo,Serie,Folio,TipoComprobante," +
+            "Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac," +
+            "FechaFac,UID,Cancelada,WebId,CSD,Observaciones " +
+            "From Ventas Where Tipo ='TIC' And EmisorId=@EmisorId And AlmacenId = @AlmacenId and Serie = @Serie and Folio=@Folio";
+
+        public static string
+        FacturaSelectxSerieyFolio = "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId,Tipo,Serie,Folio,TipoComprobante," +
+        "Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac," +
+        "FechaFac,UID,Cancelada,WebId,CSD,Observaciones,xml " +
+        "From Ventas Where (Tipo ='FAC' or Tipo = 'GLO') And " +
+            "EmisorId=@EmisorId And " +
+            "AlmacenId = @AlmacenId and " +
+            "SerieFac = @Serie and " +
+            "FolioFac = @Folio";
+
+
+        public static string
+FacturaSelectxSerieyFolioSinAlmacen = "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId,Tipo,Serie,Folio,TipoComprobante," +
+"Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac," +
+"FechaFac,UID,Cancelada,WebId,CSD,Observaciones,xml " +
+"From Ventas Where (Tipo ='FAC' or Tipo = 'GLO') And " +
+    "EmisorId=@EmisorId And " +
+    "SerieFac = @Serie and " +
+    "FolioFac = @Folio";
+
+
+        public static string
+            VentaSelect =
+            "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId,Tipo,Serie,Folio," +
+            "TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso," +
+            "Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac," +
+            "FolioFac,FechaFac,UID,Cancelada,WebId,CSD,Observaciones,Acuse,FacturaGlobalId,Observaciones,CveREL,UIDREL,VentaIdREL,xml  " +
+            "From Ventas Where VentaId = @VentaId";
+
+
+        public static string
+            VentaVisorSelect = "Select VentaId,Ventas.SucursalId,Ventas.EmisorId,Ventas.AlmacenId,Almacenes.Nombre as AlmacenNombre," +
+            " DoctorId,Doctores.NombreCompleto as DoctorNombre," +
+            " Emisores.Nombre as EmisorNombre, ClienteId,RazonesSociales.RazonSoc as ClienteNombre," +
+            " Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA," +
+            " Total,Ventas.SerieFac,Ventas.FolioFac,FechaFac,UID,Cancelada,Acuse,WebId,CSD,Observaciones,xml  " +
+            " From Ventas " +
+            " Inner Join Emisores On Ventas.EmisorId = Emisores.EmisorId " +
+            " Left Join razonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            " Inner Join Almacenes On Ventas.AlmacenId = Almacenes.AlmacenId " +
+            " Left Join Doctores On Ventas.DoctorId = Doctores.Doctor_Id " +
+            " Where VentaId = @VentaId";
+
+
+        public static string
+            VentaVisorSelectXSerieYFolio = "Select VentaId,Ventas.SucursalId,Ventas.EmisorId,Ventas.AlmacenId,Almacenes.Nombre as AlmacenNombre," +
+            " DoctorId,Doctores.NombreCompleto as DoctorNombre," +
+            " Emisores.Nombre as EmisorNombre, ClienteId,RazonesSociales.RazonSoc as ClienteNombre," +
+            " Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA," +
+            " Total,Ventas.SerieFac,Ventas.FolioFac,UID,Cancelada,WebId,CSD,Observaciones,xml  " +
+            " From Ventas " +
+            " Inner Join Emisores On Ventas.EmisorId = Emisores.EmisorId " +
+            " Left Join razonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            " Inner Join Almacenes On Ventas.AlmacenId = Almacenes.AlmacenId " +
+            " Left Join Doctores On Ventas.DoctorId = Doctores.Doctor_Id " +
+            " Where Ventas.SerieFac = @Serie and Ventas.FolioFac =@Folio";
+
+
+        public static string
+            VentaInsert =
+            "Insert Into Ventas " +
+            "(SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId,Tipo,Serie,Folio,TipoComprobante,Fecha," +
+            "FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA," +
+            "RetISR,RetIVA,Total,SerieFac,FolioFac,FechaFac,UID,Cancelada,WebId,CSD,Observaciones,CveREL,UIDREL,VentaIdREL,xml) " +
+            "Values (@SucursalId,@EmisorId,@AlmacenId,@DoctorId,@ClienteId,@Tipo,@Serie,@Folio,@TipoComprobante,@Fecha," +
+            "@FormaPago,@Moneda,@TipoCambio,@MetodoPago,@LugarExpedicion,@Uso,@Subtotal,@Descuento,@IVA," +
+            "@RetISR,@RetIVA,@Total,@SerieFac,@FolioFac,@FechaFac,@UID,@Cancelada,@WebId,@CSD,@Observaciones,@CveREL,@UIDREL,@VentaIdREL,@xml) Returning VentaId";
+
+        public static string VentaUpdate =
+            "Update Ventas Set " +
+            "SucursalId = @SucursalId," +
+            "EmisorId = @EmisorId," +
+            "AlmacenId = @AlmacenId," +
+            "DoctorId = @DoctorId," +
+            "ClienteId = @ClienteId," +
+            "Tipo = @Tipo," +
+            "Serie = @Serie," +
+            "Folio = @Folio," +
+            "TipoComprobante = @TipoComprobante," +
+            "Fecha = @Fecha," +
+            "FormaPago = @FormaPago," +
+            "Moneda = @Moneda," +
+            "TipoCambio = @TipoCambio," +
+            "MetodoPago = @MetodoPago," +
+            "LugarExpedicion = @LugarExpedicion," +
+            "Uso = @Uso," +
+            "Subtotal = @Subtotal," +
+            "Descuento = @Descuento," +
+            "IVA = @IVA," +
+            "RetISR = @RetISR," +
+            "RetIVA = @RetIVA," +
+            "Total = @Total," +
+            "SerieFac = @SerieFac," +
+            "FolioFac = @FolioFac," +
+            "FechaFac = @FechaFac," +
+            "UID = @UID," +
+            "Cancelada = @Cancelada," +
+            "WebId = @WebId," +
+            "CSD = @CSD," +
+            "Observaciones = @Observaciones," +
+            "CveREL = @CveREL," +
+            "UIDREL = @UIDREL," +
+            "VentaIdREL = @VentaIdREL," +
+            "xml =@xml " +
+            "Where VentaId = @VentaId";
+
+        public static string
+            VentaDelete = "Delete From Ventas Where VentaId = @VentaId";
+
+        public static string
+            VentaUpdateTimbrado = "Update Ventas Set UId=@uid,CSD=@csd,xml = @xml Where VentaId=@VentaId";
+
+        public static string
+            VentaDetalleSelect = "Select VentaDetId,VentaId,ArticuloId,NoIden,Descripcion,UDM,Cantidad,Precio,Descuento,IVA,TipoIVA,TasaIVA,CveProSer,CveUni,RetIVA,RetISR " +
+            "From VentasDetalle Where VentaDetId = @VentaDetId";
+        public static string
+            VentaDetallesSelect = "Select VentaDetId,VentaId,ArticuloId,NoIden,Descripcion,UDM,Cantidad,Precio,Descuento,IVA,TipoIVA,TasaIVA,CveProSer,CveUni,RetIVA,RetISR " +
+            "From VentasDetalle Where VentaId = @VentaId";
+        public static string
+            VentaDetalleInsert = "Insert Into VentasDetalle (VentaId,ArticuloId,NoIden,Descripcion,UDM,Cantidad,Precio,Descuento,IVA,TipoIVA,TasaIVA,CveProSer,CveUni,RetIVA,RetISR,DetalleIdRel) " +
+            "Values (@VentaId,@ArticuloId,@NoIden,@Descripcion,@UDM,@Cantidad,@Precio,@Descuento,@IVA,@TipoIVA,@TasaIVA,@CveProSer,@CveUni,@RetIVA,@RetISR,@DetalleIdRel) Returning VentaDetId";
+
+        public static string
+            VentaDetalleDelete = "Delete From VentasDetalle Where VentaDetId = @VentaDetId";
+        public static string
+            VentaDetallesDelete = "Delete From VentasDetalle Where VentaId = @VentaId";
+
+
+        public static string
+            NotasCreditoSelect =
+            "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId," +
+            "RazonesSociales.RazonSoc as CienteNombre, " +
+            "Tipo,Serie,Folio,TipoComprobante," +
+            "Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA," +
+            "RetISR,RetIVA,Total,SerieFac,FolioFac,UID,Cancelada,WebId,CSD,xml " +
+            "From Ventas " +
+            "left Join RazonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            "Where EmisorId = @EmisorId and AlmacenId=@AlmacenId and Tipo = 'NDC' and " +
+            "Fecha Between @FechaIni and @FechaFin Order By Fecha Desc";
+
+        public static string
+            NotasSelect =
+            "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId," +
+            "RazonesSociales.RazonSoc as CienteNombre, " +
+            "Tipo,Serie,Folio,TipoComprobante," +
+            "Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA," +
+            "RetISR,RetIVA,Total,SerieFac,FolioFac,UID,Cancelada,WebId,CSD,xml " +
+            "From Ventas " +
+            "left Join RazonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            "Where EmisorId = @EmisorId and AlmacenId=@AlmacenId and Tipo = 'NDC' and " +
+            "Fecha Between @FechaIni and @FechaFin Order By Fecha Desc";
+
+
+        public static string NotasEmisorSelect =
+            "Select VentaId,SucursalId,EmisorId,AlmacenId,DoctorId,ClienteId," +
+            "RazonesSociales.RazonSoc as CienteNombre, " +
+            "Tipo,Serie,Folio,TipoComprobante," +
+            "Fecha,FormaPago,Moneda,TipoCambio,MetodoPago,LugarExpedicion,Uso,Subtotal,Descuento,IVA," +
+            "RetISR,RetIVA,Total,SerieFac,FolioFac,UID,Cancelada,WebId,CSD,xml " +
+            "From Ventas " +
+            "left Join RazonesSociales On Ventas.ClienteId = RazonesSociales.RazonSocialId " +
+            "Where EmisorId = @EmisorId and Tipo = 'NDC' and " +
+            "Fecha Between @FechaIni and @FechaFin Order By Fecha Desc";
+
+        #endregion
+
+        #region ArticulosExistencias
+        public static string ArticuloExistenciasSelect =
+            "Select ArtExiId,ArticuloId,ArticulosExistencias.AlmacenId,Almacenes.Nombre as AlmacenNombre,Entradas,Salidas,Existencia " +
+            "From ArticulosExistencias " +
+            "Inner Join Almacenes On ArticulosExistencias.AlmacenId = Almacenes.AlmacenId " +
+            "Where ArticuloId = @ArticuloId";
+        public static string ArticuloExistenciaSelect =
+            "Select ArtExiId,ArticuloId,AlmacenId,Entradas,Salidas,Existencia " +
+            "From ArticulosExistencias " +
+            "Where ArticuloId = @ArticuloId and AlmacenId = @AlmacenId";
+        public static string ArticuloExistenciaInsert =
+            "Insert Into ArticulosExistencias (ArticuloId,AlmacenId,Entradas,Salidas) Values (@ArticuloId,@AlmacenId,@Entradas,@Salidas) Returning ArtExiId";
+        public static string ArticuloExistenciaUpdate =
+            "Update ArticulosExistencias Set Entradas = @Entradas, Salidas = @Salidas Where ArtExiId = @ArtExiId";
+
+        public static string ArticuloExistenciasDelete =
+            "Delete From ArticulosExistencias Where ArticuloId = @ArticuloId and AlmacenId=@AlmacenId";
+
+        #endregion
+
+        #region CapasDeCostos
+        public static string CapaDeCostoInsertSP = "SP_CAPADECOSTO_INS";
+        public static string CapasDeCostosDeleteByDocSP = "SP_CAPASDECOSTOS_DELBYDOC";
+        public static string CapasDeCostosRegistrarSalidaSP = "SP_CAPASDECOSTOS_REGISTRAR_SALIDA";
+        public static string CapasDeCostosRegistrarEntradaSP = "SP_CAPASDECOSTOS_REGISTRAR_ENTRADA";
+        public static string CapasDeCostosRevertirEntradaSP = "SP_CAPASDECOSTOS_REVERTIR_ENTRADA";
+
+
+        public static string CapasDeCostoUtilizadasXDocSelect = 
+            "Select First 1 CapaId " +
+            "From CapasDeCostos " +
+            "Where ConceptoId = @ConceptoId and DocumentoId = @DocumentoId And CantidadDisponible <> CantidadInicial";
+
+        #endregion
+        #region ArticulosMovimientos
+
+        public static string
+            DocumentoMovimientoInsert =
+            "Insert Into ArticulosMovimientos " +
+            "(ArticuloId,AlmacenId,ConceptoId,Tipo,Fecha,EsVenta,DocumentoId,Cantidad,Importe,UltimoCosto) " +
+            "Values " +
+            "(@ArticuloId,@AlmacenId,@ConceptoId,@Tipo,@Fecha,@EsVenta,@DocumentoId,@Cantidad,@Importe,@UltimoCosto) Returning ArtMovId";
+        public static string
+            ArticuloMovimientoDelete = "Delete From ArticulosMovimientos Where ArtMovId = @ArtMovId";
+
+        public static string
+            DocumentoMovimientosDelete = "Delete From ArticulosMovimientos Where EsVenta=@Esventa and DocumentoId = @DocumentoId";
+
+        //public static string
+        //    DocumentoMovimientosDeleteXId = "Delete From ArticulosMovimientos Where DocumentoId = @DocumentoId";
+
+        public static string
+            ArticuloMovimientosDelete = "Delete From ArticulosMovimientos Where ArticuloId = @ArticuloId and AlmacenId=@AlmacenId";
+
+        public static string
+            ArticuloMovimientoUltimoCostoUpdate = "Update ArticulosMovimientos set UltimoCosto =@UltimoCosto Where ArtMovId = @ArtMovId ";
+
+        public static string
+            ArticuloMovimientosSelect = "Select ArtMovId,ArticuloId,AlmacenId,EsVenta,ConceptoId,Tipo,Fecha,DocumentoId,Cantidad,Importe From ArticulosMovimientos Where ArticuloId = @ArticuloId Order By Fecha Desc";
+
+        public static string
+            ArticulosMovimientosSelect = "Select ArtMovId,ArticuloId,AlmacenId,EsVenta,ConceptoId,Tipo,Fecha,DocumentoId,Cantidad,Importe From ArticulosMovimientos order by ArticuloId";
+
+
+        public static string
+            ArticuloAlmacenMovimientosSelect =
+            "Select ArtMovId,ArticuloId,AlmacenId,ArticulosMovimientos.EsVenta,ConceptoId,ConceptosMovInv.Tipo as ConceptoTipo,ConceptosMovInv.Descripcion as ConceptoNombre," +
+            "ArticulosMovimientos.Tipo,Fecha,DocumentoId,Cantidad,Importe, ArticulosMovimientos.UltimoCosto " +
+            "From ArticulosMovimientos " +
+            "Inner Join ConceptosMovInv on ArticulosMovimientos.ConceptoId = ConceptosMovInv.ConMovInvId " +
+            "Where ArticuloId = @ArticuloId And AlmacenId = @AlmacenId and Fecha Between @FechaIni and @FechaFin " +
+            "Order By Fecha";
+
+
+        #endregion
         #region Documentos
-        public static string 
-            ComprasSelect = "Select DocumentoId,AlmacenId,Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total," +
-            "Documentos.ProveedorId,Proveedores.Nombre as ProveedorNombre " +
+
+        public static string
+            ArticuloCostoUltimaCompraSelect =
+            "Select First 1 Fecha,Precio From DocumentosDetalle  " +
+            "Inner Join Documentos On DocumentosDetalle.DocumentoId = Documentos.DocumentoId  " +
+            "Where ArticuloId = @ArticuloId and Documentos.Tipo = 'COM' " +
+            "Order By Documentos.Fecha Desc";
+
+        public static string ArticuloUltimoCostoByCapa =
+            "SELECT FIRST 1 COSTOUNITARIO FROM CAPASDECOSTOS " +
+            "WHERE ARTICULOID = @ARTICULOID " +
+            "AND SUCURSALID = @SUCURSALID " +
+            "AND ALMACENID  = @ALMACENID " +
+            "AND NEGATIVA   = FALSE " +
+            "ORDER BY FECHAINGRESO DESC, CAPAID DESC";
+
+        public static string ConceptosMovInvSelect = "Select ConMovInvId,Descripcion,Tipo From ConceptosMovInv Where Tipo = @TipoCon Order By Descripcion";
+
+        public static string
+            EntradasSalidasSelect = "Select DocumentoId,Documentos.AlmacenId,Documentos.ConceptoId," +
+            "ConceptosMovInv.Descripcion as ConceptoNombre,Almacenes.Nombre as AlmacenNombre," +
+            "Documentos.Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total " +
             "From Documentos " +
-            "Inner Join Proveedores On Documentos.Proveedorid = Proveedores.ProveedorId " +
+            "Inner Join Almacenes On Documentos.AlmacenId = Almacenes.AlmacenId " +
+            "Inner Join ConceptosMovInv On Documentos.ConceptoId = ConceptosMovInv.ConMovInvId " +
             "Where  " +
-            "Tipo = 'COM' and " +
+            "ConceptosMovInv.Tipo = @TipoCon and " +
+            "ConceptosMovInv.Reservado = False and " +
+            "Documentos.AlmacenId = @AlmacenId and " +
+            "Fecha Between @FechaIni and @FechaFin " +
+            "Order By Fecha Desc";
+
+        public static string
+            SalidasSelect = "Select DocumentoId,Documentos.AlmacenId, Almacenes.Nombre as AlmacenNombre," +
+            "Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total " +
+            "From Documentos " +
+            "Inner Join Almacenes On Documentos.AlmacenId = Almacenes.AlmacenId " +
+            "Where  " +
+            "(Tipo = 'DEV'  or Tipo = 'AJU' or Tipo = 'CAD' or Tipo = 'DEP') " +
+            " and " +
+            "Fecha Between @FechaIni and @FechaFin " +
+            "Order By Fecha Desc";
+
+
+
+        public static string
+            ComprasSelect = "Select DocumentoId,Documentos.AlmacenId, Almacenes.Nombre as AlmacenNombre, AlmacenesDestino.Nombre As AlmacenDestinoNombre," +
+            "ConceptoId,Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total," +
+            "Documentos.ProveedorId,Proveedores.Nombre as ProveedorNombre,Documentos.Observaciones,Cancelado  " +
+            "From Documentos " +
+            "left Join Proveedores On Documentos.Proveedorid = Proveedores.ProveedorId " +
+            "Inner Join Almacenes On Documentos.AlmacenId = Almacenes.AlmacenId " +
+            "Left Join  Almacenes AlmacenesDestino On Documentos.AlmacenDestinoId = AlmacenesDestino.AlmacenId " +
+            "Where  " +
+            "Tipo = @Tipo and Documentos.AlmacenId = @AlmacenId and " +
+            "Fecha Between @FechaIni and @FechaFin " +
+            "Order By Fecha Desc";
+
+        public static string
+            ComprasSelectXProveedor = "Select DocumentoId,Documentos.AlmacenId, Almacenes.Nombre as AlmacenNombre, AlmacenesDestino.Nombre As AlmacenDestinoNombre," +
+            "ConceptoId,Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total," +
+            "Documentos.ProveedorId,Proveedores.Nombre as ProveedorNombre,Documentos.Observaciones,Cancelado  " +
+            "From Documentos " +
+            "left Join Proveedores On Documentos.Proveedorid = Proveedores.ProveedorId " +
+            "Inner Join Almacenes On Documentos.AlmacenId = Almacenes.AlmacenId " +
+            "Left Join  Almacenes AlmacenesDestino On Documentos.AlmacenDestinoId = AlmacenesDestino.AlmacenId " +
+            "Where  " +
+            "Tipo = @Tipo and Documentos.AlmacenId = @AlmacenId and " +
+            "Fecha Between @FechaIni and @FechaFin And Documentos.ProveedorId = @ProveedorId " +
+            "Order By Fecha Desc";
+
+
+        public static string
+            DocumentosSelect = "Select DocumentoId,Documentos.SucursalId,Documentos.AlmacenId, Almacenes.Nombre as AlmacenNombre, AlmacenesDestino.Nombre As AlmacenDestinoNombre," +
+            "ConceptoId,Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total," +
+            "Documentos.ProveedorId,Proveedores.Nombre as ProveedorNombre,Documentos.Observaciones,Cancelado  " +
+            "From Documentos " +
+            "left Join Proveedores On Documentos.Proveedorid = Proveedores.ProveedorId " +
+            "Inner Join Almacenes On Documentos.AlmacenId = Almacenes.AlmacenId " +
+            "Left Join  Almacenes AlmacenesDestino On Documentos.AlmacenDestinoId = AlmacenesDestino.AlmacenId " +
+            "Where  " +
+            "Tipo = @Tipo and " +
             "Fecha Between @FechaIni and @FechaFin " +
             "Order By Fecha Desc";
         public static string
-            CompraSelect = "Select DocumentoId,AlmacenId,Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total," +
-            "Documentos.ProveedorId,Proveedores.Nombre as ProveedorNombre " +
+            DocumentoSelect = "Select DocumentoId,SucursalId,AlmacenId,AlmacenDestinoId,ConceptoId,Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total," +
+            "Documentos.ProveedorId,Proveedores.Nombre as ProveedorNombre,Documentos.Observaciones,Cancelado " +
             "From Documentos " +
-            "Inner Join Proveedores On Documentos.Proveedorid = Proveedores.ProveedorId " +
+            "left Join Proveedores On Documentos.Proveedorid = Proveedores.ProveedorId " +
             "Where  " +
             "DocumentoId = @DocumentoId";
         public static string
-            CompraInsert = "Insert Into Documentos (AlmacenId,Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total,ProveedorId) " +
+            DocumentoInsert = "Insert Into Documentos (SucursalId,AlmacenId,AlmacenDestinoId,ConceptoId,Tipo,Fecha,Serie,Folio,SubTotal,IVA,Total,ProveedorId,Observaciones,Cancelado) " +
             "Values " +
-            "(@AlmacenId,@Tipo,@Fecha,@Serie,@Folio,@SubTotal,@IVA,@Total,@ProveedorId) " +
+            "(@SucursalId,@AlmacenId,@AlmacenDestinoId,@ConceptoId,@Tipo,@Fecha,@Serie,@Folio,@SubTotal,@IVA,@Total,@ProveedorId,@Observaciones,@Cancelado) " +
             "Returning DocumentoId";
         public static string
-            CompraUpdate = "Update Documentos Set " +
+            DocumentoUpdate = "Update Documentos Set " +
+            "SucursalId = @SucursalId," +
             "AlmacenId = @AlmacenId," +
+            "ConceptoId = @ConceptoId," +
             "Tipo = @Tipo," +
             "Fecha = @Fecha," +
             "Serie = @Serie," +
@@ -47,14 +664,53 @@ namespace ClinicaFB.Helpers
             "SubTotal = @SubTotal," +
             "IVA = @IVA," +
             "Total = @Total," +
-            "ProveedorId = @ProveedorId " +
+            "ProveedorId = @ProveedorId, " +
+            "Observaciones = @Observaciones," +
+            "Cancelado  = @Cancelado " +
+            "Where DocumentoId = @DocumentoId";
+
+        public static string
+        DocumentoSetCancelado = "Update Documentos Set Cancelado = True Where DocumentoId = @DocumentoId";
+
+        public static string
+            DocumentoDelete = "Delete From Documentos Where DocumentoId = @DocumentoId";
+        public static string
+            DocumentoDetalleDelete = "Delete From DocumentosDetalle Where DocumentoId = @DocumentoId";
+        public static string
+            DocumentoDetalleInsert = "Insert Into DocumentosDetalle (DocumentoId,ArticuloId,NoIden,CveProSer,CveUni,Cantidad,Precio,TipoIVA,TasaIVA,IVA, ExistenciaInicial) " +
+            "Values " +
+            "(@DocumentoId,@ArticuloId,@NoIden,@CveProSer,@CveUni,@Cantidad,@Precio,@TipoIVA,@TasaIVA,@IVA,@ExistenciaInicial) " +
+            "Returning DocsDetId";
+        public static string
+            DocumentoDetalleSelect =
+            "Select DocsDetId,DocumentoId,DocumentosDetalle.ArticuloId,Articulos.Clave," +
+            "Articulos.Descripcion As ArticuloDescripcion,NoIden,Articulos.CveProSer,Articulos.CveUni,Cantidad,Precio,TipoIVA,TasaIVA,IVA,ExistenciaInicial " +
+            "From DocumentosDetalle " +
+            "Inner Join Articulos on DocumentosDetalle.ArticuloId = Articulos.ArticuloId " +
             "Where DocumentoId = @DocumentoId";
         public static string
-            CompraDelete = "Delete From Documentos Where DocumentoId = @DocumentoId";
+            DocumentoTipoFolioMayor = "Select Max(Folio) as Mayor From Documentos Where Tipo = @Tipo";
+        public static string
+            SalidaFolioMayor = "Select Max(Folio) as Mayor From Documentos Where Tipo = 'DEV'  or Tipo = 'AJU' or Tipo = 'CAD' or Tipo = 'DEP'";
+        public static string
+            EntradaSalidaFolioMayor =
+            "Select Max(FolioMayor) as Mayor From " +
+            "(" +
+            "Select Max(Folio) As FolioMayor, ConceptosMovInv.Descripcion From Documentos " +
+            "Inner Join ConceptosMovInv ON Documentos.ConceptoId = ConceptosMovInv.ConMovInvId " +
+            "Where  ConceptosMovInv.TIPO = @TipoCon " +
+            "Group By ConceptosMovInv.Descripcion" +
+            ")";
+
+
         #endregion
+
         #region Proveedores
+
         public static string ProveedoresSelect = "Select ProveedorId,RFC,Nombre From Proveedores Order By Nombre";
         public static string ProveedorSelect = "Select ProveedorId,RFC,Nombre From Proveedores Where ProveedorId = @ProveedorId";
+        public static string ProveedorSelectXRFC = "Select ProveedorId,RFC,Nombre From Proveedores Where RFC = @RFC";
+
         public static string ProveedorInsert = "Insert Into Proveedores (RFC,Nombre) Values (@RFC,@Nombre) Returning ProveedorId";
         public static string ProveedorUpdate = "Update Proveedores Set RFC = @RFC, Nombre = @Nombre Where ProveedorId = @ProveedorId";
         public static string ProveedorDelete = "Delete From Proveedores Where ProveedorId = @ProveedorId";
@@ -87,7 +743,7 @@ namespace ClinicaFB.Helpers
 
         public static string PacientesXFecha()
         {
-            string sql = 
+            string sql =
                 "Select PacienteFechaId,DoctorId,Fecha,PacienteId,Hora,Pacientes.NombreCompleto as PacienteNombre" +
                 " From PacientesFechas" +
                 " Inner Join Pacientes On PacientesFechas.PacienteId = Pacientes.Paciente_Id" +
@@ -155,29 +811,51 @@ namespace ClinicaFB.Helpers
 
         #endregion
         #region Pagos
-        public static string PagoInsert= "Insert Into Pagos (OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia) Values (@OrigenTipo,@DoctoOrigenId,@Tipo,@Importe,@Referencia) Returning PagoId";
-        public static string PagoSelect = "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia From Pagos Where PagoId = @PagoId";
-        public static string PagosSelect = "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia From Pagos Where OrigenTipo=@OrigenTipo and DoctoOrigenId=@DoctoOrigenId";
-        public static string PagoUpdate = "Update Pagos Set OrigenTipo = @OrigenTipo, DoctoOrigenId = @DoctoOrigenId, Tipo = @Tipo, Importe = @Importe, Referencia = @Referencia Where PagoId = @PagoId";
+        public static string PagoInsert = "Insert Into Pagos (OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia,Cambio) Values (@OrigenTipo,@DoctoOrigenId,@Tipo,@Importe,@Referencia,@Cambio) Returning PagoId";
+        public static string PagoSelect = "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia,Cambio From Pagos Where PagoId = @PagoId";
+        public static string PagosSelect = "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia,Cambio From Pagos Where OrigenTipo=@OrigenTipo and DoctoOrigenId=@DoctoOrigenId";
+        public static string PagoUpdate = "Update Pagos Set OrigenTipo = @OrigenTipo, DoctoOrigenId = @DoctoOrigenId, Tipo = @Tipo, Importe = @Importe, Referencia = @Referencia, Cambio = @Cambio Where PagoId = @PagoId";
         public static string PagoDelete = "Delete From Pagos Where PagoId = @PagoId";
-        public static string IngresoPagosSelect = "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia From Pagos Where OrigenTipo=1 and DoctoOrigenId=@DoctoOrigenId";
-        public static string IngresoPagosTarjetaOTransferenciaSelect = 
-            "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia From Pagos " +
+        public static string PagosDelete = "Delete From Pagos Where OrigenTipo=@OrigenTipo And DoctoOrigenId=@DoctoOrigenId";
+        public static string IngresoPagosSelect = "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia,Cambio From Pagos Where OrigenTipo=1 and DoctoOrigenId=@DoctoOrigenId";
+        public static string
+            VentaPagosSelect
+            = "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia,Cambio From Pagos Where OrigenTipo=2 and DoctoOrigenId=@DoctoOrigenId";
+        public static string IngresoPagosTarjetaOTransferenciaSelect =
+            "Select PagoId,OrigenTipo,DoctoOrigenId,Tipo,Importe,Referencia,Cambio From Pagos " +
             "Where OrigenTipo=1 and DoctoOrigenId=@DoctoOrigenId and Tipo Between 2 and 3";
         #endregion
 
+        #region Conceptos
+
+        public static string ConceptoSelect = "Select ConMovInvId,Tipo,Descripcion,EsVenta,Reservado,PrecioCosto From ConceptosMovInv Where ConMovInvId = @ConMovInvId";
+        public static string ConceptoSelectByDescripcion = "Select ConMovInvId,Tipo,Descripcion,PrecioCosto  From ConceptosMovInv Where Descripcion = @Descripcion and Tipo = @Tipo";
+        public static string ConceptosSelect = "Select ConMovInvId,Tipo,Descripcion,EsVenta,Reservado,PrecioCosto  From ConceptosMovInv Where Tipo = @Tipo and Reservado = false";
+        public static string ConceptoInsert = "Insert Into ConceptosMovInv (Tipo,Descripcion,EsVenta,Reservado,PrecioCosto ) Values (@Tipo,@Descripcion,@EsVenta,@Reservado,@PrecioCosto) Returning ConMovInvId";
+        public static string ConceptoUpdate = "Update ConceptosMovInv Set Tipo = @Tipo, Descripcion = @Descripcion, EsVenta = @EsVenta, Reservado = @Reservado, PrecioCosto=@PrecioCosto Where ConMovInvId = @ConMovInvId";
+        public static string ConceptoDelete = "Delete From ConceptosMovInv Where ConMovInvId = @ConMovInvId";
+
+        #endregion
+
+        #region ConceptosInvFolios
+        public static string ConceptoInvFolioSelect = "Select ConInvFolId,SucursalId, ConceptoId,Serie,Folio From ConceptosInvFolios Where ConInvFolId = @ConInvFolId";
+        public static string ConceptoInvFolioSelectBySucursal = "Select ConInvFolId,SucursalId, ConceptoId,Serie,Folio From ConceptosInvFolios Where SucursalId = @SucursalId and ConceptoId = @ConceptoId";
+        public static string ConceptoInvFolioInsert = "Insert Into ConceptosInvFolios (SucursalId,ConceptoId,Serie,Folio) Values (@SucursalId,@ConceptoId,@Serie,@Folio) Returning ConInvFolId";
+        public static string ConceptoInvFolioUpdate = "Update ConceptosInvFolios Set Serie = @Serie, Folio = @Folio Where ConInvFolId = @ConInvFolId";
+        public static string ConceptoInvFolioDelete = "Delete From ConceptosInvFolios Where ConInvFolId = @ConInvFolId";
+        #endregion
         #region Almacenes
         public static string AlmacenesSelect()
         {
             string sql = "";
-            sql = "Select AlmacenId,Nombre,Defa From Almacenes Order By Nombre";
+            sql = "Select AlmacenId,Nombre,Defa,SerieVen,FolioVen,SerieFac,FolioFac,SerieNC,FolioNC From Almacenes Order By Nombre";
             return sql;
         }
 
         public static string AlmacenSelect()
         {
             string sql = "";
-            sql = "Select AlmacenId,Nombre,Defa From Almacenes Where AlmacenId=@AlmacenId";
+            sql = "Select AlmacenId,Nombre,Defa,SerieVen,FolioVen,SerieFac,FolioFac,SerieNC,FolioNC,FormatoFac From Almacenes Where AlmacenId=@AlmacenId";
             return sql;
         }
 
@@ -185,7 +863,9 @@ namespace ClinicaFB.Helpers
         public static string AlmacenInsert()
         {
             string sql = "";
-            sql = "Insert Into Almacenes (Nombre,Defa) Values (@Nombre,@Defa) Returning AlmacenId";
+            sql = "Insert Into Almacenes " +
+                "(Nombre,Defa,SerieVen,FolioVen,SerieFac,FolioFac,SerieNC,FolioNC) " +
+                "Values (@Nombre,@Defa,@SerieVen,@FolioVen,@SerieFac,@FolioFac,@SerieNC,@FolioNC) Returning AlmacenId";
             return sql;
         }
 
@@ -193,7 +873,14 @@ namespace ClinicaFB.Helpers
         public static string AlmacenUpdate()
         {
             string sql = "";
-            sql = "Update Almacenes Set Nombre = @Nombre, defa = @Defa Where AlmacenId=@AlmacenId";
+            sql = "Update Almacenes Set Nombre = @Nombre, defa = @Defa," +
+                "SerieVen=@SerieVen," +
+                "FolioVen=@FolioVen, " +
+                "SerieFac=@SerieFac," +
+                "FolioFac=@FolioFac, " +
+                "SerieNC=@SerieNC," +
+                "FolioNC=@FolioNC " +
+                "Where AlmacenId=@AlmacenId";
             return sql;
         }
 
@@ -212,11 +899,54 @@ namespace ClinicaFB.Helpers
             return sql;
         }
 
+        public static string AlmacenDefaultSelect()
+        {
+            string sql = "";
+            sql = "Select AlmacenId,Nombre,Defa,SerieVen,FolioVen,SerieFac,FolioFac From Almacenes Where Defa = true";
+            return sql;
+        }
 
+        public static string AlmacenIncrementaFolioVenta =
+            "Update Almacenes Set FolioVen = FolioVen + 1 Where AlmacenId = @AlmacenId";
+        public static string AlmacenIncrementaFolioFactura =
+            "Update Almacenes Set FolioFac = FolioFac + 1 Where AlmacenId = @AlmacenId";
+
+        public static string AlmacenIncrementaFolioNC =
+            "Update Almacenes Set FolioNC = FolioNC + 1 Where AlmacenId = @AlmacenId";
+
+        #endregion
+
+        #region SucursalesAlmacenes
+        public static string SucursalAlmacenesSelect = "Select SucAlmaId,SucursalId,AlmacenId,Defa From SucursalesAlmacenes Where SucursalId = @SucursalId";
+        #endregion
+        #region SucursalesEmisores
+        public static string SucursalEmisoresSelect = "Select SucEmiId,SucursalId,EmisorId From SucursalesEmisores Where SucursalId = @SucursalId";
         #endregion
 
         #region CFDi
 
+        public static string CFDisCanceladosSinCancelarSelect()
+        {
+            string sql = "Select CfdiId,Serie,Folio,Fecha," +
+                "Cfdis.EmisorId,Emisores.RFC As EmisorRFC," +
+                "Emisores.Nombre As EmisorNombre," +
+                "Cfdis.PacienteId, Pacientes.NombreCompleto As PacienteNombre, " +
+                "Cfdis.RazonSocialId,RazonesSociales.RazonSoc as ReceptorNombre," +
+                "Cancelado,AcuseCan From cfdis " +
+                "Left Join Emisores On Cfdis.Emisorid = Emisores.EmisorId " +
+                "Left Join Pacientes On Cfdis.Pacienteid = Pacientes.Paciente_Id " +
+                "Left Join RazonesSociales On Cfdis.RazonSocialId = RazonesSociales.RazonSocialId " +
+                "Where  " +
+                "Fecha BetWeen @FechaIni and @FechaFin And " +
+                "Cancelado = true " +
+                "And (" +
+                "AcuseCan='' or " +
+                "AcuseCan is null or " +
+                "Position('201',acusecan)=0 and " +
+                "Position('202',acusecan)=0) " +
+                "Order By Serie,Folio";
+            return sql;
+        }
 
         public static string FacturasReporte()
         {
@@ -245,7 +975,7 @@ namespace ClinicaFB.Helpers
         {
             string sql = "";
             sql = "Select Cfdis.CfdiId,Cfdis.IngresoId,Cfdis.EmisorId,Emisores.RFC As EmisorRFC,Emisores.Nombre As EmisorNombre,Cfdis.Fecha,Cfdis.Serie,Cfdis.Folio," +
-                "Cfdis.PacienteId,Cfdis.Cancelado, Pacientes.NombreCompleto As PacienteNombre, " +
+                "Cfdis.PacienteId,Cfdis.Cancelado, Cfdis.AcuseCan,Pacientes.NombreCompleto As PacienteNombre, " +
                 "Cfdis.RazonSocialId,RazonesSociales.RazonSoc as ReceptorNombre," +
                 "Cfdis.SubTotal,Cfdis.IVA, Cfdis.Total " +
                 "From cfdis " +
@@ -259,6 +989,25 @@ namespace ClinicaFB.Helpers
 
 
         }
+
+        public static string FacturasSelectXRazonSocial=           
+           "Select Cfdis.CfdiId,Cfdis.IngresoId,Cfdis.EmisorId,Emisores.RFC As EmisorRFC,Emisores.Nombre As EmisorNombre,Cfdis.Fecha,Cfdis.Serie,Cfdis.Folio," +
+                "Cfdis.PacienteId,Cfdis.Cancelado, Cfdis.AcuseCan,Pacientes.NombreCompleto As PacienteNombre, " +
+                "Cfdis.RazonSocialId,RazonesSociales.RazonSoc as ReceptorNombre," +
+                "Cfdis.SubTotal,Cfdis.IVA, Cfdis.Total " +
+                "From cfdis " +
+                " Left Join Emisores On Cfdis.Emisorid = Emisores.EmisorId " +
+                " Left Join Pacientes On Cfdis.Pacienteid = Pacientes.Paciente_Id " +
+                " Left Join RazonesSociales On Cfdis.RazonSocialId = RazonesSociales.RazonSocialId " +
+                " Where Cfdis.TipoComprobante='I' and " +
+                " Cfdis.Emisorid = @Emisorid and Cfdis.Fecha Between @FechaIni and @FechaFin " +
+                " And Cfdis.RazonSocialId = @RazonSocialId " +
+                " Order By Cfdis.Fecha Desc";
+           
+
+
+        
+
 
         public static string FacturasSelectxFechas()
         {
@@ -282,6 +1031,29 @@ namespace ClinicaFB.Helpers
 
 
         }
+
+        public static string FacturasSelectxFechasYRazonSocial =        
+            "Select Cfdis.CfdiId,Cfdis.Fecha,Cfdis.Serie,Cfdis.Folio," +
+                "Cfdis.FormaPago,Cfdis.MetodoPago,cfdis.UsoCfdi," +
+                "Cfdis.IngresoId," +
+                "Cfdis.EmisorId,Emisores.RFC As EmisorRFC,Emisores.Nombre As EmisorNombre," +
+                "Cfdis.Cancelado, cfdis.AcuseCan," +
+                "Cfdis.PacienteId, Pacientes.NombreCompleto As PacienteNombre, " +
+                "Cfdis.RazonSocialId,RazonesSociales.RazonSoc as ReceptorNombre," +
+                "Cfdis.SubTotal,Cfdis.IVA, Cfdis.Total " +
+                "From cfdis " +
+                " Left Join Emisores On Cfdis.Emisorid = Emisores.EmisorId " +
+                " Left Join Pacientes On Cfdis.Pacienteid = Pacientes.Paciente_Id " +
+                " Left Join RazonesSociales On Cfdis.RazonSocialId = RazonesSociales.RazonSocialId " +
+                " Where Cfdis.TipoComprobante='I' and " +
+                " Cfdis.Fecha Between @FechaIni and @FechaFin " +
+                " And Cfdis.RazonSocialId = @RazonSocialId " +
+                " Order By Cfdis.Fecha Desc";
+           
+
+
+       
+
 
         public static string FacturaSelect()
         {
@@ -312,7 +1084,7 @@ namespace ClinicaFB.Helpers
                 "Emisores.RFC As EmisorRFC,Emisores.Nombre As EmisorNombre,Cfdis.Fecha,Cfdis.Serie,Cfdis.Folio," +
                 "Cfdis.PacienteId,Cfdis.uid, Pacientes.NombreCompleto As PacienteNombre, " +
                 "Cfdis.RazonSocialId,RazonesSociales.RFC as ReceptorRFC, RazonesSociales.RazonSoc as ReceptorNombre," +
-                "Cfdis.SubTotal, Cfdis.IVA,Cfdis.Total " +
+                "Cfdis.SubTotal, Cfdis.IVA,Cfdis.Total,Cfdis.AcuseCan " +
                 "From cfdis " +
                 " Left Join Emisores On Cfdis.Emisorid = Emisores.EmisorId " +
                 " Left Join Pacientes On Cfdis.Pacienteid = Pacientes.Paciente_Id " +
@@ -361,7 +1133,7 @@ namespace ClinicaFB.Helpers
         public static string CfdiFiscalUpdate()
         {
             string sql = "";
-            sql = "Update Cfdis Set uid = @uid Where CfdiId = @CfdiId"; 
+            sql = "Update Cfdis Set uid = @uid Where CfdiId = @CfdiId";
             return sql;
         }
 
@@ -418,7 +1190,11 @@ namespace ClinicaFB.Helpers
         public static string SucursalSelect()
         {
             string sql = "";
-            sql = "Select SucursalId,Nombre,DatosAdicionales, SerieIngresos,FolioIngresos,SerieFacGlobal,FolioFacGlobal From  Sucursales Where SucursalId = @SucursalId ";
+            sql =
+                "Select SucursalId,Nombre,DatosAdicionales, SerieIngresos,FolioIngresos," +
+                "SerieFacGlobal,FolioFacGlobal,SerieFacPDV,FolioFacPDV," +
+                "SerieVentas,FolioVentas,SeriePagos,FolioPagos, CarpetaReportes,Carpetaimagenes,SerieNC,FolioNC " +
+                "From  Sucursales Where SucursalId = @SucursalId ";
             return sql;
         }
 
@@ -428,9 +1204,9 @@ namespace ClinicaFB.Helpers
             string sql = "";
             sql = "Insert Into " +
                 " Sucursales " +
-                "(Nombre,DatosAdicionales, SerieIngresos,FolioIngresos,SerieFacGlobal,FolioFacGlobal) " +
+                "(Nombre,DatosAdicionales, SerieIngresos,FolioIngresos,SerieFacGlobal,FolioFacGlobal,SerieFacPDV,FolioFacPDV,SerieVentas,FolioVentas,CarpetaReportes,Carpetaimagenes,SerieNC,FolioNC) " +
                 " Values " +
-                "(@Nombre,@DatosAdicionales, @SerieIngresos,@FolioIngresos,@SerieFacGlobal,@FolioFacGlobal) " +
+                "(@Nombre,@DatosAdicionales, @SerieIngresos,@FolioIngresos,@SerieFacGlobal,@FolioFacGlobal,@SerieFacPDV,@FolioFacPDV,@SerieVentas,@FolioVentas,@CarpetaReportes,@Carpetaimagenes,@SerieNC,@FolioNC) " +
                 "Returning SucursalId ";
             return sql;
         }
@@ -445,7 +1221,15 @@ namespace ClinicaFB.Helpers
                 "SerieIngresos=@SerieIngresos," +
                 "FolioIngresos=@FolioIngresos, " +
                 "SerieFacGlobal=@SerieFacGlobal," +
-                "FolioFacGlobal=@FolioFacGlobal " +
+                "FolioFacGlobal=@FolioFacGlobal, " +
+                "SerieFacPDV=@SerieFacPDV," +
+                "FolioFacPDV=@FolioFacPDV, " +
+                "SerieVentas=@SerieVentas," +
+                "FolioVentas=@FolioVentas, " +
+                "CarpetaReportes= CarpetaReportes," +
+                "Carpetaimagenes= @CarpetaImagenes, " +
+                "SerieNC = @SerieNC," +
+                "FolioNC = @FolioNC " +
                 "Where  SucursalId = @SucursalId ";
             return sql;
         }
@@ -458,6 +1242,11 @@ namespace ClinicaFB.Helpers
                 "Where  SucursalId = @SucursalId ";
             return sql;
         }
+
+
+        public static string
+            SucursalSetSiguienteFolioNC = "Update Sucursales Set FolioNC = FolioNC + 1 Where SucursalId = @SucursalId ";
+
 
 
         public static string SucursalSetSiguienteFolioIngresos()
@@ -474,6 +1263,15 @@ namespace ClinicaFB.Helpers
             return sql;
         }
 
+        public static string SucursalSetSiguienteFolioFacPDV =
+                "update Sucursales Set FolioFacPDV = FolioFacPDV + 1 Where SucursalId = @SucursalId ";
+
+        public static string SucursalSetSiguienteFolioVentas =
+                "update Sucursales Set FolioVentas = FolioVentas + 1 Where SucursalId = @SucursalId ";
+
+        public static string SucursalSetSiguienteFolioPagos =
+        "update Sucursales Set FolioPagos = FolioPagos + 1 Where SucursalId = @SucursalId ";
+
 
         #endregion
         #region Ingresos
@@ -483,14 +1281,14 @@ namespace ClinicaFB.Helpers
         public static string IngresosNoFacturadosSelect()
         {
             string sql = "";
-            sql = 
+            sql =
                 "Select CFDis.EmisorId as CFDiEmisorId, CFDis.CFDiId, CFDis.SERIE, CFDis.FOLIO," +
                 "Ingresos.IngresoId, Ingresos.Serie as TicketSerie,Ingresos.folio as TicketFolio, " +
                 "Ingresos.Fecha, Ingresos.SubTotal, Ingresos.Impuesto, Ingresos.Total " +
                 "from Ingresos " +
                 "Left join cfdis On cfdis.ingresoid = Ingresos.IngresoId " +
                 "Where Ingresos.Cancelado = false " +
-                "And IngresosFacturaGlobalId = 0 " +
+                "And Ingresos.FacturaGlobalId = 0 " +
                 "and CFDis.CFDiId is null " +
                 "and Ingresos.EmisorId =@EmisorId " +
                 "And Ingresos.Fecha Between @FechaIni and @FechaFin";
@@ -504,7 +1302,7 @@ namespace ClinicaFB.Helpers
                 "RetIVA,RetISR,Total,Cancelado,WebId,FacturaGlobalId " +
                 "From  Ingresos " +
                 " Left Join Pacientes On Ingresos.PacienteId = Pacientes.Paciente_Id " +
-                " Left Join razonesSociales On Ingresos.RazonSocialId = RazonesSociales.RazonSocialId "+
+                " Left Join razonesSociales On Ingresos.RazonSocialId = RazonesSociales.RazonSocialId " +
                 "Where IngresoId = @IngresoId";
             return sql;
         }
@@ -522,7 +1320,7 @@ namespace ClinicaFB.Helpers
                 "RazonSocialId = @RazonSocialId," +
                 "CveFOP = @CveFop," +
                 "CveMEP = @CveMEP," +
-                "CveUSO = @CveUso "+
+                "CveUSO = @CveUso " +
                 "Where IngresoId = @IngresoId";
             return sql;
         }
@@ -549,7 +1347,19 @@ namespace ClinicaFB.Helpers
             return sql;
         }
 
-
+        public static string IngresosSelectxSucursalFechasYRazonSocial = 
+            " Select IngresoId,Tipo,SucursalId,Serie,Folio,Fecha,Hora,PacienteId,Pacientes.NombreCompleto as PacienteNombre, " +
+                "Ingresos.RazonSocialId,Ingresos.CveFOP,Ingresos.CveMEP, Ingresos.CveUSO,RazonesSociales.RazonSoc,SubTotal,Impuesto,Descuento,RetIVA,RetISR,Total,Cancelado,WebId " +
+                "From  Ingresos " +
+                " Left Join Pacientes On Ingresos.PacienteId = Pacientes.Paciente_Id " +
+                " Left Join razonesSociales On Ingresos.RazonSocialId = RazonesSociales.RazonSocialId " +
+                " Where  " +
+                " Ingresos.SucursalId = @SucursalId " +
+                " And Tipo = @Tipo " +
+                " And Ingresos.Fecha Between @FechaInicial and @FechaFinal " +
+                " And Ingresos.RazonSocialId = @RazonSocialId";
+           
+         
 
         public static string IngresoInsert()
         {
@@ -577,7 +1387,7 @@ namespace ClinicaFB.Helpers
         {
             string sql = "";
             sql = " Select IngresoDetalleId,ArticuloId,Clave,Descripcion,UDM,Cantidad,Precio,CveProSer,CveUni," +
-                "PorceDes,Descuento,BaseIVA,TipoIVA,TasaIVA,IVA,BaseRetISR,PorceRetISR,RetISR,PorceRetIVA,RetIVA,EmisorId,Serie From IngresosDetalle" +               
+                "PorceDes,Descuento,BaseIVA,TipoIVA,TasaIVA,IVA,BaseRetISR,PorceRetISR,RetISR,PorceRetIVA,RetIVA,EmisorId,Serie From IngresosDetalle" +
                 " Where IngresoId=@IngresoId";
             return sql;
         }
@@ -608,7 +1418,7 @@ namespace ClinicaFB.Helpers
         public static string PacienteImagenInsert()
         {
             string sql = "";
-            sql = "Insert Into PacientesImagenes (PacienteId,RutaImagen,Fecha,DiagnosticoId,PalabrasClave) Values "+
+            sql = "Insert Into PacientesImagenes (PacienteId,RutaImagen,Fecha,DiagnosticoId,PalabrasClave) Values " +
                 " (@PacienteId,@RutaImagen,@Fecha,@DiagnosticoId,@PalabrasClave) Returning PacImId";
             return sql;
         }
@@ -701,14 +1511,16 @@ namespace ClinicaFB.Helpers
             return sql;
         }
 
+        public static string RazonSocialTieneIngresos =
+            "Select Count(*) From Ingresos Where RazonSocialId=@RazonSocialId";
 
+        public static string RazonSocialTieneCFDis =
+            "Select Count(*) From Cfdis Where RazonSocialId=@RazonSocialId";
 
-        public static string RazonSocialDelete()
-        {
-            string sql = "";
-            sql = "Delete From RazonesSociales Where RazonSocialId=@RazonSocialId";
-            return sql;
-        }
+        public static string RazonSocialDelete = "Delete From RazonesSociales Where RazonSocialId=@RazonSocialId";
+
+       
+       
 
 
 
@@ -791,14 +1603,35 @@ namespace ClinicaFB.Helpers
         #endregion
         #region Articulos
 
+        public static string ArticulosSinCostoSelect =
+            "Select ArticuloId, Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
+                "Where Costo = 0 " +
+                "Order By Descripcion";
+
+        public static string ArticulosSelectxDes =
+            "Select ArticuloId, Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
+                "Where UPPER(Descripcion) LIKE @Filtro " +
+                "Order By Descripcion";
+
+        public static string ArticulosSelectxDesYTipo =
+            "Select ArticuloId, Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
+                "Where Tipo = @Tipo And UPPER(Descripcion) LIKE @Filtro " +
+                "Order By Descripcion";
+
+
         public static string ArticulosSelectBuscar()
         {
             string sql = "";
-            sql = "Select ArticuloId, Clave,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+            sql = "Select ArticuloId, Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5,FechaUltimaCompra, " +
 
-                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId From Articulos " +
-                " Where Descripcion Like @Buscar Or Upper(Clave) like @Buscar " +
-                "Order By Descripcion";
+                "CveProSer,CveUni,Articulos.ImpuestoId,MarcaId,LineaId,Impuestos.Porcentaje as PorceIVA " +
+                "From Articulos " +
+                "Inner Join Impuestos on Articulos.ImpuestoId = Impuestos.ImpuestoId " +
+                " Where Articulos.Descripcion Like @Buscar Or Upper(Clave) like @Buscar Or Upper(CodiGoBarras) like @Buscar" +
+                " Order By Descripcion";
             return sql;
         }
 
@@ -810,40 +1643,79 @@ namespace ClinicaFB.Helpers
         }
 
 
+        public static string
+            ArticulosSelectxClaveDescripcionCodigo =
+            "Select ArticuloId, Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+            "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
+            "Where UPPER(Clave) LIKE @Filtro OR UPPER(Descripcion) LIKE @Filtro OR UPPER(CodigoBarras) LIKE @Filtro " +
+            "Order By Descripcion";
+
         public static string ArticulosSelect()
         {
             string sql = "";
-            sql = "Select ArticuloId, Clave,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
-
-                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId From Articulos Order By Descripcion";
+            sql = "Select ArticuloId, Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,SKU,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos Order By Descripcion";
             return sql;
         }
         public static string ArticuloSelect()
         {
             string sql = "";
-            sql = "Select Clave,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
-                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId From Articulos Where ArticuloId=@ArticuloId";
+            sql = "Select ArticuloId,Clave,CodigoBarras,Articulos.Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5,FechaUltimaCompra," +
+                "CveProSer,CveUni,SKU,Articulos.ImpuestoId,MarcaId,LineaId,Impuestos.Porcentaje as PorceIVA From Articulos " +
+                "Left Join Impuestos On Articulos.ImpuestoId = Impuestos.ImpuestoId " +
+                "Where ArticuloId=@ArticuloId";
             return sql;
+        }
+
+        public static string ArticuloSelectXSKU = 
+            "Select ArticuloId,Clave,CodigoBarras,Articulos.Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5,FechaUltimaCompra," +
+                "CveProSer,CveUni,SKU,Articulos.ImpuestoId,MarcaId,LineaId,Impuestos.Porcentaje as PorceIVA From Articulos " +
+                "Left Join Impuestos On Articulos.ImpuestoId = Impuestos.ImpuestoId " +
+                "Where SKU=@SKU";
+
+        public static string ArticulosSelectBetweenDescripciones
+        {
+            get
+            {
+                return "Select ArticuloId,Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
+                "Where Descripcion Between @DescripcionInicial And @DescripcionFinal";
+            }
         }
 
         public static string ArticuloSelectxClave()
         {
             string sql = "";
-            sql = "Select ArticuloId,Clave,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
-                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId From Articulos " +
+            sql = "Select ArticuloId,Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
                 "Where Clave=@Clave";
             return sql;
         }
+
+        public static string ArticuloSelectxCodigo =
+            "Select ArticuloId,Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
+                "Where CodigoBarras=@CodigoBarras";
+
+        public static string ArticuloSelectExisteClave
+            = "Select ArticuloId,Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
+                "Where ArticuloId <> @ArticuloId And Clave=@Clave";
+
+        public static string ArticuloSelectExisteCodigo =
+            "Select ArticuloId,Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
+                "Where ArticuloId <> @ArticuloId And  CodigoBarras=@CodigoBarras";
 
 
         public static string ArticuloInsert()
         {
             string sql = "";
-            sql = "Insert Into Articulos (Clave,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
-                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId) " +
+            sql = "Insert Into Articulos (Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
+                "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra,SKU) " +
                 "values " +
-                "(@Clave,@Descripcion,@Tipo,@UDM,@Moneda,@Costo,@Precio1,@Precio2,@Precio3,@Precio4,@Precio5," +
-                "@CveProSer,@CveUni,@ImpuestoId,@MarcaId,@LineaId) Returning ArticuloId";
+                "(@Clave,@CodigoBarras,@Descripcion,@Tipo,@UDM,@Moneda,@Costo,@Precio1,@Precio2,@Precio3,@Precio4,@Precio5," +
+                "@CveProSer,@CveUni,@ImpuestoId,@MarcaId,@LineaId,@FechaUltimaCompra,@SKU) Returning ArticuloId";
             return sql;
         }
 
@@ -852,6 +1724,8 @@ namespace ClinicaFB.Helpers
             string sql = "";
             sql = "Update Articulos Set " +
                 "Clave=@Clave," +
+                "CodigoBarras=@CodigoBarras," +
+                "SKU=@SKU," +
                 "Descripcion=@Descripcion," +
                 "Tipo=@Tipo," +
                 "UDM=@UDM," +
@@ -866,11 +1740,17 @@ namespace ClinicaFB.Helpers
                 "CveUni=@CveUni," +
                 "ImpuestoId=@ImpuestoId," +
                 "MarcaId=@MarcaId," +
-                "LineaId=@LineaId " +
+                "LineaId=@LineaId," +
+                "FechaUltimaCompra = @FechaUltimaCompra " +
                 " Where ArticuloId=@ArticuloId";
             return sql;
         }
+        public static string ArticuloSKUUpdate
+             = "Update Articulos Set " +
+                "SKU=@SKU " +
+                " Where ArticuloId=@ArticuloId";
 
+        public static string ArticulosInit = "Delete From Articulos Where ArticuloId>0";
         public static string ArticuloDelete()
         {
             string sql = "";
@@ -878,6 +1758,13 @@ namespace ClinicaFB.Helpers
             return sql;
         }
 
+        public static string
+            ArticuloUpdateFechaUltimaCompra = "Update Articulos Set FechaUltimaCompra = @FechaUltimaCompra Where ArticuloId = @ArticuloId";
+        public static string
+              ArticuloUpdateCosto = "Update Articulos Set Costo = @Costo Where ArticuloId = @ArticuloId";
+        public static string
+            ArticuloUltimoCostoFromCompras = "Select Fecha,Importe as Costo From ArticulosMovimientos Desc" +
+            " Where AlmacenId=@AlmacenId and ArticuloId = @ArticuloId And  ConceptoId = @ConceptoId And Fecha <=@Fecha And Importe>1";
         #endregion
         #region SeriesDocumentos
 
@@ -957,7 +1844,7 @@ namespace ClinicaFB.Helpers
         public static string SerieDocDelete()
         {
             string sql = "";
-            sql = "Delete From SeriesDocs"+
+            sql = "Delete From SeriesDocs" +
                 " Where SerieDocId=@SerieDocId ";
             return sql;
         }
@@ -992,13 +1879,21 @@ namespace ClinicaFB.Helpers
             string sql = "";
             sql = "Select EmisorId,RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa,PDV" +
                 " From Emisores Order by Nombre";
-            return sql; 
+            return sql;
         }
+
+        public static string
+            EmisoresPDVSelect = "Select EmisorId,RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa,PDV" +
+                " From Emisores Where PDV = True and Defa = True";
+
+        public static string
+    EmisoresNoPDVSelect = "Select EmisorId,RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa,PDV" +
+        " From Emisores Where PDV = false";
 
         public static string EmisorSelect()
         {
             string sql = "";
-            sql = "Select RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa,PDV" +
+            sql = "Select EmisorId,RFC,Nombre,Direccion,Colonia,CiudadId,EstadoId,Paisid,CP,CveRef,Certificado,LlavePrivada,PassWord,Defa,PDV,Cer,Llave" +
                 " From Emisores Where EmisorId = @EmisorId";
             return sql;
         }
@@ -1199,7 +2094,7 @@ namespace ClinicaFB.Helpers
         public static string TRSelectByUsr()
         {
             string sql = "Select TextoId,Texto,Boton1,Boton2,Boton3,Boton4,Boton5,Boton6,Boton7 From TextosRapidos " +
-                " Where UsuarioId = @UsuarioId"; 
+                " Where UsuarioId = @UsuarioId";
             return sql;
 
         }
@@ -1519,7 +2414,7 @@ namespace ClinicaFB.Helpers
             sql = "Select Paciente_Id,Nombres,Apellido_Paterno,Apellido_Materno,Sexo,Fecha_Nacimiento,Telefonos,Correos," +
                 "EdoCivilId,OcupacionId,ReferenteId," +
                 "CiudadOrigenId,Direccion,Colonia,LocalidadId,CiudadId,EstadoId,PaisId,CP," +
-                "DiagnosticoId,PielId,SolarId,MedicoId,MaquillajeId,Medicamentos,Alergias,Antecedentes,Origen,PassWord From Pacientes ";
+                "DiagnosticoId,PielId,SolarId,MedicoId,MaquillajeId,Medicamentos,Alergias,Antecedentes,Origen,PassWord,Observaciones From Pacientes ";
             sql += " Where Paciente_Id = @Paciente_Id";
             return sql;
 
@@ -1530,7 +2425,7 @@ namespace ClinicaFB.Helpers
             sql = "Select Paciente_Id,Nombres,Apellido_Paterno,Apellido_Materno,Sexo,Fecha_Nacimiento,Telefonos,Correos," +
                 "EdoCivilId,OcupacionId,ReferenteId," +
                 "CiudadOrigenId,Direccion,Colonia,LocalidadId,CiudadId,EstadoId,PaisId,CP," +
-                "DiagnosticoId,PielId,SolarId,MedicoId,MaquillajeId,Medicamentos,Alergias,Antecedentes,Origen,PassWord From Pacientes ";
+                "DiagnosticoId,PielId,SolarId,MedicoId,MaquillajeId,Medicamentos,Alergias,Antecedentes,Origen,PassWord,Observaciones From Pacientes ";
             sql += " Where Paciente_Id = @Paciente_Id";
             return sql;
 
@@ -1541,10 +2436,10 @@ namespace ClinicaFB.Helpers
             string sql;
             sql = "Insert into Pacientes (Nombres,Apellido_Paterno,Apellido_Materno,Sexo,Fecha_Nacimiento,Telefonos,Correos,EdoCivilId,OcupacionId,ReferenteId," +
                 "CiudadOrigenId,Direccion,Colonia,LocalidadId,CiudadId,EstadoId,PaisId,CP," +
-                "DiagnosticoId,PielId,SolarId,MedicoId,MaquillajeId,Medicamentos,Alergias,Antecedentes,Origen,PassWord,FechaHoraCreacion,UsuarioCreacionId) values " +
+                "DiagnosticoId,PielId,SolarId,MedicoId,MaquillajeId,Medicamentos,Alergias,Antecedentes,Origen,PassWord,Observaciones,FechaHoraCreacion,UsuarioCreacionId) values " +
                 "(@Nombres,@Apellido_Paterno,@Apellido_Materno,@Sexo,@Fecha_Nacimiento,@Telefonos,@Correos,@EdoCivilId,@OcupacionId,@ReferenteId," +
                 "@CiudadOrigenId,@Direccion,@Colonia,@LocalidadId,@CiudadId,@EstadoId,@PaisId,@CP," +
-                "@DiagnosticoId,@PielId,@SolarId,@MedicoId,@MaquillajeId,@Medicamentos,@Alergias,@Antecedentes,@Origen,@PassWord,@FechaHoraCreacion,@UsuarioCreacionId) Returning Paciente_Id";
+                "@DiagnosticoId,@PielId,@SolarId,@MedicoId,@MaquillajeId,@Medicamentos,@Alergias,@Antecedentes,@Origen,@PassWord,@Observaciones,@FechaHoraCreacion,@UsuarioCreacionId) Returning Paciente_Id";
             return sql;
 
         }
@@ -1592,6 +2487,7 @@ namespace ClinicaFB.Helpers
                    "Antecedentes=@Antecedentes," +
                    "Origen=@Origen, " +
                    "PassWord=@PassWord, " +
+                   "Observaciones=@Observaciones," +
                    "FechaHoraEdicion=@FechaHoraEdicion," +
                    "UsuarioEdicionId = @UsuarioEdicionId" +
 
@@ -1619,7 +2515,7 @@ namespace ClinicaFB.Helpers
 
         public static string PacienteReporteExpedienteSelect()
         {
-            string sql="";
+            string sql = "";
             sql =
                 "Select Paciente_Id,NombreCompleto,Fecha_Nacimiento,EdosCiviles.Descripcion as EdoCivil," +
                 "Ocupaciones.Descripcion as Ocupacion,Referentes.Descripcion as Referente," +
@@ -1627,13 +2523,13 @@ namespace ClinicaFB.Helpers
                 "Ciudades.Descripcion as Ciudad,Estados.Descripcion as Estado,Paises.Descripcion as Pais,Cp," +
                 "Diagnosticos.Descripcion as Diagnostico,Pieles.Descripcion as Piel,Exposiciones.Descripcion as ExpSolar," +
                 "Medicos.Descripcion as Medico,Maquillajes.Descripcion as Maquillaje,Medicamentos," +
-                "Alergias,Antecedentes,Origen,Telefonos,Correos " +
+                "Alergias,Antecedentes,Origen,Telefonos,Correos,Observaciones " +
                 "From Pacientes " +
                 "Left Join Descripciones EdosCiviles on Pacientes.EdoCivilId = EdosCiviles.Descripcion_Id " +
                 "Left Join Descripciones Ocupaciones on Pacientes.OcupacionId = Ocupaciones.Descripcion_Id " +
                 "Left Join Descripciones Referentes on Pacientes.ReferenteId = Referentes.Descripcion_Id " +
                 "Left Join Descripciones CiudadesOr on Pacientes.CiudadOrigenId = CiudadesOr.Descripcion_Id " +
-                "Left Join Descripciones Localidades on Pacientes.LocalidadId = Localidades.Descripcion_Id "  +
+                "Left Join Descripciones Localidades on Pacientes.LocalidadId = Localidades.Descripcion_Id " +
                 "Left Join Descripciones Ciudades on Pacientes.CiudadId = Ciudades.Descripcion_Id " +
                 "Left Join Descripciones Estados on Pacientes.EstadoId = Estados.Descripcion_Id " +
                 "Left Join Descripciones Paises on Pacientes.PaisId = Paises.Descripcion_Id " +
@@ -1647,10 +2543,10 @@ namespace ClinicaFB.Helpers
             return sql;
         }
 
-            #endregion
+        #endregion
 
-            #region Notas
-            public static string NotaSelect()
+        #region Notas
+        public static string NotaSelect()
         {
             string sql;
             sql = "Select  PacienteId,Fecha,Texto,FechaHoraCreacion,UsuarioCreacionId From Notas Where NotaId = @NotaId ";
@@ -1790,10 +2686,10 @@ namespace ClinicaFB.Helpers
         #region Parametros
         public static string ParametroSelect()
         {
-            string sql ="";
+            string sql = "";
 
-            sql = "Select Parametro_Id,SysPassword,ColorCitaLetra,ColorCitaFondo,ColorMultipleLetra,ColorMultipleFondo,"+
-                "ColorBloqueoLetra,ColorBloqueoFondo,ColorConfirmadoLetra,ColorConfirmadoFondo,ColorAsistioLetra,ColorAsistioFondo "+
+            sql = "Select Parametro_Id,SysPassword,ColorCitaLetra,ColorCitaFondo,ColorMultipleLetra,ColorMultipleFondo," +
+                "ColorBloqueoLetra,ColorBloqueoFondo,ColorConfirmadoLetra,ColorConfirmadoFondo,ColorAsistioLetra,ColorAsistioFondo " +
                 "From Parametros";
 
             return sql;
@@ -1804,17 +2700,17 @@ namespace ClinicaFB.Helpers
         {
             string sql = "";
 
-            sql = "Update Parametros Set "+
+            sql = "Update Parametros Set " +
                 "SysPassword = @SysPassword," +
-                "ColorCitaLetra= @ColorCitaLetra,"+
-                "ColorCitaFondo=@ColorCitaFondo,"+
-                "ColorMultipleLetra = @ColorMultipleLetra,"+
+                "ColorCitaLetra= @ColorCitaLetra," +
+                "ColorCitaFondo=@ColorCitaFondo," +
+                "ColorMultipleLetra = @ColorMultipleLetra," +
                 "ColorMultipleFondo = @ColorMultipleFondo," +
-                "ColorBloqueoLetra = @ColorBloqueoLetra,"+
-                "ColorBloqueoFondo = @ColorBloqueoFondo,"+
-                "ColorConfirmadoLetra=@ColorConfirmadoLetra,"+
-                "ColorConfirmadoFondo = @ColorConfirmadoFondo,"+
-                "ColorAsistioLetra = @ColorAsistioLetra,"+
+                "ColorBloqueoLetra = @ColorBloqueoLetra," +
+                "ColorBloqueoFondo = @ColorBloqueoFondo," +
+                "ColorConfirmadoLetra=@ColorConfirmadoLetra," +
+                "ColorConfirmadoFondo = @ColorConfirmadoFondo," +
+                "ColorAsistioLetra = @ColorAsistioLetra," +
                 "ColorAsistioFondo = @ColorAsistioFondo " +
                 "Where Parametro_Id = @Parametro_Id";
 
@@ -1829,7 +2725,7 @@ namespace ClinicaFB.Helpers
             sql = "Insert Into Parametros " +
                 "(SysPassword,ColorCitaLetra,ColorCitaFondo,ColorMultipleLetra,ColorMultipleFondo," +
                 "ColorBloqueoLetra,ColorBloqueoFondo,ColorConfirmadoLetra,ColorConfirmadoFondo," +
-                "ColorAsistioLetra,ColorAsistioFondo)" +                
+                "ColorAsistioLetra,ColorAsistioFondo)" +
                 "Values " +
                 "(@SysPassword,@ColorCitaLetra,@ColorCitaFondo,@ColorMultipleLetra,@ColorMultipleFondo," +
                 "@ColorBloqueoLetra,@ColorBloqueoFondo,@ColorConfirmadoLetra,@ColorConfirmadoFondo," +
@@ -1847,7 +2743,8 @@ namespace ClinicaFB.Helpers
 
         #region AgendaWEB
         #region CitasWEB
-        public static string CitaWEBInsert() {
+        public static string CitaWEBInsert()
+        {
             string sql = "";
             sql = "insert Into CitasWEB (CitaInicialId,Fecha,Hora,TipoRecurso,RecursoId,RecursoNombre,PacienteId,PacienteNombre," +
                 "PacienteSexo,PacienteFechaNac,Observaciones,Cancelada,CancelacionMotivoId,CancelacionMotivo,Bloqueada," +
@@ -1880,7 +2777,8 @@ namespace ClinicaFB.Helpers
 
         #region Citas
 
-        public static string CitaSelect() {
+        public static string CitaSelect()
+        {
             string sql = "";
             sql = "Select Cita_Id,Cita_Origen_Id,SucursalId, TipoRecurso,Recurso_Id, Fecha,Hora, " +
                 "Paciente_Id, Observaciones, UsuarioAlta, FechaHoraAlta, UsuarioModificacion,  FechaHoraModificacion," +
@@ -1933,11 +2831,11 @@ namespace ClinicaFB.Helpers
                 "Paciente_Id, Observaciones, UsuarioAlta, FechaHoraAlta, UsuarioModificacion,  FechaHoraModificacion," +
         "Cancelada,CancelacionMotivo_Id,UsuarioCancelacion,FechaHoraCancelacion,Bloqueada,BloqueoMotivo_Id,ColorCitaLetra," +
         "ColorCitaFondo, Confirmado,Asistio)" +
-        " Values "+
+        " Values " +
         "(@Cita_Origen_Id,@SucursalId,@TipoRecurso,@Recurso_Id, @Fecha,@Hora, " +
                 "@Paciente_Id, @Observaciones, @UsuarioAlta, @FechaHoraAlta, @UsuarioModificacion,  @FechaHoraModificacion," +
         "@Cancelada,@CancelacionMotivo_Id,@UsuarioCancelacion,@FechaHoraCancelacion,@Bloqueada,@BloqueoMotivo_Id,@ColorCitaLetra," +
-        "@ColorCitaFondo, @Confirmado,@Asistio) Returning Cita_Id" 
+        "@ColorCitaFondo, @Confirmado,@Asistio) Returning Cita_Id"
         ;
 
             return sql;
@@ -1971,14 +2869,14 @@ namespace ClinicaFB.Helpers
                 "Asistio=@Asistio" +
                 " Where Cita_id = @Cita_id";
 
-        ;
+            ;
 
             return sql;
         }
 
         public static string CitaUpdateOrigenId()
         {
-            string sql="";
+            string sql = "";
             sql = "Update Citas Set Cita_Origen_ID = @Cita_Origen_Id Where Cita_Id = @Cita_id";
             return sql;
         }
@@ -1996,7 +2894,8 @@ namespace ClinicaFB.Helpers
 
         }
 
-        public static string CitaDelete() {
+        public static string CitaDelete()
+        {
             string sql = "";
             sql = " Delete From Citas Where Cita_Id = @Cita_Id";
             return sql;
@@ -2044,7 +2943,7 @@ namespace ClinicaFB.Helpers
                 "ProcIns_Id=@ProcIns_Id," +
                 "Importe =@Importe" +
                 " Where CitaProIns_Id = @CitaProIns_Id";
-                
+
             return sql;
         }
 
@@ -2107,8 +3006,8 @@ namespace ClinicaFB.Helpers
         public static string DatosEmpresaSelect()
         {
             string sql = "";
-            sql = "Select Empresa_Id,Nombre,Direccion,Colonia,Localidad,Cp,Ciudad,Estado,Pais,Telefonos,Correos,Logotipo,"+
-                "AvisosServidor,AvisosUsuario,AvisosPassword,AvisosCuenta,AvisosSSL,AvisosPuerto,CarpetaReportes From DatosEmpresa";
+            sql = "Select Empresa_Id,Nombre,Direccion,Colonia,Localidad,Cp,Ciudad,Estado,Pais,Telefonos,Correos,Logotipo," +
+                "AvisosServidor,AvisosUsuario,AvisosPassword,AvisosCuenta,AvisosSSL,AvisosPuerto,CarpetaReportes,IncImpVta From DatosEmpresa";
             return sql;
         }
 
@@ -2116,9 +3015,9 @@ namespace ClinicaFB.Helpers
         {
             string sql = "";
             sql = "Insert Into DatosEmpresa(Nombre,Direccion,Colonia,Localidad,Cp,Ciudad,Estado,Pais,Telefonos,Correos,Logotipo," +
-                "AvisosServidor,AvisosUsuario,AvisosPassword,AvisosCuenta,AvisosSSL,AvisosPuerto,CarpetaReportes) Values " +
+                "AvisosServidor,AvisosUsuario,AvisosPassword,AvisosCuenta,AvisosSSL,AvisosPuerto,CarpetaReportes,IncImpVta) Values " +
                 "(@Nombre,@Direccion,@Colonia,@Localidad,@Cp,@Ciudad,@Estado,@Pais,@Telefonos,@Correos,@Logotipo," +
-                "@AvisosServidor,@AvisosUsuario,@AvisosPassword,@AvisosCuenta,@AvisosSSL,@AvisosPuerto,@CarpetaReportes) Returning Empresa_Id";
+                "@AvisosServidor,@AvisosUsuario,@AvisosPassword,@AvisosCuenta,@AvisosSSL,@AvisosPuerto,@CarpetaReportes,@IncImpVta) Returning Empresa_Id";
             return sql;
         }
 
@@ -2143,7 +3042,8 @@ namespace ClinicaFB.Helpers
                 "AvisosCuenta=@AvisosCuenta," +
                 "AvisosSSL=@AvisosSSL," +
                 "AvisosPuerto=@AvisosPuerto," +
-                "CarpetaReportes =@CarpetaReportes " +
+                "CarpetaReportes =@CarpetaReportes," +
+                "IncImpVta = @IncImpVta " +
                 " Where Empresa_Id = @Empresa_Id";
             return sql;
         }
@@ -2165,7 +3065,7 @@ namespace ClinicaFB.Helpers
         {
             string sql = "";
             sql = "Select Empresa_Id,Nombre,Nombre_Corto,Direccion,Colonia,Localidad,Ciudad,Estado,Cp,Logotipo," +
-                "WebServiceURL,CarpetaWEB,BddWEB,CopiarWEB,CarpetaReportes,CarpetaImagenes From Empresas Where Empresa_Id=@Empresa_Id";
+                "WebServiceURL,CarpetaWEB,BddWEB,CopiarWEB,CarpetaReportes,CarpetaImagenes,IncImpVta From Empresas Where Empresa_Id=@Empresa_Id";
             return sql;
         }
 

@@ -43,6 +43,7 @@ namespace ClinicaFB.Modelo
         public DateTime FechaHoraEdicion { get; set; }
         public int UsuarioEdicionId { get; set; }
         public string PassWord { get; set; }
+        public string Observaciones { get; set; }
 
         public string NombreCompleto
         {
@@ -61,6 +62,8 @@ namespace ClinicaFB.Modelo
             {
                 string or = "";
                 or = String.IsNullOrEmpty(Origen)? "AGE" : Origen;
+                if (or.Contains("AC")) 
+                    or = "EXP";
                 return or;
             }
 

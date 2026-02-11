@@ -8,11 +8,11 @@ namespace ClinicaFB.Modelo
 {
     public class CFDI
     {
-        public int CfdiId { get; set; }
-        public int EmisorId { get; set; }
-        public int PacienteId { get; set; }
+        public long CfdiId { get; set; }
+        public long EmisorId { get; set; }
+        public long PacienteId { get; set; }
         public string PacienteNombre { get; set; }
-        public int RazonSocialId { get; set; }
+        public long RazonSocialId { get; set; }
 
         public string TipoComprobante { get; set; } = "I";
 
@@ -56,7 +56,7 @@ namespace ClinicaFB.Modelo
         public string RFCPAC { get; set; } = "";
         public DateTime FechaCertificacion { get; set; }
         public string CertificadoSAT { get; set; }
-        public int IngresoId { get; set; }
+        public long IngresoId { get; set; }
 
         public string NomPac { 
             get { 

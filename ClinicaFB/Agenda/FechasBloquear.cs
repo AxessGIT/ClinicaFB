@@ -22,6 +22,8 @@ namespace ClinicaFB.Agenda
         private BindingList<Recurso> _recursos;
         private List<string> _horasIniciales;
         private List<string> _horasFinales;
+        private List<string> _diasSemana;
+
 
         public FechasBloquear(FbConnection db)
         {
@@ -33,6 +35,28 @@ namespace ClinicaFB.Agenda
         {
             Close();
         }
+
+        private void EnlazaComboDias()
+        {
+            cboDias.DataSource = _diasSemana;
+           
+        }
+
+        private void LlenaDiasSemana()
+        {
+            _diasSemana = new List<string>
+    {
+        "TODOS",
+        "Lunes",
+        "Martes",
+        "Miércoles",
+        "Jueves",
+        "Viernes",
+        "Sábado",
+        "Domingo"
+    };
+        }
+
 
         private void LlenaListados()
         {
@@ -90,7 +114,9 @@ namespace ClinicaFB.Agenda
 
             _recursos = Helper.cargaDoctores(_db);
             EnlazaCombos();
+            EnlazaComboDias();
             cboTipos.SelectedIndex = 0;
+            cboDias.SelectedIndex = 0;
 
         }
 
@@ -190,6 +216,13 @@ namespace ClinicaFB.Agenda
 
             while (fechaActual <= fechaFinal)
             {
+                int diaSemana = (int)fechaActual.DayOfWeek;
+                if (cboDias.SelectedIndex != 0 && cboDias.SelectedIndex != diaSemana)
+                {
+                    fechaActual = fechaActual.AddDays(1);
+                    continue;
+                }
+
                 for (int i = indiceHoraInicial; i <= indiceHoraFinal; i++)
                 {
 
@@ -198,7 +231,7 @@ namespace ClinicaFB.Agenda
 
                     var celdaBloqueada = _db.QueryFirstOrDefault(sqlBloqueada, new
                     {
-                        SucursalId = Properties.Settings.Default.SucursalId,
+                        Properties.Settings.Default.SucursalId,
                         TipoRecurso = tipo,
                         Recurso_Id = recursoID,
                         Fecha = fechaActual,

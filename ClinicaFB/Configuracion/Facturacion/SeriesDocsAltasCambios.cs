@@ -17,12 +17,12 @@ namespace ClinicaFB.Configuracion
     public partial class SeriesDocsAltasCambios : Form
     {
         private bool _esAlta;
-        private int _emisorId;
+        private long _emisorId;
         private string _tipo;
         private int _serieId;
 
 
-        public SeriesDocsAltasCambios(bool esAlta, int emisorId,string tipo, int serieId)
+        public SeriesDocsAltasCambios(bool esAlta, long emisorId,string tipo, int serieId)
         {
             InitializeComponent();
             _esAlta = esAlta;

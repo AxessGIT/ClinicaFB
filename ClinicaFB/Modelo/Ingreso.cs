@@ -8,15 +8,15 @@ namespace ClinicaFB.Modelo
 {
     public class Ingreso
     {
-        public int IngresoId { get; set; }
-        public int EmisorId { get; set; }   
+        public long IngresoId { get; set; }
+        public long EmisorId { get; set; }   
         public string Tipo { get; set; }
-        public int SucursalId { get; set; }
+        public long SucursalId { get; set; }
         public string Serie { get; set; }
         public int Folio { get; set; }
-        public int PacienteId { get; set; }
+        public long PacienteId { get; set; }
         public string PacienteNombre { get; set; }
-        public int RazonSocialId { get; set; }
+        public long RazonSocialId { get; set; }
         public string CveFOP { get; set; }
         public string CveMEP { get; set; }
         public string CveUSO { get; set; }
@@ -31,7 +31,7 @@ namespace ClinicaFB.Modelo
         public decimal Total { get; set; }
         public bool Cancelado { get; set; }
         public string WebId { get; set; }
-        public int FacturaGlobalId { get; set; }
+        public long FacturaGlobalId { get; set; }
         public string NomPac
         {
             get { return string.IsNullOrEmpty(PacienteNombre) ? "PUBLICO EN GENERAL" : PacienteNombre; }

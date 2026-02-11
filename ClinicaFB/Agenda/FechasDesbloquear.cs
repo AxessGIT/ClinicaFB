@@ -39,6 +39,7 @@ namespace ClinicaFB.Agenda
             LlenaRecursos("DOC");
             EnlazaCombos();
             cboTipos.SelectedIndex = 0;
+            cboDias.SelectedIndex = 0;
 
         }
 
@@ -133,11 +134,19 @@ namespace ClinicaFB.Agenda
             DateTime fechaActual = fechaInicial.Date;
 
 
-            string sql = "Delete From Citas Where SucursalId =@SucursalId and  Fecha Between @FechaInicial and @FechaFinal And Hora Between @HoraInicial And @HoraFinal And Bloqueada = True";
+            string sql;
+
+            if (cboDias.SelectedIndex == 0)
+            {
+                sql = "Delete From Citas Where SucursalId =@SucursalId and  Fecha Between @FechaInicial and @FechaFinal And Hora Between @HoraInicial And @HoraFinal And Bloqueada = True";
+            }
+            else {
+                sql = "Delete From Citas Where SucursalId =@SucursalId and  Fecha Between @FechaInicial and @FechaFinal And Hora Between @HoraInicial And @HoraFinal And Bloqueada = True And EXTRACT(WEEKDAY FROM FECHA) = @DiaSemana";
+            }
 
             _db.Execute(sql, new
             {
-                SucursalId = Properties.Settings.Default.SucursalId,
+                Properties.Settings.Default.SucursalId,
                 FechaInicial = fechaInicial,
                 FechaFinal = fechaFinal,
                 HoraInicial = horaInicial,

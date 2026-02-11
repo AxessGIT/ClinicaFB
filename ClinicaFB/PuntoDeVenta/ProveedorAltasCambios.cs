@@ -16,13 +16,13 @@ namespace ClinicaFB.PuntoDeVenta
 {
     public partial class ProveedorAltasCambios : Form
     {
-        private int _proveedorId;
+        public int ProveedorId = 0;
         private bool _esAlta;
         public ProveedorAltasCambios(bool esAlta,int proveedorId)
         {
             InitializeComponent();
             _esAlta = esAlta;
-            _proveedorId = proveedorId;
+            ProveedorId = proveedorId;
         }
 
         private void ProveedorAltasCambios_Load(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace ClinicaFB.PuntoDeVenta
             using (FbConnection db = General.GetDB())
             {
                 string sql = Queries.ProveedorSelect;
-                Proveedor proveedor = db.Query<Proveedor>(sql, new { ProveedorId = _proveedorId }).FirstOrDefault();
+                Proveedor proveedor = db.Query<Proveedor>(sql, new { ProveedorId = ProveedorId }).FirstOrDefault();
                 if (proveedor != null)
                 {
                     txtRFC.Text = proveedor.RFC;
@@ -75,10 +75,17 @@ namespace ClinicaFB.PuntoDeVenta
                     sql = Queries.ProveedorUpdate;
                 }
                 Proveedor proveedor = new Proveedor();
-                proveedor.ProveedorId = _proveedorId;
+                proveedor.ProveedorId = ProveedorId;
                 proveedor.RFC = txtRFC.Text;
                 proveedor.Nombre = txtNombre.Text;
-                db.Execute(sql, proveedor);
+                if (_esAlta)
+                {
+                    ProveedorId = db.ExecuteScalar<int>(sql, proveedor);
+                }
+                else
+                {
+                    db.Execute(sql, proveedor);
+                }
             }
             return true;
         }

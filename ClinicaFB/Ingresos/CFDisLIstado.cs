@@ -1,9 +1,12 @@
 ﻿using CFDiLib;
+using ClinicaFB.Facturacion;
 using ClinicaFB.Helpers;
 using ClinicaFB.Modelo;
 using Dapper;
 using FirebirdSql.Data.FirebirdClient;
+using SplashScreen.WindowsForms;
 using Syncfusion.Windows.Forms.Grid;
+using Syncfusion.XlsIO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,14 +14,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using Syncfusion.XlsIO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SplashScreen.WindowsForms;
 
 namespace ClinicaFB.Ingresos
 {
@@ -26,6 +27,7 @@ namespace ClinicaFB.Ingresos
     {
         private BindingList<Emisor> _emisores = new BindingList<Emisor>();
         private BindingList<CFDI> _cfdis = new BindingList<CFDI>();
+        long _razonSocialId = 0;
 
         public CFDisLIstado()
         {
@@ -46,15 +48,22 @@ namespace ClinicaFB.Ingresos
 
         private void CargaFacturas()
         {
-            int emisorId =(int) cboEmisores.SelectedValue;
+            long emisorId =(long) cboEmisores.SelectedValue;
             DateTime fechaIni = dtpFechaInicial.Value;
             DateTime fechaFin = dtpFechaFinal.Value;
 
 
             using (FbConnection db = General.GetDB())
             {
-                string sql = (emisorId==0)?Queries.FacturasSelectxFechas(): Queries.FacturasSelect();
-                var res = db.Query<CFDI>(sql, new {EmisorId = emisorId, FechaIni = fechaIni, FechaFin = fechaFin }).ToList();
+                string sql = string.Empty;
+
+                if (emisorId == 0)
+                    sql = _razonSocialId ==0?Queries.FacturasSelectxFechas(): Queries.FacturasSelectxFechasYRazonSocial;
+                else
+                    sql = _razonSocialId == 0 ? Queries.FacturasSelect(): Queries.FacturasSelectXRazonSocial;
+
+
+                var res = db.Query<CFDI>(sql, new {EmisorId = emisorId, FechaIni = fechaIni, FechaFin = fechaFin, RazonSocialId = _razonSocialId}).ToList();
                 _cfdis = new BindingList<CFDI>(res);
             }
 
@@ -204,9 +213,9 @@ namespace ClinicaFB.Ingresos
                 return;
             }
 
-            int cfdiId = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
+            long cfdiId = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
             CFDI cfdi= new CFDI();
-            List<CFDIDetalle> detalle = new List<CFDIDetalle>();
+            List<CfdiDetalle> detalle = new List<CfdiDetalle>();
 
             using (FbConnection db = General.GetDB())
             {
@@ -219,8 +228,8 @@ namespace ClinicaFB.Ingresos
                 }
 
                 sql = Queries.CfdiDetallesSelect();
-                var res = db.Query<CFDIDetalle>(sql, new { Id = cfdiId }).ToList();
-                detalle = new List<CFDIDetalle>(res);
+                var res = db.Query<CfdiDetalle>(sql, new { Id = cfdiId }).ToList();
+                detalle = new List<CfdiDetalle>(res);
 
             }
 
@@ -259,7 +268,7 @@ namespace ClinicaFB.Ingresos
                 return;
             }
 
-            int cfdId = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
+            long cfdId = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
 
             CfdiCancelar cfdiCancelar = new CfdiCancelar(cfdId);
             cfdiCancelar.ShowDialog();
@@ -275,20 +284,14 @@ namespace ClinicaFB.Ingresos
                 return;
             }
 
-            int id = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
+            long id = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
             CfdiVisor cfdiVisor = new CfdiVisor(id);
             cfdiVisor.ShowDialog();
 
         }
 
-        private void Splash()
-        {
-            SplashScreen.WindowsForms.Splasher splasher = new SplashScreen.WindowsForms.Splasher("Generando reporte...");
-            splasher.Show();
-
-        }
-
-        private void GeneraExcel(int emisorId, DateTime fechaIni, DateTime fechaFin)
+   
+        private void GeneraExcel(long emisorId, DateTime fechaIni, DateTime fechaFin)
         {
             SplashScreen.WindowsForms.Splasher splasher = new SplashScreen.WindowsForms.Splasher("Generando reporte...");
             splasher.Show();
@@ -447,15 +450,15 @@ namespace ClinicaFB.Ingresos
 
         }
 
-        private async Task GeneraReporte(int emisorId, DateTime fechaIni, DateTime fechaFin)
+        private async Task GeneraReporte(long emisorId, DateTime fechaIni, DateTime fechaFin)
         {
             await Task.Run(()=> GeneraExcel(emisorId,fechaIni,fechaFin));
 
         }
 
-        private async void cmdimprimir_Click(object sender, EventArgs e)
+        private async void cmdReeporte_Click(object sender, EventArgs e)
         {
-            int emisorId = (int)cboEmisores.SelectedValue;
+            long emisorId = (long)cboEmisores.SelectedValue;
             if (emisorId == 0)
             {
                 MessageBox.Show("Indique el emisor","Aviso", MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -469,14 +472,14 @@ namespace ClinicaFB.Ingresos
            BorraTemporales();
         }
 
-        private void cmdMandarCorreo_Click(object sender, EventArgs e)
+        private async void cmdMandarCorreo_Click(object sender, EventArgs e)
         {
             if (CfdiSeleccionado() == false)
             {
                 return;
             }
 
-            int razonSocialId = _cfdis[grdCfdis.CurrentRow.Index].RazonSocialId;
+            long razonSocialId = _cfdis[grdCfdis.CurrentRow.Index].RazonSocialId;
             CorreosDirecciones correosDirecciones = new CorreosDirecciones(razonSocialId);
             correosDirecciones.ShowDialog();
 
@@ -503,9 +506,273 @@ namespace ClinicaFB.Ingresos
 
             }
 
-            ManejaCFDIs.MandaCorreo(direcciones,archivoCfdi,archivoPDF);
+            await ManejaCFDIs.MandaCorreo(direcciones,archivoCfdi,archivoPDF);
             MessageBox.Show("Se envío el correo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+
+
+        }
+
+        private void cmdChecarCancelacion_Click(object sender, EventArgs e)
+        {
+            Splasher splasher = new Splasher("Checando cancelación de CFDIs...");
+            splasher.Show();
+
+            long emisorId = (long)cboEmisores.SelectedValue;    
+            if (emisorId == 0)
+            {
+                splasher.Close();
+                MessageBox.Show("Indique el emisor", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+            DateTime fechaIni = dtpFechaInicial.Value;
+            DateTime fechaFin = dtpFechaFinal.Value;
+
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.CFDisCanceladosSinCancelarSelect();
+                List<CFDI> cfdis = db.Query<CFDI>(sql, new {EmisorId = emisorId, FechaIni = fechaIni, FechaFin = fechaFin }).ToList();
+
+                if (cfdis.Count == 0)
+                {
+                    splasher.Close(); 
+                    MessageBox.Show("No hay CFDIs sin cancelar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    return;
+                }
+
+                Microsoft.Office.Interop.Excel.Application oExcel;
+
+                oExcel = new Microsoft.Office.Interop.Excel.Application();
+                oExcel.Workbooks.Add();
+
+
+
+                int ren = 1;
+
+                oExcel.Cells[ren, 3].Value = "REPORTE DE FACTURAS";
+                
+
+                ren += 4;
+
+                oExcel.Cells[ren, 1].Value = "Fecha";
+                oExcel.Cells[ren, 2].Value = "Folio";
+                oExcel.Cells[ren, 3].Value = "Cliente";
+                oExcel.Cells[ren, 4].Value   = "UID";
+                oExcel.Cells[ren, 5].Value = "Acuse";
+
+          
+
+                ren += 2;
+
+
+
+                foreach (var cfdi in cfdis)
+                {
+                    oExcel.Cells[ren, 1].Value = cfdi.Fecha;
+                    oExcel.Cells[ren, 2].Value = cfdi.Serie.Trim() + " " + cfdi.Folio.ToString();
+                    oExcel.Cells[ren, 3].Value = string.IsNullOrEmpty(cfdi.ReceptorNombre) ? "PUBLICO EN GENERAL" : cfdi.ReceptorNombre;
+                    oExcel.Cells[ren, 4].Value = cfdi.uid;
+                    oExcel.Cells[ren, 5].Value = cfdi.AcuseCan;
+                    ren++;
+
+
+
+
+
+                }
+                oExcel.Visible = true;
+                
+            }
+            splasher.Close();
+
+        }
+
+        private void cmdCancelacionGlobal_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Desea iniciar?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                return;
+            }
+            Splasher splasher = new Splasher("Iniciando cancelación de CFDIs...");
+            splasher.Show();
+            DateTime fechaIni = dtpFechaInicial.Value;
+            DateTime fechaFin = dtpFechaFinal.Value;
+
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.CFDisCanceladosSinCancelarSelect();
+                List<CFDI> cfdis = db.Query<CFDI>(sql, new { FechaIni = fechaIni, FechaFin = fechaFin }).ToList();
+
+                if (cfdis.Count == 0)
+                {
+                    splasher.Close(); 
+                    MessageBox.Show("No hay CFDIs sin cancelar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    return;
+                }
+
+                foreach (var cfdi in cfdis)
+                {
+                    Cancelar(cfdi.CfdiId);
+                }
+            }
+
+            splasher.Close();
+            MessageBox.Show("Termino la cancelacion global", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+        }
+
+
+
+        private void Cancelar(long cfdiId)
+        {
+
+            
+
+
+            string uid = "";
+            string rfc = "";
+            string cer = "";
+            string key = "";
+            string pas = "";
+            long emisorId;
+            string sql;
+
+            using (FbConnection db = General.GetDB())
+            {
+
+
+                CFDI cfdi = new CFDI();
+
+                sql = Queries.CfdiSelect();
+                cfdi = db.Query<CFDI>(sql, new { Id = cfdiId }).FirstOrDefault();
+
+                uid = cfdi.uid;
+                emisorId = cfdi.EmisorId;
+                
+
+                sql = Queries.EmisorSelect();
+                Emisor emi = db.Query<Emisor>(sql, new { EmisorId = emisorId }).FirstOrDefault();
+
+                if (emi == null)
+                {
+                    return;
+                }
+
+                rfc = emi.RFC;
+                cer = emi.Certificado;
+                key = emi.LlavePrivada;
+                pas = emi.PassWord;
+            }
+
+            ComprobanteCFDI comprobante = new ComprobanteCFDI();
+
+            string motivo = "02";
+            string res = comprobante.CancelaSW(rfc, cer, key, pas, uid, motivo);
+
+
+            if (res.Substring(0, 3) == "999" || (res.Contains("Status:201") == false && res.Contains("Status:202") == false))
+            {
+
+                return;
+
+            }
+
+
+            using (FbConnection db = General.GetDB())
+            {
+                sql = Queries.CfdiCancela();
+                db.Execute(sql, new { Id = cfdiId, Acuse = res });
+                
+            }
+            
+
+
+
+
+        }
+
+        private void cmdImprimir_Click(object sender, EventArgs e)
+        {
+            if (CfdiSeleccionado() == false)
+            {
+                return;
+            }
+
+            long cfdiId = _cfdis[grdCfdis.CurrentRow.Index].CfdiId;
+            CFDI cfdi = new CFDI();
+            List<CfdiDetalle> detalle = new List<CfdiDetalle>();
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.CfdiSelect();
+                cfdi = db.Query<CFDI>(sql, new { Id = cfdiId }).FirstOrDefault();
+
+                if (cfdi == null)
+                {
+                    return;
+                }
+
+                sql = Queries.CfdiDetallesSelect();
+                var res = db.Query<CfdiDetalle>(sql, new { Id = cfdiId }).ToList();
+                detalle = new List<CfdiDetalle>(res);
+
+            }
+
+            string carpetaCfdi = General.CarpetaCfdi(cfdi.EmisorRFC, cfdi.Fecha);
+            string archivoCfdi = carpetaCfdi + @"\" + General.NombreArchivoCfdi("FAC", cfdi.Serie, cfdi.Folio);
+
+
+
+            string xml = File.Exists(archivoCfdi) ? File.ReadAllText(archivoCfdi) : "";
+            ComprobanteCFDI comprobante = new ComprobanteCFDI();
+
+            cfdi.uid = comprobante.GetFolioFiscal(xml);
+            cfdi.EmisorCSD = comprobante.GetEmisorCSDFromXML(xml);
+
+            string archivoPDF = ManejaCFDIs.GeneraPDFFactura(cfdi, detalle, xml);
+
+            General.ImprimePDF(archivoPDF);
+            
+
+        }
+
+        private void cmdBuscaRazonSocial_Click(object sender, EventArgs e)
+        {
+            RazonesSocialesListado razonesSocialesListado = new RazonesSocialesListado(true);
+            razonesSocialesListado.ShowDialog();
+            if (razonesSocialesListado.RazonId != 0)
+            {
+                _razonSocialId = razonesSocialesListado.RazonId;
+                CargaDatosRazonSocial();
+            }
+
+        }
+
+
+        private void CargaDatosRazonSocial()
+        {
+            if (_razonSocialId == 0)
+            {
+                return;
+            }
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.RazonSocialSelect();
+                RazonSocial raz = db.Query<RazonSocial>(sql, new { RazonSocialId = _razonSocialId }).FirstOrDefault();
+
+                if (raz != null)
+                {
+                    txtRFC.Text = raz.RFC;
+                    txtRazonSocial.Text = raz.RazonSoc;
+
+                }
+            }
 
 
         }

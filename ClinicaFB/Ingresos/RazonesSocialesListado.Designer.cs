@@ -37,6 +37,7 @@
             this.cmdModificar = new System.Windows.Forms.Button();
             this.cmdAgregar = new System.Windows.Forms.Button();
             this.cmdSeleccionar = new System.Windows.Forms.Button();
+            this.cmdBorrar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdRazones)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +47,7 @@
             this.grdRazones.Location = new System.Drawing.Point(14, 57);
             this.grdRazones.Margin = new System.Windows.Forms.Padding(4);
             this.grdRazones.Name = "grdRazones";
-            this.grdRazones.Size = new System.Drawing.Size(538, 292);
+            this.grdRazones.Size = new System.Drawing.Size(538, 328);
             this.grdRazones.TabIndex = 7;
             this.grdRazones.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdRazones_CellDoubleClick);
             // 
@@ -56,7 +57,7 @@
             this.label1.Location = new System.Drawing.Point(12, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 16);
-            this.label1.TabIndex = 0;
+            this.label1.TabIndex = 8;
             this.label1.Text = "Buscar";
             // 
             // txtBuscar
@@ -64,16 +65,16 @@
             this.txtBuscar.Location = new System.Drawing.Point(63, 19);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(489, 23);
-            this.txtBuscar.TabIndex = 1;
+            this.txtBuscar.TabIndex = 0;
             // 
             // cmdBuscar
             // 
             this.cmdBuscar.Image = ((System.Drawing.Image)(resources.GetObject("cmdBuscar.Image")));
             this.cmdBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdBuscar.Location = new System.Drawing.Point(559, 13);
+            this.cmdBuscar.Location = new System.Drawing.Point(559, 16);
             this.cmdBuscar.Name = "cmdBuscar";
             this.cmdBuscar.Size = new System.Drawing.Size(116, 29);
-            this.cmdBuscar.TabIndex = 2;
+            this.cmdBuscar.TabIndex = 1;
             this.cmdBuscar.Text = "&Buscar";
             this.cmdBuscar.UseVisualStyleBackColor = true;
             this.cmdBuscar.Click += new System.EventHandler(this.cmdBuscar_Click);
@@ -82,7 +83,7 @@
             // 
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
             this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSalir.Location = new System.Drawing.Point(559, 197);
+            this.cmdSalir.Location = new System.Drawing.Point(559, 223);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(116, 35);
             this.cmdSalir.TabIndex = 6;
@@ -94,10 +95,10 @@
             // 
             this.cmdModificar.Image = ((System.Drawing.Image)(resources.GetObject("cmdModificar.Image")));
             this.cmdModificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdModificar.Location = new System.Drawing.Point(559, 156);
+            this.cmdModificar.Location = new System.Drawing.Point(559, 140);
             this.cmdModificar.Name = "cmdModificar";
             this.cmdModificar.Size = new System.Drawing.Size(116, 35);
-            this.cmdModificar.TabIndex = 5;
+            this.cmdModificar.TabIndex = 4;
             this.cmdModificar.Text = "&Modificar";
             this.cmdModificar.UseVisualStyleBackColor = true;
             this.cmdModificar.Click += new System.EventHandler(this.cmdModificar_Click);
@@ -106,10 +107,10 @@
             // 
             this.cmdAgregar.Image = ((System.Drawing.Image)(resources.GetObject("cmdAgregar.Image")));
             this.cmdAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdAgregar.Location = new System.Drawing.Point(559, 115);
+            this.cmdAgregar.Location = new System.Drawing.Point(559, 99);
             this.cmdAgregar.Name = "cmdAgregar";
             this.cmdAgregar.Size = new System.Drawing.Size(116, 35);
-            this.cmdAgregar.TabIndex = 4;
+            this.cmdAgregar.TabIndex = 3;
             this.cmdAgregar.Text = "&Agregar";
             this.cmdAgregar.UseVisualStyleBackColor = true;
             this.cmdAgregar.Click += new System.EventHandler(this.cmdAgregar_Click);
@@ -121,16 +122,29 @@
             this.cmdSeleccionar.Location = new System.Drawing.Point(559, 57);
             this.cmdSeleccionar.Name = "cmdSeleccionar";
             this.cmdSeleccionar.Size = new System.Drawing.Size(116, 35);
-            this.cmdSeleccionar.TabIndex = 3;
+            this.cmdSeleccionar.TabIndex = 2;
             this.cmdSeleccionar.Text = "&Seleccionar";
             this.cmdSeleccionar.UseVisualStyleBackColor = true;
             this.cmdSeleccionar.Click += new System.EventHandler(this.cmdSeleccionar_Click);
+            // 
+            // cmdBorrar
+            // 
+            this.cmdBorrar.Image = ((System.Drawing.Image)(resources.GetObject("cmdBorrar.Image")));
+            this.cmdBorrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdBorrar.Location = new System.Drawing.Point(559, 181);
+            this.cmdBorrar.Name = "cmdBorrar";
+            this.cmdBorrar.Size = new System.Drawing.Size(116, 35);
+            this.cmdBorrar.TabIndex = 5;
+            this.cmdBorrar.Text = "&Borrar";
+            this.cmdBorrar.UseVisualStyleBackColor = true;
+            this.cmdBorrar.Click += new System.EventHandler(this.cmdBorrar_Click);
             // 
             // RazonesSocialesListado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 373);
+            this.ClientSize = new System.Drawing.Size(699, 398);
+            this.Controls.Add(this.cmdBorrar);
             this.Controls.Add(this.cmdSeleccionar);
             this.Controls.Add(this.cmdBuscar);
             this.Controls.Add(this.cmdSalir);
@@ -164,5 +178,6 @@
         private System.Windows.Forms.Button cmdModificar;
         private System.Windows.Forms.Button cmdAgregar;
         private System.Windows.Forms.Button cmdSeleccionar;
+        private System.Windows.Forms.Button cmdBorrar;
     }
 }

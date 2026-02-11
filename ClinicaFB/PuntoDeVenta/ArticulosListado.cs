@@ -41,6 +41,23 @@ namespace ClinicaFB.PuntoDeVenta
             }
         }
 
+        private void FiltraArticulos()
+        {
+            string filtro = $"%{txtBuscar.Text.Trim().ToUpper()}%";
+            if (string.IsNullOrEmpty(filtro))
+            {
+                CargaArticulos();
+                return;
+            }
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.ArticulosSelectxClaveDescripcionCodigo;
+                var res = db.Query<Articulo>(sql, new { Filtro= filtro }).ToList();
+                _articulos = new BindingList<Articulo>(res);
+                SetGrid();
+            }
+        }
+
         private void SetGrid()
         {
             grdArticulos.DataSource = null;
@@ -131,6 +148,90 @@ namespace ClinicaFB.PuntoDeVenta
         private void grdArticulos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             cmdModificar_Click(sender, e);
+        }
+
+        private void cmdImportar_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show(
+                "¿Desea sustituir el catálogo actual con los artículos importados \n (si presiona NO, se agregarán a los existentes)?",
+                "Confirme",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+            if (res == DialogResult.Cancel)
+            {
+                return;
+            }
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos CSV|*.csv";
+            openFileDialog.Title = "Seleccione el archivo a importar";
+            openFileDialog.ShowDialog();
+            if (string.IsNullOrEmpty(openFileDialog.FileName))
+            {
+                return;
+            }
+            string fileName = openFileDialog.FileName;
+            List<Articulo> articulos = General.GetArticulosFromCSV(fileName);
+            if (res == DialogResult.Yes)
+            {
+                using (FbConnection db = General.GetDB())
+                {
+                    string sql = Queries.ArticulosInit;
+                    db.Execute(sql);
+                }
+            }
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.ArticuloInsert();
+                foreach (Articulo articulo in articulos)
+                {
+                    articulo.CveProSer = "51241200";
+                    articulo.CveUni = "H87";
+                    articulo.UDM = "PIEZA";
+                    articulo.Moneda = "MXN";
+
+                    articulo.Precio2 = 0;
+                    articulo.Precio3 = 0;
+                    articulo.Precio4 = 0;
+                    articulo.Precio5 = 0;
+
+
+                    articulo.Clave = string.IsNullOrEmpty(articulo.Clave) ? articulo.CodigoBarras : articulo.Clave;
+                    db.Execute(sql, articulo);
+                }
+            }
+            MessageBox.Show("Artículos importados", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CargaArticulos();
+            SetGrid();
+
+        }
+
+        private void cmdKardex_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdBuscar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            FiltraArticulos();
+        }
+
+        private void cmdExistencias_Click(object sender, EventArgs e)
+        {
+            if (grdArticulos.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccione un artículo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            ArticuloExistencias kardex = new ArticuloExistencias((int)_articulos[grdArticulos.CurrentRow.Index].ArticuloId);
+            kardex.ShowDialog();
+
         }
     }
 }

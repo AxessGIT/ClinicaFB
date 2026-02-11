@@ -180,17 +180,17 @@ namespace ClinicaFB.Agenda
                     switch (cita.Tipo)
                     {
                         case "DOC":
-                            sql = Queries.DoctoresSelect();
+                            sql = ClinicaFB.Helpers.Queries.DoctoresSelect();
                             Doctor doc = _db.QueryFirstOrDefault<Doctor>(sql, new { Doctor_Id = cita.Recurso_Id });
                             NombreRecurso = doc.NombreCompleto;
                             break;
                         case "EQU":
-                            sql = Queries.EquipoSelect();
+                            sql = ClinicaFB.Helpers.Queries.EquipoSelect();
                             Equipo equ = _db.QueryFirstOrDefault<Equipo>(sql, new { Equipo_Id = cita.Recurso_Id });
                             NombreRecurso = equ == null ? "" : equ.Nombre;
                             break;
                         case "CUA":
-                            sql = Queries.CuartosSelect();
+                            sql =   ClinicaFB.Helpers.Queries.CuartosSelect();
                             Cuarto cua = _db.QueryFirstOrDefault<Cuarto>(sql, new { Cuarto_Id = cita.Recurso_Id });
                             NombreRecurso = cua == null ? "" : cua.Nombre;
                             break;
@@ -245,7 +245,7 @@ namespace ClinicaFB.Agenda
 
                     using (FbConnection db = General.GetDB())
                     {
-                        string qry = Queries.PacienteVisitas();
+                        string qry = ClinicaFB.Helpers.Queries.PacienteVisitas();
                         visitas = db.ExecuteScalar<int>(qry, new { PacienteId = cita.PacienteId });
                     }
 

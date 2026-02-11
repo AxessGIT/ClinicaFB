@@ -37,6 +37,8 @@
             this.cmdRazonesSociales = new System.Windows.Forms.Button();
             this.cmdCapturaIngreso = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
+            this.cmdNotasDeCredito = new System.Windows.Forms.Button();
+            this.cmdComplementosDePago = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmdFacturaGlobal
@@ -44,11 +46,11 @@
             this.cmdFacturaGlobal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmdFacturaGlobal.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdFacturaGlobal.Image = ((System.Drawing.Image)(resources.GetObject("cmdFacturaGlobal.Image")));
-            this.cmdFacturaGlobal.Location = new System.Drawing.Point(219, 13);
+            this.cmdFacturaGlobal.Location = new System.Drawing.Point(219, 14);
             this.cmdFacturaGlobal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdFacturaGlobal.Name = "cmdFacturaGlobal";
             this.cmdFacturaGlobal.Size = new System.Drawing.Size(63, 47);
-            this.cmdFacturaGlobal.TabIndex = 16;
+            this.cmdFacturaGlobal.TabIndex = 3;
             this.cmdFacturaGlobal.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdFacturaGlobal, "Factura global");
             this.cmdFacturaGlobal.UseVisualStyleBackColor = false;
@@ -59,11 +61,11 @@
             this.cmdListadoIngresos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmdListadoIngresos.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdListadoIngresos.Image = ((System.Drawing.Image)(resources.GetObject("cmdListadoIngresos.Image")));
-            this.cmdListadoIngresos.Location = new System.Drawing.Point(81, 13);
+            this.cmdListadoIngresos.Location = new System.Drawing.Point(81, 14);
             this.cmdListadoIngresos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdListadoIngresos.Name = "cmdListadoIngresos";
             this.cmdListadoIngresos.Size = new System.Drawing.Size(63, 47);
-            this.cmdListadoIngresos.TabIndex = 15;
+            this.cmdListadoIngresos.TabIndex = 1;
             this.cmdListadoIngresos.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdListadoIngresos, "Listado de ingresos");
             this.cmdListadoIngresos.UseVisualStyleBackColor = false;
@@ -74,11 +76,11 @@
             this.cmdFacturas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmdFacturas.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdFacturas.Image = ((System.Drawing.Image)(resources.GetObject("cmdFacturas.Image")));
-            this.cmdFacturas.Location = new System.Drawing.Point(150, 13);
+            this.cmdFacturas.Location = new System.Drawing.Point(150, 14);
             this.cmdFacturas.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdFacturas.Name = "cmdFacturas";
             this.cmdFacturas.Size = new System.Drawing.Size(63, 47);
-            this.cmdFacturas.TabIndex = 14;
+            this.cmdFacturas.TabIndex = 2;
             this.cmdFacturas.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdFacturas, "Listado de facturas");
             this.cmdFacturas.UseVisualStyleBackColor = false;
@@ -89,11 +91,11 @@
             this.cmdRazonesSociales.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmdRazonesSociales.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdRazonesSociales.Image = ((System.Drawing.Image)(resources.GetObject("cmdRazonesSociales.Image")));
-            this.cmdRazonesSociales.Location = new System.Drawing.Point(326, 13);
+            this.cmdRazonesSociales.Location = new System.Drawing.Point(463, 13);
             this.cmdRazonesSociales.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdRazonesSociales.Name = "cmdRazonesSociales";
             this.cmdRazonesSociales.Size = new System.Drawing.Size(63, 47);
-            this.cmdRazonesSociales.TabIndex = 13;
+            this.cmdRazonesSociales.TabIndex = 5;
             this.cmdRazonesSociales.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdRazonesSociales, "Razones sociales");
             this.cmdRazonesSociales.UseVisualStyleBackColor = false;
@@ -104,11 +106,11 @@
             this.cmdCapturaIngreso.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmdCapturaIngreso.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdCapturaIngreso.Image = ((System.Drawing.Image)(resources.GetObject("cmdCapturaIngreso.Image")));
-            this.cmdCapturaIngreso.Location = new System.Drawing.Point(12, 13);
+            this.cmdCapturaIngreso.Location = new System.Drawing.Point(12, 14);
             this.cmdCapturaIngreso.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdCapturaIngreso.Name = "cmdCapturaIngreso";
             this.cmdCapturaIngreso.Size = new System.Drawing.Size(63, 47);
-            this.cmdCapturaIngreso.TabIndex = 12;
+            this.cmdCapturaIngreso.TabIndex = 0;
             this.cmdCapturaIngreso.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdCapturaIngreso, "Captura de ingresos");
             this.cmdCapturaIngreso.UseVisualStyleBackColor = false;
@@ -119,21 +121,53 @@
             this.cmdSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmdSalir.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
-            this.cmdSalir.Location = new System.Drawing.Point(395, 13);
+            this.cmdSalir.Location = new System.Drawing.Point(532, 13);
             this.cmdSalir.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(63, 47);
-            this.cmdSalir.TabIndex = 11;
+            this.cmdSalir.TabIndex = 6;
             this.cmdSalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.toolTip.SetToolTip(this.cmdSalir, "Salir");
             this.cmdSalir.UseVisualStyleBackColor = false;
             this.cmdSalir.Click += new System.EventHandler(this.cmdSalir_Click);
             // 
+            // cmdNotasDeCredito
+            // 
+            this.cmdNotasDeCredito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmdNotasDeCredito.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdNotasDeCredito.Image = ((System.Drawing.Image)(resources.GetObject("cmdNotasDeCredito.Image")));
+            this.cmdNotasDeCredito.Location = new System.Drawing.Point(288, 14);
+            this.cmdNotasDeCredito.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cmdNotasDeCredito.Name = "cmdNotasDeCredito";
+            this.cmdNotasDeCredito.Size = new System.Drawing.Size(54, 47);
+            this.cmdNotasDeCredito.TabIndex = 4;
+            this.cmdNotasDeCredito.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip.SetToolTip(this.cmdNotasDeCredito, "Notas de credito");
+            this.cmdNotasDeCredito.UseVisualStyleBackColor = false;
+            this.cmdNotasDeCredito.Click += new System.EventHandler(this.cmdNotasDeCredito_Click);
+            // 
+            // cmdComplementosDePago
+            // 
+            this.cmdComplementosDePago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmdComplementosDePago.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdComplementosDePago.Image = ((System.Drawing.Image)(resources.GetObject("cmdComplementosDePago.Image")));
+            this.cmdComplementosDePago.Location = new System.Drawing.Point(348, 14);
+            this.cmdComplementosDePago.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cmdComplementosDePago.Name = "cmdComplementosDePago";
+            this.cmdComplementosDePago.Size = new System.Drawing.Size(54, 47);
+            this.cmdComplementosDePago.TabIndex = 7;
+            this.cmdComplementosDePago.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip.SetToolTip(this.cmdComplementosDePago, "Complementos de pago");
+            this.cmdComplementosDePago.UseVisualStyleBackColor = false;
+            this.cmdComplementosDePago.Click += new System.EventHandler(this.cmdComplementosDePago_Click);
+            // 
             // IngMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 74);
+            this.ClientSize = new System.Drawing.Size(607, 74);
+            this.Controls.Add(this.cmdComplementosDePago);
+            this.Controls.Add(this.cmdNotasDeCredito);
             this.Controls.Add(this.cmdFacturaGlobal);
             this.Controls.Add(this.cmdListadoIngresos);
             this.Controls.Add(this.cmdFacturas);
@@ -160,5 +194,7 @@
         private System.Windows.Forms.Button cmdFacturas;
         private System.Windows.Forms.Button cmdListadoIngresos;
         private System.Windows.Forms.Button cmdFacturaGlobal;
+        private System.Windows.Forms.Button cmdNotasDeCredito;
+        private System.Windows.Forms.Button cmdComplementosDePago;
     }
 }

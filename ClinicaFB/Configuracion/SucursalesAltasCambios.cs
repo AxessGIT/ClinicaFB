@@ -78,6 +78,14 @@ namespace ClinicaFB.Configuracion
                 suc.FolioIngresos = (int) spnFolio.Value;
                 suc.SerieFacGlobal = txtSerieFacturaGlobal.Text.Trim();
                 suc.FolioFacGlobal = (int)spnFolioFacturaGlobal.Value;
+                suc.SerieFacPDV = txtSerieFacturaPDV.Text.Trim();
+                suc.FolioFacPDV = (int)spnFolioFacturaPDV.Value;
+                suc.SerieVentas = txtSerieVentas.Text.Trim();
+                suc.FolioVentas = (int)spnFolioVentas.Value;
+                suc.SerieNC = txtSerieNC.Text.Trim();
+                suc.FolioNC = (int)spnFolioNC.Value;
+                suc.CarpetaReportes = txtCarpetaReportes.Text.Trim();
+                suc.CarpetaImagenes = txtCarpetaImagenes.Text.Trim();
 
                 db.Execute(sql, suc);
 
@@ -99,12 +107,22 @@ namespace ClinicaFB.Configuracion
                     return;
 
                 }
+
                 txtNombre.Text = suc.Nombre;
                 txtDatosAdicionales.Text = suc.DatosAdicionales;
                 txtSerie.Text = suc.SerieIngresos;
                 spnFolio.Value = suc.FolioIngresos;
                 txtSerieFacturaGlobal.Text = suc.SerieFacGlobal;
                 spnFolioFacturaGlobal.Value = suc.FolioFacGlobal;
+                txtSerieFacturaPDV.Text = suc.SerieFacPDV;
+                spnFolioFacturaPDV.Value = suc.FolioFacPDV;
+                txtSerieVentas.Text = suc.SerieVentas;
+                spnFolioVentas.Value = suc.FolioVentas;
+                txtSerieNC.Text = suc.SerieNC;
+                spnFolioNC.Value = suc.FolioNC;
+                txtCarpetaReportes.Text = suc.CarpetaReportes;
+                txtCarpetaImagenes.Text = suc.CarpetaReportes;
+
 
             }
         }
@@ -113,6 +131,26 @@ namespace ClinicaFB.Configuracion
         {
             GuardaDatos();
             Close();
+        }
+
+        private void cmdBuscaCarpetaReportes_Click(object sender, EventArgs e)
+        {
+            BuscaCarpeta(ref txtCarpetaReportes);
+        }
+
+        private void cmdBuscaCarpetaImagenes_Click(object sender, EventArgs e)
+        {
+            BuscaCarpeta(ref txtCarpetaImagenes);
+        }
+
+        private void BuscaCarpeta(ref TextBox cuadroTexto)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Seleccione la carpeta";
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                cuadroTexto.Text = fbd.SelectedPath;
+            }
         }
     }
 }

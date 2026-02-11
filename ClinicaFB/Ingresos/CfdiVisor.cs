@@ -16,10 +16,10 @@ namespace ClinicaFB.Ingresos
 {
     public partial class CfdiVisor : Form
     {
-        private int _cfdId;
-        private BindingList<CFDIDetalle> _conceptos; 
+        private long _cfdId;
+        private BindingList<CfdiDetalle> _conceptos; 
 
-        public CfdiVisor(int cfdId)
+        public CfdiVisor(long cfdId)
         {
             InitializeComponent();
             _cfdId = cfdId;
@@ -176,8 +176,8 @@ namespace ClinicaFB.Ingresos
 
 
                  sql = Queries.CfdiDetallesSelect();
-                var res = db.Query<CFDIDetalle>(sql, new {Id = _cfdId }).ToList();
-                _conceptos = new BindingList<CFDIDetalle>(res);
+                var res = db.Query<CfdiDetalle>(sql, new {Id = _cfdId }).ToList();
+                _conceptos = new BindingList<CfdiDetalle>(res);
 
             }
         }

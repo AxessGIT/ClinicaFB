@@ -8,7 +8,7 @@ namespace ClinicaFB.Modelo
 {
     public class Doctor
     {
-        public Int64 Doctor_Id { get; set; }
+        public long Doctor_Id { get; set; }
         public string Nombres { get; set; }
         public string Apellido_Paterno { get; set; }
         public string Apellido_Materno { get; set; }

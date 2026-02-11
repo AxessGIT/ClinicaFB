@@ -14,15 +14,27 @@ namespace ClinicaFB.Ingresos
     public partial class TicketEnviarOpciones : Form
     {
         public bool Aceptar { get; set; } = false;
+        private bool _enviar = true;
+        private bool _imprimir = false;
+        private string _impresora = "";
 
-        public TicketEnviarOpciones()
+        public TicketEnviarOpciones(bool enviar =true, bool impimir = false, string impresora="")
         {
             InitializeComponent();
+            _enviar = enviar;
+            _imprimir = impimir;
+            _impresora = impresora;
         }
 
         private void TicketEnviarOpciones_Load(object sender, EventArgs e)
         {
             CargaImpresoras();
+
+            if (string.IsNullOrEmpty(_impresora) == false)
+                cboImpresoras.Text = _impresora;
+
+            chkImprimir.Checked = _imprimir;
+            chkMandarCorreo.Checked = _enviar;
 
         }
 

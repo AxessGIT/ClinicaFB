@@ -20,12 +20,12 @@ namespace ClinicaFB.Configuracion.Facturacion
     public partial class EmisoresAltasCambios : Form
     {
         private bool _esAlta;
-        private int _emisorId;
+        private long _emisorId;
         private bool _emisorDefault = false;
         private BindingList<SerieDoc> _series = new BindingList<SerieDoc>();
         private BindingList<SerieConcepto> _seriesConceptos = new BindingList<SerieConcepto>();
 
-        public EmisoresAltasCambios(bool esAlta, int emisorId)
+        public EmisoresAltasCambios(bool esAlta, long emisorId)
         {
             InitializeComponent();
             _esAlta = esAlta;

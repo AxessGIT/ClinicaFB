@@ -8,8 +8,8 @@ namespace ClinicaFB.Modelo
 {
     public  class ActDatos
     {
-        public int ActDatosId { get; set; }
-        public int PacienteId { get; set; }
+        public long ActDatosId { get; set; }
+        public long PacienteId { get; set; }
         public string Prefijo { get; set; }
         public string Saludo { get; set; }
         public string Categoria { get; set; }

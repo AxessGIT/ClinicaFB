@@ -49,28 +49,18 @@ namespace ClinicaFB.PuntoDeVenta
         {
             grdAlmacenes.DataSource = null;
 
-
-
             grdAlmacenes.AllowUserToAddRows = false;
             grdAlmacenes.AllowUserToDeleteRows = false;
-
 
             grdAlmacenes.AutoGenerateColumns = false;
             grdAlmacenes.ReadOnly = true;
             grdAlmacenes.AllowUserToResizeColumns = false;
             grdAlmacenes.AllowUserToResizeRows = false;
 
-            //grdAlmacenes.ColumnCount =1;
-
-            //grdAlmacenes.RowHeadersVisible = true;
-
 
             grdAlmacenes.ColumnHeadersDefaultCellStyle.Font = new Font(grdAlmacenes.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
             grdAlmacenes.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            /*dAlmacenes.Columns[0].HeaderText = "Nombre";
-            grdAlmacenes.Columns[0].DataPropertyName = "Nombre";
-            grdAlmacenes.Columns[0].Width = 150;*/
 
 
             grdAlmacenes.DataSource = _almacenes;

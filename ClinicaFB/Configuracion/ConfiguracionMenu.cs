@@ -110,7 +110,7 @@ namespace ClinicaFB.Configuracion
 
         private async void cmdGeneraWEB_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("¿Desea generar las citas WEB?","Confirme",MessageBoxButtons.YesNo,MessageBoxIcon.Question)== DialogResult.No)
+            if (MessageBox.Show("¿Desea generar las citas WEB?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
             FbConnectionStringBuilder csb = new FbConnectionStringBuilder();
@@ -137,7 +137,7 @@ namespace ClinicaFB.Configuracion
                 doc.ApellidoMaterno = dr.Apellido_Materno;
                 doc.Telefonos = dr.Telefonos;
                 doc.Correos = dr.Correos;
-                doc.OriginalId = (int) dr.Doctor_Id;
+                doc.OriginalId = (int)dr.Doctor_Id;
 
                 dbWEB.Execute(sql, doc);
             }
@@ -180,7 +180,7 @@ namespace ClinicaFB.Configuracion
         private void cmdImpuestos_Click(object sender, EventArgs e)
         {
             ImpuestosListado impuestosListado = new ImpuestosListado();
-            impuestosListado.ShowDialog();  
+            impuestosListado.ShowDialog();
         }
 
         private void cmdClavesSAT_Click(object sender, EventArgs e)
@@ -216,7 +216,7 @@ namespace ClinicaFB.Configuracion
 
         private void cmdArticulos_Click(object sender, EventArgs e)
         {
-            ArticulosListado  articulosListado = new ArticulosListado();
+            ArticulosListado articulosListado = new ArticulosListado();
             articulosListado.ShowDialog();
         }
 
@@ -234,8 +234,73 @@ namespace ClinicaFB.Configuracion
 
         private void cmdFormasPago_Click(object sender, EventArgs e)
         {
-            FormasPagoListado formasPagoListado = new FormasPagoListado();  
+            FormasPagoListado formasPagoListado = new FormasPagoListado();
             formasPagoListado.ShowDialog();
+        }
+
+        private void cmdArticulosImportar_Click(object sender, EventArgs e)
+        {
+            ArticulosImportar();
+        }
+
+        private void ArticulosImportar()
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Archivos CSV|*.csv";
+
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string[] lines = System.IO.File.ReadAllLines(ofd.FileName, Encoding.Unicode);
+            string sql = Queries.ArticuloInsert();
+
+            using (FbConnection db = General.GetDB())
+            {
+
+                foreach (var line in lines)
+                {
+                    string[] parts = line.Split(',');
+                    Articulo a = new Articulo();
+                    a.Clave = parts[0];
+                    a.CodigoBarras = parts[0];
+                    a.Descripcion = parts[1];
+                    a.Moneda = "MXN";
+                    a.Precio1 = decimal.Parse(parts[2]);
+                    a.ImpuestoId = 1;
+                    a.Tipo = 1;
+                    a.UDM = "PIEZA";
+                    db.Execute(sql, a);
+                }
+            }
+            MessageBox.Show("Terminó la importación de artículos");
+        }
+
+        private void cmdInicializar_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("¿Desea inicializar la base de datos de inventarios?\nVentas\nCompras\nAjustes\nExistencias", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            using (FbConnection db = General.GetDB())
+            {
+                string[] instrucciones =
+                    {
+                    Queries.VentasDelete,
+                    Queries.VentasDetalleDelete,
+                    Queries.DocumentosDelete,
+                    Queries.DocumentosDetalleDelete,
+                    Queries.ArticulosExistenciasDelete,
+                    Queries.ArticulosMovimientosDelete
+                };
+
+                foreach (var instruccion in instrucciones)
+                {
+                    db.Execute(instruccion);
+                }
+            }
+            MessageBox.Show("Terminó la inicialización de inventarios");
         }
     }
 }
+

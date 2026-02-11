@@ -46,7 +46,7 @@
             this.grdArticulos.Location = new System.Drawing.Point(13, 40);
             this.grdArticulos.Margin = new System.Windows.Forms.Padding(4);
             this.grdArticulos.Name = "grdArticulos";
-            this.grdArticulos.Size = new System.Drawing.Size(497, 394);
+            this.grdArticulos.Size = new System.Drawing.Size(653, 394);
             this.grdArticulos.TabIndex = 5;
             this.grdArticulos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdArticulos_CellDoubleClick);
             // 
@@ -71,7 +71,7 @@
             // 
             this.cmdCerrar.Image = global::ClinicaFB.Properties.Resources.salir321;
             this.cmdCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCerrar.Location = new System.Drawing.Point(517, 95);
+            this.cmdCerrar.Location = new System.Drawing.Point(673, 97);
             this.cmdCerrar.Name = "cmdCerrar";
             this.cmdCerrar.Size = new System.Drawing.Size(46, 44);
             this.cmdCerrar.TabIndex = 4;
@@ -83,7 +83,7 @@
             // 
             this.cmdAceptar.Image = global::ClinicaFB.Properties.Resources.Aceptar321;
             this.cmdAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdAceptar.Location = new System.Drawing.Point(517, 43);
+            this.cmdAceptar.Location = new System.Drawing.Point(673, 45);
             this.cmdAceptar.Name = "cmdAceptar";
             this.cmdAceptar.Size = new System.Drawing.Size(46, 46);
             this.cmdAceptar.TabIndex = 3;
@@ -106,7 +106,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 445);
+            this.ClientSize = new System.Drawing.Size(731, 445);
             this.Controls.Add(this.cmdCerrar);
             this.Controls.Add(this.cmdAceptar);
             this.Controls.Add(this.cmdBuscar);

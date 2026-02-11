@@ -81,7 +81,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(46, 94);
+            this.label3.Location = new System.Drawing.Point(46, 90);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 16);
             this.label3.TabIndex = 6;
@@ -90,7 +90,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(61, 133);
+            this.label4.Location = new System.Drawing.Point(61, 127);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 16);
             this.label4.TabIndex = 8;
@@ -99,7 +99,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(67, 172);
+            this.label5.Location = new System.Drawing.Point(67, 164);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(36, 16);
             this.label5.TabIndex = 10;
@@ -174,6 +174,7 @@
             // 
             // 
             // 
+            this.txtPrecio.TextBox.AccessibilityEnabled = true;
             this.txtPrecio.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPrecio.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -200,6 +201,7 @@
             // 
             // 
             // 
+            this.txtTotal.TextBox.AccessibilityEnabled = true;
             this.txtTotal.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTotal.TextBox.DecimalValue = new decimal(new int[] {
             0,
@@ -223,6 +225,7 @@
             this.cmdBuscarArticulo.TabIndex = 3;
             this.cmdBuscarArticulo.Text = "...";
             this.cmdBuscarArticulo.UseVisualStyleBackColor = true;
+            this.cmdBuscarArticulo.Click += new System.EventHandler(this.cmdBuscarArticulo_Click);
             // 
             // cboImpuestos
             // 
@@ -235,6 +238,7 @@
             this.cboImpuestos.Style.DropDownStyle.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.cboImpuestos.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cboImpuestos.TabIndex = 29;
+            this.cboImpuestos.TabStop = false;
             // 
             // label12
             // 
@@ -247,7 +251,7 @@
             // 
             // txtDescripcionUnidad
             // 
-            this.txtDescripcionUnidad.Location = new System.Drawing.Point(454, 153);
+            this.txtDescripcionUnidad.Location = new System.Drawing.Point(454, 161);
             this.txtDescripcionUnidad.Name = "txtDescripcionUnidad";
             this.txtDescripcionUnidad.ReadOnly = true;
             this.txtDescripcionUnidad.Size = new System.Drawing.Size(307, 23);
@@ -255,7 +259,7 @@
             // 
             // cmdBuscarCveUni
             // 
-            this.cmdBuscarCveUni.Location = new System.Drawing.Point(418, 153);
+            this.cmdBuscarCveUni.Location = new System.Drawing.Point(418, 161);
             this.cmdBuscarCveUni.Name = "cmdBuscarCveUni";
             this.cmdBuscarCveUni.Size = new System.Drawing.Size(32, 23);
             this.cmdBuscarCveUni.TabIndex = 17;
@@ -284,7 +288,7 @@
             // txtCveUni
             // 
             this.txtCveUni.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCveUni.Location = new System.Drawing.Point(268, 156);
+            this.txtCveUni.Location = new System.Drawing.Point(268, 161);
             this.txtCveUni.Name = "txtCveUni";
             this.txtCveUni.Size = new System.Drawing.Size(144, 23);
             this.txtCveUni.TabIndex = 15;
@@ -293,7 +297,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(268, 135);
+            this.label11.Location = new System.Drawing.Point(268, 141);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(144, 16);
             this.label11.TabIndex = 14;
