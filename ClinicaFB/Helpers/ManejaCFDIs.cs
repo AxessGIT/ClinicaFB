@@ -5,6 +5,7 @@ using FirebirdSql.Data.FirebirdClient;
 using Microsoft.Reporting.WinForms;
 using MimeKit;
 using QRCoder;
+using SplashScreen.WindowsForms;
 using Syncfusion.Windows.Forms.PdfViewer;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,110 @@ namespace ClinicaFB.Helpers
     public static class ManejaCFDIs
     {
 
+
+        public static async Task ConfirmaVentasCanceladas(DateTime fechaIni, DateTime fechaFin)
+        {
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.VentasCanceladasSelect;
+                List<Venta> ventas = db.Query<Venta>(sql, new { FechaIni = fechaIni, FechaFin = fechaFin }).ToList();
+                if (ventas.Count == 0)
+                {
+                    MessageBox.Show("No hay ventas sin cancelar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                foreach (var venta in ventas)
+                {
+                    await CancelarVenta(venta.VentaId);
+                }
+            }
+        }
+
+        private static async Task CancelarVenta(long ventaId) { 
+        }
+
+
+        public static async Task ConfirmaCFDiCancelados(DateTime fechaIni, DateTime fechaFin)
+        {
+
+            using (FbConnection db = General.GetDB())
+            {
+                string sql = Queries.CFDisCanceladosSinCancelarSelect;
+                List<CFDI> cfdis = db.Query<CFDI>(sql, new { FechaIni = fechaIni, FechaFin = fechaFin }).ToList();
+
+                if (cfdis.Count == 0)
+                {
+                    return;
+                }
+
+                foreach (var cfdi in cfdis)
+                {
+                   await Cancelar(cfdi.CfdiId);
+                }
+            }
+        }
+
+
+        private static async Task Cancelar(long cfdiId)
+        {
+
+            string uid = "";
+            string rfc = "";
+            string cer = "";
+            string key = "";
+            string pas = "";
+            long emisorId;
+            string sql;
+
+            using (FbConnection db = General.GetDB())
+            {
+
+
+                CFDI cfdi = new CFDI();
+
+                sql = Queries.CfdiSelect();
+                cfdi = (await db.QueryAsync<CFDI>(sql, new { Id = cfdiId })).FirstOrDefault();
+
+                uid = cfdi.uid;
+                emisorId = cfdi.EmisorId;
+
+
+                sql = Queries.EmisorSelect();
+                Emisor emi = (await db.QueryAsync<Emisor>(sql, new { EmisorId = emisorId })).FirstOrDefault();
+
+                if (emi == null)
+                {
+                    return;
+                }
+
+                rfc = emi.RFC;
+                cer = emi.Certificado;
+                key = emi.LlavePrivada;
+                pas = emi.PassWord;
+            }
+
+            ComprobanteCFDI comprobante = new ComprobanteCFDI();
+
+            string motivo = "02";
+            string res = comprobante.CancelaSW(rfc, cer, key, pas, uid, motivo);
+
+
+            if (res.Substring(0, 3) == "999" || (res.Contains("Status:201") == false && res.Contains("Status:202") == false))
+            {
+
+                return;
+
+            }
+
+
+            using (FbConnection db = General.GetDB())
+            {
+                sql = Queries.CfdiCancela();
+                await db.ExecuteAsync(sql, new { Id = cfdiId, Acuse = res });
+
+            }
+
+        }
 
         public static string GeneraComplementoDePago(long pagoId,bool timbrar=true,bool mandarCorreo=true) 
         { 

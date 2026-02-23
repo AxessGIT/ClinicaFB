@@ -226,5 +226,17 @@ namespace ClinicaFB.Properties {
                 this["ImpresoraTicket"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0200-01-01")]
+        public global::System.DateTime UltimaConfirmacionCFDI {
+            get {
+                return ((global::System.DateTime)(this["UltimaConfirmacionCFDI"]));
+            }
+            set {
+                this["UltimaConfirmacionCFDI"] = value;
+            }
+        }
     }
 }

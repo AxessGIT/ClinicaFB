@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComprasAltasCambios));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -74,7 +74,6 @@
             this.txtAlmacenNombre = new System.Windows.Forms.TextBox();
             this.lblConsumidos = new System.Windows.Forms.Label();
             this.lblCancelada = new System.Windows.Forms.Label();
-            this.cmdTempo = new System.Windows.Forms.Button();
             this.lblGuardar = new System.Windows.Forms.Label();
             this.pgGuardar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.grdArticulos)).BeginInit();
@@ -186,10 +185,10 @@
             // colPrecio
             // 
             this.colPrecio.DataPropertyName = "Precio";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "C2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.colPrecio.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "C2";
+            dataGridViewCellStyle1.NullValue = null;
+            this.colPrecio.DefaultCellStyle = dataGridViewCellStyle1;
             this.colPrecio.HeaderText = "Costo";
             this.colPrecio.Name = "colPrecio";
             this.colPrecio.ReadOnly = true;
@@ -197,9 +196,9 @@
             // colImporte
             // 
             this.colImporte.DataPropertyName = "Importe";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "C2";
-            this.colImporte.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "C2";
+            this.colImporte.DefaultCellStyle = dataGridViewCellStyle2;
             this.colImporte.HeaderText = "Importe";
             this.colImporte.Name = "colImporte";
             this.colImporte.ReadOnly = true;
@@ -567,17 +566,6 @@
             this.lblCancelada.Text = "**CANCELADA***";
             this.lblCancelada.Visible = false;
             // 
-            // cmdTempo
-            // 
-            this.cmdTempo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdTempo.Location = new System.Drawing.Point(660, 577);
-            this.cmdTempo.Name = "cmdTempo";
-            this.cmdTempo.Size = new System.Drawing.Size(110, 48);
-            this.cmdTempo.TabIndex = 36;
-            this.cmdTempo.Text = "&Tempo";
-            this.cmdTempo.UseVisualStyleBackColor = true;
-            this.cmdTempo.Click += new System.EventHandler(this.cmdTempo_Click);
-            // 
             // lblGuardar
             // 
             this.lblGuardar.AutoSize = true;
@@ -603,7 +591,6 @@
             this.ClientSize = new System.Drawing.Size(1111, 671);
             this.Controls.Add(this.pgGuardar);
             this.Controls.Add(this.lblGuardar);
-            this.Controls.Add(this.cmdTempo);
             this.Controls.Add(this.lblCancelada);
             this.Controls.Add(this.lblConsumidos);
             this.Controls.Add(this.txtAlmacenNombre);
@@ -706,7 +693,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn colImporte;
-        private System.Windows.Forms.Button cmdTempo;
         private System.Windows.Forms.Label lblGuardar;
         private System.Windows.Forms.ProgressBar pgGuardar;
     }

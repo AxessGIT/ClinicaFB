@@ -51,8 +51,6 @@
             this.cmdCerrar = new System.Windows.Forms.Button();
             this.cmdReporte = new System.Windows.Forms.Button();
             this.cmdMandarCorreo = new System.Windows.Forms.Button();
-            this.cmdChecarCancelacion = new System.Windows.Forms.Button();
-            this.cmdCancelacionGlobal = new System.Windows.Forms.Button();
             this.cmdImprimir = new System.Windows.Forms.Button();
             this.txtRazonSocial = new System.Windows.Forms.TextBox();
             this.cmdBuscaRazonSocial = new System.Windows.Forms.Button();
@@ -231,7 +229,7 @@
             // 
             this.cmdCerrar.Image = ((System.Drawing.Image)(resources.GetObject("cmdCerrar.Image")));
             this.cmdCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCerrar.Location = new System.Drawing.Point(1019, 463);
+            this.cmdCerrar.Location = new System.Drawing.Point(1019, 365);
             this.cmdCerrar.Name = "cmdCerrar";
             this.cmdCerrar.Size = new System.Drawing.Size(132, 43);
             this.cmdCerrar.TabIndex = 15;
@@ -262,30 +260,6 @@
             this.cmdMandarCorreo.Text = "&Enviar";
             this.cmdMandarCorreo.UseVisualStyleBackColor = true;
             this.cmdMandarCorreo.Click += new System.EventHandler(this.cmdMandarCorreo_Click);
-            // 
-            // cmdChecarCancelacion
-            // 
-            this.cmdChecarCancelacion.Image = ((System.Drawing.Image)(resources.GetObject("cmdChecarCancelacion.Image")));
-            this.cmdChecarCancelacion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdChecarCancelacion.Location = new System.Drawing.Point(1019, 365);
-            this.cmdChecarCancelacion.Name = "cmdChecarCancelacion";
-            this.cmdChecarCancelacion.Size = new System.Drawing.Size(132, 43);
-            this.cmdChecarCancelacion.TabIndex = 13;
-            this.cmdChecarCancelacion.Text = "&Checar can.";
-            this.cmdChecarCancelacion.UseVisualStyleBackColor = true;
-            this.cmdChecarCancelacion.Click += new System.EventHandler(this.cmdChecarCancelacion_Click);
-            // 
-            // cmdCancelacionGlobal
-            // 
-            this.cmdCancelacionGlobal.Image = ((System.Drawing.Image)(resources.GetObject("cmdCancelacionGlobal.Image")));
-            this.cmdCancelacionGlobal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCancelacionGlobal.Location = new System.Drawing.Point(1019, 414);
-            this.cmdCancelacionGlobal.Name = "cmdCancelacionGlobal";
-            this.cmdCancelacionGlobal.Size = new System.Drawing.Size(132, 43);
-            this.cmdCancelacionGlobal.TabIndex = 14;
-            this.cmdCancelacionGlobal.Text = "&Can. Glob.";
-            this.cmdCancelacionGlobal.UseVisualStyleBackColor = true;
-            this.cmdCancelacionGlobal.Click += new System.EventHandler(this.cmdCancelacionGlobal_Click);
             // 
             // cmdImprimir
             // 
@@ -348,8 +322,6 @@
             this.Controls.Add(this.txtRFC);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cmdImprimir);
-            this.Controls.Add(this.cmdCancelacionGlobal);
-            this.Controls.Add(this.cmdChecarCancelacion);
             this.Controls.Add(this.cmdMandarCorreo);
             this.Controls.Add(this.cmdReporte);
             this.Controls.Add(this.cmdVer);
@@ -403,8 +375,6 @@
         private System.Windows.Forms.Button cmdVer;
         private System.Windows.Forms.Button cmdReporte;
         private System.Windows.Forms.Button cmdMandarCorreo;
-        private System.Windows.Forms.Button cmdChecarCancelacion;
-        private System.Windows.Forms.Button cmdCancelacionGlobal;
         private System.Windows.Forms.Button cmdImprimir;
         private System.Windows.Forms.TextBox txtRazonSocial;
         private System.Windows.Forms.Button cmdBuscaRazonSocial;

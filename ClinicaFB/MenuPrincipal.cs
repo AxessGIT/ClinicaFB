@@ -30,10 +30,10 @@ namespace ClinicaFB
     public partial class MenuPrincipal : Form
     {
         private FbConnection _dbConfiguracion;
-        private FbConnection _db=null;
+        private FbConnection _db = null;
         private MainForm _moduloAgenda = null;
         private pdvMenu _moduloPDV = null;
-        private int _empresaId=0;
+        private int _empresaId = 0;
         private bool _desarrollo = false;
 
 
@@ -55,11 +55,12 @@ namespace ClinicaFB
 
 
 
-            if (_desarrollo == false){
+            if (_desarrollo == false)
+            {
                 Login login = new Login();
                 login.ShowDialog();
 
-                if(login.UsuarioID==0)
+                if (login.UsuarioID == 0)
                 {
                     Close();
                     return;
@@ -67,29 +68,45 @@ namespace ClinicaFB
 
                 _dbConfiguracion = General.GetConexionConfig();
 
-                ClinicaFB.Properties.Settings.Default.Save(); 
+                ClinicaFB.Properties.Settings.Default.Save();
                 ClinicaFB.Properties.Settings.Default.Usuario_ID = login.UsuarioID;
-               
+
                 SeleccionaEmpresa();
 
-                if (_empresaId == 0) { 
+                if (_empresaId == 0)
+                {
                     Close();
                     return;
                 }
 
                 Properties.Settings.Default.Empresa_ID = _empresaId;
-                
+
             }
 
 
-            else { 
+            else
+            {
                 cargaConexionEmpresa(@"CDI");
                 Properties.Settings.Default.Empresa_ID = 7;
 
             }
 
+            long usuarioId = Properties.Settings.Default.Usuario_ID;
+            if (usuarioId == 19)
+            {
+                cmdAgenda.Visible = false;
+                cmdExpedientes.Visible = false;
+                cmdExpediente.Visible = false;
+                cmdIngresos.Visible = false;
+                cmdConfigurar.Visible = false;
+                cmdPuntoDeVenta.Left = cmdAgenda.Left;
+
+
+            }
             SetDatos();
 
+            // ✅ Ejecutar tarea semanal en background
+            EjecutarTareaSemanalSiCorresponde();
         }
 
         private void SetDatos()
@@ -106,7 +123,7 @@ namespace ClinicaFB
 
             _empresaId = empresasListado.EmpresaId;
 
-            if (_empresaId==0)
+            if (_empresaId == 0)
             {
                 return;
             }
@@ -117,7 +134,7 @@ namespace ClinicaFB
 
             string empnombre = emp.Nombre_Corto.Trim();
 
-            
+
             cargaConexionEmpresa(empnombre);
         }
 
@@ -156,6 +173,54 @@ namespace ClinicaFB
             conexionDatos.ShowDialog();
 
         }
+
+        private async void EjecutarTareaSemanalSiCorresponde()
+        {
+            try
+            {
+                // Verificar si han pasado 7 días desde la última ejecución
+                DateTime ultimaEjecucion = Properties.Settings.Default.UltimaConfirmacionCFDI;
+                DateTime ahora = DateTime.Now;
+
+                if ((ahora - ultimaEjecucion).TotalDays < 7)
+                {
+                    // No han pasado 7 días, no ejecutar
+                    return;
+                }
+
+                // Ejecutar en background sin bloquear UI
+                await Task.Run(async () =>
+                {
+                    try
+                    {
+                        // Calcular fechas: últimos 30 días
+                        DateTime fechaFin = DateTime.Now.Date;
+                        DateTime fechaIni = fechaFin.AddDays(-30);
+
+                        System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss}] Iniciando confirmación automática de CFDIs cancelados");
+
+                        await ManejaCFDIs.ConfirmaCFDiCancelados(fechaIni, fechaFin);
+
+                        System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss}] Confirmación de CFDIs completada");
+
+                        // Actualizar fecha de última ejecución
+                        Properties.Settings.Default.UltimaConfirmacionCFDI = ahora;
+                        Properties.Settings.Default.Save();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Solo loguear, no mostrar al usuario
+                        System.Diagnostics.Debug.WriteLine($"Error en confirmación automática de CFDIs: {ex.Message}");
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                // Capturar cualquier error para no afectar la carga del menú
+                System.Diagnostics.Debug.WriteLine($"Error en tarea semanal: {ex.Message}");
+            }
+        }
+
         private void cmdConfigurar_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("Usuario no autorizado");
@@ -175,7 +240,7 @@ namespace ClinicaFB
         {
             if (_moduloAgenda == null || _moduloAgenda.IsDisposed)
             {
-                _moduloAgenda = new MainForm(_db,_dbConfiguracion);
+                _moduloAgenda = new MainForm(_db, _dbConfiguracion);
             }
 
 
@@ -214,11 +279,22 @@ namespace ClinicaFB
 
         private void cmdIngresos_Click(object sender, EventArgs e)
         {
-            IngMenu ingMenu = new IngMenu();    
+            IngMenu ingMenu = new IngMenu();
             ingMenu.Show();
         }
 
-
-        
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await ManejaCFDIs.ConfirmaCFDiCancelados(new DateTime(2026,01,01), DateTime.Now);
+                MessageBox.Show("Confirmación de CFDIs completada.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al confirmar CFDIs: {ex.Message}");
+            }
+        }
     }
-}
+}           
+            

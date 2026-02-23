@@ -128,6 +128,22 @@ namespace ClinicaFB.Helpers
         #region PDV
 
         public static string
+
+        VentasCanceladasSelect =
+            "Select VentaId,Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago," +
+            "LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac,UID,Cancelada,WebId,CSD,xml " +
+            "From Ventas " +
+            "Where Tipo = 'FAC' And Cancelada = True and " +
+            "Fecha Between @FechaIni and @FechaFin " +
+            "And (" +
+            "AcuseCan='' or " +
+            "AcuseCan is null or " +
+            "Position('201',acusecan)=0 and " +
+            "Position('202',acusecan)=0) " +
+            "Order By Fecha Desc";
+
+        public static string
+
         VentasNoFacturadasSelect =
             "Select VentaId,Tipo,Serie,Folio,TipoComprobante,Fecha,FormaPago,Moneda,TipoCambio,MetodoPago," +
             "LugarExpedicion,Uso,Subtotal,Descuento,IVA,RetISR,RetIVA,Total,SerieFac,FolioFac,UID,Cancelada,WebId,CSD,xml " +
@@ -925,9 +941,9 @@ FacturaSelectxSerieyFolioSinAlmacen = "Select VentaId,SucursalId,EmisorId,Almace
 
         #region CFDi
 
-        public static string CFDisCanceladosSinCancelarSelect()
-        {
-            string sql = "Select CfdiId,Serie,Folio,Fecha," +
+        public static string CFDisCanceladosSinCancelarSelect=
+        
+            "Select CfdiId,Serie,Folio,Fecha," +
                 "Cfdis.EmisorId,Emisores.RFC As EmisorRFC," +
                 "Emisores.Nombre As EmisorNombre," +
                 "Cfdis.PacienteId, Pacientes.NombreCompleto As PacienteNombre, " +
@@ -945,8 +961,6 @@ FacturaSelectxSerieyFolioSinAlmacen = "Select VentaId,SucursalId,EmisorId,Almace
                 "Position('201',acusecan)=0 and " +
                 "Position('202',acusecan)=0) " +
                 "Order By Serie,Folio";
-            return sql;
-        }
 
         public static string FacturasReporte()
         {

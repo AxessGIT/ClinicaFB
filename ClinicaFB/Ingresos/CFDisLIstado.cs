@@ -531,7 +531,7 @@ namespace ClinicaFB.Ingresos
 
             using (FbConnection db = General.GetDB())
             {
-                string sql = Queries.CFDisCanceladosSinCancelarSelect();
+                string sql = Queries.CFDisCanceladosSinCancelarSelect;
                 List<CFDI> cfdis = db.Query<CFDI>(sql, new {EmisorId = emisorId, FechaIni = fechaIni, FechaFin = fechaFin }).ToList();
 
                 if (cfdis.Count == 0)
@@ -589,112 +589,10 @@ namespace ClinicaFB.Ingresos
 
         }
 
-        private void cmdCancelacionGlobal_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Desea iniciar?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-            {
-                return;
-            }
-            Splasher splasher = new Splasher("Iniciando cancelación de CFDIs...");
-            splasher.Show();
-            DateTime fechaIni = dtpFechaInicial.Value;
-            DateTime fechaFin = dtpFechaFinal.Value;
-
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = Queries.CFDisCanceladosSinCancelarSelect();
-                List<CFDI> cfdis = db.Query<CFDI>(sql, new { FechaIni = fechaIni, FechaFin = fechaFin }).ToList();
-
-                if (cfdis.Count == 0)
-                {
-                    splasher.Close(); 
-                    MessageBox.Show("No hay CFDIs sin cancelar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-                    return;
-                }
-
-                foreach (var cfdi in cfdis)
-                {
-                    Cancelar(cfdi.CfdiId);
-                }
-            }
-
-            splasher.Close();
-            MessageBox.Show("Termino la cancelacion global", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-        }
+      
 
 
 
-        private void Cancelar(long cfdiId)
-        {
-
-            
-
-
-            string uid = "";
-            string rfc = "";
-            string cer = "";
-            string key = "";
-            string pas = "";
-            long emisorId;
-            string sql;
-
-            using (FbConnection db = General.GetDB())
-            {
-
-
-                CFDI cfdi = new CFDI();
-
-                sql = Queries.CfdiSelect();
-                cfdi = db.Query<CFDI>(sql, new { Id = cfdiId }).FirstOrDefault();
-
-                uid = cfdi.uid;
-                emisorId = cfdi.EmisorId;
-                
-
-                sql = Queries.EmisorSelect();
-                Emisor emi = db.Query<Emisor>(sql, new { EmisorId = emisorId }).FirstOrDefault();
-
-                if (emi == null)
-                {
-                    return;
-                }
-
-                rfc = emi.RFC;
-                cer = emi.Certificado;
-                key = emi.LlavePrivada;
-                pas = emi.PassWord;
-            }
-
-            ComprobanteCFDI comprobante = new ComprobanteCFDI();
-
-            string motivo = "02";
-            string res = comprobante.CancelaSW(rfc, cer, key, pas, uid, motivo);
-
-
-            if (res.Substring(0, 3) == "999" || (res.Contains("Status:201") == false && res.Contains("Status:202") == false))
-            {
-
-                return;
-
-            }
-
-
-            using (FbConnection db = General.GetDB())
-            {
-                sql = Queries.CfdiCancela();
-                db.Execute(sql, new { Id = cfdiId, Acuse = res });
-                
-            }
-            
-
-
-
-
-        }
 
         private void cmdImprimir_Click(object sender, EventArgs e)
         {

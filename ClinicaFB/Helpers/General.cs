@@ -819,6 +819,14 @@ namespace ClinicaFB.Helpers
             csb.Port = datosConexion.Puerto;
             csb.Database = datosConexion.BaseDeDatos;
             csb.Charset = "UTF8";
+            csb.ConnectionLifeTime = 30;
+            csb.Pooling = true;
+            csb.MinPoolSize = 0;
+            csb.MaxPoolSize = 15;
+            csb.ConnectionTimeout = 15;
+            csb.CommandTimeout = 30;
+            csb.PacketSize = 8192;
+
 
 
             concad = csb.ToString();
@@ -828,9 +836,9 @@ namespace ClinicaFB.Helpers
         }
 
 
-        public static FbConnection GetDB()
+        /*public static FbConnection GetDB()
         {
-            FbConnection conn = null;
+            /*FbConnection conn = null;
             string concad = GetCadenaDeConexion();
 
             if (string.IsNullOrEmpty(concad))
@@ -841,7 +849,87 @@ namespace ClinicaFB.Helpers
 
             return conn;
 
+            string concad = GetCadenaDeConexion();
+            FbConnection conn = new FbConnection(concad);
+
+            // Validar conexión inmediatamente
+            try
+            {
+                conn.Open();
+                conn.Close();
+            }
+            catch (FbException)
+            {
+                // Si falla, limpiar pool y crear nueva
+                FbConnection.ClearAllPools();
+                conn.Dispose();
+                conn = new FbConnection(concad);
+            }
+
+            return conn;
+
+
+
+        }*/
+        private static readonly object _poolLock = new object();
+        private static DateTime _ultimaLimpieza = DateTime.MinValue;
+
+        private static int _operacionesDesdeUltimaLimpieza = 0;
+        private static readonly object _contadorLock = new object();
+
+        public static FbConnection GetDB()
+        {
+            string concad = GetCadenaDeConexion();
+            if (string.IsNullOrEmpty(concad))
+                return null;
+
+            // Incrementar contador thread-safe
+            lock (_contadorLock)
+            {
+                _operacionesDesdeUltimaLimpieza++;
+                
+                // Limpiar cada 100 operaciones
+                if (_operacionesDesdeUltimaLimpieza >= 100)
+                {
+                    LimpiarPoolConexiones();
+                    _operacionesDesdeUltimaLimpieza = 0;
+                }
+            }
+
+            try
+            {
+                return new FbConnection(concad);
+            }
+            catch (FbException)
+            {
+                LimpiarPoolConexiones();
+                System.Threading.Thread.Sleep(50);
+                return new FbConnection(concad);
+            }
         }
+
+        // Método thread-safe para limpiar pool
+        public static void LimpiarPoolConexiones()
+        {
+            lock (_poolLock)
+            {
+                try
+                {
+                    // Evitar limpiezas muy frecuentes (mínimo 30 segundos entre limpiezas)
+                    if ((DateTime.Now - _ultimaLimpieza).TotalSeconds < 30)
+                        return;
+
+                    FbConnection.ClearAllPools();
+                    _ultimaLimpieza = DateTime.Now;
+                    System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss}] Pool limpiado");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error limpiando pool: {ex.Message}");
+                }
+            }
+        }
+
 
 
         public static CitaWEB BuildCitaWEB(FbConnection db, Cita c)

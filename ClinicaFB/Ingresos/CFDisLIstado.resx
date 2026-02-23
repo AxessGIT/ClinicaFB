@@ -141,30 +141,6 @@
   <metadata name="colCancelado.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="colEmisor.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colFecha.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colSerie.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colFolio.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colPaciente.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colRazonSocial.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colImporte.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colCancelado.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cmdVer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -235,36 +211,10 @@
         Ny3mKp0LwYFG3K+p59a04u4tYbKiraZxmcUpLiraSba0/8QXx1dKG0OJXaIAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="cmdChecarCancelacion.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAAAXBJREFUSEvFlbtKBEEQRQ+ImBoaCoJ+hWDiZwiCGJgJmgoGGpmYiQiGBoL/IIof
-        YGRiICiYamLgA+UsXVC06zCzD7xQvTVd1XVrbtfuAnyP2XrLJbDb4DeZOVEs58d+b3GjyW9CNFPnx/6v
-        Vxq19ZY2UnS1q0zgxqix9y8E9WtmW0qH9et4NtGXoL6gbJEj9Ot4NjEUQRsMRTB2iY77xLPNDENwUJ7v
-        gDVgrhRcBE6AT+AROBuEYKX4F8BUOVNjGXhL51oT7ANPpfMovgnM9vE3/iJogp2ZqyzCgj4/AIfJnwYm
-        gOeuBNslV82F3Vowv2Wucw586NSBv7BTcr3QQHSuvSSJxGlXgtWS67SIkCiKZ4nEDXCvY8CfVue2yRxB
-        c/0UIZHNZV/MA1/AURB0MefcCxfRbfadsGvgvRB1gvr7JXLOHUWnJcOCFreRrSrWGk7RbSniKDotXqia
-        K4udD1w8MAmsl7/a1zItXqiaL+TEH+3IIzK3DgA4AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="cmdCancelacionGlobal.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAAAc9JREFUWEe910voTVEUx/GPZx55REyNFBNhYmgg5ZGJogzJjAlDESPlkZQBRv8B
-        RaIYoQgZCBNkRgw8Jh4lj+TdqnXqtIbuvftbp7PO/u211z737r3WPrRhJsbXxlZMxgvsqEIrduEz5leh
-        BbPxAfuq0IrDeINpVWjBAnzH9iq04gyeYkIVWrAMf7CuCq24gZu1sRVr8u2XV6EFke2e4GwVWrE1V37s
-        gOZMxWscqUIr9mTWi+zXnHn4hN1VaMWJrHhR+ZqzED+wpQqjYDru4hBmZdtFPMS40nck7MXfvN7jaNor
-        a8dRsREH8a03ka/YVDsOm4k4hrfYlolmDL97E7mPFdVxGMzJwtIFuopHWIsluNbT7lTnQVmEZ70AMZFX
-        ad/OqhdFZzUeY3MdYBA2ZHLpgsdKf5B2tEfwsG/hHFbVAQZhfZbULvhzXOo9R8D4/+O0G9vySx1gUOIQ
-        GUEj2Ecc7wV/hytpX8/q97IOMAyW5l7fn5mum8Bp/Er7Qt7vVedhMbf3S8QV2/B87zkOHnG/XB2HyeI8
-        5USgOOf/TDtWfSzMsE9Wp2EzKb/toup1b3+ql4gOVIdRMSWrXuyC+Nzq1sLO2rEVcQidkan6v/gH5k2A
-        GfBw6K8AAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="cmdImprimir.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAM9JREFUOE/VkjEOAWEUhL8TqBQULiA6DqBRa1zEDZxApRSV0iEcQeEEEgegU5FJ
+        DwAACw8BkvkDpQAAAM9JREFUOE/VkjEOAWEUhL8TqBQULiA6DqBRa1zEDZxApRSV0iEcQeEEEgegU5FJ
         Hnn7e7t+2Y3El0yymXkzybLwI0ZANzUdHWCYmlXcgG1qOjbANTWruAO71HQo000pE+DopONL4nkp0433
         tPFiZgenoPxJ6qirjbfBgplJ2A3NTMJuaDqW9kd49SwLu6Hp0G91BvbAwW4HloXd0HRocGXP46YG10Ab
         mDY1qNyr1qA+WmVeLcvCbmhmEnaf5txe5RupUzpYR4XBPrCoKW38AQ+qdXRRh3wrLgAAAABJRU5ErkJg

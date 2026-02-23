@@ -742,7 +742,7 @@ namespace ClinicaFB.PuntoDeVenta
             _mandarCorreos = opciones.chkMandarCorreo.Checked;
             _correos = opciones.txtCorreos.Text.Trim();
             _impresora = opciones.cboImpresoras.Text.Trim();
-            await GuardaVenta(false);
+            await GuardaVenta(false, pag: txtTotalPagos.DecimalValue, cam: txtCambio.DecimalValue);
             Inicializa();
 
         }
@@ -780,10 +780,6 @@ namespace ClinicaFB.PuntoDeVenta
 
             }
 
-
-
-            
-
         }
 
 
@@ -806,15 +802,10 @@ namespace ClinicaFB.PuntoDeVenta
 
         private async Task GuardaVenta(bool facturar = false, decimal pag = 0, decimal cam = 0, DateTime fechaFac = default, bool soloGuardar = false)
         {
-
-
+            CambiaBotones(false);
             using (FbConnection db = General.GetDB())
             {
                 await db.OpenAsync();
-
-
-
-
 
                 using (var transaction = db.BeginTransaction())
                 {
@@ -832,7 +823,7 @@ namespace ClinicaFB.PuntoDeVenta
                         if (_esAlta)
                         {
                             sql = Helpers.Queries.AlmacenSelect();
-                            alma = db.Query<Almacen>(sql, new { AlmacenId = almacenId },transaction).FirstOrDefault();
+                            alma = db.Query<Almacen>(sql, new { AlmacenId = almacenId }, transaction).FirstOrDefault();
 
                             if (alma == null)
                             {
@@ -842,18 +833,14 @@ namespace ClinicaFB.PuntoDeVenta
 
                             serie = alma.SerieVen;
                             folio = alma.FolioVen;
-                            UtilsInv.AlmacenIncrementaFolioVenta(almacenId,db,transaction);
-
-
-
+                            UtilsInv.AlmacenIncrementaFolioVenta(almacenId, db, transaction);
                         }
-                        else {
-
+                        else
+                        {
                             await UtilsInv.DevuelveDetalleOriginal(_detalleOriginal.ToList(), _almacenOriginalId, entrada: false, db, transaction);
                             await UtilsInv.VentaBorraDetalle(_ventaId, db, transaction);
                             await UtilsInv.VentaBorraMovimientos(_ventaId, db, transaction);
                             await UtilsInv.BorraPagos(origenTipo: 2, docId: _ventaId, db, transaction);
-
                         }
 
                         if (facturar)
@@ -862,12 +849,7 @@ namespace ClinicaFB.PuntoDeVenta
                             folioFac = alma.FolioFac;
                         }
 
-
                         await ActualizaExistencias(db, transaction);
-
-
-
-
 
                         Emisor emi = new Emisor();
                         long emisorId = cboEmisores.SelectedValue == null ? 0 : (long)cboEmisores.SelectedValue;
@@ -877,8 +859,6 @@ namespace ClinicaFB.PuntoDeVenta
 
                         long docId = (long)cboDoctores.SelectedValue;
 
-
-
                         if (_esAlta)
                         {
                             vta = new Venta
@@ -886,9 +866,7 @@ namespace ClinicaFB.PuntoDeVenta
                                 Serie = serie,
                                 Folio = folio
                             };
-
                         }
-
 
                         vta.VentaId = _ventaId;
                         vta.SucursalId = _sucursalId;
@@ -897,8 +875,6 @@ namespace ClinicaFB.PuntoDeVenta
                         vta.DoctorId = docId;
                         vta.ClienteId = _razonSocialId;
                         vta.Tipo = facturar ? "FAC" : "TIC";
-
-
                         vta.Fecha = dtpFecha.Value;
                         vta.FormaPago = _cveFOP;
                         vta.Moneda = "MXN";
@@ -919,7 +895,6 @@ namespace ClinicaFB.PuntoDeVenta
                         vta.WebId = General.RandomString(5);
                         vta.FechaFac = fechaFac;
 
-
                         sql = _esAlta ? Helpers.Queries.VentaInsert : Helpers.Queries.VentaUpdate;
 
                         if (_esAlta)
@@ -929,12 +904,11 @@ namespace ClinicaFB.PuntoDeVenta
                         }
                         else
                         {
-                            await db.ExecuteAsync(sql, vta,transaction);
+                            await db.ExecuteAsync(sql, vta, transaction);
                         }
 
                         foreach (VentaDetalle det in _ventaArticulos)
                         {
-
                             sql = Helpers.Queries.VentaDetalleInsert;
 
                             VentaDetalle vtaDet = new VentaDetalle
@@ -947,18 +921,14 @@ namespace ClinicaFB.PuntoDeVenta
                                 Cantidad = det.Cantidad,
                                 Precio = det.Precio,
                                 Descuento = det.Descuento,
-
                                 CveProSer = det.CveProSer,
                                 CveUni = det.CveUni,
-
-
-                                TipoIVA = det.TipoIVA, //1=tasa 2=exento
+                                TipoIVA = det.TipoIVA,
                                 TasaIVA = det.TasaIVA,
-
                                 IVA = det.IVA
                             };
 
-                            long detalleId = await db.ExecuteScalarAsync<long>(sql, vtaDet,transaction);
+                            long detalleId = await db.ExecuteScalarAsync<long>(sql, vtaDet, transaction);
 
                             decimal ultimoCosto = 0;
 
@@ -978,8 +948,7 @@ namespace ClinicaFB.PuntoDeVenta
                                 UltimoCosto = ultimoCosto
                             };
 
-                            await db.ExecuteAsync(sql, documentoMovimiento,transaction);
-
+                            await db.ExecuteAsync(sql, documentoMovimiento, transaction);
                         }
 
                         await UtilsInv.VentaReconstruyeCapasDeCostos(almacenId, _ventaArticulos.ToList(), db, transaction);
@@ -988,7 +957,6 @@ namespace ClinicaFB.PuntoDeVenta
                         {
                             await UtilsInv.VentaReconstruyeCapasDeCostos(almacenId, _detalleOriginal.ToList(), db, transaction);
                         }
-
 
                         List<Pago> pagos = new List<Pago>();
                         if (txtEfectivo.DecimalValue > 0)
@@ -1009,14 +977,12 @@ namespace ClinicaFB.PuntoDeVenta
                         if (txtTarjetaCredito.DecimalValue > 0)
                         {
                             pagos.Add(new Pago { OrigenTipo = 2, DoctoOrigenId = (int)_ventaId, Tipo = 4, Importe = txtTarjetaCredito.DecimalValue, Referencia = txtReferencia.Text });
-
                         }
 
                         if (txtCheque.DecimalValue > 0)
                         {
                             pagos.Add(new Pago { OrigenTipo = 2, DoctoOrigenId = (int)_ventaId, Tipo = 5, Importe = txtCheque.DecimalValue, Referencia = txtReferencia.Text });
                         }
-
 
                         if (txtIntermediarios.DecimalValue > 0)
                         {
@@ -1028,31 +994,7 @@ namespace ClinicaFB.PuntoDeVenta
                             await Task.Run(() => UtilsInv.GuardaPagos(pagos, db, transaction));
                         }
 
-
-                        if (facturar)
-                        {
-                            int res = await ManejaCFDIs.GeneraFactura(vta,db,transaction, _imprimir, _impresora, _mandarCorreos, _correos);
-
-                            if (res != 0)
-                            {
-                                await UtilsInv.QuitaDatosFactura(vta.VentaId);
-                            }
-                        }
-
-                        else
-                        {
-                            if (soloGuardar == false)
-                            {
-                                await Task.Run(
-                                    () =>
-                                    ManejaCFDIs.ImprimeTicketPDV(vta, _ventaArticulos, _imprimir, _impresora, _mandarCorreos, _correos,
-                                    pagado: pag, cambio: cam)
-                                    );
-
-                            }
-                        }
-
-
+                        // ✅ COMMIT - Todo lo crítico de BD ya se guardó
                         transaction.Commit();
                     }
                     catch (Exception ex)
@@ -1064,11 +1006,58 @@ namespace ClinicaFB.PuntoDeVenta
                 }
             }
 
-            
+            // ✅ Operaciones secundarias FUERA de la transacción
+            if (!soloGuardar)
+            {
+                if (facturar)
+                {
+                    try
+                    {
+                        // Facturar requiere nueva conexión/transacción interna
+                        using (FbConnection dbFac = General.GetDB())
+                        {
+                            await dbFac.OpenAsync();
+                            using (var transFac = dbFac.BeginTransaction())
+                            {
+                                int res = await ManejaCFDIs.GeneraFactura(vta, dbFac, transFac,
+                                    _imprimir, _impresora, _mandarCorreos, _correos);
 
-
-            //Inicializa();
-
+                                if (res != 0)
+                                {
+                                    transFac.Rollback();
+                                    await UtilsInv.QuitaDatosFactura(vta.VentaId);
+                                    MessageBox.Show("La venta se guardó pero hubo un error al facturar. Puede facturar desde el módulo de facturas.",
+                                        "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                                else
+                                {
+                                    transFac.Commit();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception exFac)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error facturando: {exFac.Message}");
+                        MessageBox.Show("La venta se guardó correctamente pero no se pudo completar la facturación.",
+                            "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        await Task.Run(() =>
+                            ManejaCFDIs.ImprimeTicketPDV(vta, _ventaArticulos, _imprimir, _impresora,
+                                _mandarCorreos, _correos, pagado: pag, cambio: cam));
+                    }
+                    catch (Exception exTicket)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error imprimiendo/enviando ticket: {exTicket.Message}");
+                        // No mostrar error al usuario, solo loguear
+                    }
+                }
+            }
         }
 
 
@@ -1091,8 +1080,8 @@ namespace ClinicaFB.PuntoDeVenta
             cmdFactura.Enabled = habilitado;
             cmdGuardar.Enabled = habilitado;
             cmdTicket.Enabled = habilitado;
-            cmdSalir.Enabled = habilitado;  
-        }   
+            cmdSalir.Enabled = habilitado;
+        }
         private async void cmdFactura_Click(object sender, EventArgs e)
         {
             if (_ventaArticulos.Count == 0)
@@ -1156,6 +1145,7 @@ namespace ClinicaFB.PuntoDeVenta
 
             if (clavesSATSeleccionar.Aceptar == false)
             {
+                CambiaBotones(true);
                 return;
             }
 
@@ -1166,6 +1156,7 @@ namespace ClinicaFB.PuntoDeVenta
             _impresora = clavesSATSeleccionar.cboImpresoras.Text.Trim();
             _mandarCorreos = clavesSATSeleccionar.chkMandarCorreo.Checked;
             _correos = clavesSATSeleccionar.txtCorreos.Text.Trim();
+
             DateTime fechaFactura = clavesSATSeleccionar.dtpFecha.Value;
 
             await GuardaVenta(facturar: true, fechaFac: fechaFactura);
@@ -1441,7 +1432,7 @@ namespace ClinicaFB.PuntoDeVenta
                 decimal cantidad = Convert.ToDecimal(worksheet.Cells[ren, 3].Value);
                 decimal precio = Convert.ToDecimal(worksheet.Cells[ren, 4].Value);
 
-                if (string.IsNullOrEmpty(sku) || cantidad<1 || precio <1)
+                if (string.IsNullOrEmpty(sku) || cantidad < 1 || precio < 1)
                 {
                     continue;
                 }
@@ -1512,7 +1503,7 @@ namespace ClinicaFB.PuntoDeVenta
 
 
                 }
-                );                
+                );
             }
             workbook.Close();
             excelApp.Quit();
@@ -1521,5 +1512,3 @@ namespace ClinicaFB.PuntoDeVenta
         }
     }
 }
-
-

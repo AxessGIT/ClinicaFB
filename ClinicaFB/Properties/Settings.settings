@@ -53,5 +53,8 @@
     <Setting Name="ImpresoraTicket" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="UltimaConfirmacionCFDI" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">0200-01-01</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
