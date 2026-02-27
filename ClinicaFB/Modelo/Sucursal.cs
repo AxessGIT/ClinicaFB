@@ -25,6 +25,7 @@ namespace ClinicaFB.Modelo
         public int FolioNC { get; set; }
         public string SeriePagos { get; set; }
         public int FolioPagos { get; set; }
+        public long ListaDePreciosId { get; set; }
 
     }
 }

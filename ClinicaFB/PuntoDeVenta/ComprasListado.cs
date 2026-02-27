@@ -26,7 +26,6 @@ namespace ClinicaFB.PuntoDeVenta
         private BindingList<Documento> _compras = new BindingList<Documento>();
         private BindingList<Almacen> _almacenes = new BindingList<Almacen>();
         private int _proveedorId;
-        private bool _isProcessing;
 
         public ComprasListado()
         {

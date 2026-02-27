@@ -207,7 +207,7 @@ namespace ClinicaFB.PuntoDeVenta
 
         }
 
-        private void cmdArchivos_Click(object sender, EventArgs e)
+        private async void cmdArchivos_Click(object sender, EventArgs e)
         {
             long ventaId = RenglonSeleccionado();
 
@@ -224,43 +224,8 @@ namespace ClinicaFB.PuntoDeVenta
 
             }
 
-            UtilsPDV.MuestraArchivosCFDi(ventaId);
+            await UtilsPDV.MuestraArchivosCFDi(ventaId);
 
-            /*Venta venta = new Venta();
-            List<VentaDetalle> detalle = new List<VentaDetalle>();
-            Emisor emisor = new Emisor();
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = "";
-                sql = Queries.VentaSelect;
-                venta = db.Query<Venta>(sql, new { VentaId = ventaId }).FirstOrDefault();
-                sql = Queries.VentaDetallesSelect;
-                detalle = db.Query<VentaDetalle>(sql, new { VentaId = ventaId }).ToList();
-
-                sql = Queries.EmisorSelect();
-                emisor = db.Query<Emisor>(sql, new { EmisorId = venta.EmisorId }).FirstOrDefault();
-
-
-            }
-
-            string carpetaCfdi = General.CarpetaFacturaPDV(emisor.RFC, venta.FechaFac);
-            string archivoCfdi = carpetaCfdi + @"\" + General.NombreArchivoCfdi("FAC", venta.SerieFac, venta.FolioFac);
-
-            if (string.IsNullOrEmpty(venta.xml))
-                venta.xml = File.Exists(archivoCfdi) ? File.ReadAllText(archivoCfdi) : "";
-
-            ComprobanteCFDI comprobante = new ComprobanteCFDI();
-
-
-            ManejaCFDIs.GeneraPDFFacturaPDV(venta, detalle);
-
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
-            {
-                FileName = carpetaCfdi,
-                UseShellExecute = true,
-                Verb = "open"
-            });*/
 
         }
 

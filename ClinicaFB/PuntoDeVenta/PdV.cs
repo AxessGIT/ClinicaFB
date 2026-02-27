@@ -509,9 +509,24 @@ namespace ClinicaFB.PuntoDeVenta
                 }
 
 
+                decimal precio = art.Precio1;
+                long sucursalId = Properties.Settings.Default.SucursalId;
+                sql = Helpers.Queries.SucursalSelect();
+                Sucursal suc = db.Query<Sucursal>(sql, new { SucursalId = sucursalId }).FirstOrDefault();
 
-                decimal descuento = Math.Round(art.Precio1 * spnDescuento.Value / 100, 2);
-                decimal PrecioNeto = art.Precio1 - descuento;
+                if (suc != null && suc.ListaDePreciosId!=0)
+                {
+                    sql = Helpers.Queries.ArticuloPreciosSelectByArticuloYLista;
+                    ArticuloPrecios ap = db.Query<ArticuloPrecios>(sql, new { art.ArticuloId, ListaPrecioId = suc.ListaDePreciosId }).FirstOrDefault();
+                    if (ap != null)
+                    {
+                        precio = ap.Precio1;
+                    }
+                }
+
+
+                decimal descuento = Math.Round(precio * spnDescuento.Value / 100, 2);
+                decimal PrecioNeto = precio - descuento;
                 decimal iva = Math.Round(PrecioNeto * (decimal)spnCantidad.Value * tasaIVA / 100, 2);
 
                 _ventaArticulos.Add(new VentaDetalle
@@ -520,7 +535,7 @@ namespace ClinicaFB.PuntoDeVenta
                     NoIden = txtConcepto.Text.Trim(),
                     Descripcion = art.Descripcion,
                     UDM = art.UDM,
-                    Precio = art.Precio1,
+                    Precio = precio,
                     Cantidad = (decimal)spnCantidad.Value,
                     CveProSer = art.CveProSer,
                     CveUni = art.CveUni,
@@ -820,7 +835,17 @@ namespace ClinicaFB.PuntoDeVenta
                         Almacen alma = new Almacen();
                         string sql = "";
 
-                        if (_esAlta)
+                        
+                        if (_esAlta == false)
+                        {
+                            await UtilsInv.DevuelveDetalleOriginal(_detalleOriginal.ToList(), _almacenOriginalId, entrada: false, db, transaction);
+                            await UtilsInv.VentaBorraDetalle(_ventaId, db, transaction);
+                            await UtilsInv.VentaBorraMovimientos(_ventaId, db, transaction);
+                            await UtilsInv.BorraPagos(origenTipo: 2, docId: _ventaId, db, transaction);
+                        }
+
+
+                        if (vta.FolioFac == 0)
                         {
                             sql = Helpers.Queries.AlmacenSelect();
                             alma = db.Query<Almacen>(sql, new { AlmacenId = almacenId }, transaction).FirstOrDefault();
@@ -835,13 +860,7 @@ namespace ClinicaFB.PuntoDeVenta
                             folio = alma.FolioVen;
                             UtilsInv.AlmacenIncrementaFolioVenta(almacenId, db, transaction);
                         }
-                        else
-                        {
-                            await UtilsInv.DevuelveDetalleOriginal(_detalleOriginal.ToList(), _almacenOriginalId, entrada: false, db, transaction);
-                            await UtilsInv.VentaBorraDetalle(_ventaId, db, transaction);
-                            await UtilsInv.VentaBorraMovimientos(_ventaId, db, transaction);
-                            await UtilsInv.BorraPagos(origenTipo: 2, docId: _ventaId, db, transaction);
-                        }
+
 
                         if (facturar)
                         {
@@ -1022,17 +1041,7 @@ namespace ClinicaFB.PuntoDeVenta
                                 int res = await ManejaCFDIs.GeneraFactura(vta, dbFac, transFac,
                                     _imprimir, _impresora, _mandarCorreos, _correos);
 
-                                if (res != 0)
-                                {
-                                    transFac.Rollback();
-                                    await UtilsInv.QuitaDatosFactura(vta.VentaId);
-                                    MessageBox.Show("La venta se guardó pero hubo un error al facturar. Puede facturar desde el módulo de facturas.",
-                                        "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                }
-                                else
-                                {
-                                    transFac.Commit();
-                                }
+                              transFac.Commit(); // Aunque falle la factura, no revertimos la venta. Solo limpiamos datos relacionados a factura en caso de error dentro de ManejaCFDIs.GeneraFactura
                             }
                         }
                     }

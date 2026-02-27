@@ -712,7 +712,7 @@
             this.cmdGuardar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cmdGuardar.Location = new System.Drawing.Point(694, 503);
             this.cmdGuardar.Name = "cmdGuardar";
-            this.cmdGuardar.Size = new System.Drawing.Size(92, 52);
+            this.cmdGuardar.Size = new System.Drawing.Size(92, 59);
             this.cmdGuardar.TabIndex = 10;
             this.cmdGuardar.Text = "Guardar";
             this.cmdGuardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -725,7 +725,7 @@
             this.cmdTimbrar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cmdTimbrar.Location = new System.Drawing.Point(596, 503);
             this.cmdTimbrar.Name = "cmdTimbrar";
-            this.cmdTimbrar.Size = new System.Drawing.Size(92, 52);
+            this.cmdTimbrar.Size = new System.Drawing.Size(92, 59);
             this.cmdTimbrar.TabIndex = 16;
             this.cmdTimbrar.Text = "Timbrar";
             this.cmdTimbrar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -738,7 +738,7 @@
             this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cmdSalir.Location = new System.Drawing.Point(792, 503);
             this.cmdSalir.Name = "cmdSalir";
-            this.cmdSalir.Size = new System.Drawing.Size(86, 52);
+            this.cmdSalir.Size = new System.Drawing.Size(86, 59);
             this.cmdSalir.TabIndex = 11;
             this.cmdSalir.Text = "Salir";
             this.cmdSalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;

@@ -209,7 +209,7 @@ namespace ClinicaFB.Helpers
             return resultado;
         }
 
-        public static void MuestraArchivosCFDi(long documentoId, string tipoDoc = "FAC")
+        public static async Task MuestraArchivosCFDi(long documentoId, string tipoDoc = "FAC")
         {
 
 
@@ -243,91 +243,91 @@ namespace ClinicaFB.Helpers
             Emisor emisor = new Emisor();
 
 
-            if (tipoDoc == "FAC" || tipoDoc == "NDC")
+
+            using (FbConnection db = General.GetDB())
             {
-
-
-
-
-                using (FbConnection db = General.GetDB())
+                await db.OpenAsync();
+                using (var transaction = db.BeginTransaction())
                 {
 
-                    sql = Queries.VentaSelect;
-                    venta = db.Query<Venta>(sql, new { VentaId = documentoId }).FirstOrDefault();
-                    sql = Queries.VentaDetallesSelect;
-                    detalle = db.Query<VentaDetalle>(sql, new { VentaId = documentoId }).ToList();
-
-                    sql = Queries.EmisorSelect();
-                    emisor = db.Query<Emisor>(sql, new { venta.EmisorId }).FirstOrDefault();
-
-
-                }
-
-                serie = venta.SerieFac;
-                folio = venta.FolioFac;
-
-            }
-            else
-            {
-                using (FbConnection db = General.GetDB())
-                {
-                    sql = Queries.ComplementoDePagoSelect;
-                    complemento = db.Query<ComplementoPago>(sql, new { ComPagId = documentoId }).FirstOrDefault();
-
-                    sql = Queries.EmisorSelect();
-                    emisor = db.Query<Emisor>(sql, new { complemento.EmisorId }).FirstOrDefault();
-
-                    serie = complemento.Serie;
-                    folio = complemento.Folio;
-                }
-            }
-
-
-            archivoCfdi = General.NombreArchivoCfdi(tipoDoc, serie, folio);
-            archivoDestino = $@"{carpetaUsuario}\{archivoCfdi}";
-
-            if (tipoDoc == "FAC" || tipoDoc == "NDC")
-            {
-
-                if (string.IsNullOrEmpty(venta.xml))
-                {
-                    carpetaCfdi = General.CarpetaFacturaPDV(emisor.RFC, venta.FechaFac);
-                    archivoCfdi = carpetaCfdi + @"\" + General.NombreArchivoCfdi(venta.Tipo.Trim(), venta.SerieFac, venta.FolioFac);
-
-                    if (File.Exists(archivoCfdi))
+                    if (tipoDoc == "FAC" || tipoDoc == "NDC")
                     {
-                        File.Copy(archivoCfdi, archivoDestino, true);
+
+                        sql = Queries.VentaSelect;
+                        venta = db.Query<Venta>(sql, new { VentaId = documentoId },transaction).FirstOrDefault();
+                        sql = Queries.VentaDetallesSelect;
+                        detalle = db.Query<VentaDetalle>(sql, new { VentaId = documentoId },transaction).ToList();
+
+                        sql = Queries.EmisorSelect();
+                        emisor = db.Query<Emisor>(sql, new { venta.EmisorId },transaction).FirstOrDefault();
+
+
+                        serie = venta.SerieFac;
+                        folio = venta.FolioFac;
+
                     }
-                }
-                else
-                {
+                    else
+                    {
+                        sql = Queries.ComplementoDePagoSelect;
+                        complemento = db.Query<ComplementoPago>(sql, new { ComPagId = documentoId },transaction).FirstOrDefault();
 
-                    File.WriteAllText(archivoDestino, venta.xml);
-                }
+                        sql = Queries.EmisorSelect();
+                        emisor = db.Query<Emisor>(sql, new { complemento.EmisorId },transaction).FirstOrDefault();
+
+                        serie = complemento.Serie;
+                        folio = complemento.Folio;
+                    }
+
+                    archivoCfdi = General.NombreArchivoCfdi(tipoDoc, serie, folio);
+                    archivoDestino = $@"{carpetaUsuario}\{archivoCfdi}";
+
+                    if (tipoDoc == "FAC" || tipoDoc == "NDC")
+                    {
+
+                        if (string.IsNullOrEmpty(venta.xml))
+                        {
+                            carpetaCfdi = General.CarpetaFacturaPDV(emisor.RFC, venta.FechaFac);
+                            archivoCfdi = carpetaCfdi + @"\" + General.NombreArchivoCfdi(venta.Tipo.Trim(), venta.SerieFac, venta.FolioFac);
+
+                            if (File.Exists(archivoCfdi))
+                            {
+                                File.Copy(archivoCfdi, archivoDestino, true);
+                            }
+                        }
+                        else
+                        {
+
+                            File.WriteAllText(archivoDestino, venta.xml);
+                        }
+
+                        if (string.IsNullOrEmpty(venta.xml) && File.Exists(archivoCfdi))
+                        {
+                            venta.xml = File.ReadAllText(archivoCfdi);
+
+                        }
 
 
-                if (string.IsNullOrEmpty(venta.xml) && File.Exists(archivoCfdi))
-                {
-                    venta.xml = File.ReadAllText(archivoCfdi);
+                        if (tipoDoc == "FAC")
+                        {
+                            ManejaCFDIs.GeneraPDFFacturaPDV(venta, detalle,db,transaction, carpetaUsuario);
+                        }
+                        else
+                        {
+                            ManejaCFDIs.GeneraPDFNotaDeCreditoPDV(venta, detalle, carpetaUsuario);
+                        }
 
-                }
+                    }
 
+                    else if (tipoDoc == "CPG")
+                    {
+                        File.WriteAllText(archivoDestino, complemento.xml);
+                        ManejaCFDIs.GeneraPDFComplementoDePago(complemento.ComPagId, carpetaUsuario);
+                    }
 
-                if (tipoDoc == "FAC")
-                {
-                    ManejaCFDIs.GeneraPDFFacturaPDV(venta, detalle, carpetaUsuario);
-                }
-                else
-                {
-                    ManejaCFDIs.GeneraPDFNotaDeCreditoPDV(venta, detalle, carpetaUsuario);
                 }
             }
 
-            else if (tipoDoc == "CPG")
-            {
-                File.WriteAllText(archivoDestino, complemento.xml);
-                ManejaCFDIs.GeneraPDFComplementoDePago(complemento.ComPagId, carpetaUsuario);
-            }
+
 
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
             {

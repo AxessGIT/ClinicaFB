@@ -31,10 +31,34 @@ namespace ClinicaFB.PuntoDeVenta
         private void CargaArticulos()
         {
 
+            long sucursalId = Properties.Settings.Default.SucursalId;
+
             using (FbConnection db = General.GetDB())
             {
-                string sql = Queries.ArticulosSelect();
-                var res = db.Query<Articulo>(sql).ToList();
+
+
+                string sql = "";
+
+
+
+                sql = Queries.SucursalSelect();
+                Sucursal sucursal = db.Query<Sucursal>(sql, new { SucursalId = sucursalId }).FirstOrDefault();
+
+
+                List <Articulo> res = new List<Articulo>();
+
+                if (sucursal != null && sucursal.ListaDePreciosId != 0)
+                {
+                    sql = Queries.ArticulosSelectListaPrecios;
+                    res = db.Query<Articulo>(sql, new { ListaPreciosId = sucursal.ListaDePreciosId }).ToList();
+                }
+                else
+                {
+                    sql = Queries.ArticulosSelect();
+                    res = db.Query<Articulo>(sql).ToList();
+                }
+
+
 
                 _articulos = new BindingList<Articulo>(res);
 

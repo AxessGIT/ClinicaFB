@@ -49,7 +49,6 @@
             this.cmdCancelar = new System.Windows.Forms.Button();
             this.cmdSalir = new System.Windows.Forms.Button();
             this.cmdTicket = new System.Windows.Forms.Button();
-            this.cmdFacturar = new System.Windows.Forms.Button();
             this.cmdVer = new System.Windows.Forms.Button();
             this.cmdMandarCorreo = new System.Windows.Forms.Button();
             this.cmdArchivos = new System.Windows.Forms.Button();
@@ -57,6 +56,7 @@
             this.cboAlmacenes = new Syncfusion.WinForms.ListView.SfComboBox();
             this.lblAlmacen = new System.Windows.Forms.Label();
             this.cmdModificar = new System.Windows.Forms.Button();
+            this.cmdFacturar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdVentas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboAlmacenes)).BeginInit();
             this.SuspendLayout();
@@ -209,7 +209,7 @@
             // 
             this.cmdCancelar.Image = global::ClinicaFB.Properties.Resources.Cancelar20;
             this.cmdCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdCancelar.Location = new System.Drawing.Point(816, 379);
+            this.cmdCancelar.Location = new System.Drawing.Point(816, 377);
             this.cmdCancelar.Name = "cmdCancelar";
             this.cmdCancelar.Size = new System.Drawing.Size(116, 40);
             this.cmdCancelar.TabIndex = 12;
@@ -221,7 +221,7 @@
             // 
             this.cmdSalir.Image = ((System.Drawing.Image)(resources.GetObject("cmdSalir.Image")));
             this.cmdSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSalir.Location = new System.Drawing.Point(816, 423);
+            this.cmdSalir.Location = new System.Drawing.Point(816, 421);
             this.cmdSalir.Name = "cmdSalir";
             this.cmdSalir.Size = new System.Drawing.Size(116, 40);
             this.cmdSalir.TabIndex = 13;
@@ -233,7 +233,7 @@
             // 
             this.cmdTicket.Image = ((System.Drawing.Image)(resources.GetObject("cmdTicket.Image")));
             this.cmdTicket.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdTicket.Location = new System.Drawing.Point(816, 291);
+            this.cmdTicket.Location = new System.Drawing.Point(816, 289);
             this.cmdTicket.Name = "cmdTicket";
             this.cmdTicket.Size = new System.Drawing.Size(116, 40);
             this.cmdTicket.TabIndex = 10;
@@ -241,23 +241,11 @@
             this.cmdTicket.UseVisualStyleBackColor = true;
             this.cmdTicket.Click += new System.EventHandler(this.cmdTicket_Click);
             // 
-            // cmdFacturar
-            // 
-            this.cmdFacturar.Image = ((System.Drawing.Image)(resources.GetObject("cmdFacturar.Image")));
-            this.cmdFacturar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdFacturar.Location = new System.Drawing.Point(816, 335);
-            this.cmdFacturar.Name = "cmdFacturar";
-            this.cmdFacturar.Size = new System.Drawing.Size(116, 40);
-            this.cmdFacturar.TabIndex = 11;
-            this.cmdFacturar.Text = "&Facturar";
-            this.cmdFacturar.UseVisualStyleBackColor = true;
-            this.cmdFacturar.Click += new System.EventHandler(this.cmdFacturar_Click);
-            // 
             // cmdVer
             // 
             this.cmdVer.Image = ((System.Drawing.Image)(resources.GetObject("cmdVer.Image")));
             this.cmdVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdVer.Location = new System.Drawing.Point(816, 159);
+            this.cmdVer.Location = new System.Drawing.Point(816, 157);
             this.cmdVer.Name = "cmdVer";
             this.cmdVer.Size = new System.Drawing.Size(116, 40);
             this.cmdVer.TabIndex = 7;
@@ -269,7 +257,7 @@
             // 
             this.cmdMandarCorreo.Image = ((System.Drawing.Image)(resources.GetObject("cmdMandarCorreo.Image")));
             this.cmdMandarCorreo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdMandarCorreo.Location = new System.Drawing.Point(816, 247);
+            this.cmdMandarCorreo.Location = new System.Drawing.Point(816, 245);
             this.cmdMandarCorreo.Name = "cmdMandarCorreo";
             this.cmdMandarCorreo.Size = new System.Drawing.Size(116, 40);
             this.cmdMandarCorreo.TabIndex = 9;
@@ -281,7 +269,7 @@
             // 
             this.cmdArchivos.Image = ((System.Drawing.Image)(resources.GetObject("cmdArchivos.Image")));
             this.cmdArchivos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdArchivos.Location = new System.Drawing.Point(816, 203);
+            this.cmdArchivos.Location = new System.Drawing.Point(816, 201);
             this.cmdArchivos.Name = "cmdArchivos";
             this.cmdArchivos.Size = new System.Drawing.Size(116, 40);
             this.cmdArchivos.TabIndex = 8;
@@ -337,11 +325,23 @@
             this.cmdModificar.UseVisualStyleBackColor = true;
             this.cmdModificar.Click += new System.EventHandler(this.cmdModificar_Click);
             // 
+            // cmdFacturar
+            // 
+            this.cmdFacturar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdFacturar.Location = new System.Drawing.Point(816, 333);
+            this.cmdFacturar.Name = "cmdFacturar";
+            this.cmdFacturar.Size = new System.Drawing.Size(116, 40);
+            this.cmdFacturar.TabIndex = 17;
+            this.cmdFacturar.Text = "&Facturar";
+            this.cmdFacturar.UseVisualStyleBackColor = true;
+            this.cmdFacturar.Click += new System.EventHandler(this.cmdFacturar_Click);
+            // 
             // VentasListado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 631);
+            this.Controls.Add(this.cmdFacturar);
             this.Controls.Add(this.cmdModificar);
             this.Controls.Add(this.cboAlmacenes);
             this.Controls.Add(this.lblAlmacen);
@@ -351,7 +351,6 @@
             this.Controls.Add(this.cmdCancelar);
             this.Controls.Add(this.cmdSalir);
             this.Controls.Add(this.cmdTicket);
-            this.Controls.Add(this.cmdFacturar);
             this.Controls.Add(this.cmdVer);
             this.Controls.Add(this.grdVentas);
             this.Controls.Add(this.cmdBuscar);
@@ -383,7 +382,6 @@
         private System.Windows.Forms.Button cmdCancelar;
         private System.Windows.Forms.Button cmdSalir;
         private System.Windows.Forms.Button cmdTicket;
-        private System.Windows.Forms.Button cmdFacturar;
         private System.Windows.Forms.Button cmdVer;
         private System.Windows.Forms.Button cmdMandarCorreo;
         private System.Windows.Forms.Button cmdArchivos;
@@ -400,5 +398,6 @@
         private Syncfusion.WinForms.ListView.SfComboBox cboAlmacenes;
         private System.Windows.Forms.Label lblAlmacen;
         private System.Windows.Forms.Button cmdModificar;
+        private System.Windows.Forms.Button cmdFacturar;
     }
 }

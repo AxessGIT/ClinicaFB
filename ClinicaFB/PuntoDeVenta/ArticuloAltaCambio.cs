@@ -95,6 +95,25 @@ namespace ClinicaFB.PuntoDeVenta
                     txtCveProSer_Validated(new { }, new EventArgs { });
                     txtCveUni_Validated(new { }, new EventArgs { });
 
+                    long sucursalId = Properties.Settings.Default.SucursalId;
+                    Sucursal suc = db.Query<Sucursal>(Queries.SucursalSelect(), new { SucursalId = sucursalId }).FirstOrDefault();  
+
+                    if (suc.ListaDePreciosId != 0)
+                    {
+                        sql = Queries.ArticuloPreciosSelectByArticuloYLista;
+                        ArticuloPrecios ap = db.Query<ArticuloPrecios>(sql, new { ArticuloId = _articuloId,ListaPrecioId = suc.ListaDePreciosId }).FirstOrDefault();
+                        if (ap != null)
+                        {
+                            txtPrecio1.DecimalValue = ap.Precio1;
+                            txtPrecio2.DecimalValue = ap.Precio2;
+                            txtPrecio3.DecimalValue = ap.Precio3;
+                            txtPrecio4.DecimalValue = ap.Precio4;
+                            txtPrecio5.DecimalValue = ap.Precio5;
+                        }
+
+                    }
+
+
                 }
             }
 
@@ -243,6 +262,7 @@ namespace ClinicaFB.PuntoDeVenta
                 {
                     try
                     {
+                        string sql = "";
 
                         Articulo art = new Articulo
                         {
@@ -267,8 +287,41 @@ namespace ClinicaFB.PuntoDeVenta
                             LineaId = (int)General.DevuelveValorCombo(cboLineas, "LIN")
                         };
 
+                        long sucursalId = Properties.Settings.Default.SucursalId;
+                        if (sucursalId != 0)
+                        {
+                            Sucursal suc = db.Query<Sucursal>(Queries.SucursalSelect(), new { SucursalId = sucursalId },transaction).FirstOrDefault();
+                            if (suc.ListaDePreciosId != 0)
+                            {
+                                ArticuloPrecios ap = new ArticuloPrecios
+                                {
+                                    ArticuloId = _articuloId,
+                                    ListaPrecioId = suc.ListaDePreciosId,
+                                    Precio1 = txtPrecio1.DecimalValue,
+                                    Precio2 = txtPrecio2.DecimalValue,
+                                    Precio3 = txtPrecio3.DecimalValue,
+                                    Precio4 = txtPrecio4.DecimalValue,
+                                    Precio5 = txtPrecio5.DecimalValue
+                                };
+                                sql = Queries.ArticuloPreciosSelectByArticuloYLista;
+                                ArticuloPrecios apExiste = db.Query<ArticuloPrecios>(sql, new { ArticuloId = _articuloId,ListaPrecioId = suc.ListaDePreciosId },transaction).FirstOrDefault();
+                                if (apExiste == null)
+                                {
+                                    sql = Queries.ArticuloPreciosInsert;
+                                    db.Execute(sql, ap, transaction);
+                                }
+                                else
+                                {
+                                    ap.ArticuloPrecioId = apExiste.ArticuloPrecioId;
+                                    sql = Queries.ArticuloPreciosUpdate;
+                                    db.Execute(sql, ap, transaction);
+                                }
+                            }
 
-                        string sql = "";
+                        }
+
+
+
 
                         if (_esAlta)
                         {
@@ -289,7 +342,7 @@ namespace ClinicaFB.PuntoDeVenta
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Error al guardar el artículo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error al guardar el artículo: " + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 

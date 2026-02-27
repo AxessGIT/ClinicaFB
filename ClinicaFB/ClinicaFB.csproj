@@ -912,6 +912,7 @@
     <Compile Include="Modelo\ArticuloClave.cs" />
     <Compile Include="Modelo\ArticuloImportar.cs" />
     <Compile Include="Modelo\ArticuloMovimiento.cs" />
+    <Compile Include="Modelo\ArticuloPrecios.cs" />
     <Compile Include="Modelo\ArticulosVendidos.cs" />
     <Compile Include="Modelo\CapaDeCosto.cs" />
     <Compile Include="Modelo\CFDIDetalle.cs" />
@@ -942,6 +943,7 @@
     <Compile Include="Modelo\Ingreso.cs" />
     <Compile Include="Modelo\IngresoDetalle.cs" />
     <Compile Include="Modelo\InventarioInicial.cs" />
+    <Compile Include="Modelo\ListaDePrecios.cs" />
     <Compile Include="Modelo\Pago.cs" />
     <Compile Include="Modelo\Nota.cs" />
     <Compile Include="Modelo\Paciente.cs" />

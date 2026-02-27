@@ -1191,6 +1191,23 @@ FacturaSelectxSerieyFolioSinAlmacen = "Select VentaId,SucursalId,EmisorId,Almace
 
         #endregion
 
+
+        #region ArticulosPrecios
+        public static string ArticuloPreciosSelectByArticuloYLista
+            =
+            "Select ArticuloPrecioId,ListaPrecioId,ArticuloId,Precio1,Precio2,Precio3,Precio4,Precio5 From ArticulosPrecios Where ListaPrecioId = @ListaPrecioId And ArticuloId = @ArticuloId";
+        public static string ArticuloPreciosInsert
+            =
+            "Insert Into ArticulosPrecios (ListaPrecioId,ArticuloId,Precio1,Precio2,Precio3,Precio4,Precio5) " +
+            "Values (@ListaPrecioId,@ArticuloId,@Precio1,@Precio2,@Precio3,@Precio4,@Precio5) " +
+            "Returning ArticuloPrecioId";
+
+        public static string ArticuloPreciosUpdate
+            =
+            "Update ArticulosPrecios Set Precio1 = @Precio1, Precio2 = @Precio2, Precio3 = @Precio3, Precio4 = @Precio4, Precio5 = @Precio5 " +
+            "Where ArticuloPrecioId = @ArticuloPrecioId";
+
+        #endregion  
         #region Sucursales
 
         public static string SucursalesSelect()
@@ -1207,7 +1224,7 @@ FacturaSelectxSerieyFolioSinAlmacen = "Select VentaId,SucursalId,EmisorId,Almace
             sql =
                 "Select SucursalId,Nombre,DatosAdicionales, SerieIngresos,FolioIngresos," +
                 "SerieFacGlobal,FolioFacGlobal,SerieFacPDV,FolioFacPDV," +
-                "SerieVentas,FolioVentas,SeriePagos,FolioPagos, CarpetaReportes,Carpetaimagenes,SerieNC,FolioNC " +
+                "SerieVentas,FolioVentas,SeriePagos,FolioPagos, CarpetaReportes,Carpetaimagenes,SerieNC,FolioNC,ListaDePreciosId " +
                 "From  Sucursales Where SucursalId = @SucursalId ";
             return sql;
         }
@@ -1629,11 +1646,46 @@ FacturaSelectxSerieyFolioSinAlmacen = "Select VentaId,SucursalId,EmisorId,Almace
                 "Where UPPER(Descripcion) LIKE @Filtro " +
                 "Order By Descripcion";
 
+
+        /* Fecha de creación: 24/02/2026 16:32
+   Ajuste: Implementación de Left Join con ArticulosPrecios para búsqueda por descripción
+*/
+        public static string ArticulosSelectxDesListaPrecios =
+            "SELECT A.ArticuloId, A.Clave, A.CodigoBarras, A.Descripcion, A.Tipo, A.UDM, A.Moneda, A.Costo, " +
+            "COALESCE(AP.Precio1, A.Precio1) AS Precio1, " +
+            "COALESCE(AP.Precio2, A.Precio2) AS Precio2, " +
+            "COALESCE(AP.Precio3, A.Precio3) AS Precio3, " +
+            "COALESCE(AP.Precio4, A.Precio4) AS Precio4, " +
+            "COALESCE(AP.Precio5, A.Precio5) AS Precio5, " +
+            "A.CveProSer, A.CveUni, A.ImpuestoId, A.MarcaId, A.LineaId, A.FechaUltimaCompra " +
+            "FROM Articulos A " +
+            "LEFT JOIN ArticulosPrecios AP ON AP.ListaPrecioId = @ListaPrecioId AND  A.ArticuloId = AP.ArticuloId  " +
+            "WHERE UPPER(A.Descripcion) LIKE @Filtro " +
+            "ORDER BY A.Descripcion";
+
+
         public static string ArticulosSelectxDesYTipo =
             "Select ArticuloId, Clave,CodigoBarras,Descripcion,Tipo,UDM,Moneda,Costo,Precio1,Precio2,Precio3,Precio4,Precio5," +
                 "CveProSer,CveUni,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos " +
                 "Where Tipo = @Tipo And UPPER(Descripcion) LIKE @Filtro " +
                 "Order By Descripcion";
+
+
+        /* Fecha de creación: 24/02/2026 16:38
+   Ajuste: Búsqueda por Tipo y Descripción con soporte para Listas de Precios (Sucursales)
+*/
+        public static string ArticulosSelectxDesYTipoListaPrecios =
+            "SELECT A.ArticuloId, A.Clave, A.CodigoBarras, A.Descripcion, A.Tipo, A.UDM, A.Moneda, A.Costo, " +
+            "COALESCE(AP.Precio1, A.Precio1) AS Precio1, " +
+            "COALESCE(AP.Precio2, A.Precio2) AS Precio2, " +
+            "COALESCE(AP.Precio3, A.Precio3) AS Precio3, " +
+            "COALESCE(AP.Precio4, A.Precio4) AS Precio4, " +
+            "COALESCE(AP.Precio5, A.Precio5) AS Precio5, " +
+            "A.CveProSer, A.CveUni, A.ImpuestoId, A.MarcaId, A.LineaId, A.FechaUltimaCompra " +
+            "FROM Articulos A " +
+            "LEFT JOIN ArticulosPrecios AP ON AP.ListaPrecioId = @ListaPrecioId AND A.ArticuloId = AP.ArticuloId " +
+            "WHERE A.Tipo = @Tipo AND UPPER(A.Descripcion) LIKE @Filtro " +
+            "ORDER BY A.Descripcion";
 
 
         public static string ArticulosSelectBuscar()
@@ -1671,6 +1723,22 @@ FacturaSelectxSerieyFolioSinAlmacen = "Select VentaId,SucursalId,EmisorId,Almace
                 "CveProSer,CveUni,SKU,ImpuestoId,MarcaId,LineaId,FechaUltimaCompra From Articulos Order By Descripcion";
             return sql;
         }
+
+        /* Fecha de creación: 24/02/2026 16:15 */
+        public static string ArticulosSelectListaPrecios =
+            "SELECT A.ArticuloId, A.Clave, A.CodigoBarras, A.Descripcion, A.Tipo, A.UDM, A.Moneda, A.Costo, " +
+            "COALESCE(AP.Precio1, A.Precio1) AS Precio1, " + // Si no hay precio en lista, usa el base
+            "COALESCE(AP.Precio2, A.Precio2) AS Precio2, " +
+            "COALESCE(AP.Precio3, A.Precio3) AS Precio3, " +
+            "COALESCE(AP.Precio4, A.Precio4) AS Precio4, " +
+            "COALESCE(AP.Precio5, A.Precio5) AS Precio5, " +
+            "A.CveProSer, A.CveUni, A.SKU, A.ImpuestoId, A.MarcaId, A.LineaId, A.FechaUltimaCompra " +
+            "FROM Articulos A " +
+            "LEFT JOIN ArticulosPrecios AP ON AP.ListaPrecioId = @ListaPreciosId AND A.ArticuloId = AP.ArticuloId   " +
+            "ORDER BY A.Descripcion";
+
+
+
         public static string ArticuloSelect()
         {
             string sql = "";

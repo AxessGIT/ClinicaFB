@@ -61,8 +61,29 @@ namespace ClinicaFB.PuntoDeVenta
 
             using (FbConnection db = General.GetDB())
             {
-                string sql = _tipo==99?Queries.ArticulosSelectxDes:Queries.ArticulosSelectxDesYTipo;
-                List<Articulo> res = db.Query<Articulo>(sql, new {Tipo=_tipo, Filtro=buscar}).ToList();
+                string sql = "";
+
+                long sucursalId  = Properties.Settings.Default.SucursalId;
+                sql = Queries.SucursalSelect();
+                Sucursal suc = db.Query<Sucursal>(sql, new { SucursalId = sucursalId }).FirstOrDefault();
+
+
+                bool usaLista = false;
+                if (suc != null && suc.ListaDePreciosId!=0)
+                {
+                    usaLista = true;
+                }
+
+
+                if (_tipo==99)
+                {
+                    sql = usaLista?Queries.ArticulosSelectxDesListaPrecios:Queries.ArticulosSelectxDes;
+                }
+                else
+                {
+                    sql = usaLista?Queries.ArticulosSelectxDesYTipoListaPrecios:Queries.ArticulosSelectxDesYTipo;
+                }
+                List<Articulo> res = db.Query<Articulo>(sql, new { Tipo=_tipo, Filtro=buscar,ListaPrecioId = suc.ListaDePreciosId }).ToList();
 
                 _articulos = new BindingList<Articulo>(res);
 

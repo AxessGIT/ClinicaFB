@@ -245,7 +245,7 @@ namespace ClinicaFB.PuntoDeVenta
 
         }
 
-        private void cmdArchivos_Click(object sender, EventArgs e)
+        private async void cmdArchivos_Click(object sender, EventArgs e)
         {
             long ventaId = RenglonSeleccionado();
 
@@ -262,73 +262,7 @@ namespace ClinicaFB.PuntoDeVenta
 
             }
 
-            UtilsPDV.MuestraArchivosCFDi(ventaId);
-            /*
-
-            Venta venta = new Venta();
-            List<VentaDetalle> detalle = new List<VentaDetalle>();
-            Emisor emisor = new Emisor();
-
-            using (FbConnection db = General.GetDB())
-            {
-                string sql = "";
-                sql = Queries.VentaSelect;
-                venta = db.Query<Venta>(sql, new { VentaId = ventaId }).FirstOrDefault();
-                sql = Queries.VentaDetallesSelect;
-                detalle = db.Query<VentaDetalle>(sql, new { VentaId = ventaId }).ToList();
-
-                sql = Queries.EmisorSelect();
-                emisor = db.Query<Emisor>(sql, new {venta.EmisorId }).FirstOrDefault();
-
-
-            }
-
-            string carpetaCfdi =  string.Empty; 
-            string carpetaEscritorio = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string carpetaUsuario = carpetaEscritorio + @"\CFDIs";
-
-            if (!Directory.Exists(carpetaUsuario))
-            {
-                Directory.CreateDirectory(carpetaUsuario);
-            }
-
-            string archivoCfdi = General.NombreArchivoCfdi("FAC", venta.SerieFac, venta.FolioFac);
-
-
-            string archivoDestino = $@"{carpetaUsuario}\{archivoCfdi}";
-
-            if (string.IsNullOrEmpty(venta.xml)) 
-            {
-                carpetaCfdi = General.CarpetaFacturaPDV(emisor.RFC, venta.FechaFac);
-                archivoCfdi = carpetaCfdi + @"\" + General.NombreArchivoCfdi("FAC", venta.SerieFac, venta.FolioFac);
-
-                if (File.Exists(archivoCfdi))
-                {
-                    File.Copy(archivoCfdi, archivoDestino, true);
-                }
-            }
-            else { 
-                    
-                File.WriteAllText(archivoDestino, venta.xml);
-            }
-
-            
-            if (string.IsNullOrEmpty(venta.xml) && File.Exists(archivoCfdi))
-            {
-                venta.xml = File.ReadAllText(archivoCfdi);
-
-            }
-            ComprobanteCFDI comprobante = new ComprobanteCFDI();
-
-
-            ManejaCFDIs.GeneraPDFFacturaPDV(venta,detalle,carpetaUsuario);
-
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
-            {
-                FileName = carpetaUsuario,
-                UseShellExecute = true,
-                Verb = "open"
-            });*/
+            await UtilsPDV.MuestraArchivosCFDi(ventaId);
 
         }
 
@@ -417,7 +351,7 @@ namespace ClinicaFB.PuntoDeVenta
 
         }
 
-        private  async void cmdFacturar_Click(object sender, EventArgs e)
+        private  async Task Facturar()
         {
             long ventaId = RenglonSeleccionado();
             if (ventaId == 0)
@@ -571,6 +505,13 @@ namespace ClinicaFB.PuntoDeVenta
             CargaVentas();
             SetGrid();
 
+        }
+
+        private async void cmdFacturar_Click(object sender, EventArgs e)
+        {
+            cmdFacturar.Enabled = false;
+            await Facturar();
+            cmdFacturar.Enabled = true;
         }
     }
 }

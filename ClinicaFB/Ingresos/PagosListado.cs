@@ -255,14 +255,14 @@ namespace ClinicaFB.Ingresos
             return true;
         }
 
-        private void cmdArchivos_Click(object sender, EventArgs e)
+        private async void cmdArchivos_Click(object sender, EventArgs e)
         {
             if (!HayRenglonSeleccionado())
             {
                 return;
             }
 
-            UtilsPDV.MuestraArchivosCFDi(_complementos[grdPagos.CurrentRow.Index].ComPagId, "CPG");
+            await UtilsPDV.MuestraArchivosCFDi(_complementos[grdPagos.CurrentRow.Index].ComPagId, "CPG");
         }
 
         private void cmdCancelar_Click(object sender, EventArgs e)

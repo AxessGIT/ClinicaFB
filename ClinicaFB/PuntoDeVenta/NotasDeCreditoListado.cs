@@ -382,7 +382,7 @@ namespace ClinicaFB.PuntoDeVenta
 
         }
 
-        private void cmdArchivos_Click(object sender, EventArgs e)
+        private async void cmdArchivos_Click(object sender, EventArgs e)
         {
 
 
@@ -390,7 +390,7 @@ namespace ClinicaFB.PuntoDeVenta
             if (!RenglonSeleccionado())
                 return;
 
-            UtilsPDV.MuestraArchivosCFDi(_notas[grdNotas.CurrentRow.Index].VentaId, "NDC");
+            await UtilsPDV.MuestraArchivosCFDi(_notas[grdNotas.CurrentRow.Index].VentaId, "NDC");
 
 
         }
